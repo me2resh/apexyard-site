@@ -1,1151 +1,1462 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ApexStack — AI-Native Development Stack for Claude Code</title>
-<meta name="description" content="20 role definitions, battle-tested workflows, and structured processes — packaged as a reusable stack for Claude Code.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ApexStack — an opinionated stack for Claude Code</title>
+<meta name="description" content="ApexStack packages roles, workflows, hooks, agents, slash commands, and CI pipelines into one drop-in stack for Claude Code. Open source. Plain markdown. No lock-in.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
+/* ============================================================
+   ApexStack — terminal-native brutalism
+   One typeface (JetBrains Mono), warm cream paper, single
+   warning-red accent. No gradients. No shadows. Sharp corners.
+   The page is one big README rendered with care.
+   ============================================================ */
 
 :root {
-  --bg-deep: #0a0c10;
-  --bg-surface: #0f1218;
-  --bg-elevated: #161b24;
-  --bg-card: #1a1f2a;
-  --grid-line: rgba(56, 189, 248, 0.04);
-  --grid-line-strong: rgba(56, 189, 248, 0.07);
-  --border-dim: rgba(148, 163, 184, 0.08);
-  --border-subtle: rgba(148, 163, 184, 0.12);
-  --border-accent: rgba(56, 189, 248, 0.2);
-  --text-primary: #e2e8f0;
-  --text-secondary: #94a3b8;
-  --text-dim: #64748b;
-  --accent-cyan: #38bdf8;
-  --accent-cyan-dim: rgba(56, 189, 248, 0.15);
-  --accent-amber: #fbbf24;
-  --accent-amber-dim: rgba(251, 191, 36, 0.12);
-  --accent-emerald: #34d399;
-  --accent-emerald-dim: rgba(52, 211, 153, 0.12);
-  --accent-rose: #fb7185;
-  --accent-rose-dim: rgba(251, 113, 133, 0.12);
-  --accent-violet: #a78bfa;
-  --accent-violet-dim: rgba(167, 139, 250, 0.12);
-  --mono: 'DM Mono', 'SF Mono', 'Fira Code', monospace;
-  --serif: 'Instrument Serif', Georgia, serif;
-  --sans: 'DM Sans', -apple-system, sans-serif;
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  /* paper */
+  --paper:    #F4EFE6;
+  --paper-2:  #ECE5D2;
+  --paper-3:  #E0D7BD;
+
+  /* ink */
+  --ink:       #1A1612;
+  --ink-soft:  #4A4239;
+  --ink-faint: #877E70;
+  --ink-ghost: #B6AD9B;
+
+  /* the single accent — used like a stamp, never as a fill */
+  --accent:      #C8321A;
+  --accent-soft: #E07050;
+
+  /* hairlines */
+  --rule:        #1A1612;
+  --rule-faint:  #B6AD9B;
+
+  /* one font */
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* layout */
+  --max-w:  1280px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
 }
 
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:    #15120D;
+    --paper-2:  #1C1813;
+    --paper-3:  #25201A;
+    --ink:       #F2EBD9;
+    --ink-soft:  #C5BEAA;
+    --ink-faint: #847C68;
+    --ink-ghost: #4A4338;
+    --accent:      #FF6E4A;
+    --accent-soft: #FFA180;
+    --rule:        #F2EBD9;
+    --rule-faint:  #4A4338;
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
-  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  background: var(--paper);
+  scroll-behavior: smooth;
+  font-feature-settings: 'calt', 'ss01', 'ss03';
 }
 
 body {
-  font-family: var(--sans);
-  background: var(--bg-deep);
-  color: var(--text-primary);
-  line-height: 1.6;
+  font-family: var(--mono);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.55;
+  font-weight: 400;
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* Blueprint grid background */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
-    linear-gradient(var(--grid-line-strong) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line-strong) 1px, transparent 1px);
-  background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px;
-  pointer-events: none;
-  z-index: 0;
+::selection { background: var(--accent); color: var(--paper); }
+
+a { color: inherit; text-decoration: none; }
+a:hover { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* ============================================================
+   utility — the box-drawing primitive
+   ============================================================ */
+
+.dash { color: var(--ink-faint); user-select: none; }
+.kw { color: var(--accent); font-weight: 600; }
+.cm { color: var(--ink-faint); font-style: italic; }
+.st { color: var(--ink); }
+.fn { color: var(--ink); font-weight: 600; }
+.dim { color: var(--ink-faint); }
+.lift { color: var(--accent); }
+.uline { border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
+
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
 }
 
-/* Noise texture overlay */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-}
+/* ============================================================
+   site header — sticky terminal title bar
+   ============================================================ */
 
-.wrapper {
-  position: relative;
-  z-index: 1;
-}
-
-/* ---- Navigation ---- */
-nav {
-  position: fixed;
+.titlebar {
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 100;
-  padding: 0 2rem;
-  height: 56px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  padding: 0.75rem 0;
+  font-size: 12px;
+}
+
+.titlebar__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(10, 12, 16, 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border-dim);
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.nav-logo {
-  font-family: var(--mono);
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text-primary);
-  text-decoration: none;
-  letter-spacing: 0.04em;
-}
-
-.nav-logo span {
-  color: var(--accent-cyan);
-}
-
-.nav-links {
+.titlebar__left {
   display: flex;
-  gap: 2rem;
-  list-style: none;
   align-items: center;
+  gap: 0.65rem;
 }
 
-.nav-links a {
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  text-decoration: none;
-  letter-spacing: 0.03em;
-  transition: color 0.2s;
-}
-
-.nav-links a:hover {
-  color: var(--text-primary);
-}
-
-.nav-gh {
+.titlebar__dots {
   display: inline-flex;
+  gap: 0.35rem;
+  margin-right: 0.4rem;
+}
+.titlebar__dot {
+  width: 11px;
+  height: 11px;
+  border: 1px solid var(--rule);
+  display: inline-block;
+}
+.titlebar__dot.is-warn { background: var(--accent); border-color: var(--accent); }
+
+.titlebar__path {
+  color: var(--ink-soft);
+}
+.titlebar__path b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.titlebar__right {
+  display: flex;
+  gap: 1.25rem;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.8rem;
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  text-decoration: none;
-  transition: all 0.2s;
+  font-size: 12px;
+}
+.titlebar__right a {
+  color: var(--ink-soft);
+  position: relative;
+}
+.titlebar__right a:hover { color: var(--accent); }
+.titlebar__right a.is-cta {
+  border: 1px solid var(--rule);
+  padding: 0.35rem 0.75rem;
+  color: var(--ink);
+}
+.titlebar__right a.is-cta:hover {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
 }
 
-.nav-gh:hover {
-  border-color: var(--accent-cyan);
-  color: var(--accent-cyan);
-}
+/* ============================================================
+   hero — full-bleed ascii poster
+   ============================================================ */
 
-.nav-gh svg {
-  width: 14px;
-  height: 14px;
-  fill: currentColor;
-}
-
-/* ---- Sections ---- */
-section {
-  padding: 6rem 2rem;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-/* ---- Hero ---- */
 .hero {
-  min-height: 100vh;
+  position: relative;
+  padding: clamp(2.5rem, 6vw, 5rem) 0 clamp(3rem, 7vw, 6rem);
+  border-bottom: 1px solid var(--rule);
+}
+
+.hero__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+.hero__eyebrow .pill {
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 0.2rem 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+}
+
+.hero__title {
+  font-family: var(--mono);
+  font-weight: 800;
+  font-size: clamp(3.5rem, 12vw, 11rem);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.hero__title::after {
+  content: '_';
+  color: var(--accent);
+  animation: blink 1.1s steps(1, end) infinite;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+.hero__tagline {
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  font-weight: 500;
+  color: var(--ink);
+  max-width: 60ch;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.hero__sub {
+  font-size: 14px;
+  color: var(--ink-soft);
+  max-width: 70ch;
+  line-height: 1.65;
+  margin-bottom: 2.5rem;
+}
+
+/* the install command — the most important element on the page */
+.install {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.85rem;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  font-size: 14px;
+  max-width: 720px;
+}
+.install__prompt { color: var(--accent); font-weight: 700; user-select: none; }
+.install__cmd {
+  color: var(--ink);
+  white-space: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.install__cmd::-webkit-scrollbar { display: none; }
+.install__copy {
+  background: transparent;
+  border: 1px solid var(--rule-faint);
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.45rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.install__copy:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.install__copy.is-copied {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.install__caveat {
+  font-size: 12px;
+  color: var(--ink-faint);
+  max-width: 720px;
+  margin-bottom: 2.5rem;
+}
+
+.hero__metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin-top: 2rem;
+}
+@media (max-width: 720px) {
+  .hero__metrics { grid-template-columns: 1fr 1fr; }
+}
+.hero__metric {
+  padding: 1.5rem 1.25rem;
+  border-right: 1px solid var(--rule-faint);
+}
+.hero__metric:last-child { border-right: none; }
+@media (max-width: 720px) {
+  .hero__metric:nth-child(2) { border-right: none; }
+  .hero__metric:nth-child(1),
+  .hero__metric:nth-child(2) { border-bottom: 1px solid var(--rule-faint); }
+}
+.hero__metric strong {
+  display: block;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.hero__metric span {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+
+/* ============================================================
+   ascii section — boxed
+   ============================================================ */
+
+.section {
+  padding: clamp(3rem, 6vw, 5rem) 0;
+  border-bottom: 1px solid var(--rule);
+}
+.section--alt { background: var(--paper-2); }
+
+.section__head {
+  max-width: var(--max-w);
+  margin: 0 auto 2.5rem;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.25rem 1.5rem;
+  align-items: baseline;
+}
+@media (max-width: 720px) {
+  .section__head { grid-template-columns: 1fr; }
+}
+.section__num {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.section__title {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0;
+}
+.section__lede {
+  grid-column: 2;
+  font-size: 14px;
+  color: var(--ink-soft);
+  max-width: 65ch;
+  line-height: 1.65;
+}
+@media (max-width: 720px) {
+  .section__lede { grid-column: 1; }
+}
+
+/* ============================================================
+   file tree — ASCII rendered, monospace, semantic
+   ============================================================ */
+
+.tree {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.tree__inner {
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.tree__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper-3);
+  font-size: 11px;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.tree__head .files { color: var(--ink-faint); text-transform: none; letter-spacing: 0; }
+.tree__body {
+  padding: 1.5rem 1.5rem 2rem;
+  white-space: pre;
+  overflow-x: auto;
+  color: var(--ink);
+}
+.tree__body .branch { color: var(--ink-faint); }
+.tree__body .dir { color: var(--ink); font-weight: 700; }
+.tree__body .new { color: var(--accent); font-weight: 700; }
+.tree__body .lf  { color: var(--ink-soft); }
+.tree__body .nf  { color: var(--ink-faint); font-style: italic; }
+.tree__body .badge {
+  background: var(--accent);
+  color: var(--paper);
+  padding: 0 6px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  margin-left: 6px;
+  vertical-align: 1px;
+}
+
+/* ============================================================
+   layers — 4 cards in a 2x2 with sharp borders
+   ============================================================ */
+
+.layers {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--rule);
+}
+@media (max-width: 720px) {
+  .layers { grid-template-columns: 1fr; }
+}
+.layer {
+  padding: 2rem 1.75rem;
+  border-right: 1px solid var(--rule-faint);
+  border-bottom: 1px solid var(--rule-faint);
+  position: relative;
+}
+.layer:nth-child(2n) { border-right: none; }
+.layer:nth-last-child(-n+2) { border-bottom: none; }
+@media (max-width: 720px) {
+  .layer { border-right: none; }
+  .layer:not(:last-child) { border-bottom: 1px solid var(--rule-faint); }
+}
+.layer__num {
+  font-size: 11px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.6rem;
+}
+.layer__num .new {
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0 5px;
+  margin-left: 6px;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+.layer__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.018em;
+}
+.layer__desc {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+  max-width: 42ch;
+}
+.layer__list {
+  list-style: none;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-top: 56px;
-  position: relative;
+  gap: 0.4rem;
+  font-size: 12.5px;
 }
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.3rem 0.8rem;
-  border: 1px solid var(--border-accent);
-  border-radius: 100px;
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--accent-cyan);
-  letter-spacing: 0.04em;
-  width: fit-content;
-  margin-bottom: 2rem;
-  background: var(--accent-cyan-dim);
-  animation: fadeInUp 0.8s var(--ease-out-expo) both;
-}
-
-.hero-badge::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-cyan);
-  animation: pulse 2s ease-in-out infinite;
-}
-
-.hero h1 {
-  font-family: var(--serif);
-  font-size: clamp(3rem, 7vw, 5.5rem);
-  font-weight: 400;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
-  margin-bottom: 1.5rem;
-  animation: fadeInUp 0.8s var(--ease-out-expo) 0.1s both;
-}
-
-.hero h1 em {
-  font-style: italic;
-  color: var(--accent-cyan);
-  position: relative;
-}
-
-.hero h1 em::after {
-  content: '';
-  position: absolute;
-  bottom: 0.08em;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--accent-cyan);
-  opacity: 0.3;
-}
-
-.hero-sub {
-  font-family: var(--sans);
-  font-size: 1.15rem;
-  color: var(--text-secondary);
-  max-width: 540px;
-  line-height: 1.7;
-  margin-bottom: 2.5rem;
-  animation: fadeInUp 0.8s var(--ease-out-expo) 0.2s both;
-}
-
-.hero-actions {
-  display: flex;
+.layer__list li {
+  display: grid;
+  grid-template-columns: 14ch 1fr;
   gap: 1rem;
-  align-items: center;
-  flex-wrap: wrap;
-  animation: fadeInUp 0.8s var(--ease-out-expo) 0.3s both;
+  color: var(--ink-soft);
+}
+.layer__list li code {
+  font-family: inherit;
+  color: var(--ink);
+  font-weight: 600;
 }
 
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1.5rem;
-  background: var(--accent-cyan);
-  color: var(--bg-deep);
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  font-weight: 500;
-  text-decoration: none;
-  border-radius: 8px;
-  letter-spacing: 0.02em;
-  transition: all 0.2s;
-  border: 1px solid transparent;
-}
+/* ============================================================
+   show, don't tell — example demos
+   ============================================================ */
 
-.btn-primary:hover {
-  background: #67d6ff;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 24px rgba(56, 189, 248, 0.25);
-}
-
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1.5rem;
-  background: transparent;
-  color: var(--text-secondary);
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  text-decoration: none;
-  border-radius: 8px;
-  border: 1px solid var(--border-subtle);
-  letter-spacing: 0.02em;
-  transition: all 0.2s;
-}
-
-.btn-secondary:hover {
-  border-color: var(--text-dim);
-  color: var(--text-primary);
-}
-
-.hero-stats {
-  display: flex;
-  gap: 3rem;
-  margin-top: 4rem;
-  padding-top: 2.5rem;
-  border-top: 1px solid var(--border-dim);
-  animation: fadeInUp 0.8s var(--ease-out-expo) 0.45s both;
-}
-
-.hero-stat-num {
-  font-family: var(--serif);
-  font-size: 2.2rem;
-  color: var(--text-primary);
-  line-height: 1;
-  margin-bottom: 0.35rem;
-}
-
-.hero-stat-label {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-/* Decorative floating element */
-.hero-decor {
-  position: absolute;
-  right: -40px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 340px;
-  height: 340px;
-  border: 1px solid var(--grid-line-strong);
-  border-radius: 50%;
-  animation: rotateDecor 60s linear infinite, fadeIn 1.5s ease both 0.5s;
-  opacity: 0;
-}
-
-.hero-decor::before {
-  content: '';
-  position: absolute;
-  inset: 30px;
-  border: 1px dashed var(--grid-line-strong);
-  border-radius: 50%;
-}
-
-.hero-decor::after {
-  content: '';
-  position: absolute;
-  inset: 60px;
-  border: 1px solid var(--border-accent);
-  border-radius: 50%;
-  box-shadow: 0 0 60px var(--accent-cyan-dim);
-}
-
-/* ---- What's Inside ---- */
-.section-label {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--accent-cyan);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
-
-.section-title {
-  font-family: var(--serif);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 400;
-  line-height: 1.15;
-  margin-bottom: 1rem;
-  letter-spacing: -0.01em;
-}
-
-.section-desc {
-  color: var(--text-secondary);
-  max-width: 560px;
-  margin-bottom: 3.5rem;
-  line-height: 1.7;
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1px;
-  background: var(--border-dim);
-  border: 1px solid var(--border-dim);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.feature-card {
-  background: var(--bg-surface);
-  padding: 2rem;
-  transition: background 0.3s;
-}
-
-.feature-card:hover {
-  background: var(--bg-elevated);
-}
-
-.feature-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.25rem;
-  font-size: 1.1rem;
-}
-
-.feature-icon.cyan { background: var(--accent-cyan-dim); color: var(--accent-cyan); }
-.feature-icon.amber { background: var(--accent-amber-dim); color: var(--accent-amber); }
-.feature-icon.emerald { background: var(--accent-emerald-dim); color: var(--accent-emerald); }
-.feature-icon.rose { background: var(--accent-rose-dim); color: var(--accent-rose); }
-
-.feature-card h3 {
-  font-family: var(--sans);
-  font-size: 1rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-}
-
-.feature-card p {
-  font-size: 0.88rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-.feature-tag {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 0.2rem 0.6rem;
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  color: var(--text-dim);
-  border: 1px solid var(--border-dim);
-  border-radius: 4px;
-  letter-spacing: 0.03em;
-}
-
-/* ---- How It Works ---- */
-.steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  margin-top: 1rem;
-}
-
-.step {
-  position: relative;
-  padding: 2rem;
-  border: 1px solid var(--border-dim);
-  border-radius: 12px;
-  background: var(--bg-surface);
-  transition: border-color 0.3s;
-}
-
-.step:hover {
-  border-color: var(--border-accent);
-}
-
-.step-num {
-  font-family: var(--serif);
-  font-size: 3rem;
-  color: var(--accent-cyan);
-  opacity: 0.15;
-  position: absolute;
-  top: 0.8rem;
-  right: 1.2rem;
-  line-height: 1;
-}
-
-.step h3 {
-  font-family: var(--mono);
-  font-size: 0.85rem;
-  font-weight: 500;
-  margin-bottom: 0.75rem;
-  color: var(--text-primary);
-}
-
-.step p {
-  font-size: 0.88rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-.step code {
-  display: block;
-  margin-top: 1rem;
-  padding: 0.8rem 1rem;
-  background: var(--bg-deep);
-  border: 1px solid var(--border-dim);
-  border-radius: 6px;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  color: var(--accent-cyan);
-  overflow-x: auto;
-  white-space: pre;
-}
-
-/* ---- Roles Directory ---- */
-.roles-section {
-  background: var(--bg-surface);
-  border-top: 1px solid var(--border-dim);
-  border-bottom: 1px solid var(--border-dim);
-  padding: 6rem 2rem;
-  margin: 0;
-  max-width: none;
-}
-
-.roles-inner {
-  max-width: 1100px;
+.demos {
+  max-width: var(--max-w);
   margin: 0 auto;
-}
-
-.departments {
+  padding: 0 var(--gutter);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
 }
-
-.dept-card {
-  border: 1px solid var(--border-dim);
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--bg-deep);
-  transition: border-color 0.3s;
+@media (max-width: 900px) {
+  .demos { grid-template-columns: 1fr; }
 }
-
-.dept-card:hover {
-  border-color: var(--border-accent);
+.demo {
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
 }
-
-.dept-header {
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid var(--border-dim);
+.demo__head {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-}
-
-.dept-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.dept-dot.cyan { background: var(--accent-cyan); box-shadow: 0 0 8px var(--accent-cyan-dim); }
-.dept-dot.amber { background: var(--accent-amber); box-shadow: 0 0 8px var(--accent-amber-dim); }
-.dept-dot.emerald { background: var(--accent-emerald); box-shadow: 0 0 8px var(--accent-emerald-dim); }
-.dept-dot.rose { background: var(--accent-rose); box-shadow: 0 0 8px var(--accent-rose-dim); }
-.dept-dot.violet { background: var(--accent-violet); box-shadow: 0 0 8px var(--accent-violet-dim); }
-
-.dept-name {
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
+  justify-content: space-between;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper-3);
+  font-size: 11px;
+  color: var(--ink-soft);
   text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.demo__head .label {
+  color: var(--accent);
+  font-weight: 700;
+}
+.demo__body {
+  padding: 1.25rem 1.25rem 1.5rem;
+  font-size: 12.5px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  color: var(--ink);
+  flex: 1;
+}
+.demo__body .you { color: var(--accent); font-weight: 700; }
+.demo__body .ai { color: var(--ink); }
+.demo__body .ag { color: var(--ink-soft); font-style: italic; }
+.demo__body .blk { color: var(--accent); font-weight: 700; text-transform: uppercase; }
+.demo__body .ok { color: var(--accent); font-weight: 700; }
+.demo__caption {
+  font-size: 11px;
+  color: var(--ink-faint);
+  padding: 0.7rem 1rem;
+  border-top: 1px solid var(--rule-faint);
 }
 
-.dept-count {
-  margin-left: auto;
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  color: var(--text-dim);
+/* ============================================================
+   pipelines list
+   ============================================================ */
+
+.pipelines {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
 }
-
-.dept-roles {
-  list-style: none;
-  padding: 0.5rem 0;
+.pipelines__inner {
+  border: 1px solid var(--rule);
+  background: var(--paper-2);
 }
-
-.dept-roles li {
-  padding: 0.55rem 1.5rem;
-  font-size: 0.88rem;
-  color: var(--text-secondary);
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  transition: color 0.15s, background 0.15s;
-}
-
-.dept-roles li:hover {
-  color: var(--text-primary);
-  background: rgba(255,255,255,0.02);
-}
-
-.dept-roles li::before {
-  content: '';
-  width: 4px;
-  height: 4px;
-  border-radius: 1px;
-  background: var(--text-dim);
-  flex-shrink: 0;
-  transform: rotate(45deg);
-}
-
-.role-tag {
-  margin-left: auto;
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  color: var(--text-dim);
-  opacity: 0.6;
-}
-
-/* ---- Workflow ---- */
-.workflow-visual {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  flex-wrap: wrap;
-  margin-top: 2rem;
-  margin-bottom: 3rem;
-}
-
-.wf-stage {
-  padding: 0.6rem 1.2rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-dim);
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  white-space: nowrap;
-  transition: all 0.2s;
-}
-
-.wf-stage:first-child { border-radius: 8px 0 0 8px; }
-.wf-stage:last-child { border-radius: 0 8px 8px 0; }
-
-.wf-stage:hover {
-  background: var(--bg-elevated);
-  color: var(--accent-cyan);
-  border-color: var(--border-accent);
-  z-index: 1;
-  position: relative;
-}
-
-.wf-arrow {
-  color: var(--text-dim);
-  font-size: 0.75rem;
-  padding: 0 0.15rem;
-  font-family: var(--mono);
-}
-
-.workflow-details {
+.pipeline {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1px;
-  background: var(--border-dim);
-  border: 1px solid var(--border-dim);
-  border-radius: 12px;
-  overflow: hidden;
+  grid-template-columns: 28ch 1fr auto;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--rule-faint);
+  font-size: 13px;
+}
+@media (max-width: 720px) {
+  .pipeline { grid-template-columns: 1fr; gap: 0.3rem; padding: 1rem 1.25rem; }
+}
+.pipeline:last-child { border-bottom: none; }
+.pipeline__file {
+  color: var(--ink);
+  font-weight: 700;
+}
+.pipeline__file::before {
+  content: '$ ';
+  color: var(--accent);
+  font-weight: 700;
+}
+.pipeline__desc { color: var(--ink-soft); }
+.pipeline__agent {
+  font-size: 11px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
 }
 
-.wf-detail {
-  background: var(--bg-surface);
-  padding: 1.5rem 2rem;
-}
+/* ============================================================
+   install steps — actual numbered steps with code
+   ============================================================ */
 
-.wf-detail h4 {
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  font-weight: 500;
+.steps {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+@media (max-width: 900px) {
+  .steps { grid-template-columns: 1fr; }
+}
+.step {
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  padding: 1.5rem 1.5rem 1.25rem;
+}
+.step__num {
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   margin-bottom: 0.5rem;
-  color: var(--text-primary);
+  font-weight: 700;
 }
-
-.wf-detail p {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
+.step__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+}
+.step__desc {
+  font-size: 13px;
+  color: var(--ink-soft);
   line-height: 1.6;
+  margin-bottom: 1rem;
 }
-
-/* ---- Code block showcase ---- */
-.code-showcase {
-  margin-top: 3rem;
-  border: 1px solid var(--border-dim);
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--bg-deep);
-}
-
-.code-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.25rem;
-  background: var(--bg-surface);
-  border-bottom: 1px solid var(--border-dim);
-}
-
-.code-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--border-subtle);
-}
-
-.code-dot:nth-child(1) { background: #ff5f57; }
-.code-dot:nth-child(2) { background: #febc2e; }
-.code-dot:nth-child(3) { background: #28c840; }
-
-.code-filename {
-  margin-left: 0.75rem;
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--text-dim);
-}
-
-.code-body {
-  padding: 1.5rem;
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  line-height: 1.8;
-  color: var(--text-secondary);
+.step__code {
+  background: var(--paper-2);
+  border: 1px solid var(--rule-faint);
+  padding: 0.75rem 1rem;
+  font-size: 12px;
+  color: var(--ink);
+  white-space: pre;
   overflow-x: auto;
 }
+.step__code .acc { color: var(--accent); }
+.step__code .cm { color: var(--ink-faint); font-style: italic; }
 
-.code-body .kw { color: var(--accent-violet); }
-.code-body .str { color: var(--accent-emerald); }
-.code-body .cmt { color: var(--text-dim); font-style: italic; }
-.code-body .fn { color: var(--accent-amber); }
-.code-body .val { color: var(--accent-cyan); }
+/* ============================================================
+   anti-features — what apexstack is NOT
+   ============================================================ */
 
-/* ---- CTA Section ---- */
-.cta-section {
-  text-align: center;
-  padding: 8rem 2rem;
+.antifeatures {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
 }
-
-.cta-section .section-title {
-  margin-bottom: 1.5rem;
+.antifeatures__inner {
+  border: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
 }
-
-.cta-section .section-desc {
-  margin: 0 auto 2.5rem;
-  text-align: center;
+@media (max-width: 720px) {
+  .antifeatures__inner { grid-template-columns: 1fr; }
 }
-
-.cta-actions {
+.antifeatures__col {
+  padding: 1.75rem 1.75rem 1.5rem;
+}
+.antifeatures__col:first-child {
+  border-right: 1px solid var(--rule-faint);
+}
+@media (max-width: 720px) {
+  .antifeatures__col:first-child { border-right: none; border-bottom: 1px solid var(--rule-faint); }
+}
+.antifeatures__col h3 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  margin-bottom: 1rem;
+}
+.antifeatures__col h3.is-yes { color: var(--accent); }
+.antifeatures__col ul {
+  list-style: none;
   display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.antifeatures__col li {
+  display: grid;
+  grid-template-columns: 1.5em 1fr;
+  color: var(--ink);
+}
+.antifeatures__col li::before {
+  font-weight: 700;
+}
+.antifeatures__col.is-do li::before {
+  content: '+';
+  color: var(--accent);
+}
+.antifeatures__col.is-dont li::before {
+  content: '×';
+  color: var(--ink-faint);
+}
+.antifeatures__col.is-dont li {
+  color: var(--ink-soft);
+  text-decoration: line-through;
+  text-decoration-color: var(--ink-ghost);
+  text-decoration-thickness: 1px;
+}
+
+/* ============================================================
+   final cta
+   ============================================================ */
+
+.final {
+  padding: clamp(4rem, 8vw, 7rem) 0;
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule);
+}
+.final__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 3rem;
+  align-items: end;
+}
+@media (max-width: 900px) {
+  .final__inner { grid-template-columns: 1fr; gap: 2rem; }
+}
+.final h2 {
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  color: var(--ink);
+}
+.final h2 .acc { color: var(--accent); }
+.final p {
+  font-size: 13px;
+  color: var(--ink-soft);
+  max-width: 50ch;
+  line-height: 1.65;
+  margin-top: 1.25rem;
+}
+.final__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-self: end;
+}
+.final__btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--rule);
+  padding: 1rem 1.25rem;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  text-transform: none;
+  background: var(--paper);
+}
+.final__btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.final__btn .arrow { font-weight: 800; }
+
+/* ============================================================
+   footer
+   ============================================================ */
+
+footer.foot {
+  padding: 2rem 0 2.5rem;
+  background: var(--paper);
+}
+.foot__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
+  font-size: 11px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.foot__inner a:hover { color: var(--accent); }
+
+/* ============================================================
+   page-load reveal — staggered, restrained
+   ============================================================ */
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.rise { animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.rise-1 { animation-delay: 0.05s; }
+.rise-2 { animation-delay: 0.13s; }
+.rise-3 { animation-delay: 0.21s; }
+.rise-4 { animation-delay: 0.29s; }
+.rise-5 { animation-delay: 0.37s; }
+.rise-6 { animation-delay: 0.45s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rise, .rise-1, .rise-2, .rise-3, .rise-4, .rise-5, .rise-6 {
+    animation: none !important;
+  }
+  .hero__title::after { animation: none; }
 }
 
-/* ---- Footer ---- */
-footer {
-  padding: 2.5rem 2rem;
-  border-top: 1px solid var(--border-dim);
-  text-align: center;
+/* ============================================================
+   skip link
+   ============================================================ */
+.skip {
+  position: absolute;
+  left: -10000px;
+  top: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.6rem 1rem;
+  z-index: 200;
+  font-size: 12px;
 }
-
-footer p {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  letter-spacing: 0.02em;
-}
-
-footer a {
-  color: var(--text-secondary);
-  text-decoration: none;
-  transition: color 0.15s;
-}
-
-footer a:hover {
-  color: var(--accent-cyan);
-}
-
-/* ---- Animations ---- */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-@keyframes rotateDecor {
-  from { transform: translateY(-50%) rotate(0deg); }
-  to { transform: translateY(-50%) rotate(360deg); }
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ---- Responsive ---- */
-@media (max-width: 768px) {
-  nav { padding: 0 1.25rem; }
-  .nav-links { gap: 1rem; }
-  .nav-links .hide-mobile { display: none; }
-  section { padding: 4rem 1.25rem; }
-  .hero { min-height: auto; padding-top: 8rem; padding-bottom: 4rem; }
-  .hero h1 { font-size: 2.5rem; }
-  .hero-stats { gap: 2rem; flex-wrap: wrap; }
-  .hero-decor { display: none; }
-  .steps { grid-template-columns: 1fr; }
-  .departments { grid-template-columns: 1fr; }
-  .features-grid { grid-template-columns: 1fr; }
-  .workflow-visual { gap: 0.25rem; }
-  .wf-stage { padding: 0.5rem 0.8rem; font-size: 0.65rem; }
-  .roles-section { padding: 4rem 1.25rem; }
-}
-
-@media (max-width: 480px) {
-  .hero h1 { font-size: 2rem; }
-  .hero-stat-num { font-size: 1.8rem; }
-  .hero-actions { flex-direction: column; align-items: flex-start; }
-}
+.skip:focus { left: 1rem; top: 1rem; }
 </style>
 </head>
 <body>
+<a href="#main" class="skip">Skip to content</a>
 
-<div class="wrapper">
+<!-- ============================================================
+     TITLE BAR — sticky
+     ============================================================ -->
+<header class="titlebar">
+  <div class="titlebar__inner">
+    <div class="titlebar__left">
+      <span class="titlebar__dots" aria-hidden="true">
+        <span class="titlebar__dot"></span>
+        <span class="titlebar__dot"></span>
+        <span class="titlebar__dot is-warn"></span>
+      </span>
+      <span class="titlebar__path">~/<b>apexstack</b> <span class="dim">— main · v0.1</span></span>
+    </div>
+    <nav class="titlebar__right" aria-label="Primary">
+      <a href="#stack">stack</a>
+      <a href="#tree">tree</a>
+      <a href="#layers">layers</a>
+      <a href="#examples">examples</a>
+      <a href="#install">install</a>
+      <a href="https://github.com/me2resh/apexstack" class="is-cta" target="_blank" rel="noopener">github →</a>
+    </nav>
+  </div>
+</header>
 
-<!-- Navigation -->
-<nav>
-  <a href="#" class="nav-logo"><span>&gt;</span> ApexStack</a>
-  <ul class="nav-links">
-    <li><a href="#features" class="hide-mobile">Features</a></li>
-    <li><a href="#roles" class="hide-mobile">Roles</a></li>
-    <li><a href="#workflow" class="hide-mobile">Workflow</a></li>
-    <li>
-      <a href="https://github.com/me2resh/apexstack" class="nav-gh" target="_blank" rel="noopener">
-        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-        GitHub
-      </a>
-    </li>
-  </ul>
-</nav>
+<main id="main">
 
-<!-- Hero -->
+<!-- ============================================================
+     HERO
+     ============================================================ -->
 <section class="hero">
-  <div class="hero-badge">Open Source</div>
-  <h1>Your dev team,<br><em>structured</em></h1>
-  <p class="hero-sub">
-    ApexStack packages 20 role definitions, battle-tested workflows, and structured
-    processes into a reusable stack for Claude Code. One config file to adopt.
-    Zero lock-in.
-  </p>
-  <div class="hero-actions">
-    <a href="https://github.com/me2resh/apexstack" class="btn-primary" target="_blank" rel="noopener">
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-      Get Started
-    </a>
-    <a href="#features" class="btn-secondary">See what's inside</a>
+  <div class="hero__inner">
+
+    <div class="hero__eyebrow rise rise-1">
+      <span class="pill">apexstack v0.1</span>
+      <span>open source · MIT · plain markdown · zero dependencies</span>
+    </div>
+
+    <h1 class="hero__title rise rise-2">apexstack</h1>
+
+    <p class="hero__tagline rise rise-3">
+      An opinionated stack for <span class="uline">Claude Code</span>. Roles, workflows, hooks, agents, slash commands, and CI pipelines — packaged so your AI can act like a structured chief of staff for your engineering org.
+    </p>
+
+    <p class="hero__sub rise rise-3">
+      Drop into any project. Configure with one YAML file. Get a Code Reviewer agent that enforces glossaries, hooks that block <code>git add -A</code>, slash commands like <code>/decide</code> and <code>/code-review</code>, and CI workflows ready to copy into <code>.github/workflows/</code>. No SaaS. No lock-in. Just markdown and shell scripts.
+    </p>
+
+    <div class="install rise rise-4" id="install-block">
+      <span class="install__prompt">$</span>
+      <code class="install__cmd" id="install-cmd">git clone https://github.com/me2resh/apexstack.git ~/.apexstack</code>
+      <button type="button" class="install__copy" id="install-copy" aria-label="Copy install command">copy</button>
+    </div>
+
+    <p class="install__caveat rise rise-4">
+      Then symlink <code>~/.apexstack/.claude</code> to your project root, point your <code>CLAUDE.md</code> at <code>@~/.apexstack/CLAUDE.md</code>, and you're done. Full steps in <a href="#install" class="uline">install</a> below.
+    </p>
+
+    <div class="hero__metrics rise rise-5" aria-label="What you get">
+      <div class="hero__metric">
+        <strong>19</strong>
+        <span>Role definitions</span>
+      </div>
+      <div class="hero__metric">
+        <strong>17</strong>
+        <span>Hooks · rules · agents · skills</span>
+      </div>
+      <div class="hero__metric">
+        <strong>7</strong>
+        <span>CI pipelines</span>
+      </div>
+      <div class="hero__metric">
+        <strong>4</strong>
+        <span>Document templates</span>
+      </div>
+    </div>
+
   </div>
-  <div class="hero-stats">
-    <div>
-      <div class="hero-stat-num">20</div>
-      <div class="hero-stat-label">Roles</div>
-    </div>
-    <div>
-      <div class="hero-stat-num">5</div>
-      <div class="hero-stat-label">Departments</div>
-    </div>
-    <div>
-      <div class="hero-stat-num">3</div>
-      <div class="hero-stat-label">Workflows</div>
-    </div>
-    <div>
-      <div class="hero-stat-num">4</div>
-      <div class="hero-stat-label">Templates</div>
-    </div>
-  </div>
-  <div class="hero-decor" aria-hidden="true"></div>
 </section>
 
-<!-- Features -->
-<section id="features">
-  <div class="reveal">
-    <div class="section-label">What's Inside</div>
-    <h2 class="section-title">Everything your AI team needs</h2>
-    <p class="section-desc">
-      Role definitions, workflow processes, document templates, and a config file to make it all yours.
+<!-- ============================================================
+     SECTION 01 — what's in the box (file tree)
+     ============================================================ -->
+<section class="section" id="tree">
+
+  <div class="section__head">
+    <span class="section__num">01 / TREE</span>
+    <h2 class="section__title">What you get when you clone it</h2>
+    <p class="section__lede">
+      The whole stack is plain markdown and shell scripts. No build step, no package install, nothing to compile. Here's the literal directory you get after a fresh clone.
     </p>
   </div>
-  <div class="features-grid reveal">
-    <div class="feature-card">
-      <div class="feature-icon cyan">&#9679;</div>
-      <h3>Role Definitions</h3>
-      <p>20 software development roles across Engineering, Product, Design, Security, and Data. Each role defines capabilities, boundaries, interfaces, and checklists.</p>
-      <span class="feature-tag">roles/*.md</span>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon amber">&#9650;</div>
-      <h3>Workflow Processes</h3>
-      <p>Full SDLC with quality gates, structured code review process, and deployment pipeline. Entry criteria, exit criteria, and escalation paths for every phase.</p>
-      <span class="feature-tag">workflows/*.md</span>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon emerald">&#9632;</div>
-      <h3>Document Templates</h3>
-      <p>PRDs, technical designs, Architecture Decision Records, and Agent Decision Records. Structured formats that produce consistent, thorough documentation.</p>
-      <span class="feature-tag">templates/*.md</span>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon rose">&#9830;</div>
-      <h3>Onboarding Config</h3>
-      <p>A single YAML file where you define your company, team, tech stack, and preferences. Claude Code reads it and adapts to your specific context.</p>
-      <span class="feature-tag">onboarding.yaml</span>
+
+  <div class="tree">
+    <div class="tree__inner">
+      <div class="tree__head">
+        <span>$ tree apexstack</span>
+        <span class="files">62 files · 5,480 LOC</span>
+      </div>
+      <div class="tree__body"><span class="dir">apexstack/</span>
+<span class="branch">├──</span> <span class="lf">CLAUDE.md</span>              <span class="nf"># Stack entry point — Claude Code reads this first</span>
+<span class="branch">├──</span> <span class="lf">README.md</span>
+<span class="branch">├──</span> <span class="lf">LICENSE</span>                <span class="nf"># MIT</span>
+<span class="branch">├──</span> <span class="lf">onboarding.yaml</span>        <span class="nf"># Your company config — fill this in to adopt the stack</span>
+<span class="branch">│</span>
+<span class="branch">├──</span> <span class="dir">roles/</span>                 <span class="nf"># 19 role definitions across 5 departments</span>
+<span class="branch">│   ├──</span> <span class="dir">engineering/</span>      <span class="nf"># Head of Eng, Tech Lead, Backend, Frontend, QA, Platform, SRE</span>
+<span class="branch">│   ├──</span> <span class="dir">product/</span>          <span class="nf"># Head of Product, PM, Product Analyst</span>
+<span class="branch">│   ├──</span> <span class="dir">design/</span>           <span class="nf"># Head of Design, UI Designer, UX Designer</span>
+<span class="branch">│   ├──</span> <span class="dir">security/</span>         <span class="nf"># Head of Security, Auditor, Pen Tester</span>
+<span class="branch">│   └──</span> <span class="dir">data/</span>             <span class="nf"># Head of Data, Analyst, Engineer</span>
+<span class="branch">│</span>
+<span class="branch">├──</span> <span class="dir">workflows/</span>             <span class="nf"># 3 process docs</span>
+<span class="branch">│   ├──</span> <span class="lf">sdlc.md</span>           <span class="nf"># Planning → Design → Build → Review → QA → Deploy → Monitor</span>
+<span class="branch">│   ├──</span> <span class="lf">code-review.md</span>
+<span class="branch">│   └──</span> <span class="lf">deployment.md</span>
+<span class="branch">│</span>
+<span class="branch">├──</span> <span class="dir">templates/</span>             <span class="nf"># 4 document templates</span>
+<span class="branch">│   ├──</span> <span class="lf">prd.md</span>
+<span class="branch">│   ├──</span> <span class="lf">technical-design.md</span>
+<span class="branch">│   ├──</span> <span class="lf">adr.md</span>
+<span class="branch">│   └──</span> <span class="lf">agdr.md</span>           <span class="nf"># Agent Decision Record — AI-specific</span>
+<span class="branch">│</span>
+<span class="branch">├──</span> <span class="dir new">.claude/</span>               <span class="nf"># <span class="new">[NEW]</span> Claude Code primitives — the runnable layer</span>
+<span class="branch">│   ├──</span> <span class="lf">settings.json</span>     <span class="nf"># Wires hooks to PreToolUse events</span>
+<span class="branch">│   ├──</span> <span class="dir">hooks/</span>            <span class="nf"># 6 enforcement scripts</span>
+<span class="branch">│   │   ├──</span> <span class="lf">block-git-add-all.sh</span>     <span class="nf"># refuses git add -A / .</span>
+<span class="branch">│   │   ├──</span> <span class="lf">block-main-push.sh</span>       <span class="nf"># refuses push to main</span>
+<span class="branch">│   │   ├──</span> <span class="lf">check-secrets.sh</span>         <span class="nf"># scans staged files for credentials</span>
+<span class="branch">│   │   ├──</span> <span class="lf">pre-push-gate.sh</span>         <span class="nf"># reminds to lint+typecheck+test+build</span>
+<span class="branch">│   │   ├──</span> <span class="lf">validate-branch-name.sh</span>  <span class="nf"># enforces feature/&lt;TICKET&gt;-… format</span>
+<span class="branch">│   │   └──</span> <span class="lf">validate-pr-create.sh</span>    <span class="nf"># enforces PR title + glossary</span>
+<span class="branch">│   ├──</span> <span class="dir">rules/</span>            <span class="nf"># 6 modular rule files imported via @-imports</span>
+<span class="branch">│   │   ├──</span> <span class="lf">agdr-decisions.md</span>        <span class="nf"># when to /decide</span>
+<span class="branch">│   │   ├──</span> <span class="lf">code-standards.md</span>        <span class="nf"># TS, DDD, naming, testing</span>
+<span class="branch">│   │   ├──</span> <span class="lf">git-conventions.md</span>       <span class="nf"># branch + PR title format</span>
+<span class="branch">│   │   ├──</span> <span class="lf">pr-quality.md</span>            <span class="nf"># glossary required, SHA verify</span>
+<span class="branch">│   │   ├──</span> <span class="lf">pr-workflow.md</span>           <span class="nf"># hard stops before push/PR/merge</span>
+<span class="branch">│   │   └──</span> <span class="lf">workflow-gates.md</span>        <span class="nf"># 6-gate model PRD → Done</span>
+<span class="branch">│   ├──</span> <span class="dir">agents/</span>           <span class="nf"># 5 sub-agents</span>
+<span class="branch">│   │   ├──</span> <span class="lf">code-reviewer.md</span>         <span class="nf"># Rex — reviews PRs against the standards</span>
+<span class="branch">│   │   ├──</span> <span class="lf">security-reviewer.md</span>     <span class="nf"># Shield — OWASP, injection, auth</span>
+<span class="branch">│   │   ├──</span> <span class="lf">dependency-auditor.md</span>    <span class="nf"># Guardian — vulns, outdated, licenses</span>
+<span class="branch">│   │   ├──</span> <span class="lf">pr-manager.md</span>            <span class="nf"># 2-review workflow + SHA verification</span>
+<span class="branch">│   │   └──</span> <span class="lf">ticket-manager.md</span>        <span class="nf"># GitHub Issues per project</span>
+<span class="branch">│   └──</span> <span class="dir">skills/</span>           <span class="nf"># 5 slash commands</span>
+<span class="branch">│       ├──</span> <span class="lf">decide/SKILL.md</span>          <span class="nf"># /decide — creates an AgDR</span>
+<span class="branch">│       ├──</span> <span class="lf">code-review/SKILL.md</span>     <span class="nf"># /code-review</span>
+<span class="branch">│       ├──</span> <span class="lf">security-review/SKILL.md</span> <span class="nf"># /security-review</span>
+<span class="branch">│       ├──</span> <span class="lf">audit-deps/SKILL.md</span>      <span class="nf"># /audit-deps</span>
+<span class="branch">│       └──</span> <span class="lf">write-spec/SKILL.md</span>      <span class="nf"># /write-spec</span>
+<span class="branch">│</span>
+<span class="branch">├──</span> <span class="dir new">golden-paths/</span>          <span class="nf"># <span class="new">[NEW]</span> Reusable infra & ops templates</span>
+<span class="branch">│   └──</span> <span class="dir">pipelines/</span>        <span class="nf"># 7 drop-in GitHub Actions workflows</span>
+<span class="branch">│       ├──</span> <span class="lf">ci.yml</span>               <span class="nf"># combined: code quality + security + deps</span>
+<span class="branch">│       ├──</span> <span class="lf">code-quality.yml</span>     <span class="nf"># Rex — TS, ESLint, tests, build</span>
+<span class="branch">│       ├──</span> <span class="lf">security.yml</span>         <span class="nf"># Sentinel — Semgrep + npm audit + secrets</span>
+<span class="branch">│       ├──</span> <span class="lf">dependency-audit.yml</span> <span class="nf"># Guardian — weekly</span>
+<span class="branch">│       ├──</span> <span class="lf">pr-title-check.yml</span>   <span class="nf"># enforces ticket ID in PR titles</span>
+<span class="branch">│       ├──</span> <span class="lf">review-check.yml</span>     <span class="nf"># blocks merge if Rex hasn't reviewed HEAD</span>
+<span class="branch">│       ├──</span> <span class="lf">seo-check.yml</span>        <span class="nf"># Scout — SEO scoring for content</span>
+<span class="branch">│       └──</span> <span class="lf">README.md</span>
+<span class="branch">│</span>
+<span class="branch">├──</span> <span class="dir">docs/</span>
+<span class="branch">│   └──</span> <span class="lf">getting-started.md</span>
+<span class="branch">│</span>
+<span class="branch">└──</span> <span class="dir">site/</span>                  <span class="nf"># this page</span>
+    <span class="branch">└──</span> <span class="lf">index.html</span>
+</div>
     </div>
   </div>
+
 </section>
 
-<!-- How It Works -->
-<section id="how">
-  <div class="reveal">
-    <div class="section-label">How It Works</div>
-    <h2 class="section-title">Three steps to <em style="font-family: var(--serif); color: var(--accent-cyan);">structured</em> AI</h2>
-    <p class="section-desc">
-      Copy the stack, fill in your config, and point Claude Code at it. That's the whole setup.
+<!-- ============================================================
+     SECTION 02 — the four layers
+     ============================================================ -->
+<section class="section section--alt" id="layers">
+
+  <div class="section__head">
+    <span class="section__num">02 / LAYERS</span>
+    <h2 class="section__title">Two passive layers, two runnable</h2>
+    <p class="section__lede">
+      The original ApexStack shipped <em>passive</em> markdown — content for Claude Code to read. The latest release adds a <em>runnable</em> layer that fires hooks, runs slash commands, and invokes specialised sub-agents. Both layers combine into one coherent stack.
     </p>
   </div>
-  <div class="steps reveal">
-    <div class="step">
-      <div class="step-num">01</div>
-      <h3>Copy the stack</h3>
-      <p>Clone ApexStack into your project as a directory. It's just markdown files.</p>
-      <code>cp -r apexstack/ .apexstack/</code>
-    </div>
-    <div class="step">
-      <div class="step-num">02</div>
-      <h3>Configure</h3>
-      <p>Edit onboarding.yaml with your company name, team members, tech stack, and workflow preferences.</p>
-      <code>$EDITOR .apexstack/onboarding.yaml</code>
-    </div>
-    <div class="step">
-      <div class="step-num">03</div>
-      <h3>Use it</h3>
-      <p>Reference the stack from your CLAUDE.md. Claude Code now knows your team structure and processes.</p>
-      <code>@.apexstack/CLAUDE.md</code>
-    </div>
+
+  <div class="layers">
+
+    <article class="layer">
+      <div class="layer__num">01 — passive · markdown</div>
+      <h3 class="layer__title">Roles</h3>
+      <p class="layer__desc">
+        19 software roles across 5 departments. Each role has identity, responsibilities, capabilities, boundaries, interfaces, and a checklist. Tell Claude "act as the QA Engineer" and it picks up the full mental model.
+      </p>
+      <ul class="layer__list">
+        <li><code>engineering/</code><span>7 roles — Head, TL, BE, FE, QA, Platform, SRE</span></li>
+        <li><code>product/</code><span>3 roles — Head, PM, Analyst</span></li>
+        <li><code>design/</code><span>3 roles — Head, UI, UX</span></li>
+        <li><code>security/</code><span>3 roles — Head, Auditor, Pen Tester</span></li>
+        <li><code>data/</code><span>3 roles — Head, Analyst, Engineer</span></li>
+      </ul>
+    </article>
+
+    <article class="layer">
+      <div class="layer__num">02 — passive · markdown</div>
+      <h3 class="layer__title">Workflows + templates</h3>
+      <p class="layer__desc">
+        Three workflow processes (full SDLC, code review, deployment) and four document templates. Drop them into your <code>docs/</code>, ship faster.
+      </p>
+      <ul class="layer__list">
+        <li><code>sdlc.md</code><span>7-phase lifecycle with quality gates</span></li>
+        <li><code>code-review.md</code><span>structured author + reviewer process</span></li>
+        <li><code>deployment.md</code><span>staging → prod with rollback</span></li>
+        <li><code>prd.md</code><span>product requirements doc</span></li>
+        <li><code>agdr.md</code><span>Agent Decision Record (AI-specific)</span></li>
+      </ul>
+    </article>
+
+    <article class="layer">
+      <div class="layer__num">03 — runnable · executable <span class="new">NEW</span></div>
+      <h3 class="layer__title">Hooks + rules</h3>
+      <p class="layer__desc">
+        Six shell hooks block dangerous git operations and enforce standards on every <code>Bash</code> tool call. Six modular rule files import into your <code>CLAUDE.md</code> via <code>@-imports</code> so Claude inherits the standards in every conversation.
+      </p>
+      <ul class="layer__list">
+        <li><code>hooks/</code><span>git add -A · main push · secrets · branch / PR format</span></li>
+        <li><code>rules/</code><span>AgDR triggers, code standards, PR quality, gates</span></li>
+        <li><code>settings.json</code><span>wires hooks to PreToolUse events</span></li>
+      </ul>
+    </article>
+
+    <article class="layer">
+      <div class="layer__num">04 — runnable · invokable <span class="new">NEW</span></div>
+      <h3 class="layer__title">Agents + skills</h3>
+      <p class="layer__desc">
+        Five sub-agents with their own model, prompt, and tool access. Five slash commands users type into Claude Code. Both designed to be invoked from any conversation in any of your projects.
+      </p>
+      <ul class="layer__list">
+        <li><code>agents/</code><span>Rex · Shield · Guardian · PR Manager · Ticket Manager</span></li>
+        <li><code>skills/</code><span>/decide · /code-review · /security-review · /audit-deps · /write-spec</span></li>
+      </ul>
+    </article>
+
   </div>
 
-  <div class="code-showcase reveal">
-    <div class="code-header">
-      <span class="code-dot"></span>
-      <span class="code-dot"></span>
-      <span class="code-dot"></span>
-      <span class="code-filename">onboarding.yaml</span>
-    </div>
-    <div class="code-body">
-<span class="kw">company</span>:
-  <span class="kw">name</span>: <span class="str">"Acme Corp"</span>
-  <span class="kw">mission</span>: <span class="str">"Making widgets simple"</span>
-
-<span class="kw">team</span>:
-  - <span class="kw">name</span>: <span class="str">"Alice"</span>
-    <span class="kw">role</span>: <span class="str">"tech-lead"</span>       <span class="cmt"># maps to roles/engineering/tech-lead.md</span>
-  - <span class="kw">name</span>: <span class="str">"Bob"</span>
-    <span class="kw">role</span>: <span class="str">"backend-engineer"</span>
-  - <span class="kw">name</span>: <span class="str">"Charlie"</span>
-    <span class="kw">role</span>: <span class="str">"product-manager"</span>
-
-<span class="kw">tech_stack</span>:
-  <span class="kw">language</span>: <span class="str">"TypeScript"</span>
-  <span class="kw">framework</span>: <span class="str">"Next.js"</span>
-  <span class="kw">database</span>: <span class="str">"PostgreSQL"</span>
-
-<span class="kw">quality</span>:
-  <span class="kw">test_coverage_target</span>: <span class="val">80</span>
-  <span class="kw">required_reviews</span>: <span class="val">1</span>
-    </div>
-  </div>
 </section>
 
-<!-- Roles Directory -->
-<section class="roles-section" id="roles">
-  <div class="roles-inner">
-    <div class="reveal">
-      <div class="section-label">Role Directory</div>
-      <h2 class="section-title">20 roles, 5 departments</h2>
-      <p class="section-desc">
-        Each role defines identity, responsibilities, capabilities, boundaries, interfaces with other roles, handoff protocols, and quality checklists.
+<!-- ============================================================
+     SECTION 03 — show, don't tell
+     ============================================================ -->
+<section class="section" id="examples">
+
+  <div class="section__head">
+    <span class="section__num">03 / EXAMPLES</span>
+    <h2 class="section__title">What it actually feels like to use</h2>
+    <p class="section__lede">
+      Four interactions a developer has with ApexStack on a typical day. Real terminal output, not marketing copy.
+    </p>
+  </div>
+
+  <div class="demos">
+
+    <article class="demo">
+      <div class="demo__head">
+        <span><span class="label">/decide</span> — slash command</span>
+        <span>skill</span>
+      </div>
+      <pre class="demo__body"><span class="you">› /decide use react-query vs swr for the new dashboard</span>
+
+<span class="ai">Decision: react-query (TanStack Query)
+because: better TypeScript inference, infinite query
+support is critical for the activity feed,
+and the team already knows it from FlatMate.
+
+Created: docs/agdr/AgDR-0008-dashboard-data-fetching.md
+Proceeding with: install @tanstack/react-query
+</span></pre>
+      <div class="demo__caption">/decide forces a structured decision and leaves an auditable AgDR file. Never lose "why we picked X over Y" again.</div>
+    </article>
+
+    <article class="demo">
+      <div class="demo__head">
+        <span><span class="label">git add -A</span> — hook</span>
+        <span>blocked</span>
+      </div>
+      <pre class="demo__body"><span class="you">› git add -A</span>
+<span class="blk">BLOCKED:</span> Never use 'git add -A', 'git add --all',
+or 'git add .' — always add specific files to
+avoid committing unrelated changes.
+<span class="ag">  hook: .claude/hooks/block-git-add-all.sh
+  exit: 2</span>
+
+<span class="you">› git add src/handlers/api/get-trending-questions.ts</span>
+<span class="ok">  ✓ staged 1 file</span></pre>
+      <div class="demo__caption">Six hooks like this fire on every git / gh / Bash call. Block first, allow second. Configurable per project.</div>
+    </article>
+
+    <article class="demo">
+      <div class="demo__head">
+        <span><span class="label">/code-review 178</span> — agent invocation</span>
+        <span>Rex</span>
+      </div>
+      <pre class="demo__body"><span class="you">› /code-review 178</span>
+
+<span class="ag">→ Invoking Code Reviewer Agent (Rex)
+→ Fetching PR #178 from your-org/your-repo
+→ Reading 7 changed files
+→ Running checklist…
+</span>
+<span class="ai">## Code Review: PR #178
+Commit: 3c8b736
+
+Architecture & DDD:    ✓ Pass
+Code Quality:          ✓ Pass
+Testing:               ✓ Pass (15 new tests)
+Glossary:              ✓ 5 entries
+AgDR linked:           ✓ AgDR-0008
+Verdict: <span class="ok">APPROVED</span>
+</span></pre>
+      <div class="demo__caption">Rex enforces glossary, scans for missing AgDRs, and verifies the latest commit SHA was reviewed. Posted to GitHub via gh pr review.</div>
+    </article>
+
+    <article class="demo">
+      <div class="demo__head">
+        <span><span class="label">gh issue create</span> — ticket-manager agent</span>
+        <span>tracking</span>
+      </div>
+      <pre class="demo__body"><span class="you">› create issue: fix trending hot partition
+  in curios-dog</span>
+
+<span class="ag">→ Invoking Ticket Manager Agent
+→ Determined repo: me2resh/curios-dog
+→ Determined priority: P1
+</span>
+<span class="ai">✓ Created GitHub Issue: me2resh/curios-dog#179
+  Title: [P1] Fix trending hot partition
+  Labels: P1, enhancement
+  URL: github.com/me2resh/curios-dog/issues/179
+
+Branch: feature/GH-179-fix-trending-hot-partition
+</span></pre>
+      <div class="demo__caption">Each project's tickets live in that project's own GitHub repo. No central tracker. Co-located with the code.</div>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- ============================================================
+     SECTION 04 — pipelines
+     ============================================================ -->
+<section class="section section--alt" id="pipelines">
+
+  <div class="section__head">
+    <span class="section__num">04 / PIPELINES</span>
+    <h2 class="section__title">Drop-in CI workflows</h2>
+    <p class="section__lede">
+      Seven GitHub Actions workflows live at <code>golden-paths/pipelines/</code>. Copy whichever you want into your project's <code>.github/workflows/</code> — no boilerplate to write, no configuration to wrestle with.
+    </p>
+  </div>
+
+  <div class="pipelines">
+    <div class="pipelines__inner">
+
+      <div class="pipeline">
+        <div class="pipeline__file">ci.yml</div>
+        <div class="pipeline__desc">Combined pipeline — code quality + security + dependencies in one file. Start here.</div>
+        <div class="pipeline__agent">Rex · Sentinel · Guardian</div>
+      </div>
+
+      <div class="pipeline">
+        <div class="pipeline__file">code-quality.yml</div>
+        <div class="pipeline__desc">TypeScript check, ESLint, Prettier, tests with coverage, build verification. Posts a summary comment on every PR.</div>
+        <div class="pipeline__agent">Rex</div>
+      </div>
+
+      <div class="pipeline">
+        <div class="pipeline__file">security.yml</div>
+        <div class="pipeline__desc">Semgrep SAST (OWASP Top 10), npm audit, TruffleHog secrets detection, optional CodeQL. Fails on critical or high severity.</div>
+        <div class="pipeline__agent">Sentinel</div>
+      </div>
+
+      <div class="pipeline">
+        <div class="pipeline__file">dependency-audit.yml</div>
+        <div class="pipeline__desc">Weekly vulnerability scan (Mondays 09:00 UTC) plus on every package.json change. Auto-creates a security issue when something critical lands.</div>
+        <div class="pipeline__agent">Guardian</div>
+      </div>
+
+      <div class="pipeline">
+        <div class="pipeline__file">pr-title-check.yml</div>
+        <div class="pipeline__desc">Enforces a ticket ID in every PR title. Default: GitHub Issues (#58). Also accepts any uppercase tracker prefix.</div>
+        <div class="pipeline__agent">governance</div>
+      </div>
+
+      <div class="pipeline">
+        <div class="pipeline__file">review-check.yml</div>
+        <div class="pipeline__desc">Blocks merge if Rex hasn't reviewed the latest commit on the PR. Compares review SHAs against HEAD.</div>
+        <div class="pipeline__agent">Rex (verification)</div>
+      </div>
+
+      <div class="pipeline">
+        <div class="pipeline__file">seo-check.yml</div>
+        <div class="pipeline__desc">SEO scoring for content files — H1, meta description, length, headings, alt text, internal links. For docs and blog sites.</div>
+        <div class="pipeline__agent">Scout</div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- ============================================================
+     SECTION 05 — install
+     ============================================================ -->
+<section class="section" id="install">
+
+  <div class="section__head">
+    <span class="section__num">05 / INSTALL</span>
+    <h2 class="section__title">Adopt in five minutes</h2>
+    <p class="section__lede">
+      The install model is two-step: clone the markdown content for Claude to read, then expose the executable layer at <code>.claude/</code> in your project root.
+    </p>
+  </div>
+
+  <div class="steps">
+
+    <article class="step">
+      <div class="step__num">01 — clone</div>
+      <h3 class="step__title">Get the stack</h3>
+      <p class="step__desc">Clone ApexStack to a stable location. We recommend <code>~/.apexstack</code> so multiple projects can share it.</p>
+      <pre class="step__code"><span class="cm"># clone to a shared location</span>
+git clone https://github.com/me2resh/apexstack.git ~/.apexstack</pre>
+    </article>
+
+    <article class="step">
+      <div class="step__num">02 — expose .claude/</div>
+      <h3 class="step__title">Symlink the runnable layer</h3>
+      <p class="step__desc">Claude Code looks for hooks, agents, skills, and <code>settings.json</code> at <code>.claude/</code>. Symlink so updates in apexstack stay in sync.</p>
+      <pre class="step__code"><span class="cm"># in your project root</span>
+ln -s <span class="acc">~/.apexstack/.claude</span> .claude</pre>
+    </article>
+
+    <article class="step">
+      <div class="step__num">03 — configure</div>
+      <h3 class="step__title">Fill in onboarding.yaml</h3>
+      <p class="step__desc">Tell ApexStack about your team. Pick which roles map to your humans, your tech stack, your quality bar.</p>
+      <pre class="step__code"><span class="cm"># edit in place — committed to your project</span>
+$EDITOR ~/.apexstack/onboarding.yaml</pre>
+    </article>
+
+    <article class="step">
+      <div class="step__num">04 — wire CLAUDE.md</div>
+      <h3 class="step__title">Point your CLAUDE.md at the stack</h3>
+      <p class="step__desc">A single <code>@-import</code> line in your project's <code>CLAUDE.md</code> pulls in the entire stack — rules, role definitions, workflows, and templates.</p>
+      <pre class="step__code"><span class="cm"># in your project's CLAUDE.md</span>
+<span class="acc">@~/.apexstack/CLAUDE.md</span></pre>
+    </article>
+
+    <article class="step">
+      <div class="step__num">05 — drop in CI (optional)</div>
+      <h3 class="step__title">Copy the pipelines</h3>
+      <p class="step__desc">Pick the GHA workflows you want and copy them to <code>.github/workflows/</code>. Start with <code>ci.yml</code> for the combined pipeline.</p>
+      <pre class="step__code"><span class="cm"># start with the combined pipeline</span>
+cp ~/.apexstack/golden-paths/pipelines/ci.yml \
+   .github/workflows/ci.yml</pre>
+    </article>
+
+    <article class="step">
+      <div class="step__num">06 — start working</div>
+      <h3 class="step__title">Try a slash command</h3>
+      <p class="step__desc">In any Claude Code session inside your project, the new commands are immediately available. The hooks fire on every Bash call. Done.</p>
+      <pre class="step__code"><span class="cm"># in claude code</span>
+<span class="acc">/decide</span> use postgres or dynamodb for the new feature</pre>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- ============================================================
+     SECTION 06 — what apexstack is and isn't
+     ============================================================ -->
+<section class="section section--alt">
+
+  <div class="section__head">
+    <span class="section__num">06 / SCOPE</span>
+    <h2 class="section__title">Opinionated by design</h2>
+    <p class="section__lede">
+      Every reusable framework has to draw a line between "this is what we do" and "this is yours to figure out". ApexStack draws the line where it makes the most difference for engineering teams.
+    </p>
+  </div>
+
+  <div class="antifeatures">
+    <div class="antifeatures__inner">
+      <div class="antifeatures__col is-do">
+        <h3 class="is-yes">+ what apexstack does</h3>
+        <ul>
+          <li>Enforces ticket-first development via GitHub Issues per project</li>
+          <li>Forces structured decisions via /decide → AgDR audit trail</li>
+          <li>Blocks dangerous git operations (add -A, push to main, secrets in commits)</li>
+          <li>Ships an opinionated 6-gate workflow from PRD to QA</li>
+          <li>Mandates a glossary in every PR — knowledge stays in the team</li>
+          <li>Defaults to TypeScript, DDD, vitest, GitHub Actions — but stays editable</li>
+          <li>Treats hooks, agents, and slash commands as a single coherent surface</li>
+        </ul>
+      </div>
+      <div class="antifeatures__col is-dont">
+        <h3>× what apexstack does NOT do</h3>
+        <ul>
+          <li>Replace your team — humans still write code, ship product, talk to customers</li>
+          <li>Lock you into a SaaS — every file is markdown or shell, fork freely</li>
+          <li>Hide its opinions — read the rules, disagree, edit them</li>
+          <li>Pretend to be language-agnostic — TypeScript-leaning by default</li>
+          <li>Ship a UI — this is a stack of files, not an app</li>
+          <li>Impose a central tracker — issues live in each project's own GitHub repo</li>
+          <li>Compete with Claude Code's built-ins — it extends them</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============================================================
+     FINAL CTA
+     ============================================================ -->
+<section class="final">
+  <div class="final__inner">
+    <div>
+      <h2>Stop reinventing<br>the same <span class="acc">processes</span>.</h2>
+      <p>
+        ApexStack is one git clone, one symlink, and one config file away.
+        It's MIT licensed, plain markdown, and edits are encouraged.
+        If you change your mind, you delete the directory and you're back where you started.
       </p>
     </div>
-    <div class="departments reveal">
-      <div class="dept-card">
-        <div class="dept-header">
-          <span class="dept-dot cyan"></span>
-          <span class="dept-name">Engineering</span>
-          <span class="dept-count">7 roles</span>
-        </div>
-        <ul class="dept-roles">
-          <li>Head of Engineering <span class="role-tag">leadership</span></li>
-          <li>Tech Lead <span class="role-tag">leadership</span></li>
-          <li>Backend Engineer <span class="role-tag">IC</span></li>
-          <li>Frontend Engineer <span class="role-tag">IC</span></li>
-          <li>QA Engineer <span class="role-tag">IC</span></li>
-          <li>Platform Engineer <span class="role-tag">IC</span></li>
-          <li>Site Reliability Engineer <span class="role-tag">IC</span></li>
-        </ul>
-      </div>
-      <div class="dept-card">
-        <div class="dept-header">
-          <span class="dept-dot amber"></span>
-          <span class="dept-name">Product</span>
-          <span class="dept-count">3 roles</span>
-        </div>
-        <ul class="dept-roles">
-          <li>Head of Product <span class="role-tag">leadership</span></li>
-          <li>Product Manager <span class="role-tag">IC</span></li>
-          <li>Product Analyst <span class="role-tag">IC</span></li>
-        </ul>
-      </div>
-      <div class="dept-card">
-        <div class="dept-header">
-          <span class="dept-dot emerald"></span>
-          <span class="dept-name">Design</span>
-          <span class="dept-count">3 roles</span>
-        </div>
-        <ul class="dept-roles">
-          <li>Head of Design <span class="role-tag">leadership</span></li>
-          <li>UI Designer <span class="role-tag">IC</span></li>
-          <li>UX Designer <span class="role-tag">IC</span></li>
-        </ul>
-      </div>
-      <div class="dept-card">
-        <div class="dept-header">
-          <span class="dept-dot rose"></span>
-          <span class="dept-name">Security</span>
-          <span class="dept-count">3 roles</span>
-        </div>
-        <ul class="dept-roles">
-          <li>Head of Security <span class="role-tag">leadership</span></li>
-          <li>Security Auditor <span class="role-tag">IC</span></li>
-          <li>Penetration Tester <span class="role-tag">IC</span></li>
-        </ul>
-      </div>
-      <div class="dept-card">
-        <div class="dept-header">
-          <span class="dept-dot violet"></span>
-          <span class="dept-name">Data</span>
-          <span class="dept-count">3 roles</span>
-        </div>
-        <ul class="dept-roles">
-          <li>Head of Data <span class="role-tag">leadership</span></li>
-          <li>Data Analyst <span class="role-tag">IC</span></li>
-          <li>Data Engineer <span class="role-tag">IC</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Workflow -->
-<section id="workflow">
-  <div class="reveal">
-    <div class="section-label">Workflow</div>
-    <h2 class="section-title">From idea to production</h2>
-    <p class="section-desc">
-      A complete SDLC with quality gates at every stage. Each phase has entry criteria, exit criteria, and escalation paths.
-    </p>
-  </div>
-  <div class="workflow-visual reveal">
-    <div class="wf-stage">Planning</div>
-    <span class="wf-arrow">&rarr;</span>
-    <div class="wf-stage">Design</div>
-    <span class="wf-arrow">&rarr;</span>
-    <div class="wf-stage">Build</div>
-    <span class="wf-arrow">&rarr;</span>
-    <div class="wf-stage">Review</div>
-    <span class="wf-arrow">&rarr;</span>
-    <div class="wf-stage">QA</div>
-    <span class="wf-arrow">&rarr;</span>
-    <div class="wf-stage">Deploy</div>
-    <span class="wf-arrow">&rarr;</span>
-    <div class="wf-stage">Monitor</div>
-  </div>
-  <div class="workflow-details reveal">
-    <div class="wf-detail">
-      <h4>Quality Gates</h4>
-      <p>Every phase transition has a gate. PRD approved before design. Tests passing before review. Code review before merge. QA before done. No exceptions.</p>
-    </div>
-    <div class="wf-detail">
-      <h4>Code Review</h4>
-      <p>Structured process with architecture, security, testing, and performance checklists. Severity levels for feedback. Response time targets.</p>
-    </div>
-    <div class="wf-detail">
-      <h4>Deployment</h4>
-      <p>CI/CD pipeline stages, environment promotion, pre-deploy checklists, rollback procedures, and post-deploy monitoring guidance.</p>
-    </div>
-    <div class="wf-detail">
-      <h4>Decision Records</h4>
-      <p>Agent Decision Records (AgDR) capture technical choices made by AI agents -- what was considered, what was chosen, and why.</p>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta-section">
-  <div class="reveal">
-    <div class="section-label">Get Started</div>
-    <h2 class="section-title">Structure your AI workflow</h2>
-    <p class="section-desc">
-      ApexStack is open source, MIT licensed, and designed to be forked and customized.
-      It's just markdown files -- no dependencies, no lock-in.
-    </p>
-    <div class="cta-actions">
-      <a href="https://github.com/me2resh/apexstack" class="btn-primary" target="_blank" rel="noopener">
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-        View on GitHub
+    <div class="final__actions">
+      <a href="https://github.com/me2resh/apexstack" class="final__btn" target="_blank" rel="noopener">
+        <span>view on github</span>
+        <span class="arrow">→</span>
       </a>
-      <a href="#how" class="btn-secondary">Read the docs</a>
+      <a href="#install" class="final__btn">
+        <span>back to install</span>
+        <span class="arrow">↑</span>
+      </a>
+      <a href="https://github.com/me2resh/apexstack/issues" class="final__btn" target="_blank" rel="noopener">
+        <span>open an issue</span>
+        <span class="arrow">→</span>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- Footer -->
-<footer>
-  <p>
-    ApexStack &middot; MIT License &middot;
-    <a href="https://github.com/me2resh/apexstack" target="_blank" rel="noopener">GitHub</a>
-  </p>
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="foot">
+  <div class="foot__inner">
+    <span>apexstack v0.1 · MIT · plain markdown · zero dependencies</span>
+    <span><a href="https://github.com/me2resh/apexstack">github</a> · <a href="https://github.com/me2resh/apexstack/issues">issues</a> · <a href="https://github.com/me2resh/apexstack/pulls">prs</a></span>
+  </div>
 </footer>
 
-</div>
-
-<!-- Scroll reveal script -->
+<!-- ============================================================
+     copy-to-clipboard for the install command
+     ============================================================ -->
 <script>
-(function() {
-  const els = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  els.forEach(el => observer.observe(el));
+(function () {
+  var btn = document.getElementById('install-copy');
+  var cmd = document.getElementById('install-cmd');
+  if (!btn || !cmd) return;
+
+  btn.addEventListener('click', function () {
+    var text = cmd.textContent || '';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { confirm(); });
+    } else {
+      // fallback
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); confirm(); } catch (_) {}
+      document.body.removeChild(ta);
+    }
+  });
+
+  function confirm() {
+    btn.classList.add('is-copied');
+    var prev = btn.textContent;
+    btn.textContent = 'copied';
+    setTimeout(function () {
+      btn.classList.remove('is-copied');
+      btn.textContent = prev;
+    }, 1600);
+  }
 })();
 </script>
 
