@@ -920,7 +920,7 @@ footer.foot {
         <span>Role definitions</span>
       </div>
       <div class="hero__metric">
-        <strong>17</strong>
+        <strong>30</strong>
         <span>Hooks · rules · agents · skills</span>
       </div>
       <div class="hero__metric">
@@ -928,8 +928,8 @@ footer.foot {
         <span>CI pipelines</span>
       </div>
       <div class="hero__metric">
-        <strong>4</strong>
-        <span>Document templates</span>
+        <strong>2</strong>
+        <span>Operating modes (single &amp; multi-project)</span>
       </div>
     </div>
 
@@ -953,7 +953,7 @@ footer.foot {
     <div class="tree__inner">
       <div class="tree__head">
         <span>$ tree apexstack</span>
-        <span class="files">62 files · 5,480 LOC</span>
+        <span class="files">79 files · the runnable + portfolio layers added in v0.1</span>
       </div>
       <div class="tree__body"><span class="dir">apexstack/</span>
 <span class="branch">├──</span> <span class="lf">CLAUDE.md</span>              <span class="nf"># Stack entry point — Claude Code reads this first</span>
@@ -1001,26 +1001,44 @@ footer.foot {
 <span class="branch">│   │   ├──</span> <span class="lf">dependency-auditor.md</span>    <span class="nf"># Guardian — vulns, outdated, licenses</span>
 <span class="branch">│   │   ├──</span> <span class="lf">pr-manager.md</span>            <span class="nf"># 2-review workflow + SHA verification</span>
 <span class="branch">│   │   └──</span> <span class="lf">ticket-manager.md</span>        <span class="nf"># GitHub Issues per project</span>
-<span class="branch">│   └──</span> <span class="dir">skills/</span>           <span class="nf"># 5 slash commands</span>
+<span class="branch">│   └──</span> <span class="dir">skills/</span>           <span class="nf"># 13 slash commands</span>
 <span class="branch">│       ├──</span> <span class="lf">decide/SKILL.md</span>          <span class="nf"># /decide — creates an AgDR</span>
 <span class="branch">│       ├──</span> <span class="lf">code-review/SKILL.md</span>     <span class="nf"># /code-review</span>
 <span class="branch">│       ├──</span> <span class="lf">security-review/SKILL.md</span> <span class="nf"># /security-review</span>
 <span class="branch">│       ├──</span> <span class="lf">audit-deps/SKILL.md</span>      <span class="nf"># /audit-deps</span>
-<span class="branch">│       └──</span> <span class="lf">write-spec/SKILL.md</span>      <span class="nf"># /write-spec</span>
+<span class="branch">│       ├──</span> <span class="lf">write-spec/SKILL.md</span>      <span class="nf"># /write-spec — generate a PRD</span>
+<span class="branch">│       ├──</span> <span class="lf">idea/SKILL.md</span>            <span class="nf"># /idea — capture a new idea to the backlog</span>
+<span class="branch">│       ├──</span> <span class="lf">handover/SKILL.md</span>        <span class="nf"># /handover — onboard an external repo</span>
+<span class="branch">│       ├──</span> <span class="lf">projects/SKILL.md</span>        <span class="nf"># /projects — list managed projects + status</span>
+<span class="branch">│       ├──</span> <span class="lf">inbox/SKILL.md</span>           <span class="nf"># /inbox — PRs/issues needing your attention</span>
+<span class="branch">│       ├──</span> <span class="lf">status/SKILL.md</span>          <span class="nf"># /status — git + CI snapshot per project</span>
+<span class="branch">│       ├──</span> <span class="lf">tasks/SKILL.md</span>           <span class="nf"># /tasks — actionable task list with URLs</span>
+<span class="branch">│       ├──</span> <span class="lf">roadmap/SKILL.md</span>         <span class="nf"># /roadmap — update or create the product roadmap</span>
+<span class="branch">│       └──</span> <span class="lf">stakeholder-update/SKILL.md</span> <span class="nf"># /stakeholder-update — weekly/monthly/launch</span>
+<span class="branch">│</span>
+<span class="branch">├──</span> <span class="dir new">workspace/</span>             <span class="nf"># <span class="new">[NEW]</span> Live local clones (gitignored) — multi-project mode</span>
+<span class="branch">│   └──</span> <span class="lf">README.md</span>          <span class="nf"># Convention: workspace/&lt;name&gt;/ holds each repo's working copy</span>
+<span class="branch">│</span>
+<span class="branch">├──</span> <span class="dir new">projects/</span>              <span class="nf"># <span class="new">[NEW]</span> Per-project committed docs — multi-project mode</span>
+<span class="branch">│   ├──</span> <span class="lf">README.md</span>          <span class="nf"># Convention: projects/&lt;name&gt;/ holds README, roadmap, AgDRs, handover</span>
+<span class="branch">│   └──</span> <span class="lf">ideas-backlog.md</span>   <span class="nf"># Shared idea backlog (created by /idea on first use)</span>
+<span class="branch">│</span>
+<span class="branch">├──</span> <span class="lf new">apexstack.projects.yaml.example</span>  <span class="nf"># <span class="new">[NEW]</span> Portfolio registry template — copy and edit</span>
 <span class="branch">│</span>
 <span class="branch">├──</span> <span class="dir new">golden-paths/</span>          <span class="nf"># <span class="new">[NEW]</span> Reusable infra & ops templates</span>
 <span class="branch">│   └──</span> <span class="dir">pipelines/</span>        <span class="nf"># 7 drop-in GitHub Actions workflows</span>
 <span class="branch">│       ├──</span> <span class="lf">ci.yml</span>               <span class="nf"># combined: code quality + security + deps</span>
 <span class="branch">│       ├──</span> <span class="lf">code-quality.yml</span>     <span class="nf"># Rex — TS, ESLint, tests, build</span>
-<span class="branch">│       ├──</span> <span class="lf">security.yml</span>         <span class="nf"># Sentinel — Semgrep + npm audit + secrets</span>
+<span class="branch">│       ├──</span> <span class="lf">security.yml</span>         <span class="nf"># Shield — Semgrep + npm audit + secrets</span>
 <span class="branch">│       ├──</span> <span class="lf">dependency-audit.yml</span> <span class="nf"># Guardian — weekly</span>
 <span class="branch">│       ├──</span> <span class="lf">pr-title-check.yml</span>   <span class="nf"># enforces ticket ID in PR titles</span>
 <span class="branch">│       ├──</span> <span class="lf">review-check.yml</span>     <span class="nf"># blocks merge if Rex hasn't reviewed HEAD</span>
-<span class="branch">│       ├──</span> <span class="lf">seo-check.yml</span>        <span class="nf"># Scout — SEO scoring for content</span>
+<span class="branch">│       ├──</span> <span class="lf">seo-check.yml</span>        <span class="nf"># SEO scoring for content files</span>
 <span class="branch">│       └──</span> <span class="lf">README.md</span>
 <span class="branch">│</span>
 <span class="branch">├──</span> <span class="dir">docs/</span>
-<span class="branch">│   └──</span> <span class="lf">getting-started.md</span>
+<span class="branch">│   ├──</span> <span class="lf">getting-started.md</span>
+<span class="branch">│   └──</span> <span class="lf new">multi-project.md</span>     <span class="nf"># <span class="new">[NEW]</span> Full guide to multi-project mode</span>
 <span class="branch">│</span>
 <span class="branch">└──</span> <span class="dir">site/</span>                  <span class="nf"># this page</span>
     <span class="branch">└──</span> <span class="lf">index.html</span>
@@ -1037,9 +1055,9 @@ footer.foot {
 
   <div class="section__head">
     <span class="section__num">02 / LAYERS</span>
-    <h2 class="section__title">Two passive layers, two runnable</h2>
+    <h2 class="section__title">Five layers, one stack</h2>
     <p class="section__lede">
-      The original ApexStack shipped <em>passive</em> markdown — content for Claude Code to read. The latest release adds a <em>runnable</em> layer that fires hooks, runs slash commands, and invokes specialised sub-agents. Both layers combine into one coherent stack.
+      ApexStack is built around managing a <em>portfolio</em> of projects, not a single repo. Five layers stack together: roles, workflows + templates, hooks + rules, agents + skills, and the workspace itself — a registry of every repo under your org's care. Single-project mode still works for the simple case, but the default is multi-project.
     </p>
   </div>
 
@@ -1092,11 +1110,27 @@ footer.foot {
       <div class="layer__num">04 — runnable · invokable <span class="new">NEW</span></div>
       <h3 class="layer__title">Agents + skills</h3>
       <p class="layer__desc">
-        Five sub-agents with their own model, prompt, and tool access. Five slash commands users type into Claude Code. Both designed to be invoked from any conversation in any of your projects.
+        Five sub-agents with their own model, prompt, and tool access. Thirteen slash commands users type into Claude Code. Both designed to be invoked from any conversation in any of your projects.
       </p>
       <ul class="layer__list">
         <li><code>agents/</code><span>Rex · Shield · Guardian · PR Manager · Ticket Manager</span></li>
         <li><code>skills/</code><span>/decide · /code-review · /security-review · /audit-deps · /write-spec</span></li>
+        <li><code>skills/</code><span>/idea · /handover · /projects · /inbox · /status · /tasks · /roadmap · /stakeholder-update</span></li>
+      </ul>
+    </article>
+
+    <article class="layer" style="grid-column: 1 / -1;">
+      <div class="layer__num">05 — workspace · multi-project by default <span class="new">NEW</span></div>
+      <h3 class="layer__title">A portfolio, not a single repo</h3>
+      <p class="layer__desc">
+        ApexStack treats your engineering org as a portfolio of projects, not a single codebase. The default install creates an <strong>ops repo</strong> with an <code>apexstack.projects.yaml</code> registry listing every repo you manage — and every skill that operates on tickets, PRs, issues, status, or roadmap (<code>/projects</code>, <code>/inbox</code>, <code>/status</code>, <code>/tasks</code>, <code>/handover</code>) aggregates across the registry by default. If you only have one repo, ApexStack still works — set <code>mode: single-project</code> in <code>onboarding.yaml</code> and the same skills scope to the current repo. <code>workspace/&lt;name&gt;/</code> holds live local clones; <code>projects/&lt;name&gt;/</code> holds the long-lived committed docs.
+      </p>
+      <ul class="layer__list" style="grid-template-columns: 22ch 1fr;">
+        <li><code>onboarding.yaml</code><span><code>apexstack.mode: multi-project</code> (default) or <code>single-project</code></span></li>
+        <li><code>apexstack.projects.yaml</code><span>the portfolio registry — name, repo, workspace path, docs path, status, applicable roles</span></li>
+        <li><code>workspace/&lt;name&gt;/</code><span>live local clones, gitignored — your daily working copies</span></li>
+        <li><code>projects/&lt;name&gt;/</code><span>committed per-project docs (README, roadmap, AgDRs, handover assessments, stakeholder updates)</span></li>
+        <li><code>docs/multi-project.md</code><span>full guide — registry schema, daily workflow, migration from single-project</span></li>
       </ul>
     </article>
 
@@ -1129,7 +1163,7 @@ footer.foot {
 <span class="ai">Decision: react-query (TanStack Query)
 because: better TypeScript inference, infinite query
 support is critical for the activity feed,
-and the team already knows it from FlatMate.
+and matches the team's existing experience.
 
 Created: docs/agdr/AgDR-0008-dashboard-data-fetching.md
 Proceeding with: install @tanstack/react-query
@@ -1184,19 +1218,19 @@ Verdict: <span class="ok">APPROVED</span>
         <span><span class="label">gh issue create</span> — ticket-manager agent</span>
         <span>tracking</span>
       </div>
-      <pre class="demo__body"><span class="you">› create issue: fix trending hot partition
-  in curios-dog</span>
+      <pre class="demo__body"><span class="you">› create issue: add CSV export
+  in your-org/your-project</span>
 
 <span class="ag">→ Invoking Ticket Manager Agent
-→ Determined repo: me2resh/curios-dog
+→ Determined repo: your-org/your-project
 → Determined priority: P1
 </span>
-<span class="ai">✓ Created GitHub Issue: me2resh/curios-dog#179
-  Title: [P1] Fix trending hot partition
+<span class="ai">✓ Created GitHub Issue: your-org/your-project#42
+  Title: [P1] Add CSV export to dashboard
   Labels: P1, enhancement
-  URL: github.com/me2resh/curios-dog/issues/179
+  URL: github.com/your-org/your-project/issues/42
 
-Branch: feature/GH-179-fix-trending-hot-partition
+Branch: feature/GH-42-add-csv-export
 </span></pre>
       <div class="demo__caption">Each project's tickets live in that project's own GitHub repo. No central tracker. Co-located with the code.</div>
     </article>
@@ -1224,7 +1258,7 @@ Branch: feature/GH-179-fix-trending-hot-partition
       <div class="pipeline">
         <div class="pipeline__file">ci.yml</div>
         <div class="pipeline__desc">Combined pipeline — code quality + security + dependencies in one file. Start here.</div>
-        <div class="pipeline__agent">Rex · Sentinel · Guardian</div>
+        <div class="pipeline__agent">Rex · Shield · Guardian</div>
       </div>
 
       <div class="pipeline">
@@ -1236,7 +1270,7 @@ Branch: feature/GH-179-fix-trending-hot-partition
       <div class="pipeline">
         <div class="pipeline__file">security.yml</div>
         <div class="pipeline__desc">Semgrep SAST (OWASP Top 10), npm audit, TruffleHog secrets detection, optional CodeQL. Fails on critical or high severity.</div>
-        <div class="pipeline__agent">Sentinel</div>
+        <div class="pipeline__agent">Shield</div>
       </div>
 
       <div class="pipeline">
@@ -1260,7 +1294,7 @@ Branch: feature/GH-179-fix-trending-hot-partition
       <div class="pipeline">
         <div class="pipeline__file">seo-check.yml</div>
         <div class="pipeline__desc">SEO scoring for content files — H1, meta description, length, headings, alt text, internal links. For docs and blog sites.</div>
-        <div class="pipeline__agent">Scout</div>
+        <div class="pipeline__agent">no agent</div>
       </div>
 
     </div>
@@ -1275,9 +1309,9 @@ Branch: feature/GH-179-fix-trending-hot-partition
 
   <div class="section__head">
     <span class="section__num">05 / INSTALL</span>
-    <h2 class="section__title">Adopt in five minutes</h2>
+    <h2 class="section__title">Set up your portfolio in six steps</h2>
     <p class="section__lede">
-      The install model is two-step: clone the markdown content for Claude to read, then expose the executable layer at <code>.claude/</code> in your project root.
+      ApexStack defaults to multi-project mode — one ops repo, one registry, every managed project listed inside it. Single-project mode (one repo only) is a one-line opt-out at the end if that's what you actually need.
     </p>
   </div>
 
@@ -1285,51 +1319,65 @@ Branch: feature/GH-179-fix-trending-hot-partition
 
     <article class="step">
       <div class="step__num">01 — clone</div>
-      <h3 class="step__title">Get the stack</h3>
-      <p class="step__desc">Clone ApexStack to a stable location. We recommend <code>~/.apexstack</code> so multiple projects can share it.</p>
-      <pre class="step__code"><span class="cm"># clone to a shared location</span>
-git clone https://github.com/me2resh/apexstack.git ~/.apexstack</pre>
+      <h3 class="step__title">Clone ApexStack into your ops repo</h3>
+      <p class="step__desc">The <em>ops repo</em> is where ApexStack lives — typically a dedicated repo like <code>your-org/ops</code>, or an existing internal-tools repo. ApexStack itself sits at <code>.apexstack/</code> inside it.</p>
+      <pre class="step__code"><span class="cm"># in your ops repo (or create one)</span>
+git clone https://github.com/me2resh/apexstack.git \
+  .apexstack</pre>
     </article>
 
     <article class="step">
       <div class="step__num">02 — expose .claude/</div>
       <h3 class="step__title">Symlink the runnable layer</h3>
       <p class="step__desc">Claude Code looks for hooks, agents, skills, and <code>settings.json</code> at <code>.claude/</code>. Symlink so updates in apexstack stay in sync.</p>
-      <pre class="step__code"><span class="cm"># in your project root</span>
-ln -s <span class="acc">~/.apexstack/.claude</span> .claude</pre>
+      <pre class="step__code"><span class="cm"># in your ops repo root</span>
+ln -s <span class="acc">.apexstack/.claude</span> .claude</pre>
     </article>
 
     <article class="step">
       <div class="step__num">03 — configure</div>
       <h3 class="step__title">Fill in onboarding.yaml</h3>
-      <p class="step__desc">Tell ApexStack about your team. Pick which roles map to your humans, your tech stack, your quality bar.</p>
-      <pre class="step__code"><span class="cm"># edit in place — committed to your project</span>
-$EDITOR ~/.apexstack/onboarding.yaml</pre>
+      <p class="step__desc">Tell ApexStack about your team — roles, tech stack, quality bar. The default mode is <code>multi-project</code>; leave it as is unless you only have one repo.</p>
+      <pre class="step__code"><span class="cm"># defaults are sane — edit in place</span>
+$EDITOR .apexstack/onboarding.yaml</pre>
     </article>
 
     <article class="step">
-      <div class="step__num">04 — wire CLAUDE.md</div>
+      <div class="step__num">04 — list your projects</div>
+      <h3 class="step__title">Create the registry</h3>
+      <p class="step__desc">Copy the example registry and list every repo you want under ApexStack management. One YAML entry per project — name, repo, status, applicable roles. The cross-project skills (<code>/projects</code>, <code>/inbox</code>, <code>/status</code>, <code>/tasks</code>) read from this file.</p>
+      <pre class="step__code"><span class="cm"># in your ops repo root</span>
+cp .apexstack/apexstack.projects.yaml.example \
+   apexstack.projects.yaml
+$EDITOR apexstack.projects.yaml  <span class="cm"># list your repos</span></pre>
+    </article>
+
+    <article class="step">
+      <div class="step__num">05 — wire CLAUDE.md</div>
       <h3 class="step__title">Point your CLAUDE.md at the stack</h3>
-      <p class="step__desc">A single <code>@-import</code> line in your project's <code>CLAUDE.md</code> pulls in the entire stack — rules, role definitions, workflows, and templates.</p>
-      <pre class="step__code"><span class="cm"># in your project's CLAUDE.md</span>
-<span class="acc">@~/.apexstack/CLAUDE.md</span></pre>
-    </article>
-
-    <article class="step">
-      <div class="step__num">05 — drop in CI (optional)</div>
-      <h3 class="step__title">Copy the pipelines</h3>
-      <p class="step__desc">Pick the GHA workflows you want and copy them to <code>.github/workflows/</code>. Start with <code>ci.yml</code> for the combined pipeline.</p>
-      <pre class="step__code"><span class="cm"># start with the combined pipeline</span>
-cp ~/.apexstack/golden-paths/pipelines/ci.yml \
-   .github/workflows/ci.yml</pre>
+      <p class="step__desc">A single <code>@-import</code> line in your ops repo's <code>CLAUDE.md</code> pulls in the entire stack — rules, role definitions, workflows, templates, and the multi-project skill set.</p>
+      <pre class="step__code"><span class="cm"># in your ops repo CLAUDE.md</span>
+<span class="acc">@.apexstack/CLAUDE.md</span></pre>
     </article>
 
     <article class="step">
       <div class="step__num">06 — start working</div>
-      <h3 class="step__title">Try a slash command</h3>
-      <p class="step__desc">In any Claude Code session inside your project, the new commands are immediately available. The hooks fire on every Bash call. Done.</p>
-      <pre class="step__code"><span class="cm"># in claude code</span>
-<span class="acc">/decide</span> use postgres or dynamodb for the new feature</pre>
+      <h3 class="step__title">Try a portfolio command</h3>
+      <p class="step__desc">In any Claude Code session inside the ops repo, the cross-project skills are immediately available. Hooks fire on every Bash call. Done.</p>
+      <pre class="step__code"><span class="cm"># in claude code, from the ops repo</span>
+<span class="acc">/projects</span>          <span class="cm"># list every managed project + status</span>
+<span class="acc">/inbox</span>             <span class="cm"># PRs, issues, comments needing your eyes</span>
+<span class="acc">/status</span>            <span class="cm"># git + CI snapshot per project</span>
+<span class="acc">/decide</span> migrate billing to Stripe</pre>
+    </article>
+
+    <article class="step" style="grid-column: 1 / -1;">
+      <div class="step__num">opt-out — single-project mode</div>
+      <h3 class="step__title">If you actually have just one repo</h3>
+      <p class="step__desc">Skip step 04 entirely (no registry needed) and set <code>apexstack.mode: single-project</code> in <code>onboarding.yaml</code>. ApexStack lives directly inside that one repo, not a separate ops repo. The same skills scope to the current repo, the roadmap lives at <code>ROADMAP.md</code>, ideas at <code>IDEAS.md</code>. Everything else is identical.</p>
+      <pre class="step__code"><span class="cm"># in onboarding.yaml</span>
+apexstack:
+  mode: <span class="acc">single-project</span></pre>
     </article>
 
   </div>
