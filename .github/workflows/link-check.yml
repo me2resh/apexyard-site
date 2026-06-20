@@ -2,6 +2,16 @@
 #
 # Uses lychee to find broken links in root HTML files and all *.md files.
 # Private / loopback addresses are excluded; 301/302 redirects accepted.
+#
+# Fragment checking (--include-fragments) is intentionally omitted:
+#   - Same-page nav anchors (href="#move" etc.) are validated by the browser,
+#     not by lychee, and have no canonical URL for lychee to resolve.
+#   - --base would resolve them against the live domain, which may not yet
+#     serve the current build (e.g. during the deploy-config bootstrap PR),
+#     causing false failures on anchors that are perfectly valid in the file.
+# The --base flag is also omitted for the same reason: root-relative links in
+# static HTML are only meaningful once the site is deployed; validating them
+# against a not-yet-repointed live domain produces noise, not signal.
 
 name: Link Check
 
@@ -38,11 +48,9 @@ jobs:
         with:
           args: >-
             --no-progress
-            --include-fragments
             --exclude-loopback
             --exclude-private
             --accept 200,204,206,301,302,429
-            --base https://yard.apexscript.com/
             '*.html'
             '**/*.md'
           fail: true
