@@ -1342,6 +1342,7 @@ function level1(){
         roundIdx++;
         if (roundIdx < ROUNDS.length){ renderRound(); }
         else {
+          nb.disabled = true;
           const avg = Math.round(totalScore / ROUNDS.length);
           state.levelScores[state.level] = avg;
           addScore(avg);
@@ -2000,6 +2001,7 @@ function level6(){
         if (roundIdx < DOCS.length){
           renderRound();
         } else {
+          newBtn.disabled = true;
           state.levelScores[state.level] = totalScore;
           addScore(totalScore);
           showResult(totalScore, 100,
@@ -2314,6 +2316,7 @@ function levelTemp(){
         roundIdx++;
         if (roundIdx < SCEN.length) renderRound();
         else {
+          nb.disabled = true;
           const avg = Math.round(totalScore/SCEN.length);
           state.levelScores[state.level] = avg;
           addScore(avg);
