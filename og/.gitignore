@@ -1,0 +1,4 @@
+# Throwaway render dependencies (installed by render.sh / npm install playwright)
+node_modules/
+package.json
+package-lock.json

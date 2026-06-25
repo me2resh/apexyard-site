@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<style>
+  .pad { justify-content: space-between; }
+
+  .hero { display: flex; flex-direction: column; gap: 18px; }
+  .wordmark {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 150px;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .wordmark .block {
+    display: inline-block;
+    width: 56px;
+    height: 100px;
+    background: var(--accent);
+    border-radius: 6px;
+    margin-left: 14px;
+  }
+  .tagline {
+    font-family: var(--font-mono);
+    font-size: 38px;
+    font-weight: 500;
+    color: var(--ink-2);
+    letter-spacing: -0.01em;
+  }
+  .tagline u {
+    text-decoration: none;
+    color: var(--accent);
+    border-bottom: 4px solid var(--accent-line);
+    padding-bottom: 2px;
+  }
+
+  .footer {
+    display: flex;
+    align-items: baseline;
+    gap: 38px;
+    font-family: var(--font-mono);
+    font-size: 26px;
+    color: var(--muted);
+  }
+  .footer .stat b {
+    color: var(--ink);
+    font-weight: 600;
+    margin-right: 8px;
+  }
+  .footer .sep { color: var(--border-strong); }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="pad">
+    <div class="eyebrow">
+      <span class="brand">~/<span class="ay">apexyard</span></span>
+      <span class="right">MIT · open source</span>
+    </div>
+
+    <div class="hero">
+      <div class="wordmark">apexyard<span class="block"></span></div>
+      <div class="tagline">where AI agents ship <u>production software</u></div>
+    </div>
+
+    <div class="footer">
+      <span class="stat"><b>{{ROLES}}</b>roles</span>
+      <span class="sep">·</span>
+      <span class="stat"><b>{{SKILLS}}</b>skills</span>
+      <span class="sep">·</span>
+      <span class="stat"><b>{{HOOKS}}</b>hooks</span>
+      <span class="sep">·</span>
+      <span class="stat"><b>1</b>ops repo</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
