@@ -34,15 +34,21 @@ jobs:
         with:
           # Root HTML pages + Markdown alternates. --no-progress keeps CI logs
           # clean; a non-zero exit fails the job so broken links block merge.
-          # --max-retries + a wait absorb transient external flakiness (e.g. a
-          # site that 301s or rate-limits a CI runner). The .lycheeignore at
-          # repo root excludes the Netlify-rewrite /*.md alternate routes.
+          # Excludes (passed as args — the standalone .lycheeignore is not
+          # auto-loaded by this action):
+          #   • /*.md alternates are Netlify 200-rewrites from *.md.gen, not
+          #     local files — they resolve live but 404 in a local check.
+          #   • me2resh.com is the author's blog (up; 301) — a known-good
+          #     external that flakes/rate-limits in CI.
+          # --max-retries absorbs transient external flakiness for the rest.
           args: >-
             --no-progress
             --verbose
             --max-concurrency 8
             --max-retries 3
             --retry-wait-time 2
+            --exclude "(index|architecture|skills|how-it-works|game)\.md$"
+            --exclude "https?://(www\.)?me2resh\.com"
             "*.html"
             "*.md"
           fail: true
