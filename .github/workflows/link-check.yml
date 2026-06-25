@@ -34,20 +34,23 @@ jobs:
         with:
           # Root HTML pages + Markdown alternates. --no-progress keeps CI logs
           # clean; a non-zero exit fails the job so broken links block merge.
-          # Excludes (passed as args — the standalone .lycheeignore is not
-          # auto-loaded by this action):
-          #   • /*.md alternates are Netlify 200-rewrites from *.md.gen, not
-          #     local files — they resolve live but 404 in a local check.
-          #   • me2resh.com is the author's blog (up; 301) — a known-good
-          #     external that flakes/rate-limits in CI.
-          # --max-retries absorbs transient external flakiness for the rest.
+          # Scope to EXTERNAL http(s) links. The site uses Netlify clean URLs +
+          # rewrites (/game → game.html, /foo.md → foo.md.gen), which lychee
+          # can't resolve against local files ("cannot convert path to URI").
+          # Netlify's own deploy-preview + redirect-rules checks validate the
+          # internal routing; lychee here catches EXTERNAL link rot, where it's
+          # reliable and where rot actually bites.
+          #   • --scheme http/https skips local file:// links.
+          #   • me2resh.com (author's blog, up; CI-flaky 301) excluded.
+          #   • --max-retries absorbs transient external flakiness.
           args: >-
             --no-progress
             --verbose
             --max-concurrency 8
             --max-retries 3
             --retry-wait-time 2
-            --exclude "(index|architecture|skills|how-it-works|game)\.md$"
+            --scheme https
+            --scheme http
             --exclude "https?://(www\.)?me2resh\.com"
             "*.html"
             "*.md"
