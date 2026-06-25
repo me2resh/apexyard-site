@@ -1,0 +1,45 @@
+name: Link Check
+
+# Catches link rot in the static site's HTML pages + Markdown alternates.
+# lychee is fast + low-noise; runs on PRs, on push to main, and weekly so
+# external link rot is caught even when nothing changes.
+
+on:
+  pull_request:
+    paths:
+      - "*.html"
+      - "*.md"
+      - ".github/workflows/link-check.yml"
+  push:
+    branches: [main]
+    paths:
+      - "*.html"
+      - "*.md"
+  schedule:
+    - cron: "0 9 * * 1" # weekly, Monday 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  link-check:
+    name: lychee
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check links in HTML + Markdown
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Root HTML pages + Markdown alternates. --no-progress keeps CI logs
+          # clean; a non-zero exit fails the job so broken links block merge.
+          args: >-
+            --no-progress
+            --verbose
+            --max-concurrency 8
+            "*.html"
+            "*.md"
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
