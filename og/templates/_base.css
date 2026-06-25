@@ -1,0 +1,90 @@
+/* ====================================================================
+ * Swiss Graphite — OG share-card design tokens (LIGHT theme)
+ * Canonical source: apexyard design-system tokens.css [data-theme="light"]
+ * Used by all four 1200x630 OG card templates.
+ * ==================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+:root {
+  /* surfaces */
+  --bg: #f7f9fc;
+  --bg-2: #f2f5fa;
+  --surface: #ffffff;
+  --surface-2: #fcfdff;
+  --surface-hi: #f2f5fa;
+  --border: #e2e7ef;
+  --border-strong: #dde3ec;
+  /* ink ramp */
+  --ink: #14181f;
+  --ink-2: #3a4452;
+  --muted: #5c6986;
+  --faint: #9aa4b4;
+  /* accent + status */
+  --accent: #2f6df6;
+  --accent-soft: rgba(47, 109, 246, 0.10);
+  --accent-line: rgba(47, 109, 246, 0.32);
+  --ok: #2f9e5e;
+  --warn: #f5a524;
+  --danger: #e5484d;
+  --violet: #283593;
+  /* type */
+  --font-display: "Archivo", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-ui: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --radius: 14px;
+  --radius-sm: 9px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { width: 1200px; height: 630px; }
+
+.card {
+  width: 1200px;
+  height: 630px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  position: relative;
+  overflow: hidden;
+  /* subtle dot grid for quiet Swiss texture */
+  background-image: radial-gradient(circle at 1px 1px, rgba(20, 24, 31, 0.045) 1px, transparent 0);
+  background-size: 32px 32px;
+}
+
+/* hairline frame inset — clean Swiss containment */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  pointer-events: none;
+}
+
+.pad {
+  position: absolute;
+  inset: 24px;
+  padding: 48px 56px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* shared eyebrow header row */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.01em;
+}
+.eyebrow .brand { color: var(--ink); font-weight: 600; }
+.eyebrow .brand .ay { color: var(--accent); }
+.eyebrow .right { color: var(--faint); }
+
+.mono { font-family: var(--font-mono); }
+.display { font-family: var(--font-display); }
+.accent { color: var(--accent); }

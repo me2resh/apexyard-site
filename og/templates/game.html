@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<style>
+  .pad { justify-content: space-between; align-items: stretch; }
+
+  .headline {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 92px;
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-top: 4px;
+  }
+  .headline .vs { color: var(--accent); font-style: italic; padding: 0 0.12em; }
+
+  .sub {
+    font-family: var(--font-ui);
+    font-size: 30px;
+    line-height: 1.35;
+    color: var(--muted);
+    max-width: 880px;
+    margin-top: 18px;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 6px;
+    max-width: 1010px;
+  }
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-family: var(--font-ui);
+    font-weight: 500;
+    font-size: 25px;
+    padding: 11px 20px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink-2);
+  }
+  .chip .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .d-info   { background: var(--accent); }
+  .d-violet { background: var(--violet); }
+  .d-ok     { background: var(--ok); }
+  .d-warn   { background: var(--warn); }
+  .d-danger { background: var(--danger); }
+
+  .ctarow { display: flex; align-items: center; gap: 28px; }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #fff;
+    background: var(--ink);
+    padding: 18px 34px;
+    border-radius: var(--radius);
+  }
+  .cta .arrow { color: var(--accent); }
+  .note {
+    font-family: var(--font-mono);
+    font-size: 23px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="pad">
+    <div class="eyebrow">
+      <span class="brand">~/<span class="ay">apexyard</span> — game</span>
+      <span class="right">11 rounds · ~15 min</span>
+    </div>
+
+    <div>
+      <div class="headline">You <span class="vs">vs.</span> the LLM</div>
+      <div class="sub">Think you understand how AI actually works? Prove it — score it, then challenge your friends to beat you.</div>
+    </div>
+
+    <div class="chips">
+      <span class="chip"><span class="dot d-info"></span>Tokens</span>
+      <span class="chip"><span class="dot d-violet"></span>Embeddings</span>
+      <span class="chip"><span class="dot d-info"></span>Temperature</span>
+      <span class="chip"><span class="dot d-ok"></span>Prompting</span>
+      <span class="chip"><span class="dot d-ok"></span>Cutoff</span>
+      <span class="chip"><span class="dot d-ok"></span>RAG</span>
+      <span class="chip"><span class="dot d-danger"></span>Hallucination</span>
+      <span class="chip"><span class="dot d-danger"></span>Injection</span>
+      <span class="chip"><span class="dot d-warn"></span>Agents</span>
+      <span class="chip"><span class="dot d-warn"></span>Cost</span>
+      <span class="chip"><span class="dot d-warn"></span>Loops</span>
+    </div>
+
+    <div class="ctarow">
+      <span class="cta">Take the challenge <span class="arrow">→</span></span>
+      <span class="note">yard.apexscript.com/game</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
