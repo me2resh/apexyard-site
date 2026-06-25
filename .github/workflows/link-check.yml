@@ -34,23 +34,22 @@ jobs:
         with:
           # Root HTML pages + Markdown alternates. --no-progress keeps CI logs
           # clean; a non-zero exit fails the job so broken links block merge.
-          # Scope to EXTERNAL http(s) links. The site uses Netlify clean URLs +
-          # rewrites (/game → game.html, /foo.md → foo.md.gen), which lychee
-          # can't resolve against local files ("cannot convert path to URI").
-          # Netlify's own deploy-preview + redirect-rules checks validate the
-          # internal routing; lychee here catches EXTERNAL link rot, where it's
-          # reliable and where rot actually bites.
-          #   • --scheme http/https skips local file:// links.
-          #   • me2resh.com (author's blog, up; CI-flaky 301) excluded.
-          #   • --max-retries absorbs transient external flakiness.
+          # --root-dir resolves the site's root-relative links (/favicon.ico,
+          # /#quickstart, …) against the repo root. The Netlify clean-URL +
+          # rewrite routes (/game → game.html, /foo.md → foo.md.gen) don't
+          # exist as local files, so they're excluded — Netlify's own
+          # deploy-preview + redirect-rules checks validate that internal
+          # routing. me2resh.com (author's blog, up; CI-flaky 301) is excluded.
+          # Verified locally: 97 OK / 0 errors / 64 excluded.
           args: >-
             --no-progress
             --verbose
             --max-concurrency 8
             --max-retries 3
             --retry-wait-time 2
-            --scheme https
-            --scheme http
+            --root-dir "${{ github.workspace }}"
+            --exclude "/(game|skills|architecture|how-it-works)(\.md)?$"
+            --exclude "/(index|architecture|skills|how-it-works|game)\.md$"
             --exclude "https?://(www\.)?me2resh\.com"
             "*.html"
             "*.md"
