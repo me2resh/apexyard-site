@@ -1,0 +1,82 @@
+name: Deploy to AWS (S3 + CloudFront)
+
+# Syncs the static site to S3 (apexyard-site-prod) and invalidates CloudFront —
+# the Egypt-reachable path off Netlify (instaloc-infra#14, GH-11). Runs ALONGSIDE
+# Netlify (both stay in sync) until the DNS cutover. Auth is via OIDC into the
+# apexscript-prod `github-actions-deployer` role — no long-lived AWS keys.
+#
+# Prereq: the instaloc-infra `apexyard-site` stack must be APPLIED first (the
+# bucket + distribution have to exist). Until then the invalidation step warns
+# and no-ops instead of failing.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write # assume the AWS role via OIDC
+  contents: read
+
+concurrency:
+  group: deploy-aws
+  cancel-in-progress: true
+
+env:
+  BUCKET: apexyard-site-prod
+  SITE_DOMAIN: yard.apexscript.com
+  ROLE_ARN: arn:aws:iam::340541183783:role/github-actions-deployer
+
+jobs:
+  deploy:
+    name: s3 sync + invalidate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.ROLE_ARN }}
+          aws-region: eu-west-1
+
+      - name: Sync static site to S3
+        run: |
+          aws s3 sync . "s3://${BUCKET}" \
+            --delete \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --exclude "og/node_modules/*" \
+            --exclude "og/templates/*" \
+            --exclude "og/render*" \
+            --exclude "og/package*.json" \
+            --exclude "og/.gitignore" \
+            --exclude "og/README.md" \
+            --exclude "README.md" \
+            --exclude ".gitignore" \
+            --exclude ".lycheeignore"
+
+      - name: Publish markdown alternates at clean .md keys
+        run: |
+          # Netlify served the .md.gen files at /skills.md etc. via _redirects.
+          # On CloudFront we publish each .md.gen at its bare .md key so the
+          # LLM-consumer alternates keep resolving.
+          shopt -s nullglob
+          for f in *.md.gen; do
+            key="${f%.gen}"
+            echo "publish $f -> s3://${BUCKET}/${key}"
+            aws s3 cp "$f" "s3://${BUCKET}/${key}" \
+              --content-type "text/markdown; charset=utf-8"
+          done
+
+      - name: Invalidate CloudFront
+        run: |
+          DIST_ID=$(aws cloudfront list-distributions \
+            --query "DistributionList.Items[?contains(Aliases.Items, '${SITE_DOMAIN}')].Id | [0]" \
+            --output text 2>/dev/null || true)
+          if [ -z "$DIST_ID" ] || [ "$DIST_ID" = "None" ]; then
+            echo "::warning::No CloudFront distribution for ${SITE_DOMAIN} yet — apply the instaloc-infra apexyard-site stack first. Skipping invalidation."
+            exit 0
+          fi
+          echo "Invalidating distribution ${DIST_ID}"
+          aws cloudfront create-invalidation --distribution-id "$DIST_ID" --paths "/*"
