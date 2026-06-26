@@ -203,7 +203,39 @@ a:hover { color: var(--accent); }
 .titlebar__path a { color: inherit; }
 .titlebar__path a:hover { color: var(--accent); }
 .titlebar__path b { color: var(--ink); font-weight: 700; }
-.titlebar__right { display: flex; gap: 1.25rem; align-items: center; font-size: 12px; }
+.titlebar__right {
+  /* #9: shrink-and-scroll on narrow screens so the nav never forces the page
+     wider than the viewport (the .always links defeated the old mobile hide).
+     No-op on desktop — nothing overflows, so nothing scrolls. */
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none; display: flex; gap: 1.25rem; align-items: center; font-size: 12px; }
+.titlebar__right::-webkit-scrollbar { display: none; }
+/* #9 follow-up: hamburger on mobile (progressive enhancement — nav-toggle.js
+   adds .nav-enhanced; with JS off the nav stays the scroll strip above). */
+.nav-toggle { display: none; }
+.nav-toggle > span { display: block; width: 18px; height: 2px; background: var(--ink); transition: transform 0.2s, opacity 0.2s; }
+@media (max-width: 700px) {
+  .nav-enhanced .nav-toggle {
+    display: inline-flex; flex-direction: column; justify-content: center; gap: 4px;
+    background: none; border: 1px solid var(--rule); padding: 8px 9px; cursor: pointer;
+  }
+  .nav-enhanced .titlebar__right {
+    position: absolute; top: 100%; left: 0; right: 0; z-index: 100;
+    flex-direction: column; align-items: stretch; gap: 0;
+    padding: 0.25rem var(--gutter) 0.85rem;
+    background: var(--paper); border-bottom: 1px solid var(--rule);
+    overflow-x: visible; min-width: 0; font-size: 14px;
+    display: none;
+  }
+  .nav-enhanced.is-open .titlebar__right { display: flex; }
+  .nav-enhanced .titlebar__right a { padding: 0.75rem 0.15rem; border-bottom: 1px solid var(--rule-faint); white-space: nowrap; }
+  .nav-enhanced .titlebar__right a.is-cta { border: 1px solid var(--rule); margin-top: 0.6rem; padding: 0.65rem; text-align: center; }
+  .nav-enhanced.is-open .nav-toggle > span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-enhanced.is-open .nav-toggle > span:nth-child(2) { opacity: 0; }
+  .nav-enhanced.is-open .nav-toggle > span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+}
 .titlebar__right a { color: var(--ink-faint); transition: color 0.15s ease; }
 .titlebar__right a:hover { color: var(--accent); }
 .titlebar__right a.is-current { color: var(--ink); border-bottom: 1px solid var(--accent); padding-bottom: 2px; pointer-events: none; }
@@ -601,7 +633,8 @@ main { background: var(--paper); }
       </span>
       <span class="titlebar__path">~/<a href="/"><b>apexyard</b></a> <span class="dim">· how it works</span></span>
     </div>
-    <nav class="titlebar__right" aria-label="Primary">
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav"><span></span><span></span><span></span></button>
+    <nav class="titlebar__right" id="primary-nav" aria-label="Primary">
       <a href="/how-it-works" class="is-current always">how it works</a>
       <a href="/#quickstart" class="is-cta always">quickstart</a>
       <a href="/architecture" class="always">architecture</a>
@@ -879,5 +912,6 @@ main { background: var(--paper); }
 <!-- end: consent -->
 
 <script src="/copy-for-ai.js" defer></script>
+<script src="/nav-toggle.js" defer></script>
 </body>
 </html>
