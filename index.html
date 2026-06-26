@@ -262,11 +262,19 @@ a:hover { color: var(--accent); }
 }
 
 .titlebar__right {
+  /* #9: shrink-and-scroll on narrow screens so the nav never forces the page
+     wider than the viewport (the .always links defeated the old mobile hide).
+     No-op on desktop — nothing overflows, so nothing scrolls. */
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   display: flex;
   gap: 1.25rem;
   align-items: center;
   font-size: 12px;
 }
+.titlebar__right::-webkit-scrollbar { display: none; }
 .titlebar__right a {
   color: var(--ink-soft);
   position: relative;
