@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ApexYard — Founder Onboarding</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+  :root{
+    --accent:#2F6DF6; --accent-dk:#5B8CFF; --ink:#14181F; --canvas:#F7F9FC;
+    --muted:#5b6472; --border:#e3e8ef; --card:#fff; --code-bg:#0f1115; --code-ink:#e7ebf2;
+    --warn-bg:#fff7ed; --warn-bd:#fed7aa; --warn-ink:#9a3412;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--canvas);line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:780px;margin:0 auto;padding:0 24px 110px}
+  header{padding:56px 0 34px;border-bottom:1px solid var(--border);margin-bottom:8px}
+  .lockup{display:flex;align-items:center;gap:14px}
+  .mark{width:50px;height:50px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-weight:700;color:#fff;font-size:21px;letter-spacing:-.04em}
+  .wm{font-family:Archivo,sans-serif;font-weight:700;font-size:25px;letter-spacing:-.02em}
+  .kicker{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.14em;margin-top:18px}
+  h1{font-family:Archivo,sans-serif;font-weight:800;font-size:38px;letter-spacing:-.025em;margin:24px 0 10px;line-height:1.12}
+  .lede{font-size:17.5px;color:var(--muted);max-width:64ch}
+  .lede b{color:var(--ink)}
+  h2{font-family:Archivo,sans-serif;font-weight:700;font-size:23px;letter-spacing:-.02em;margin:46px 0 4px;padding-top:10px}
+  h2 .n{font-family:'IBM Plex Mono',monospace;color:var(--accent);font-size:14px;font-weight:600;margin-right:9px;vertical-align:2px}
+  h3{font-family:Archivo,sans-serif;font-weight:600;font-size:17px;margin:26px 0 6px}
+  p{margin:11px 0}
+  a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+  ul{margin:10px 0;padding-left:22px} li{margin:5px 0}
+  code{font-family:'IBM Plex Mono',monospace;font-size:.86em;background:#eef2f8;border:1px solid var(--border);border-radius:5px;padding:1px 6px}
+  kbd{font-family:'IBM Plex Mono',monospace;font-size:.84em;background:#eef2f8;border:1px solid var(--border);border-radius:5px;padding:1px 6px;box-shadow:0 1px 0 var(--border)}
+  /* copy-able command block */
+  .cmd{position:relative;margin:14px 0}
+  .cmd pre{background:var(--code-bg);color:var(--code-ink);border-radius:10px;padding:15px 16px;padding-right:74px;overflow-x:auto;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.6}
+  /* reset inline-code styling inside code blocks (otherwise the light inline bg hides the text) */
+  .cmd pre code{background:none;border:0;padding:0;color:inherit;font:inherit}
+  .cmd .copy{position:absolute;top:9px;right:9px;background:#2a2f3a;color:#cdd2da;border:1px solid #3a4150;border-radius:7px;font-size:11px;font-family:Inter,sans-serif;padding:4px 9px;cursor:pointer;display:flex;align-items:center;gap:5px}
+  .cmd .copy:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .cmd .copy.done{background:#1f7a4d;color:#fff;border-color:#1f7a4d}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin:14px 0}
+  th,td{border:1px solid var(--border);padding:9px 12px;text-align:left;vertical-align:top}
+  th{background:var(--card2,#f1f4f9);font-family:Archivo;font-weight:600}
+  td:first-child{white-space:nowrap;font-weight:600}
+  td code{font-size:.82em}
+  .note{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:14px 18px;margin:18px 0;font-size:15px}
+  .warn{background:var(--warn-bg);border:1px solid var(--warn-bd);border-left:3px solid #ea7317;color:var(--warn-ink);border-radius:10px;padding:14px 18px;margin:18px 0;font-size:15px}
+  .step{border-left:2px solid var(--border);padding:2px 0 2px 22px;margin:0 0 4px 8px}
+  .step h3{margin-top:18px}
+  .step h3 .s{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:13px;align-items:center;justify-content:center;margin-left:-37px;margin-right:11px;vertical-align:1px}
+  footer{margin-top:60px;padding-top:26px;border-top:1px solid var(--border);color:var(--muted);font-size:13px;display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap}
+  .mark.xs{width:28px;height:28px;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="lockup"><div class="mark">AY</div><div class="wm">ApexYard</div></div>
+    <div class="kicker">Founder Onboarding · building an AWS portal</div>
+    <h1>An AI engineering org that follows process.</h1>
+    <p class="lede">You're about to stand up a real software-engineering <b>organisation</b> — product, architecture, engineering, security, design — except the team is AI, running under a strict, automated SDLC that keeps the work production-grade. You give direction in plain English; ApexYard turns it into specs, decisions, tickets, reviewed code, and shipped software. It's not "an AI that writes code" — it's an AI org that <em>follows process</em>.</p>
+    <p class="lede" style="margin-top:14px">The arc: <b>install a few prerequisites → set up the framework → walk one idea from spark to kicked-off project</b> (idea → validate → spec → decisions → its own repo → plan → build). Under an hour — and by the end you'll have a validated PRD, recorded-and-challenged decisions, a milestone plan, and real tickets, all before writing a line of portal code. You'll work in <a href="https://claude.com/claude-code">Claude Code</a>, mostly by just <em>talking</em> (see §2).</p>
+  </header>
+
+  <h2><span class="n">00</span>Before you start — prerequisites</h2>
+  <p>Most of this is one Homebrew line. On a fresh Mac, install <b>Homebrew</b> first:</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre></div>
+  <p>Then install everything ApexYard needs in <b>one</b> command:</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>brew install git gh jq node pipx</code></pre></div>
+  <p>Finish setup — authorise GitHub and put pipx on your PATH (then restart your shell):</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>gh auth login        # authenticate once
+pipx ensurepath      # then restart your shell</code></pre></div>
+  <p>Two more, outside Homebrew:</p>
+  <ul>
+    <li><b>Claude Code</b> — the AI agent you drive ApexYard with. Install from <a href="https://claude.com/claude-code">claude.com/claude-code</a>, sign in, and keep it current with <code>claude update</code>.</li>
+    <li><b>Docker</b> <em>(optional)</em> — only if you later use container components: <code>brew install --cask docker</code>.</li>
+  </ul>
+  <p>What each piece is for:</p>
+  <table>
+    <tr><th>Tool</th><th>Why you need it</th></tr>
+    <tr><td>git + gh</td><td>your code + the framework live on GitHub</td></tr>
+    <tr><td>jq</td><td>the framework's governance hooks use it</td></tr>
+    <tr><td>node</td><td>runs the admin dashboard</td></tr>
+    <tr><td>pipx</td><td>installs the premium toolbelt</td></tr>
+    <tr><td>Claude Code</td><td>the agent you give direction to</td></tr>
+  </table>
+  <p class="note"><strong>Sanity check</strong> — after installing, each of these should answer:</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>claude --version && gh auth status && jq --version && node -v && pipx --version</code></pre></div>
+
+  <h2><span class="n">01</span>Set up (≈10 min)</h2>
+
+  <h3>1.1 — Fork + clone the framework</h3>
+  <p>Fork <code>github.com/me2resh/apexyard</code> to your account, then:</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>git clone git@github.com:&lt;you&gt;/apexyard.git
+cd apexyard
+claude            # start Claude Code in the repo</code></pre></div>
+
+  <h3>1.2 — Configure it</h3>
+  <p>Inside Claude Code, run <code>/setup</code> — three quick exchanges (describe your stack → accept defaults → confirm). Done.</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>/setup</code></pre></div>
+
+  <h3>1.3 — Turn on the premium skills (one command)</h3>
+  <p>You've been issued a <b>fine-grained access token</b> (a read-only GitHub PAT) so you can install the paid skills <b>without</b> repo access. Treat it like a password. Install the CLI once, then run the <b>setup wizard</b> — it auto-detects your roots, asks for the token, and lets you tick the components:</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code># paste your token when prompted (hidden, not saved to shell history):
+read -rs APEXYARD_TOKEN && echo
+pipx install "git+https://${APEXYARD_TOKEN}@github.com/me2resh/apexyard-premium.git"
+
+# then, from your apexyard fork, run the wizard:
+apexyard-premium setup</code></pre></div>
+  <p>When it lists components, pick <b>apexyard-search</b>, <b>roundtable</b>, <b>aws-diagram</b>, and <b>apexyard-admin</b>. Restart Claude Code afterwards so the new skills load.</p>
+  <p class="note"><strong>Where the token comes from:</strong> whoever sent you this guide generated it (GitHub fine-grained PAT, read-only). Ask them to refresh it if it expires — you never need write access to any private repo.</p>
+
+  <h3>1.4 — Open your dashboard (optional, recommended)</h3>
+  <p>A browser view of your portfolio — including a read-only <b>spend</b> view so you can watch token cost as you go (nothing caps you; you just <em>see</em> it).</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>export APEXYARD_OPS_ROOT="$PWD" APEXYARD_PORTFOLIO_ROOT="$PWD"
+cd "$APEXYARD_PORTFOLIO_ROOT/apps/apexyard-admin" && npm run dev
+# then open http://localhost:3000</code></pre></div>
+  <p>Prefer one click? See the <a href="../">ApexDock launcher guide</a>.</p>
+
+  <h2><span class="n">02</span>Your golden path — idea → kicked-off project</h2>
+  <div class="note"><strong>Read this first — it's a conversation, not a checklist.</strong> You don't have to memorise commands or run them in order. <b>Just talk to Claude in plain English</b> — "I want to build a customer portal on AWS", "help me decide between Cognito and my own auth", "what should I do next?" — and the framework picks the right skill and tells you the next sensible step. The slash-commands below are the <em>named</em> shortcuts; type them directly, or just describe what you want. Skip, reorder, or revisit any step — this is the <b>typical arc</b>, not a script. When in doubt, ask: <em>"what's the best next step?"</em></div>
+
+  <div class="step"><h3><span class="s">1</span>Capture the idea</h3>
+    <div class="cmd"><button class="copy">Copy</button><pre><code>/idea A customer portal on AWS where our clients log in, see their projects, and download reports.</code></pre></div>
+    <p>Logs the concept to your backlog before you over-invest in it.</p></div>
+
+  <div class="step"><h3><span class="s">2</span>Pressure-test it cheaply</h3>
+    <div class="cmd"><button class="copy">Copy</button><pre><code>/validate-idea</code></pre></div>
+    <p>Five questions that catch "this isn't worth building yet" in ten minutes.</p></div>
+
+  <div class="step"><h3><span class="s">3</span>Write the spec</h3>
+    <div class="cmd"><button class="copy">Copy</button><pre><code>/write-spec customer portal</code></pre></div>
+    <p>Produces a PRD: problem, users, acceptance criteria — the contract the rest of the work is measured against.</p></div>
+
+  <div class="step"><h3><span class="s">4</span>Give the project its own repo (private by default)</h3>
+    <p>Mental model: <b>your apexyard fork is mission control</b> — process, roles, decisions, tickets. Your <b>product code does not live in it.</b> The moment an idea is worth building, it gets its <b>own repository — private by default</b> (it's your IP):</p>
+    <div class="cmd"><button class="copy">Copy</button><pre><code>gh repo create &lt;you&gt;/customer-portal --private --clone</code></pre></div>
+    <p>Then register it so the framework governs it (so <code>/status</code>, <code>/tasks</code>, search, and the SDLC gates see it):</p>
+    <ul>
+      <li><b>Brand-new repo</b> → add an entry (name + repo) to <code>apexyard.projects.yaml</code>.</li>
+      <li><b>Already has code</b> → run <code>/handover &lt;owner/repo&gt;</code> — it scores the codebase and wires it in.</li>
+    </ul>
+    <p>Rule of thumb: <b>one product = one private repo</b>; apexyard governs many from your one fork. The portal's tickets, PRs, decisions, and diagrams live in the <b>portal's</b> repo — not your apexyard fork.</p></div>
+
+  <div class="step"><h3><span class="s">5</span>Make your technical decisions — and challenge them</h3>
+    <p>Every real architecture call gets <b>recorded</b> and can be <b>challenged</b> before you commit:</p>
+    <div class="cmd"><button class="copy">Copy</button><pre><code>/decide Cognito vs. self-managed auth for the portal</code></pre></div>
+    <p><code>/decide</code> records an <b>AgDR</b> (Agent Decision Record) — options, the choice, the trade-off. <b>And it automatically offers to stress-test the call</b>: right after recording, it invites <b>Naqid, The Contrarian</b> to challenge it. You can also run it yourself anytime:</p>
+    <div class="cmd"><button class="copy">Copy</button><pre><code>/challenge Cognito vs self-managed auth</code></pre></div>
+    <p>Naqid <b>steelmans your choice, then attacks it</b>: hidden assumptions, failure modes, cheaper alternatives, and a proceed / proceed-with-changes / reconsider verdict. Advisory only — it informs, it never blocks. For the <em>big</em> forks (monolith vs microservices, RDS vs DynamoDB), convene the whole room:</p>
+    <div class="cmd"><button class="copy">Copy</button><pre><code>/roundtable Should the portal be a monolith or microservices on AWS?</code></pre></div>
+    <p>Several role agents (Head of Eng, Solution Architect, Tech Lead…) debate it and converge on one written recommendation with an explicit "what we are NOT doing".</p></div>
+
+  <div class="step"><h3><span class="s">6</span>Plan the work</h3>
+    <div class="cmd"><button class="copy">Copy</button><pre><code>/plan-initiative customer portal</code></pre></div>
+    <p>Turns the spec into milestones → tasks, in dependency order.</p></div>
+
+  <div class="step"><h3><span class="s">7</span>File the tickets</h3>
+    <div class="cmd"><button class="copy">Copy</button><pre><code>/feature Client login with Cognito
+/task    Set up the AWS infra (VPC, RDS, ECS)</code></pre></div>
+    <p>Real GitHub issues with acceptance criteria. (One ticket at a time — the system enforces it.)</p></div>
+
+  <div class="step"><h3><span class="s">8</span>See the architecture</h3>
+    <div class="cmd"><button class="copy">Copy</button><pre><code>/c4              # system + container diagrams
+/dfd             # data-flow + trust boundaries
+/aws-diagram     # AWS architecture from your IaC (once you have Terraform/CDK)</code></pre></div></div>
+
+  <div class="step"><h3><span class="s">9</span>Build, under governance</h3>
+    <div class="cmd"><button class="copy">Copy</button><pre><code>/start-ticket &lt;number&gt;     # declare what you're working on
+# ...write code with Claude...
+# open a PR → Rex (the AI code reviewer) reviews every commit
+# you give the explicit go → it merges</code></pre></div></div>
+
+  <h2><span class="n">03</span>The guardrails you'll feel</h2>
+  <p>ApexYard is deliberately strict — that's what keeps AI output shippable:</p>
+  <ul>
+    <li><b>Ticket-first.</b> You can't edit code until a ticket is active (<code>/start-ticket</code>). Keeps work traceable.</li>
+    <li><b>Every PR gets reviewed</b> by Rex before it can merge.</li>
+    <li><b>Merges need your explicit per-PR "approved".</b> A plan-level "go" is never enough — the system stops and asks before merging. Merges are the one truly hard-to-undo step.</li>
+    <li><b>No direct pushes to main</b>, no committed secrets, tests required. The hooks catch these for you.</li>
+  </ul>
+  <p>If something blocks you and you don't know why, just ask: <em>"why did that get blocked?"</em> — the system explains which rule fired.</p>
+
+  <h2><span class="n">04</span>A good first session</h2>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>/idea            → capture the portal concept
+/validate-idea   → is it worth building now?
+/write-spec      → the PRD
+gh repo create … --private   → the portal's own private repo + register it
+/decide          → Cognito vs self-managed auth   (auto-challenged)
+/roundtable      → monolith vs microservices       (the big one)
+/plan-initiative → milestones + tasks
+/feature         → file the first ticket (in the portal's repo)
+/start-ticket 1  → begin
+/c4              → see the shape of what you're building</code></pre></div>
+  <p>By the end: a logged idea, a validated PRD, <b>its own private repo registered with the portfolio</b>, two recorded + challenged decisions, a milestone plan, real tickets, and your first diagram — all before a line of portal code. That's the point.</p>
+
+  <h2><span class="n">05</span>The ApexDock launcher</h2>
+  <p>ApexDock is an optional one-click macOS launcher (boot the dashboard + Claude, run the premium setup, plus your own launchers, each with a live console). Full download + install + usage guide:</p>
+  <p><a href="../"><b>→ ApexDock install &amp; usage guide</b></a></p>
+
+  <h2><span class="n">06</span>Help</h2>
+  <ul>
+    <li><em>"what can you do?"</em> — ask in plain English; the system lists the relevant skills.</li>
+    <li><em>"act as the Solution Architect and review my plan"</em> — you can summon any role.</li>
+    <li>Stuck on a bug that resisted a quick fix? <code>/debug</code>.</li>
+    <li>Lost the thread across sessions? <code>/status</code> and <code>/inbox</code>.</li>
+  </ul>
+  <p>Have a great build. — The ApexYard team</p>
+
+  <footer>
+    <div class="lockup"><div class="mark xs">AY</div><div style="font-family:Archivo;font-weight:700;font-size:14px;color:var(--ink)">ApexYard</div></div>
+    <div>Founder Onboarding</div>
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll('.cmd .copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.parentElement.querySelector('code');
+      var text = code ? code.innerText : '';
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'Copied';
+        btn.classList.add('done');
+        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1300);
+      });
+    });
+  });
+</script>
+</body>
+</html>

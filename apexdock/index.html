@@ -140,9 +140,14 @@
       </li>
     </ol>
 
-    <div class="note"><strong>Why the warning?</strong> ApexDock is a direct download rather than an App Store /
-      notarized build, so macOS can't auto-verify the developer. You're approving it once, deliberately, from a
-      source you trust — after that it runs like any other app.</div>
+    <div class="note"><strong>Why the warning — and why this is fine.</strong> ApexDock is a direct download, not
+      an App Store / Apple-notarized build. Apple notarization requires a paid <strong>Apple Developer Program
+      membership (US$99/year)</strong> plus a signing + notarization pipeline — overhead that makes sense for a
+      shrink-wrapped consumer app, but not for an internal, fast-moving tool we hand directly to a small group.
+      We'd rather put that into the product than into Apple's gate. So macOS can't auto-verify the developer and
+      shows the warning. Nothing about the app is different — you're approving <em>this specific download</em>
+      once, deliberately, from a source you trust; after that it launches like any other app. (You can revoke it
+      anytime by deleting it from Applications.)</div>
   </section>
 
   <section id="usage">
@@ -174,6 +179,13 @@
       <div class="r"><div class="t">Premium Setup</div><div class="d">Runs the <code>apexyard-premium setup</code> wizard — pick and install premium skills in a few prompts.</div></div>
       <div class="r"><div class="t">Rebuild</div><div class="d">Updates apexyard-premium and reinstalls your components to the latest version.</div></div>
     </div>
+  </section>
+
+  <section id="onboarding">
+    <h2><span class="n">04</span>New to ApexYard?</h2>
+    <p>ApexDock is the launcher; the framework is the rest. Start here for the full
+      install → set up → kick off your first project walkthrough:</p>
+    <p><a href="./onboarding/"><strong>→ ApexYard Founder Onboarding guide</strong></a></p>
   </section>
 
   <footer>
