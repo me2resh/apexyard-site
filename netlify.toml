@@ -15,6 +15,18 @@
     # cover GA4 /g/collect hits. data: images for the 1px tracking pixel.
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
 
+# Basic-auth gate for the discreet ApexDock guide + download. The edge function
+# checks per-founder credentials (Netlify env var APEXDOCK_CREDS — hashed, never
+# in the repo) before serving anything under /apexdock, including the .dmg.
+# See netlify/edge-functions/apexdock-gate.ts for the credential format.
+[[edge_functions]]
+  path = "/apexdock"
+  function = "apexdock-gate"
+
+[[edge_functions]]
+  path = "/apexdock/*"
+  function = "apexdock-gate"
+
 # Canonicalize the .netlify.app hostname to the production subdomain.
 # Dormant until DNS flips yard.apexscript.com onto this Netlify site;
 # after that, visits to apexyard.netlify.app get 301'd so search
