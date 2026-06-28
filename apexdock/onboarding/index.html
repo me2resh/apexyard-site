@@ -133,8 +133,8 @@ apexyard-premium setup --confirm</code></pre></div>
     <tr><td><code>aws-diagram</code></td><td>Generate AWS architecture diagrams straight from your infrastructure-as-code.</td></tr>
     <tr><th colspan="2">Decide &amp; automate</th></tr>
     <tr><td><code>/roundtable</code></td><td>Convene 2–5 role agents + The Contrarian in a facilitated debate (positions → cross-talk → challenge → synthesis) that converges on one written decision — with an explicit "what we are <em>not</em> doing".</td></tr>
-    <tr><td><code>/run-playbook</code><br><span class="note">(apexyard-playbooks)</span></td><td>Load and run named, repeatable procedures with confirm-before-side-effect — standardise the steps your team does over and over.</td></tr>
-    <tr><td><code>/loop-recipe</code><br><span class="note">(apexyard-loops)</span></td><td>Governed build → verify → iterate cycles that stop at the right gates — repetitive work on autopilot, without runaway loops.</td></tr>
+    <tr><td><code>/run-playbook</code><br><span style="opacity:.6;font-size:.85em">(apexyard-playbooks)</span></td><td>Load and run named, repeatable procedures with confirm-before-side-effect — standardise the steps your team does over and over.</td></tr>
+    <tr><td><code>/loop-recipe</code><br><span style="opacity:.6;font-size:.85em">(apexyard-loops)</span></td><td>Governed build → verify → iterate cycles that stop at the right gates — repetitive work on autopilot, without runaway loops.</td></tr>
     <tr><th colspan="2">Grow &amp; launch</th></tr>
     <tr><td><code>growth-pack</code></td><td>A whole Growth/Marketing department — Head of Growth (Layla) + Growth Manager (Bilal) roles that activate on go-to-market work.</td></tr>
     <tr><td><code>/go-to-market</code></td><td>Turn a project's docs into a launch kit: positioning brief, one-pager, messaging set, launch checklist.</td></tr>
@@ -143,9 +143,11 @@ apexyard-premium setup --confirm</code></pre></div>
 
   <h3>1.4 — Open your dashboard (optional, recommended)</h3>
   <p>A browser view of your portfolio — including a read-only <b>spend</b> view so you can watch token cost as you go (nothing caps you; you just <em>see</em> it). The dashboard is password-protected; a <b>unique password is generated for your install</b> at <code>~/.config/apexyard/admin.env</code> the first time it starts.</p>
-  <p class="note"><strong>Start it</strong> — run from <b>your apexyard fork</b>:</p>
-  <div class="cmd"><button class="copy">Copy</button><pre><code>export APEXYARD_OPS_ROOT="$PWD" APEXYARD_PORTFOLIO_ROOT="$PWD"
-cd "$APEXYARD_PORTFOLIO_ROOT/apps/apexyard-admin" && npm run dev</code></pre></div>
+  <p class="note"><strong>Start it.</strong> The dashboard reads your portfolio (projects <em>and</em> skills) from the <code>APEXYARD_OPS_ROOT</code> / <code>APEXYARD_PORTFOLIO_ROOT</code> roots — the setup wizard already saved the correct values to <code>apexyard-premium.env</code>. <b>Source that file</b> so the dashboard finds them (don't hand-type paths — they differ in split-portfolio setups):</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>source ~/path/to/your-apexyard-portfolio/apexyard-premium.env
+cd "$APEXYARD_PORTFOLIO_ROOT/apps/apexyard-admin"
+npm run dev</code></pre></div>
+  <p class="note">Watch the startup line — it should read <code>wrote .env.local (APEXYARD_OPS_ROOT, APEXYARD_PORTFOLIO_ROOT, APEXYARD_ADMIN_PASSWORD)</code>. If it lists <b>only</b> the password, the roots weren't set and the dashboard will show <b>no projects and no skills</b> — re-source the env file and relaunch.</p>
   <p class="note"><strong>Open it pre-authenticated — no password typing.</strong> Mint a one-time login token from your stored password and open straight in:</p>
   <div class="cmd"><button class="copy">Copy</button><pre><code>source ~/.config/apexyard/admin.env
 cd ~/path/to/your-apexyard-portfolio/apps/apexyard-admin
@@ -155,11 +157,15 @@ open "http://127.0.0.1:3000/login?token=$(node scripts/mint-login-token.mjs)"</c
 open "http://127.0.0.1:3000"</code></pre></div>
   <p><b>One click instead?</b> Add the launcher items in <a href="#launcher">§1.5</a> below.</p>
 
+  <p class="note"><strong>PDF service (optional).</strong> The <code>/pdf</code> skill and the dashboard's <b>PDF export</b> render through a small local service. Start it from your <b>portfolio</b> — it listens on <code>http://localhost:3001</code> and uses your <b>system browser</b> (Chrome, Chromium, or Edge must be installed; nothing is bundled):</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>cd ~/path/to/your-apexyard-portfolio/services/apexyard-pdf
+npm start</code></pre></div>
+
   <h3 id="launcher">1.5 — One-click launcher (optional)</h3>
   <p>If you use <a href="../">ApexDock</a>, add these items to your <code>launcher-items.yaml</code> (under the <code>items:</code> key) for a one-click start. <b>Replace the two paths</b> — <code>/Users/you/apexyard</code> (your fork) and <code>/Users/you/apexyard-portfolio</code> (your portfolio) — with yours, then <b>quit and reopen ApexDock</b>. The "Start" item launches the services and opens the dashboard <b>already logged in</b> (it mints the one-time token for you):</p>
   <div class="cmd"><button class="copy">Copy</button><pre><code>  - id: apexyard-start
     title: "ApexYard — Start"
-    subtitle: "Start the admin service and open the dashboard, already logged in"
+    subtitle: "Start the admin + PDF services and open the dashboard, already logged in"
     iconSystemName: play.circle.fill
     preLaunchCommands:
       -
@@ -167,7 +173,11 @@ open "http://127.0.0.1:3000"</code></pre></div>
         shell: "export APEXYARD_OPS_ROOT=/Users/you/apexyard APEXYARD_PORTFOLIO_ROOT=/Users/you/apexyard-portfolio && cd /Users/you/apexyard-portfolio/apps/apexyard-admin && npm run dev"
         waitForExit: false
       -
-        displayName: "Wait for the server"
+        displayName: "Start PDF service (:3001)"
+        shell: "cd /Users/you/apexyard-portfolio/services/apexyard-pdf && npm start"
+        waitForExit: false
+      -
+        displayName: "Wait for the servers"
         shell: "sleep 5"
       -
         displayName: "Open the dashboard, pre-authenticated"
