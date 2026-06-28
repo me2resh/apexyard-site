@@ -102,23 +102,71 @@ claude            # start Claude Code in the repo</code></pre></div>
   <p>Inside Claude Code, run <code>/setup</code> — three quick exchanges (describe your stack → accept defaults → confirm). Done.</p>
   <div class="cmd"><button class="copy">Copy</button><pre><code>/setup</code></pre></div>
 
-  <h3>1.3 — Turn on the premium skills (one command)</h3>
-  <p>You've been issued a <b>fine-grained access token</b> (a read-only GitHub PAT) so you can install the paid skills <b>without</b> repo access. Treat it like a password. Install the CLI once, then run the <b>setup wizard</b> — it auto-detects your roots, asks for the token, and lets you tick the components:</p>
-  <div class="cmd"><button class="copy">Copy</button><pre><code># paste your token when prompted (hidden, not saved to shell history):
-read -rs APEXYARD_TOKEN && echo
-pipx install "git+https://${APEXYARD_TOKEN}@github.com/me2resh/apexyard-premium.git"
+  <h3>1.3 — Turn on the premium skills</h3>
+  <p>You've been issued a <b>fine-grained access token</b> (a read-only GitHub PAT) so you can install the paid skills <b>without</b> repo access. Treat it like a password. Two steps: install the CLI, then run the setup wizard.</p>
 
-# then, from your apexyard fork, run the wizard:
-apexyard-premium setup</code></pre></div>
-  <p>When it lists components, pick <b>apexyard-search</b>, <b>roundtable</b>, <b>aws-diagram</b>, and <b>apexyard-admin</b>. Restart Claude Code afterwards so the new skills load.</p>
+  <p class="note"><strong>Step 1 — install the CLI.</strong> Run from <b>anywhere</b>. Paste the token at the hidden prompt; we export it as <code>APEXYARD_DEPLOY_TOKEN</code> so the wizard reuses it in Step 2 (no second prompt):</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>read -rs APEXYARD_DEPLOY_TOKEN; export APEXYARD_DEPLOY_TOKEN; echo
+pipx install "git+https://${APEXYARD_DEPLOY_TOKEN}@github.com/me2resh/apexyard-premium.git"</code></pre></div>
+
+  <p class="note"><strong>Step 2 — run the wizard.</strong> Run from <b>your apexyard fork</b> (it detects your roots from there). The <code>--confirm</code> flag lets you pick the gated (🔒) skills like <code>/roundtable</code> and enables them for you:</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>cd ~/path/to/your-apexyard-fork
+apexyard-premium setup --confirm</code></pre></div>
+  <p>When it lists components, type the numbers for the set you want — recommended: <b>apexyard-search, aws-diagram, apexyard-admin, apexyard-deploy, apexyard-pdf, apexyard-playbooks, apexyard-loops, roundtable</b>. Then <b>restart Claude Code</b> so the new skills load.</p>
+
+  <p class="note"><strong>Missed one?</strong> Install any single skill later from your fork — <code>--confirm</code> enables it if it's gated:</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>apexyard-premium install roundtable --confirm</code></pre></div>
+
   <p class="note"><strong>Where the token comes from:</strong> whoever sent you this guide generated it (GitHub fine-grained PAT, read-only). Ask them to refresh it if it expires — you never need write access to any private repo.</p>
 
   <h3>1.4 — Open your dashboard (optional, recommended)</h3>
-  <p>A browser view of your portfolio — including a read-only <b>spend</b> view so you can watch token cost as you go (nothing caps you; you just <em>see</em> it).</p>
+  <p>A browser view of your portfolio — including a read-only <b>spend</b> view so you can watch token cost as you go (nothing caps you; you just <em>see</em> it). The dashboard is password-protected; a <b>unique password is generated for your install</b> at <code>~/.config/apexyard/admin.env</code> the first time it starts.</p>
+  <p class="note"><strong>Start it</strong> — run from <b>your apexyard fork</b>:</p>
   <div class="cmd"><button class="copy">Copy</button><pre><code>export APEXYARD_OPS_ROOT="$PWD" APEXYARD_PORTFOLIO_ROOT="$PWD"
-cd "$APEXYARD_PORTFOLIO_ROOT/apps/apexyard-admin" && npm run dev
-# then open http://localhost:3000</code></pre></div>
-  <p>Prefer one click? See the <a href="../">ApexDock launcher guide</a>.</p>
+cd "$APEXYARD_PORTFOLIO_ROOT/apps/apexyard-admin" && npm run dev</code></pre></div>
+  <p class="note"><strong>Open it pre-authenticated — no password typing.</strong> Mint a one-time login token from your stored password and open straight in:</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>source ~/.config/apexyard/admin.env
+TOKEN=$(cd "$APEXYARD_PORTFOLIO_ROOT/apps/apexyard-admin" && node scripts/mint-login-token.mjs)
+open "http://127.0.0.1:3000/login?token=$TOKEN"</code></pre></div>
+  <p class="note">Prefer to type it? Copy the password to your clipboard, then open the login page:</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>source ~/.config/apexyard/admin.env; printf '%s' "$APEXYARD_ADMIN_PASSWORD" | pbcopy
+open "http://127.0.0.1:3000"</code></pre></div>
+  <p><b>One click instead?</b> Add the launcher items in <a href="#launcher">§1.5</a> below.</p>
+
+  <h3 id="launcher">1.5 — One-click launcher (optional)</h3>
+  <p>If you use <a href="../">ApexDock</a>, add these items to your <code>launcher-items.yaml</code> (under the <code>items:</code> key) for a one-click start. <b>Replace the two paths</b> — <code>/Users/you/apexyard</code> (your fork) and <code>/Users/you/apexyard-portfolio</code> (your portfolio) — with yours, then <b>quit and reopen ApexDock</b>. The "Start" item launches the services and opens the dashboard <b>already logged in</b> (it mints the one-time token for you):</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>  - id: apexyard-start
+    title: "ApexYard — Start"
+    subtitle: "Start the admin service and open the dashboard, already logged in"
+    iconSystemName: play.circle.fill
+    preLaunchCommands:
+      -
+        displayName: "Start admin (:3000)"
+        shell: "export APEXYARD_OPS_ROOT=/Users/you/apexyard APEXYARD_PORTFOLIO_ROOT=/Users/you/apexyard-portfolio && cd /Users/you/apexyard-portfolio/apps/apexyard-admin && npm run dev"
+        waitForExit: false
+      -
+        displayName: "Wait for the server"
+        shell: "sleep 5"
+      -
+        displayName: "Open the dashboard, pre-authenticated"
+        shell: "source ~/.config/apexyard/admin.env && TOKEN=$(cd /Users/you/apexyard-portfolio/apps/apexyard-admin && node scripts/mint-login-token.mjs) && open \"http://127.0.0.1:3000/login?token=$TOKEN\""
+        waitForExit: false
+    action:
+      type: openURL
+      url: "http://127.0.0.1:3000"</code></pre></div>
+  <p class="note">Want just the password on your clipboard instead of auto-login? Add this second item:</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>  - id: apexyard-copy-password
+    title: "ApexYard — Copy dashboard password"
+    subtitle: "Copy the admin password to the clipboard"
+    iconSystemName: key.fill
+    preLaunchCommands:
+      -
+        displayName: "Copy password"
+        shell: "source ~/.config/apexyard/admin.env && printf '%s' \"$APEXYARD_ADMIN_PASSWORD\" | pbcopy && osascript -e 'display notification \"Dashboard password copied to clipboard\" with title \"ApexYard Admin\"'"
+        waitForExit: false
+    action:
+      type: openURL
+      url: "http://127.0.0.1:3000"</code></pre></div>
 
   <h2><span class="n">02</span>Your golden path — idea → kicked-off project</h2>
   <div class="note"><strong>Read this first — it's a conversation, not a checklist.</strong> You don't have to memorise commands or run them in order. <b>Just talk to Claude in plain English</b> — "I want to build a customer portal on AWS", "help me decide between Cognito and my own auth", "what should I do next?" — and the framework picks the right skill and tells you the next sensible step. The slash-commands below are the <em>named</em> shortcuts; type them directly, or just describe what you want. Skip, reorder, or revisit any step — this is the <b>typical arc</b>, not a script. When in doubt, ask: <em>"what's the best next step?"</em></div>
