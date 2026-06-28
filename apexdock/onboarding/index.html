@@ -119,6 +119,28 @@ apexyard-premium setup --confirm</code></pre></div>
 
   <p class="note"><strong>Where the token comes from:</strong> whoever sent you this guide generated it (GitHub fine-grained PAT, read-only). Ask them to refresh it if it expires — you never need write access to any private repo.</p>
 
+  <h3>What you just turned on — your premium toolkit</h3>
+  <p>The recommended set adds the capabilities below. You don't memorise these — just describe what you want in plain English and the framework reaches for the right one. This is the menu you're paying for:</p>
+  <table>
+    <tr><th>Skill / component</th><th>What it gives you</th></tr>
+    <tr><th colspan="2">Find &amp; understand your work</th></tr>
+    <tr><td><code>apexyard-search</code></td><td>Semantic search across <em>all</em> your project docs and code — Claude finds the right file by meaning, not just keywords. Faster, cheaper, sharper answers.</td></tr>
+    <tr><td><code>search-freshness</code></td><td>Keeps that search index fresh automatically — re-indexes on session start so results never go stale.</td></tr>
+    <tr><th colspan="2">Ship &amp; document</th></tr>
+    <tr><td><code>apexyard-admin</code></td><td>A browser dashboard for your whole portfolio — projects, a read-only <b>spend</b> view, feature flags, playbooks — at <code>localhost:3000</code>.</td></tr>
+    <tr><td><code>apexyard-deploy</code></td><td>CI-first deploy scaffolding for each project — the foundation your cloud provider plugs into.</td></tr>
+    <tr><td><code>apexyard-pdf</code></td><td>Turn any markdown, HTML, or diagram into a clean PDF locally — specs, stakeholder updates, C4 diagrams, all render reliably.</td></tr>
+    <tr><td><code>aws-diagram</code></td><td>Generate AWS architecture diagrams straight from your infrastructure-as-code.</td></tr>
+    <tr><th colspan="2">Decide &amp; automate</th></tr>
+    <tr><td><code>/roundtable</code></td><td>Convene 2–5 role agents + The Contrarian in a facilitated debate (positions → cross-talk → challenge → synthesis) that converges on one written decision — with an explicit "what we are <em>not</em> doing".</td></tr>
+    <tr><td><code>/run-playbook</code><br><span class="note">(apexyard-playbooks)</span></td><td>Load and run named, repeatable procedures with confirm-before-side-effect — standardise the steps your team does over and over.</td></tr>
+    <tr><td><code>/loop-recipe</code><br><span class="note">(apexyard-loops)</span></td><td>Governed build → verify → iterate cycles that stop at the right gates — repetitive work on autopilot, without runaway loops.</td></tr>
+    <tr><th colspan="2">Grow &amp; launch</th></tr>
+    <tr><td><code>growth-pack</code></td><td>A whole Growth/Marketing department — Head of Growth (Layla) + Growth Manager (Bilal) roles that activate on go-to-market work.</td></tr>
+    <tr><td><code>/go-to-market</code></td><td>Turn a project's docs into a launch kit: positioning brief, one-pager, messaging set, launch checklist.</td></tr>
+    <tr><td><code>growth-skills</code></td><td>The hands-on growth toolkit: <code>/cro</code>, <code>/copywriting</code>, <code>/pricing</code>, <code>/customer-research</code>, <code>/marketing-psychology</code>, <code>/cold-email</code>.</td></tr>
+  </table>
+
   <h3>1.4 — Open your dashboard (optional, recommended)</h3>
   <p>A browser view of your portfolio — including a read-only <b>spend</b> view so you can watch token cost as you go (nothing caps you; you just <em>see</em> it). The dashboard is password-protected; a <b>unique password is generated for your install</b> at <code>~/.config/apexyard/admin.env</code> the first time it starts.</p>
   <p class="note"><strong>Start it</strong> — run from <b>your apexyard fork</b>:</p>
@@ -126,8 +148,8 @@ apexyard-premium setup --confirm</code></pre></div>
 cd "$APEXYARD_PORTFOLIO_ROOT/apps/apexyard-admin" && npm run dev</code></pre></div>
   <p class="note"><strong>Open it pre-authenticated — no password typing.</strong> Mint a one-time login token from your stored password and open straight in:</p>
   <div class="cmd"><button class="copy">Copy</button><pre><code>source ~/.config/apexyard/admin.env
-TOKEN=$(cd "$APEXYARD_PORTFOLIO_ROOT/apps/apexyard-admin" && node scripts/mint-login-token.mjs)
-open "http://127.0.0.1:3000/login?token=$TOKEN"</code></pre></div>
+cd ~/path/to/your-apexyard-portfolio/apps/apexyard-admin
+open "http://127.0.0.1:3000/login?token=$(node scripts/mint-login-token.mjs)"</code></pre></div>
   <p class="note">Prefer to type it? Copy the password to your clipboard, then open the login page:</p>
   <div class="cmd"><button class="copy">Copy</button><pre><code>source ~/.config/apexyard/admin.env; printf '%s' "$APEXYARD_ADMIN_PASSWORD" | pbcopy
 open "http://127.0.0.1:3000"</code></pre></div>
