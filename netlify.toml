@@ -1,5 +1,12 @@
 # Publish directory is the repo root (Netlify default for static sites; no build step).
-# This file contributes security headers + the canonical-domain redirect.
+# This file contributes security headers to the Netlify-served site.
+#
+# Split of duties (as of GH-26): production lives on AWS S3 + CloudFront at
+# yard.apexscript.com (see deploy-aws.yml) — CloudFront serves straight from S3
+# and never reads this file. Netlify's job is (1) a persistent, noindex staging
+# mirror of `main` at apexyard.netlify.app, and (2) per-PR deploy previews.
+# The X-Robots-Tag header below keeps both out of search indexes; it has no
+# effect on the CloudFront-served production site.
 
 [[headers]]
   for = "/*"
@@ -8,19 +15,14 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "interest-cohort=()"
+    # Netlify only ever serves the staging mirror + PR previews now — never
+    # production — so keep every Netlify-hosted response out of search indexes.
+    # Production (CloudFront/S3 at yard.apexscript.com) does not read this file
+    # and stays fully indexable.
+    X-Robots-Tag = "noindex, nofollow"
     # CSP: 'unsafe-inline' is required for script-src and style-src because
     # the page ships a single-file landing with inline <style>, inline
     # gtag boilerplate, and inline animation JS. googletagmanager.com is
     # allowed for the gtag.js loader; google-analytics.com + analytics.google.com
     # cover GA4 /g/collect hits. data: images for the 1px tracking pixel.
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
-
-# Canonicalize the .netlify.app hostname to the production subdomain.
-# Dormant until DNS flips yard.apexscript.com onto this Netlify site;
-# after that, visits to apexyard.netlify.app get 301'd so search
-# engines consolidate SEO signals on the custom domain.
-[[redirects]]
-  from = "https://apexyard.netlify.app/*"
-  to = "https://yard.apexscript.com/:splat"
-  status = 301
-  force = true
