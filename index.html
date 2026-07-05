@@ -675,6 +675,11 @@ a:hover { color: var(--accent); }
   font-weight: 600;
   margin-top: 0.45rem;
 }
+.shell-demo__body .blk {
+  color: var(--ink);
+  font-weight: 700;
+  text-transform: uppercase;
+}
 .shell-demo__body .muted {
   color: var(--ink-faint);
 }
@@ -1467,6 +1472,201 @@ a:hover { color: var(--accent); }
   line-height: 1.6;
 }
 
+/* "Read the hooks yourself" — 2x2 rule cards, same border grammar as
+   .outcome-tiles / .audience but 2-column since each card carries more
+   text (rule + outcome story + source link). */
+.rules {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border: 1px solid var(--rule);
+}
+@media (max-width: 900px) {
+  .rules { grid-template-columns: 1fr; }
+}
+.rule-card {
+  padding: 1.75rem 1.75rem;
+  border-right: 1px solid var(--rule-faint);
+  border-bottom: 1px solid var(--rule-faint);
+}
+.rule-card:nth-child(2n) { border-right: none; }
+.rule-card:nth-last-child(-n+2) { border-bottom: none; }
+@media (max-width: 900px) {
+  .rule-card { border-right: none; border-bottom: 1px solid var(--rule-faint); }
+  .rule-card:last-child { border-bottom: none; }
+}
+.rule-card__name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.55rem;
+  line-height: 1.3;
+}
+.rule-card__story {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  margin-bottom: 0.75rem;
+  max-width: 48ch;
+}
+.rule-card__link {
+  font-size: 12px;
+  font-family: var(--mono, monospace);
+}
+
+/* Commercial section — pricing pair + deployment-story callout, built
+   from the same border grammar as the rest of the page, not a
+   redesign. */
+.pricing {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border: 1px solid var(--rule);
+}
+@media (max-width: 900px) {
+  .pricing { grid-template-columns: 1fr; }
+}
+.pricing__tier {
+  padding: 2rem 1.75rem;
+  border-right: 1px solid var(--rule-faint);
+}
+.pricing__tier:last-child { border-right: none; }
+@media (max-width: 900px) {
+  .pricing__tier { border-right: none; border-bottom: 1px solid var(--rule-faint); }
+  .pricing__tier:last-child { border-bottom: none; }
+}
+.pricing__label {
+  font-size: 11px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+.pricing__amount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.6rem;
+}
+.pricing__amount small {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+.pricing__desc {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 40ch;
+}
+.pricing__perk {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 1.25rem var(--gutter);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  border-left: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.pricing__perk strong { color: var(--ink); }
+.deploy-story {
+  max-width: var(--max-w);
+  margin: 1.75rem auto 0;
+  padding: 1.5rem var(--gutter);
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.7;
+  border-left: 2px solid var(--accent);
+  max-width: calc(var(--max-w) - var(--gutter) * 2);
+}
+.commercial-cta {
+  max-width: var(--max-w);
+  margin: 1.75rem auto 0;
+  padding: 0 var(--gutter);
+}
+.commercial-note {
+  max-width: var(--max-w);
+  margin: 0.85rem auto 0;
+  padding: 0 var(--gutter);
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+
+/* "Governed by ApexYard" badge program — small unnumbered block,
+   same visual weight as .manifesto (an interstitial, not a full section). */
+.badge-program {
+  background: var(--paper-2);
+  border-top: 1px solid var(--rule-faint);
+  border-bottom: 1px solid var(--rule-faint);
+  padding: 2.5rem 0;
+}
+.badge-program__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem 2.5rem;
+}
+.badge-program__copy {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+.badge-program__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+.badge-program__desc {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 56ch;
+}
+.badge-program__snippet {
+  flex: 1 1 320px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--paper);
+  border: 1px solid var(--rule-faint);
+  padding: 0.75rem 0.9rem;
+  font-family: var(--mono, monospace);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.badge-program__snippet code {
+  flex: 1 1 auto;
+  overflow-x: auto;
+  white-space: pre;
+  color: var(--ink);
+}
+.badge-program__copy-btn {
+  flex: 0 0 auto;
+  border: 1px solid var(--rule-faint);
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 11px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+}
+.badge-program__copy-btn:hover { color: var(--ink); border-color: var(--ink-faint); }
+.badge-program__copy-btn.is-copied { color: var(--accent); border-color: var(--accent); }
+
 /* Plain-language intro paragraph that sits above the terminal demo
    section so the screen reads as proof, not as primary
    sales material. */
@@ -1619,17 +1819,22 @@ a:hover { color: var(--accent); }
     </p>
 
     <p class="hero__sub rise rise-3" id="ai-lead">
-      ApexYard adds the reviews, guardrails, and process behind every change you make with Claude Code. Catch the mistakes before your customers do — automatically, without checking every commit yourself. <a href="/how-it-works" class="uline" style="white-space:nowrap;">See a day with it →</a>
+      ApexYard is the SDLC framework that makes AI agents ship production software — with the same gates, reviews, and receipts a real engineering org runs on. It governs its own development; <a href="#gate-replay" class="uline">check the log</a>. <a href="/how-it-works" class="uline" style="white-space:nowrap;">See a day with it →</a>
     </p>
 
     <div class="hero__cta rise rise-4">
-      <a href="#quickstart" class="cta cta--primary">Quickstart — fork &amp; <code>/setup</code> in minutes →</a>
+      <a href="#quickstart" class="cta cta--primary">Quickstart — fork, then <code>/setup</code> →</a>
       <span class="cta__sep" aria-hidden="true">·</span>
       <a href="https://github.com/me2resh/apexyard" class="cta cta--ghost" target="_blank" rel="noopener">⑂ Fork on GitHub ↗</a>
     </div>
 
     <p class="hero__builtby rise rise-4">
       Built by <a href="https://me2resh.com" target="_blank" rel="noopener">me2resh</a>
+    </p>
+
+    <p class="hero__badges rise rise-4" aria-label="Live counts from GitHub, not hardcoded">
+      <a href="https://github.com/me2resh/apexyard/stargazers" target="_blank" rel="noopener"><img src="https://img.shields.io/github/stars/me2resh/apexyard?style=flat-square&amp;logo=github&amp;label=stars&amp;color=2F6DF6" alt="GitHub stars — live count" width="104" height="20" loading="lazy"></a>
+      <a href="https://github.com/me2resh/apexyard/forks" target="_blank" rel="noopener"><img src="https://img.shields.io/github/forks/me2resh/apexyard?style=flat-square&amp;logo=github&amp;label=forks&amp;color=2F6DF6" alt="GitHub forks — live count" width="102" height="20" loading="lazy"></a>
     </p>
 
   </div>
@@ -1743,13 +1948,126 @@ a:hover { color: var(--accent); }
 </section>
 
 <!-- ============================================================
+     THE PROOF MOMENT — a real BLOCKED -> APPROVED merge-gate
+     replay (PR #787, me2resh/apexyard). Self-contained scripted
+     terminal, not a hosted sandbox — every fact in it is a real,
+     checkable commit/PR/hook. Respects prefers-reduced-motion:
+     the lines below are already fully rendered in the markup, so
+     if the animation script bails out, the static transcript
+     still reads correctly top to bottom.
+     ============================================================ -->
+<section class="section section--alt" id="gate-replay" aria-label="A real blocked merge, replayed">
+  <div class="section__head">
+    <span class="section__num">04 / THE PROOF MOMENT</span>
+    <h2 class="section__title">A real merge, from the log</h2>
+    <p class="section__lede">
+      Not a mockup. This is <a href="https://github.com/me2resh/apexyard/pull/787" class="uline" target="_blank" rel="noopener">PR #787</a> in ApexYard's own history — a change to the framework's own trust chain, replayed exactly as it happened. Every line below links to something you can check yourself.
+    </p>
+  </div>
+
+  <div class="hero__inner">
+
+    <div class="shell-demo shell-demo--tall rise rise-4" id="gate-replay-demo" aria-label="Replay of PR 787's merge gate: blocked, reviewed, then approved">
+      <div class="shell-demo__chrome">
+        <span class="shell-demo__dots" aria-hidden="true">
+          <span class="shell-demo__dot"></span>
+          <span class="shell-demo__dot"></span>
+          <span class="shell-demo__dot is-warn"></span>
+        </span>
+        <div class="shell-demo__title">apexyard · #787 · trust-chain change</div>
+        <button type="button" class="shell-demo__replay" id="gate-replay-replay" aria-label="Replay the merge-gate demo">replay ↻</button>
+      </div>
+      <div class="shell-demo__body" id="gate-replay-body">
+        <div class="line you"><span class="prompt">$ </span>gh pr merge 787 --squash</div>
+        <div class="line blk">✗ BLOCKED: PR #787 has no recorded code-reviewer (Rex) approval.</div>
+        <div class="line">&nbsp;</div>
+        <div class="line muted">&nbsp;&nbsp;role-triggers #777: diff touches the trust chain</div>
+        <div class="line muted">&nbsp;&nbsp;(.claude/settings.json + a new PreToolUse hook) —</div>
+        <div class="line muted">&nbsp;&nbsp;Security Auditor review required, regardless of author.</div>
+        <div class="line">&nbsp;</div>
+        <div class="line sys">→ security-reviewer checks <a href="https://github.com/me2resh/apexyard/commit/512d2537884f9e7962d09616a075c45b30d0c6fd" target="_blank" rel="noopener">512d253</a> ... <span class="ok">APPROVED</span></div>
+        <div class="line muted">&nbsp;&nbsp;settings.json diff: 55 → 56 hooks, zero removed or altered</div>
+        <div class="line muted">&nbsp;&nbsp;new hook exits 0 on every path — cannot block or allow</div>
+        <div class="line muted">&nbsp;&nbsp;no marker writes, no injection surface, no secret read</div>
+        <div class="line">&nbsp;</div>
+        <div class="line sys">→ code-reviewer (Rex) checks <a href="https://github.com/me2resh/apexyard/commit/512d2537884f9e7962d09616a075c45b30d0c6fd" target="_blank" rel="noopener">512d253</a> ... <span class="ok">APPROVED</span></div>
+        <div class="line muted">&nbsp;&nbsp;verified independently — fetched from upstream, ran the</div>
+        <div class="line muted">&nbsp;&nbsp;test suite, shellcheck, and diff scope myself</div>
+        <div class="line">&nbsp;</div>
+        <div class="line sys">→ me2resh approves PR #787 by name</div>
+        <div class="line muted">&nbsp;&nbsp;a plan-level "go" doesn't count — this has to name the PR</div>
+        <div class="line">&nbsp;</div>
+        <div class="line you"><span class="prompt">$ </span>gh pr merge 787 --squash</div>
+        <div class="line ok">✓ Merged as <a href="https://github.com/me2resh/apexyard/commit/3fc95fb0ff39989f87dbbdca09988c7c26d1ff78" target="_blank" rel="noopener">3fc95fb</a> · issue <a href="https://github.com/me2resh/apexyard/issues/784" target="_blank" rel="noopener">#784</a> auto-closed · worktree cleaned</div>
+      </div>
+    </div>
+
+    <p class="hero__proof rise rise-5" aria-label="Check it yourself">
+      Check it yourself — <a href="https://github.com/me2resh/apexyard/blob/main/.claude/hooks/block-unreviewed-merge.sh" class="uline" target="_blank" rel="noopener">the gate that blocked the first attempt</a>, <a href="https://github.com/me2resh/apexyard/blob/3fc95fb0ff39989f87dbbdca09988c7c26d1ff78/.claude/hooks/warn-isolated-build-risk.sh" class="uline" target="_blank" rel="noopener">the hook the security review checked</a>, and <a href="https://github.com/me2resh/apexyard/pull/787" class="uline" target="_blank" rel="noopener">the PR itself</a>, reviews and all.
+    </p>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     READ THE HOOKS YOURSELF — 4 named rules, each backed by a
+     real hook source file + a plain-language outcome story. The
+     non-bash-readers convert on the consequence, not the shell.
+     ============================================================ -->
+<section class="section" id="the-rules" aria-label="The rules, enforced as code">
+  <div class="section__head">
+    <span class="section__num">05 / READ THE HOOKS YOURSELF</span>
+    <h2 class="section__title">Rules shipped as code, not policy docs</h2>
+    <p class="section__lede">
+      These aren't guidelines an agent is asked to remember. Each one is a small script that runs at the moment it matters and refuses to let the risky thing happen. Four of them, named, with the actual source.
+    </p>
+  </div>
+
+  <div class="rules">
+
+    <article class="rule-card">
+      <h3 class="rule-card__name">"No direct pushes to main."</h3>
+      <p class="rule-card__story">
+        An agent's shortcut push during a "quick fix" can't land: the hook blocks it before it reaches the branch, whether a human or an agent is holding the keyboard. Every change goes through a PR, zero exceptions for "just a typo."
+      </p>
+      <a href="https://github.com/me2resh/apexyard/blob/main/.claude/hooks/block-main-push.sh" class="uline rule-card__link" target="_blank" rel="noopener">.claude/hooks/block-main-push.sh ↗</a>
+    </article>
+
+    <article class="rule-card">
+      <h3 class="rule-card__name">"A build agent cannot review its own work."</h3>
+      <p class="rule-card__story">
+        The agent that writes the code and the agent that reviews it run in separate contexts, so an author can't quietly approve its own PR. If a build agent tries to fake that separation by writing its own approval marker, this hook catches it before the merge gate ever sees it.
+      </p>
+      <a href="https://github.com/me2resh/apexyard/blob/main/.claude/hooks/warn-review-marker-write.sh" class="uline rule-card__link" target="_blank" rel="noopener">.claude/hooks/warn-review-marker-write.sh ↗</a>
+    </article>
+
+    <article class="rule-card">
+      <h3 class="rule-card__name">"Plan-level 'go' is not merge approval."</h3>
+      <p class="rule-card__story">
+        Saying "go" to a six-step plan doesn't authorize the merge buried inside step four. Every merge needs a named human to look at that specific pull request and say so. That's exactly what you watched happen in the PR #787 replay above.
+      </p>
+      <a href="https://github.com/me2resh/apexyard/blob/main/.claude/hooks/block-unreviewed-merge.sh" class="uline rule-card__link" target="_blank" rel="noopener">.claude/hooks/block-unreviewed-merge.sh ↗</a>
+    </article>
+
+    <article class="rule-card">
+      <h3 class="rule-card__name">"Every significant decision gets a record."</h3>
+      <p class="rule-card__story">
+        Pick a library, a pattern, or an architecture without writing down why, and review flags it. Not busywork: the next engineer, human or agent, inherits the reasoning instead of just the code six months later.
+      </p>
+      <a href="https://github.com/me2resh/apexyard/blob/main/.claude/hooks/require-agdr-for-arch-pr.sh" class="uline rule-card__link" target="_blank" rel="noopener">.claude/hooks/require-agdr-for-arch-pr.sh ↗</a>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============================================================
      TERMINAL DEMO — moved below the fold. Excellent proof for
      a technical evaluator who scrolls; would be intimidating
      as a first impression for the target founder.
      ============================================================ -->
 <section class="section" id="terminal-demo" aria-label="Terminal walkthrough">
   <div class="section__head">
-    <span class="section__num">04 / FOR THE TECHNICALLY CURIOUS</span>
+    <span class="section__num">06 / FOR THE TECHNICALLY CURIOUS</span>
     <h2 class="section__title">What one day looks like, in real terminal</h2>
     <p class="section__lede">
       If you'd rather skim the plain-English version, read <a href="/how-it-works" class="uline">how it works</a>. The replay below is for the technical friend you'll show this to.
@@ -1836,11 +2154,11 @@ a:hover { color: var(--accent); }
       <div class="install" id="install-block">
         <span class="install__prompt">$</span>
         <code class="install__cmd" id="install-cmd">gh repo fork me2resh/apexyard --clone</code>
-        <button type="button" class="install__copy" id="install-copy" aria-label="Copy install command">copy</button>
+        <button type="button" class="install__copy" id="install-copy" data-event="quickstart-copy" aria-label="Copy install command">copy</button>
       </div>
-      <a href="#" class="install__cta" id="pro-setup-cta"
-         data-u="hello+apexyard" data-d="me2resh.com"
-         aria-label="Contact for professional setup">
+      <a href="#" class="install__cta mailto-cta" id="pro-setup-cta"
+         data-u="hello" data-d="apexyard.ai" data-event="mailto-click"
+         aria-label="Email for professional setup">
         <span class="install__cta__label">professional setup</span>
         <span class="install__cta__arrow">→</span>
       </a>
@@ -1876,10 +2194,10 @@ a:hover { color: var(--accent); }
 <section class="section section--alt" id="quickstart">
 
   <div class="section__head">
-    <span class="section__num">05 / QUICKSTART</span>
+    <span class="section__num">07 / QUICKSTART</span>
     <h2 class="section__title">How do I get started?</h2>
     <p class="section__lede">
-      From fork to first command. Everything is public; no invite needed. If you'd rather see a day with it before installing, read <a href="/how-it-works" class="uline">how it works</a> first.
+      From fork to first command. Everything is public; no invite needed. This is the real path, not a highlight reel — three commands, three <code>/setup</code> questions, and you're wired into your first ticket. No separate install, no waitlist, no trial account. If you'd rather see a day with it before installing, read <a href="/how-it-works" class="uline">how it works</a> first.
     </p>
   </div>
 
@@ -1923,7 +2241,7 @@ claude
 <section class="section" id="examples">
 
   <div class="section__head">
-    <span class="section__num">06 / WALKTHROUGHS</span>
+    <span class="section__num">08 / WALKTHROUGHS</span>
     <h2 class="section__title">Three real situations, three real outcomes</h2>
     <p class="section__lede">
       Each walkthrough starts with a moment you'll recognise — and shows what apexyard does about it. Below the screens are technical captions for the friend who's vetting this with you.
@@ -2022,7 +2340,7 @@ confirm it skips the missing column before you ship."</span></pre>
 <section class="section" id="in-the-box">
 
   <div class="section__head">
-    <span class="section__num">07 / WHAT'S IN THE BOX</span>
+    <span class="section__num">09 / WHAT'S IN THE BOX</span>
     <h2 class="section__title">What's in the toolbox</h2>
     <p class="section__lede">
       Section 01 told you what ApexYard does for you. This section is the inventory — the actual reviews, audits, ticketing, and portfolio surfaces you get when you fork it. Outcome on the left of each row, technical detail (counts, names, file paths) on the right.
@@ -2085,6 +2403,83 @@ confirm it skips the missing column before you ship."</span></pre>
 </section>
 
 <!-- ============================================================
+     COMMERCIAL — open-core split + professional setup & support.
+     Pricing is public by design; the payment link is not — every
+     engagement is a quoted conversation over email, never a
+     checkout page in this source. See docs/briefs/apexyard-ai-
+     relaunch-brief-v3.md (private, ops portfolio) for the pricing
+     decision this section renders.
+     ============================================================ -->
+<section class="section section--alt" id="commercial" aria-label="Professional setup and support">
+
+  <div class="section__head">
+    <span class="section__num">10 / PROFESSIONAL SETUP &amp; SUPPORT</span>
+    <h2 class="section__title">Free forever. Or set up for you.</h2>
+    <p class="section__lede">
+      The framework itself is MIT, forever: fork it, run it, change anything, never pay a cent. What's not free is the premium cockpit and the self-hosted Box, plus having me personally wire either one into your repos instead of doing it yourself.
+    </p>
+  </div>
+
+  <div class="pricing">
+    <div class="pricing__tier">
+      <div class="pricing__label">Setup · one time</div>
+      <div class="pricing__amount">from £499</div>
+      <p class="pricing__desc">
+        Solo band, up to 3 clean repos. Growth teams (more repos, messier history) start from £999, quoted by the <code>/handover</code> harnessability assessment. Not a guess.
+      </p>
+    </div>
+    <div class="pricing__tier">
+      <div class="pricing__label">Running · per product</div>
+      <div class="pricing__amount">£99<small>/mo</small></div>
+      <p class="pricing__desc">
+        Updates, new skills and hooks as they ship, and direct support. Billed per product, not per repo: a monorepo and a 5-service product cost the same.
+      </p>
+    </div>
+  </div>
+  <p class="pricing__perk">
+    <strong>Founding Access is onboarded personally.</strong> Every install gets me on the call, and founding customers keep their rate for life, even after the price goes up for everyone else.
+  </p>
+
+  <div class="deploy-story">
+    Runs on your laptop or a £5/mo VPS in your own cloud, one command. You bring your own Claude subscription: we never see your code, and we never see your bill.
+  </div>
+
+  <div class="commercial-cta">
+    <a href="#" class="install__cta mailto-cta" id="commercial-mailto-cta"
+       data-u="hello" data-d="apexyard.ai" data-event="mailto-click"
+       aria-label="Email for professional setup and support">
+      <span class="install__cta__label">professional setup &amp; support</span>
+      <span class="install__cta__arrow">→</span>
+    </a>
+  </div>
+  <p class="commercial-note">
+    No checkout link anywhere in this page. Every engagement starts as an email, scoped and quoted to what you're actually bringing, not a fixed shelf price.
+  </p>
+
+</section>
+
+<!-- ============================================================
+     GOVERNED BY APEXYARD — badge program. Small, unnumbered
+     interstitial (same visual weight as .manifesto) — adopters
+     copy this into their own README, turning every fork into
+     distribution.
+     ============================================================ -->
+<section class="badge-program" aria-label="Governed by ApexYard badge for your README">
+  <div class="badge-program__inner">
+    <div class="badge-program__copy">
+      <div class="badge-program__title">Ship one, add the badge</div>
+      <p class="badge-program__desc">
+        Once your repo runs under ApexYard's gates, tell people. Drop this in your README: it links straight to the framework so anyone who clicks can see exactly what "governed" means here.
+      </p>
+    </div>
+    <div class="badge-program__snippet">
+      <code id="badge-snippet-code">[![Governed by ApexYard](https://img.shields.io/badge/governed_by-ApexYard-2F6DF6?style=flat-square)](https://github.com/me2resh/apexyard)</code>
+      <button type="button" class="badge-program__copy-btn" id="badge-snippet-copy" aria-label="Copy the badge markdown snippet">copy</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
      FINAL CTA
      ============================================================ -->
 <section class="final">
@@ -2135,10 +2530,28 @@ confirm it skips the missing column before you ship."</span></pre>
       <a href="/game">play the game</a>
       <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">changelog ↗</a>
       <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener">github ↗</a>
+      <a href="https://github.com/me2resh" target="_blank" rel="noopener">me2resh ↗</a>
+      <a href="https://www.youtube.com/@learnWithMe2resh" target="_blank" rel="noopener">youtube ↗</a>
     </nav>
     <div class="page-footer__meta">© 2026 <a href="https://me2resh.com" target="_blank" rel="noopener">me2resh</a> · ApexYard · open source · plain markdown · zero dependencies</div>
   </div>
 </footer>
+
+<!-- ============================================================
+     conversion instrumentation — two events, via the gtag already
+     loaded above (Consent Mode v2; gtag no-ops until the visitor
+     grants analytics_storage, so this never needs its own consent
+     check). No third-party script added beyond the gtag already on
+     the page, no telemetry beyond the two named clicks the brief
+     asks for.
+     ============================================================ -->
+<script>
+function apexyardTrack(eventName) {
+  if (typeof gtag === 'function') {
+    gtag('event', eventName);
+  }
+}
+</script>
 
 <!-- ============================================================
      copy-to-clipboard for the install command
@@ -2151,6 +2564,7 @@ confirm it skips the missing column before you ship."</span></pre>
 
   btn.addEventListener('click', function () {
     var text = cmd.textContent || '';
+    apexyardTrack('quickstart_copy');
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(function () { confirm(); });
     } else {
@@ -2177,32 +2591,64 @@ confirm it skips the missing column before you ship."</span></pre>
   }
 })();
 
-// ---- professional-setup CTA: non-scrapable email assembly ----
-// The mailto: address is never present in the page source. Data attributes
-// hold the user + domain parts separately, and we only assemble and set
-// the href on the first user hover / focus / touch. Basic crawlers that
-// read HTML will find neither an @ sign nor the composed address.
+// ---- badge-snippet copy-to-clipboard (Governed by ApexYard block) ----
 (function () {
-  var a = document.getElementById('pro-setup-cta');
-  if (!a) return;
-  var assembled = false;
-  function assemble() {
-    if (assembled) return;
+  var btn = document.getElementById('badge-snippet-copy');
+  var code = document.getElementById('badge-snippet-code');
+  if (!btn || !code) return;
+
+  btn.addEventListener('click', function () {
+    var text = code.textContent || '';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(confirm);
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); confirm(); } catch (_) {}
+      document.body.removeChild(ta);
+    }
+  });
+
+  function confirm() {
+    btn.classList.add('is-copied');
+    var prev = btn.textContent;
+    btn.textContent = 'copied';
+    setTimeout(function () {
+      btn.classList.remove('is-copied');
+      btn.textContent = prev;
+    }, 1600);
+  }
+})();
+
+// ---- mailto CTAs: non-scrapable email assembly ----
+// Shared across every element with class "mailto-cta" (the small ghost
+// link in the install block + the main commercial-section button). The
+// mailto: address is never present in the page source — data attributes
+// hold the user + domain parts separately, and each link only assembles
+// and sets its href on the first hover / focus / touch. Basic crawlers
+// that read raw HTML find neither an @ sign nor the composed address.
+(function () {
+  var links = document.querySelectorAll('.mailto-cta');
+  if (!links.length) return;
+
+  function assemble(a) {
+    if (a.dataset.assembled) return;
     var u = a.getAttribute('data-u') || '';
     var d = a.getAttribute('data-d') || '';
     if (!u || !d) return;
-    var subject = 'ApexYard - professional setup enquiry';
+    var subject = 'Professional setup';
     var body = [
       'Hi Ahmed,',
       '',
-      "I'd like to set up apexyard for my team. A few quick details so you can scope the work:",
+      "We would like to talk about professional setup and support for ApexYard.",
       '',
-      '- Company / org:',
+      '- Repo (or repos) we are bringing under management:',
       '- Team size:',
-      '- Stack (languages / frameworks):',
-      '- Number of repos to bring under management:',
-      "- What you're trying to solve (engineering consistency, portfolio visibility, onboarding speed, something else):",
-      '- Timeline / urgency:',
+      "- What we are shipping:",
       '',
       'Thanks,',
       ''
@@ -2212,14 +2658,20 @@ confirm it skips the missing column before you ship."</span></pre>
       '?subject=' + encodeURIComponent(subject) +
       '&body=' + encodeURIComponent(body)
     );
-    assembled = true;
+    a.dataset.assembled = '1';
   }
-  ['mouseenter', 'focus', 'touchstart'].forEach(function (ev) {
-    a.addEventListener(ev, assemble, { once: false, passive: true });
+
+  links.forEach(function (a) {
+    ['mouseenter', 'focus', 'touchstart'].forEach(function (ev) {
+      a.addEventListener(ev, function () { assemble(a); }, { once: false, passive: true });
+    });
+    // Safety net: if someone clicks before any of the above fire (keyboard
+    // activation on some browsers), assemble first and let the click proceed.
+    a.addEventListener('click', function () {
+      assemble(a);
+      apexyardTrack('mailto_click');
+    });
   });
-  // Safety net: if someone clicks before any of the above fire (keyboard
-  // activation on some browsers), assemble first and let the click proceed.
-  a.addEventListener('click', assemble);
 })();
 
 // ---- multi-tab shell animation (hero) ----
