@@ -1528,68 +1528,11 @@ a:hover { color: var(--accent); }
   font-family: var(--mono, monospace);
 }
 
-/* Commercial section — pricing pair + deployment-story callout, built
-   from the same border grammar as the rest of the page, not a
-   redesign. */
-.pricing {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0;
-  border: 1px solid var(--rule);
-}
-@media (max-width: 900px) {
-  .pricing { grid-template-columns: 1fr; }
-}
-.pricing__tier {
-  padding: 2rem 1.75rem;
-  border-right: 1px solid var(--rule-faint);
-}
-.pricing__tier:last-child { border-right: none; }
-@media (max-width: 900px) {
-  .pricing__tier { border-right: none; border-bottom: 1px solid var(--rule-faint); }
-  .pricing__tier:last-child { border-bottom: none; }
-}
-.pricing__label {
-  font-size: 11px;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 700;
-  margin-bottom: 0.6rem;
-}
-.pricing__amount {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--ink);
-  letter-spacing: -0.02em;
-  margin-bottom: 0.6rem;
-}
-.pricing__amount small {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--ink-soft);
-}
-.pricing__desc {
-  font-size: 13.5px;
-  color: var(--ink-soft);
-  line-height: 1.6;
-  max-width: 40ch;
-}
-.pricing__perk {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 1.25rem var(--gutter);
-  font-size: 13.5px;
-  color: var(--ink-soft);
-  line-height: 1.65;
-  border-left: 1px solid var(--rule);
-  border-right: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-}
-.pricing__perk strong { color: var(--ink); }
+/* Commercial section — deployment-story callout, built from the same
+   border grammar as the rest of the page, not a redesign. The pricing
+   pair (.pricing / .pricing__tier / .pricing__perk) that used to live
+   here is intentionally removed from production — see the HTML comment
+   above the #commercial section. */
 .deploy-story {
   max-width: var(--max-w);
   margin: 1.75rem auto 0;
@@ -2417,11 +2360,12 @@ confirm it skips the missing column before you ship."</span></pre>
 
 <!-- ============================================================
      COMMERCIAL — open-core split + professional setup & support.
-     Pricing is public by design; the payment link is not — every
-     engagement is a quoted conversation over email, never a
-     checkout page in this source. See docs/briefs/apexyard-ai-
-     relaunch-brief-v3.md (private, ops portfolio) for the pricing
-     decision this section renders.
+     Pricing is intentionally NOT shown here yet — it's staged on the
+     `staging` branch for founder review before it goes live. This
+     section stays pricing-free on production until that review closes
+     out; the CTA below routes straight to a quoted email conversation.
+     See docs/briefs/apexyard-ai-relaunch-brief-v3.md (private, ops
+     portfolio) for the pricing decision in progress.
      ============================================================ -->
 <section class="section section--alt" id="commercial" aria-label="Professional setup and support">
 
@@ -2429,32 +2373,12 @@ confirm it skips the missing column before you ship."</span></pre>
     <span class="section__num">10 / PROFESSIONAL SETUP &amp; SUPPORT</span>
     <h2 class="section__title">Free forever. Or set up for you.</h2>
     <p class="section__lede">
-      The framework itself is MIT, forever: fork it, run it, change anything, never pay a cent. What's not free is the premium cockpit and the self-hosted Box, plus having me personally wire either one into your repos instead of doing it yourself.
+      The framework itself is MIT, forever: fork it, run it, change anything, never pay a cent. What's not free is the premium cockpit and the self-hosted Box, plus having me personally wire either one into your repos instead of doing it yourself. Get in touch and we'll scope it to what you're actually bringing.
     </p>
   </div>
 
-  <div class="pricing">
-    <div class="pricing__tier">
-      <div class="pricing__label">Setup · one time</div>
-      <div class="pricing__amount">from £499</div>
-      <p class="pricing__desc">
-        Solo band, up to 3 clean repos. Growth teams (more repos, messier history) start from £999, quoted by the <code>/handover</code> harnessability assessment. Not a guess.
-      </p>
-    </div>
-    <div class="pricing__tier">
-      <div class="pricing__label">Running · per product</div>
-      <div class="pricing__amount">£99<small>/mo</small></div>
-      <p class="pricing__desc">
-        Updates, new skills and hooks as they ship, and direct support. Billed per product, not per repo: a monorepo and a 5-service product cost the same.
-      </p>
-    </div>
-  </div>
-  <p class="pricing__perk">
-    <strong>Founding Access is onboarded personally.</strong> Every install gets me on the call, and founding customers keep their rate for life, even after the price goes up for everyone else.
-  </p>
-
   <div class="deploy-story">
-    Runs on your laptop or a £5/mo VPS in your own cloud, one command. You bring your own Claude subscription: we never see your code, and we never see your bill.
+    Runs on your laptop or a cheap VPS in your own cloud, one command. You bring your own Claude subscription: we never see your code, and we never see your bill.
   </div>
 
   <div class="commercial-cta">
