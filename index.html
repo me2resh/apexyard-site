@@ -416,6 +416,17 @@ a:hover { color: var(--accent); }
   margin-bottom: 2.5rem;
 }
 
+.hero__badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.75rem 0 0;
+}
+.hero__badges img {
+  display: block;
+}
+
 /* the install row - the most important element on the page. holds the
    `gh repo fork` command + a professional-setup CTA side by side so the
    page reads "here's how to self-serve / or pay us to do it for you" */
@@ -1666,6 +1677,9 @@ a:hover { color: var(--accent); }
 }
 .badge-program__copy-btn:hover { color: var(--ink); border-color: var(--ink-faint); }
 .badge-program__copy-btn.is-copied { color: var(--accent); border-color: var(--accent); }
+@media (max-width: 520px) {
+  .badge-program__snippet code { white-space: normal; overflow-x: visible; word-break: break-all; }
+}
 
 /* Plain-language intro paragraph that sits above the terminal demo
    section so the screen reads as proof, not as primary
@@ -1967,7 +1981,7 @@ a:hover { color: var(--accent); }
 
   <div class="hero__inner">
 
-    <div class="shell-demo shell-demo--tall rise rise-4" id="gate-replay-demo" aria-label="Replay of PR 787's merge gate: blocked, reviewed, then approved">
+    <div class="shell-demo rise rise-4" id="gate-replay-demo" aria-label="Replay of PR 787's merge gate: blocked, reviewed, then approved">
       <div class="shell-demo__chrome">
         <span class="shell-demo__dots" aria-hidden="true">
           <span class="shell-demo__dot"></span>
@@ -1975,7 +1989,6 @@ a:hover { color: var(--accent); }
           <span class="shell-demo__dot is-warn"></span>
         </span>
         <div class="shell-demo__title">apexyard · #787 · trust-chain change</div>
-        <button type="button" class="shell-demo__replay" id="gate-replay-replay" aria-label="Replay the merge-gate demo">replay ↻</button>
       </div>
       <div class="shell-demo__body" id="gate-replay-body">
         <div class="line you"><span class="prompt">$ </span>gh pr merge 787 --squash</div>
