@@ -72,6 +72,29 @@ jobs:
               --content-type "text/markdown; charset=utf-8"
           done
 
+      - name: Publish a staging-specific robots.txt (Disallow)
+        run: |
+          # The s3 sync above lands PRODUCTION's robots.txt (Allow: /), which
+          # reads as "crawl everything" — the wrong signal for a pre-prod env.
+          # Overwrite the key with a staging robots that disallows crawling.
+          # This is belt-and-suspenders with the `X-Robots-Tag: noindex,
+          # nofollow` response header the CloudFront layer already sets on every
+          # response (instaloc-infra apexyard-site-staging/cloudfront.tf) — the
+          # header is what actually keeps staging out of the index; this stops a
+          # compliant crawler from fetching in the first place. Staging only —
+          # deploy-aws.yml (prod) keeps prod's Allow: / untouched. See #50.
+          # printf (not a heredoc) so YAML space-indentation can't leak leading
+          # whitespace into the robots directives.
+          printf '%s\n' \
+            '# Staging environment — not for indexing or crawling.' \
+            '# See also the X-Robots-Tag: noindex, nofollow response header set' \
+            '# at the CloudFront layer (instaloc-infra apexyard-site-staging).' \
+            'User-agent: *' \
+            'Disallow: /' > /tmp/staging-robots.txt
+          echo "publish staging robots.txt -> s3://${BUCKET}/robots.txt"
+          aws s3 cp /tmp/staging-robots.txt "s3://${BUCKET}/robots.txt" \
+            --content-type "text/plain; charset=utf-8"
+
       - name: Invalidate CloudFront
         run: |
           DIST_ID=$(aws cloudfront list-distributions \
