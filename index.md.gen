@@ -84,7 +84,7 @@ Every edit needs a real ticket behind it. Every database change needs a rollback
 - **Rex** (code review) reads what changed and how the rest of the system reacts to it
 - **Hakim** (security) flags auth / crypto / secrets
 - **Munir** (deps) scans vulnerabilities + licences
-- **Tariq** (PR manager) and **Idris** (ticket manager) handle the orchestration
+- **Naqid** (the Contrarian) challenges the premise; **Tariq** (solution architect) reviews the design before build
 
 ### One inbox across everything
 
