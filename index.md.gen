@@ -11,7 +11,7 @@ ApexYard adds the reviews, guardrails, and process behind every change you make 
 - **Automatic code review.** Every change — yours or your contractor's — gets a senior-engineering-level review before it ships
 - **Launch-readiness checks.** Find out what's missing across security, performance, accessibility, monitoring, docs before customers tell you
 - **One inbox across all your products.** Every PR, issue, comment, blocker in one screen, no tab-juggling
-- **A real engineering team's worth of reviewers.** Touch auth code → a security reviewer takes a look. Touch the database → someone walks you through the rollback plan. 20 role definitions, 25 specialised reviewer agents
+- **A real engineering team's worth of reviewers.** Touch auth code → a security reviewer takes a look. Touch the database → someone walks you through the rollback plan. 20 role definitions, 23 specialised reviewer agents
 - **Guardrails that fire themselves.** 49 small scripts catch ticket-first edits, missing rollback plans, secrets in code, red CI before merge — so you don't have to remember
 - **A decision-log that follows you.** Every meaningful technical decision is recorded with reasoning — search it next year, the answer's there
 
