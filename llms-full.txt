@@ -2,8 +2,8 @@
 
 > ApexYard lets founders ship AI-built software like a real engineering team —
 > without hiring one. Automatic code review, launch-readiness checks, and
-> one place for all your products, built on top of Claude Code. 65 skills,
-> 42 hooks, 20 role definitions. Open source, plain markdown and shell, no SaaS,
+> one place for all your products, built on top of Claude Code. 66 skills,
+> 49 hooks, 20 role definitions. Open source, plain markdown and shell, no SaaS,
 > no lock-in.
 
 This file is the LLM/agent-friendly concatenation of the apexyard marketing
@@ -122,14 +122,14 @@ its own checklist and boundaries.
 Want to adopt a project you've inherited? `/handover`. Want to capture
 an idea before it evaporates? `/idea`. Want to know what's waiting on
 you across every product? `/inbox`. Want a launch-readiness check before
-customers see it? `/launch-check`. 65 of these in total — each one is a
+customers see it? `/launch-check`. 66 of these in total — each one is a
 focused workflow with safety rails.
 
 ### Guardrails that stop bad code from shipping — automatically
 
 Every edit needs a real ticket behind it. Every database change needs a
 rollback plan. Every merge needs a real review. Secrets in code get
-caught before they're committed. Mechanically enforced — 42 small
+caught before they're committed. Mechanically enforced — 49 small
 scripts that fire at the right moments, so you don't have to remember
 to check.
 
@@ -139,7 +139,7 @@ The reviewer reads what changed and how the rest of the system reacts
 to it — not just the diff. It flags missing tests, surfaces decisions
 you made silently, and refuses to approve work that bypasses the team's
 standards. Pushing new code invalidates the previous approval, so
-nothing slips through after the review is done. Powered by 25
+nothing slips through after the review is done. Powered by 23
 specialised reviewer agents under the hood.
 
 ### Every product, one screen
@@ -242,9 +242,9 @@ each owned by different parts of the framework:
 1. **Governance layer** — the markdown spec: `CLAUDE.md`, `roles/`,
    `workflows/`, `templates/`, `handbooks/`. The "what good looks like"
    for the framework.
-2. **Capability layer** — the runnable spec: `.claude/skills/` (65
-   slash commands), `.claude/agents/` (25 sub-agents incl. Rex), and
-   `.claude/hooks/` (42 mechanical enforcement scripts).
+2. **Capability layer** — the runnable spec: `.claude/skills/` (66
+   slash commands), `.claude/agents/` (23 sub-agents incl. Rex), and
+   `.claude/hooks/` (49 mechanical enforcement scripts).
 3. **Framework defaults layer** — `.claude/project-config.defaults.json`
    ships the framework's opinions; adopters override per-repo in
    `.claude/project-config.json` (shallow merge).
@@ -294,7 +294,7 @@ Free with any project you don't want named publicly.
 
 # Skills (https://yard.apexscript.com/skills)
 
-65 slash commands grouped by what you're trying to do — not by what's
+66 slash commands grouped by what you're trying to do — not by what's
 under the hood. Each is a markdown SKILL.md file under
 `.claude/skills/<name>/`.
 

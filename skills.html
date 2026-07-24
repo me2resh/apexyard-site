@@ -7,14 +7,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>ApexYard Skills — 53 active slash commands for Claude Code</title>
+<title>ApexYard Skills — 66 active slash commands for Claude Code</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <meta name="author" content="me2resh">
 <meta name="copyright" content="© 2026 ApexYard · MIT">
-<meta name="description" content="ApexYard ships 53 active slash commands across audits, tickets, architecture, decisions, portfolio, and framework ops. Drop into any Claude Code session.">
+<meta name="description" content="ApexYard ships 66 active slash commands across audits, tickets, architecture, decisions, portfolio, and framework ops. Drop into any Claude Code session.">
 <link rel="canonical" href="https://yard.apexscript.com/skills">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -25,8 +25,8 @@
 <meta name="llm:token-count" content="11945">
 <meta name="llm:doc-length" content="47780 chars">
 
-<meta property="og:title" content="ApexYard Skills — 53 active slash commands for Claude Code">
-<meta property="og:description" content="53 active slash commands available in any apexyard-managed project. Run any of these in a Claude Code session inside your fork.">
+<meta property="og:title" content="ApexYard Skills — 66 active slash commands for Claude Code">
+<meta property="og:description" content="66 active slash commands available in any apexyard-managed project. Run any of these in a Claude Code session inside your fork.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://yard.apexscript.com/skills">
 <meta property="og:site_name" content="ApexYard">
@@ -36,8 +36,8 @@
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://yard.apexscript.com/skills">
-<meta name="twitter:title" content="ApexYard Skills — 53 active slash commands for Claude Code">
-<meta name="twitter:description" content="The full ApexYard slash-command surface — 53 active skills, what each one does, and how to invoke it.">
+<meta name="twitter:title" content="ApexYard Skills — 66 active slash commands for Claude Code">
+<meta name="twitter:description" content="The full ApexYard slash-command surface — 66 active skills, what each one does, and how to invoke it.">
 <meta name="twitter:image" content="https://yard.apexscript.com/og/skills.png">
 
 <!-- Structured data: BreadcrumbList -->
@@ -66,9 +66,9 @@
   "@context": "https://schema.org",
   "@type": "TechArticle",
   "url": "https://yard.apexscript.com/skills",
-  "name": "ApexYard Skills — 53 active slash commands for Claude Code",
+  "name": "ApexYard Skills — 66 active slash commands for Claude Code",
   "headline": "ApexYard Skills",
-  "description": "ApexYard ships 53 active slash commands grouped under outcome headings.",
+  "description": "ApexYard ships 66 active slash commands grouped under outcome headings.",
   "datePublished": "2026-04-09",
   "dateModified": "2026-05-24",
   "copyrightYear": "2026",
@@ -573,7 +573,7 @@ main {
     <div class="page-header__inner">
       <div class="page-header__eyebrow">
         <span class="pill">apexyard / skills</span>
-        <span>53 active slash commands, grouped by outcome</span>
+        <span>66 active slash commands, grouped by outcome</span>
         <button class="copy-for-ai" data-md-url="/skills.md" type="button" style="margin-left:auto;font-size:0.75rem;padding:0.25rem 0.6rem;border:1px solid currentColor;border-radius:4px;background:transparent;color:inherit;cursor:pointer;font-family:inherit;">Copy as Markdown for AI</button>
       </div>
       <h1>Skills</h1>
@@ -581,7 +581,7 @@ main {
         <strong>In plain English:</strong> these are the commands you type into Claude Code to get ApexYard to do something. They're grouped by what you're trying to do — keep quality high, move work forward, see everything at once, onboard new code, run things — not by what's under the hood. If you'd rather see a real day with these, read <a href="/how-it-works" class="uline" style="border-bottom: 1px solid currentColor;">how it works</a>.
       </p>
       <p class="tagline" id="ai-lead">
-        <strong>What is it?</strong> ApexYard ships 53 active slash commands grouped under outcome headings — Keep quality high, Move work forward, See everything at once, Onboard new code, Run things.
+        <strong>What is it?</strong> ApexYard ships 66 active slash commands grouped under outcome headings — Keep quality high, Move work forward, See everything at once, Onboard new code, Run things.
         <strong>What can it do?</strong> Each <code>/&lt;name&gt;</code> is a structured workflow with safety rails — the right framework checks fire at the right moments, so <code>/approve-merge</code> writes a record that the merge gate verifies before the merge actually runs.
         <strong>What's needed to start?</strong> Browse below; invoke any from a Claude Code session inside an apexyard fork. Every skill ships in <code>.claude/skills/&lt;name&gt;/SKILL.md</code>.
       </p>
@@ -619,6 +619,30 @@ main {
         <code class="skill__args">&lt;pr-number&gt; [repo]</code>
       </header>
       <p class="skill__desc">Security-focused PR review for vulnerabilities and best practices. Invokes the Security Reviewer agent (Hakim).</p>
+    </article>
+
+    <article class="skill">
+      <header class="skill__head">
+        <code class="skill__name">/design-review</code>
+        <code class="skill__args">&lt;pr-number&gt; [repo]</code>
+      </header>
+      <p class="skill__desc">Review a technical design, migration decision-record, or feature spec for architectural soundness <em>before</em> the Build phase. Invokes the Solution Architect agent (Tariq) — the non-code analog of <code>/code-review</code>.</p>
+    </article>
+
+    <article class="skill">
+      <header class="skill__head">
+        <code class="skill__name">/challenge</code>
+        <code class="skill__args">&lt;idea, feature, decision, or plan&gt;</code>
+      </header>
+      <p class="skill__desc">Invoke The Contrarian (Naqid) to steelman then challenge a premise — surfacing hidden assumptions, failure modes, and cheaper alternatives before you commit. Advisory only; it informs, it never blocks a gate.</p>
+    </article>
+
+    <article class="skill">
+      <header class="skill__head">
+        <code class="skill__name">/eval-agents</code>
+        <code class="skill__args">&lt;rex | hakim | tariq&gt; [corpus]</code>
+      </header>
+      <p class="skill__desc">Score a review agent against a labelled PR corpus — measured by ground-truth defect-set overlap, never a prose rubric. The headline metric is approve-precision: how often an approval was actually safe.</p>
     </article>
 
     <article class="skill">
@@ -748,6 +772,14 @@ main {
 
     <article class="skill">
       <header class="skill__head">
+        <code class="skill__name">/approve-architecture</code>
+        <code class="skill__args">&lt;pr-number&gt;</code>
+      </header>
+      <p class="skill__desc">Record per-PR architecture-review approval so a design-artifact PR clears the architecture merge gate. The Solution Architect's sign-off, recorded with the same per-PR-naming discipline as <code>/approve-merge</code>.</p>
+    </article>
+
+    <article class="skill">
+      <header class="skill__head">
         <code class="skill__name">/decide</code>
         <code class="skill__args">&lt;what you're deciding&gt;</code>
       </header>
@@ -788,10 +820,26 @@ main {
 
     <article class="skill">
       <header class="skill__head">
+        <code class="skill__name">/request-apexyard-feature</code>
+        <code class="skill__args">&lt;the framework enhancement you want&gt;</code>
+      </header>
+      <p class="skill__desc">Request a feature or enhancement for the apexyard framework <em>itself</em>, filed as a structured issue upstream. Distinct from <code>/feature</code>, which files into your own project.</p>
+    </article>
+
+    <article class="skill">
+      <header class="skill__head">
         <code class="skill__name">/bug</code>
         <code class="skill__args">&lt;short description of the bug&gt;</code>
       </header>
       <p class="skill__desc">Create a structured bug report with Given/When/Then scenario, repro steps, and severity. Use when reporting a bug or unexpected behavior.</p>
+    </article>
+
+    <article class="skill">
+      <header class="skill__head">
+        <code class="skill__name">/report-apexyard-bug</code>
+        <code class="skill__args">&lt;what's broken in the framework&gt;</code>
+      </header>
+      <p class="skill__desc">Report a bug in the apexyard framework <em>itself</em> — a hook misfire, a skill gap, a rule bug — as a structured issue filed upstream. Distinct from <code>/bug</code>, which files into your own project.</p>
     </article>
 
     <article class="skill">
@@ -812,10 +860,34 @@ main {
 
     <article class="skill">
       <header class="skill__head">
+        <code class="skill__name">/prototype</code>
+        <code class="skill__args">&lt;what you want to feel out&gt;</code>
+      </header>
+      <p class="skill__desc">Create a throwaway UX/demo prototype ticket — the "what should it look and feel like?" sibling of <code>/spike</code>. Discard-by-default, with the same decision-record and coverage exemptions.</p>
+    </article>
+
+    <article class="skill">
+      <header class="skill__head">
+        <code class="skill__name">/walking-skeleton</code>
+        <code class="skill__args">&lt;feature — the thin path to wire end-to-end&gt;</code>
+      </header>
+      <p class="skill__desc">Scaffold a <code>[Feature]</code> ticket for the thinnest end-to-end slice — one trivial path wired through every architectural layer. Unlike a spike it is <em>kept</em> and grown into the product, so it runs the full SDLC with no exemptions.</p>
+    </article>
+
+    <article class="skill">
+      <header class="skill__head">
         <code class="skill__name">/spike-close</code>
         <code class="skill__args">&lt;ticket&gt; --promote | --discard</code>
       </header>
       <p class="skill__desc">Disposition gate for spikes. <code>--promote</code> files a follow-up <code>[Feature]</code> ticket with cross-references; <code>--discard</code> writes a memo to <code>docs/spike-memos/&lt;slug&gt;.md</code>. Closing without running this gate leaves no record of what was learned.</p>
+    </article>
+
+    <article class="skill">
+      <header class="skill__head">
+        <code class="skill__name">/prototype-close</code>
+        <code class="skill__args">&lt;ticket&gt; --promote | --discard</code>
+      </header>
+      <p class="skill__desc">Disposition gate for prototypes — the mirror of <code>/spike-close</code>. <code>--promote</code> files a follow-up <code>[Feature]</code>; <code>--discard</code> writes a memo so the learning survives even when the throwaway code doesn't.</p>
     </article>
 
     <article class="skill">
@@ -921,6 +993,16 @@ main {
     </article>
 
     <article class="skill">
+      <header class="skill__head"><code class="skill__name">/onboard</code></header>
+      <p class="skill__desc">Guided first-run onboarding — a capability tour, the handover-vs-new-project branch, and a guided first win via a real filed ticket. The front door for a brand-new ApexYard fork.</p>
+    </article>
+
+    <article class="skill">
+      <header class="skill__head"><code class="skill__name">/tutorial</code></header>
+      <p class="skill__desc">Replay the capability tour and full glossary any time — the roles, skills, and gates walkthrough plus every core term, independent of <code>/setup</code> or <code>/handover</code>.</p>
+    </article>
+
+    <article class="skill">
       <header class="skill__head">
         <code class="skill__name">/c4</code>
         <code class="skill__args">[project-name] [--level=1|2|both] [--force]</code>
@@ -1011,6 +1093,22 @@ main {
         <code class="skill__args">&lt;optional explicit version, e.g. v1.2.0&gt;</code>
       </header>
       <p class="skill__desc">Cut a new apexyard release — diff dev against main, pick a semver bump, generate a CHANGELOG draft from conventional commits, open the release PR, and (after merge) tag + push. Framework-only.</p>
+    </article>
+
+    <article class="skill">
+      <header class="skill__head">
+        <code class="skill__name">/release-sync</code>
+        <code class="skill__args">&lt;version, e.g. v1.2.0&gt;</code>
+      </header>
+      <p class="skill__desc">Sync main back to dev after a squash-merge release — files a PR that makes the release squash commit an ancestor of dev, so future release PRs don't accumulate merge conflicts. Framework-only.</p>
+    </article>
+
+    <article class="skill">
+      <header class="skill__head">
+        <code class="skill__name">/design-sync</code>
+        <code class="skill__args">[component]</code>
+      </header>
+      <p class="skill__desc">Sync a local component library to a claude.ai/design design-system project incrementally — one component at a time, never a wholesale replace. Drives the DesignSync tool.</p>
     </article>
 
     <article class="skill">

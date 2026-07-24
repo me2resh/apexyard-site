@@ -1,6 +1,6 @@
 # ApexYard Skills
 
-> 65 slash commands grouped by what you're trying to do — not by what's under the hood. Drop into your Claude Code session inside an apexyard fork.
+> 66 slash commands grouped by what you're trying to do — not by what's under the hood. Drop into your Claude Code session inside an apexyard fork.
 
 ## In plain English
 
@@ -8,7 +8,7 @@ These are the commands you type into Claude Code to get ApexYard to do something
 
 ## What is it?
 
-ApexYard ships 65 slash commands grouped under outcome headings — Keep quality high, Move work forward, See everything at once, Onboard new code, Run things.
+ApexYard ships 66 slash commands grouped under outcome headings — Keep quality high, Move work forward, See everything at once, Onboard new code, Run things.
 
 ## What can it do?
 
@@ -26,6 +26,9 @@ The skills that catch mistakes before they reach customers — reviews, audits, 
 
 - `/code-review <pr>` — invoke the Code Reviewer agent (Rex) on a PR.
 - `/security-review <pr>` — invoke the Security Reviewer agent (Hakim) on a PR.
+- `/design-review <pr>` — review a technical design / migration decision-record / feature spec for architectural soundness before Build; invokes the Solution Architect agent (Tariq), the non-code analog of `/code-review`.
+- `/challenge <idea | feature | decision | plan>` — invoke The Contrarian (Naqid) to steelman then challenge a premise; advisory only, never blocks a gate.
+- `/eval-agents <rex | hakim | tariq>` — score a review agent against a labelled PR corpus; headline metric is approve-precision, not a prose rubric.
 - `/audit-deps` — audit dependencies for vulnerabilities, outdated packages, licences.
 - `/launch-check` — production readiness audit — multi-dimension go/no-go sweep at milestone boundaries.
 - `/threat-model` — threat modelling across 6 attack categories (spoofing, tampering, repudiation, disclosure, denial of service, elevation of privilege).
@@ -46,16 +49,22 @@ Capture an idea, file a ticket, record a decision, approve a merge — everythin
 - `/start-ticket <N> | <owner>/<repo>#<N>` — Declare an active ticket for this session so the ticket-first hook lets code edits through.
 - `/approve-merge <pr>` — Record per-PR CEO approval and merge in one turn. Only on an explicit per-PR "approved" — never on umbrella "go".
 - `/approve-design <pr>` — Record per-PR design-review approval for UI PRs.
+- `/approve-architecture <pr>` — Record per-PR architecture-review approval so a design-artifact PR clears the architecture merge gate.
 - `/decide` — Make a technical decision and record it permanently — what you considered, what you picked, why. Required before architecture changes.
 - `/idea` — Capture a new product idea / feature concept / internal tool proposal to the shared backlog.
 - `/validate-idea` — Lightweight 5-question pre-spec gate between `/idea` and `/write-spec`.
 - `/write-spec` — Generate a PRD or feature spec from a problem statement.
 - `/plan-initiative` — Initiative → milestones → tasks with dependency-aware sequencing.
 - `/feature` — Create a structured feature ticket (user story + acceptance criteria + design notes).
+- `/request-apexyard-feature` — Request a feature/enhancement for the apexyard framework *itself*, filed upstream. Distinct from `/feature`, which files into your own project.
 - `/bug` — Create a structured bug ticket (Given/When/Then + repro steps + severity).
+- `/report-apexyard-bug` — Report a bug in the apexyard framework *itself* (hook misfire, skill gap, rule bug), filed upstream. Distinct from `/bug`, which files into your own project.
 - `/task` — Create a structured technical task ticket (driver, scope, ACs) for tech debt, infra, refactoring.
 - `/spike` — Create a hypothesis-driven, time-boxed spike ticket. Exempt from decision-record + coverage gates.
 - `/spike-close --promote | --discard` — Disposition gate for spikes — promote files a fresh `[Feature]`; discard writes a memo.
+- `/prototype` — Create a throwaway UX/demo prototype ticket — the "what should it look and feel like?" sibling of `/spike`. Same exemptions.
+- `/prototype-close --promote | --discard` — Disposition gate for prototypes — the mirror of `/spike-close`.
+- `/walking-skeleton` — Scaffold a `[Feature]` for the thinnest end-to-end slice through every layer. Unlike a spike it is *kept* and grown — full SDLC, no exemptions.
 - `/migration` — Create a labelled migration ticket + matching decision record (rollback, downtime, consumers, observability). Required by the migration gate.
 - `/investigation` — Create an investigation ticket + live-doc for sustained root-cause work.
 - `/tickets-batch` — Bulk-file 5–20 structured tickets in one flow (shared-context Qs once, 3-Q micro-interview per ticket).
@@ -78,6 +87,8 @@ Fresh fork, new project handed to you, codebase you want to understand. These sk
 
 - `/setup [--reset]` — First-run framework bootstrap for a new ApexYard fork. Three exchanges and the fork is configured.
 - `/handover <name> [path-or-url]` — Onboard an external repo into ApexYard management. Reads the target, synthesises a structured handover assessment, scores harnessability across 5 codebase dimensions.
+- `/onboard` — Guided first-run onboarding — a capability tour, the handover-vs-new-project branch, and a guided first win via a real filed ticket. The front door for a brand-new fork.
+- `/tutorial` — Replay the capability tour and full glossary any time — roles, skills, and gates plus every core term, independent of `/setup` or `/handover`.
 - `/c4` — Generate architecture diagrams (Level 1 system context + Level 2 container detail) from a project's codebase.
 - `/dfd` — Extract a data-flow diagram with trust boundaries + data classifications (Mermaid + optional Threat Dragon JSON). Source of truth for `/threat-model`.
 - `/process` — Extract a business process from your code (state machines, queue chains, cron, API choreography) via 7-axis scan + gap-targeted interview, then emit a standard process-diagram file.
@@ -94,6 +105,8 @@ Sync the framework, parallelise independent work, cut a release, debug something
 - `/update [--dry-run] [--rebase]` — Sync the ApexYard fork with upstream. Previews pending commits, creates a sync branch, merges or rebases, walks per-file conflicts.
 - `/split-portfolio [--verify] [--dry-run]` — Migrate from single-fork to split-portfolio mode (public framework + private portfolio).
 - `/release [version]` — Cut a new apexyard release (framework-only). Diffs dev vs main, picks a semver bump, generates CHANGELOG, opens release PR.
+- `/release-sync <version>` — Sync main back to dev after a squash-merge release, so future release PRs don't accumulate merge conflicts (framework-only).
+- `/design-sync [component]` — Sync a local component library to a claude.ai/design design-system project incrementally, one component at a time. Drives the DesignSync tool.
 - `/debug` — Hypothesis-driven debugging — architecture-first reading + evidence-before-fix. For bugs that resisted naïve fix attempts.
 - `/pdf` — Convert markdown / HTML / process-diagram to PDF (pandoc / md-to-pdf / wkhtmltopdf / bpmn-to-image).
 - `/fan-out <task1, task2, ...>` — Spawn N parallel Agent calls in a single assistant message, optionally with worktree isolation.
