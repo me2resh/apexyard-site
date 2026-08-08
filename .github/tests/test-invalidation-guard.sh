@@ -81,7 +81,13 @@ run() {
   else
     [ "$rc" -ne 0 ] || ok=0
   fi
-  if [ -n "$needle" ] && ! printf '%s' "$out$(cat "$summary")" | grep -qF "$needle"; then
+  # Here-string, not `printf | grep`. Under `pipefail`, grep -q short-circuits
+  # on a match and printf takes EPIPE, which pipefail promotes to non-zero — so
+  # a needle that WAS present reports absent. That made this suite fail 11 of 20
+  # runs before the fix, on assertions whose exit codes were already correct.
+  local haystack
+  haystack="$out$(cat "$summary")"
+  if [ -n "$needle" ] && ! grep -qF "$needle" <<< "$haystack"; then
     ok=0
   fi
 
@@ -102,6 +108,10 @@ run "lookup throttled fails the job"     nonzero throttled ok   unreachable "aws
 
 # The legitimate warn-and-continue window, and its impostor.
 run "unprovisioned stack warns, exits 0" 0       absent    ok   unreachable "pre-apply window"
+# Production today: the domain answers 200, but from Netlify, not CloudFront —
+# deploy-aws.yml runs alongside Netlify until the DNS cutover. A non-CloudFront
+# origin must NOT be read as an alias mismatch.
+run "non-CloudFront origin still warns"  0       absent    ok   other       "pre-apply window"
 run "alias mismatch fails the job"       nonzero absent    ok   cloudfront  "different alias"
 
 # The happy path must produce evidence, not just a zero exit.
@@ -122,6 +132,18 @@ for wf in deploy-aws.yml deploy-aws-staging.yml; do
     fail=$((fail + 1)); printf '  FAIL  %-46s still embeds its own lookup\n' "$wf"
   fi
 done
+
+# Structural: the lookup must guard Aliases.Items before contains(). CloudFront
+# omits that key when a distribution has no aliases, and contains(null, …) is a
+# JMESPath type error, not a non-match — one alias-less distribution in the
+# account would fail every deploy. Can't be caught by the stubs (the real
+# JMESPath evaluation happens inside the AWS CLI), so assert on the query text.
+echo "Lookup query survives alias-less distributions"
+if grep -q "Aliases.Items && contains(Aliases.Items," "$script"; then
+  pass=$((pass + 1)); printf '  ok    %-46s\n' "Aliases.Items guarded"
+else
+  fail=$((fail + 1)); printf '  FAIL  %-46s contains(null,…) raises, not returns false\n' "Aliases.Items unguarded"
+fi
 
 echo
 echo "passed $pass, failed $fail"

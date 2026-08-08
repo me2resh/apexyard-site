@@ -22,6 +22,7 @@ on:
       - ".github/scripts/**"
       - ".github/tests/**"
       - ".github/workflows/deploy-aws*.yml"
+      - ".github/workflows/shell-tests.yml"
   workflow_dispatch:
 
 permissions:

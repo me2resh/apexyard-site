@@ -80,21 +80,35 @@ summarise() {
 serving_via_cloudfront() {
   local headers
   headers=$(curl -sS -I --max-time 15 "https://${1}/" 2>/dev/null) || return 1
-  printf '%s' "$headers" | grep -qiE '^x-amz-cf-id:|^(via|x-cache):.*cloudfront'
+  # Here-string, not `printf | grep`: under `pipefail`, grep -q short-circuits on
+  # a match and the writer takes EPIPE, which pipefail then promotes to a
+  # non-zero status for a pattern that DID match. Here that would read as "not
+  # CloudFront" and fall through to warn-and-skip — reintroducing #48 inside the
+  # function written to prevent it. Same construct measurably flaked in the test
+  # harness (11/20 runs); this avoids the pipe entirely.
+  grep -qiE '^x-amz-cf-id:|^(via|x-cache):.*cloudfront' <<< "$headers"
 }
 
 # ---------------------------------------------------------------- 1. lookup --
 # stdout and the exit code are captured separately; stderr is kept, not
 # dropped, because it carries the reason the operator needs.
+# `Aliases.Items &&` is load-bearing, not defensive noise. CloudFront omits
+# Aliases.Items entirely when Quantity == 0, and contains(null, …) is a
+# JMESPath TYPE ERROR, not a non-match — verified against jmespath 1.1.0, the
+# library the AWS CLI uses. A single alias-less distribution anywhere in the
+# account therefore made the whole call exit non-zero. Under the old
+# `2>/dev/null || true` that surfaced as "no distribution yet" + exit 0, which
+# is a third candidate root cause for #48 the ticket doesn't list; without this
+# guard the new fail-loudly path would break every deploy in the account.
 dist_id=$(aws cloudfront list-distributions \
-  --query "DistributionList.Items[?contains(Aliases.Items, '${SITE_DOMAIN}')].Id | [0]" \
+  --query "DistributionList.Items[?Aliases.Items && contains(Aliases.Items, '${SITE_DOMAIN}')].Id | [0]" \
   --output text 2>"$tmp/lookup.err")
 lookup_rc=$?
 lookup_err=$(tr -d '\r' < "$tmp/lookup.err")
 
 if [ "$lookup_rc" -ne 0 ]; then
   summarise "❌ lookup failed" "" ""
-  fail "CloudFront distribution lookup for ${SITE_DOMAIN} failed (aws exit ${lookup_rc}). This is NOT the 'stack not applied yet' case — the API call itself did not succeed, so this deploy cannot know whether it needed to invalidate. Most likely the deploy role is missing cloudfront:ListDistributions (see #23). aws stderr: ${lookup_err:-<empty>}"
+  fail "CloudFront distribution lookup for ${SITE_DOMAIN} failed (aws exit ${lookup_rc}). This is NOT the 'stack not applied yet' case — the API call itself did not succeed, so this deploy cannot know whether it needed to invalidate. Check, in order: the deploy role may be missing cloudfront:ListDistributions (#23); the call may have been throttled; or the --query may have hit a JMESPath type error. Read the stderr below before assuming which. aws stderr: ${lookup_err:-<empty>}"
 fi
 
 # ------------------------------------------------- 2. lookup matched nothing --
@@ -110,9 +124,13 @@ fi
 
 # ------------------------------------------------------------ 3. invalidate --
 echo "Invalidating ${INVALIDATION_PATHS} on distribution ${dist_id} (${SITE_DOMAIN})"
+# Split on whitespace so INVALIDATION_PATHS can carry more than one path;
+# --paths takes a list, and passing the whole string as one argument would send
+# CloudFront a single nonsense path.
+read -ra invalidation_paths <<< "$INVALIDATION_PATHS"
 inv_id=$(aws cloudfront create-invalidation \
   --distribution-id "$dist_id" \
-  --paths "$INVALIDATION_PATHS" \
+  --paths "${invalidation_paths[@]}" \
   --query 'Invalidation.Id' \
   --output text 2>"$tmp/inv.err")
 inv_rc=$?
@@ -132,3 +150,6 @@ fi
 
 echo "Invalidation ${inv_id} created on distribution ${dist_id}"
 summarise "✅ invalidated" "$dist_id" "$inv_id"
+# Explicit: without this the script exits with summarise's status (the `>>`
+# redirect), which is not what "the invalidation succeeded" should hinge on.
+exit 0
