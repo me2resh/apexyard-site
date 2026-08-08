@@ -7,7 +7,11 @@ name: Deploy to AWS (S3 + CloudFront)
 #
 # Prereq: the instaloc-infra `apexyard-site` stack must be APPLIED first (the
 # bucket + distribution have to exist). Until then the invalidation step warns
-# and no-ops instead of failing.
+# and no-ops instead of failing — but ONLY when it can show the distribution
+# genuinely isn't there. A lookup that errors, or a domain CloudFront is already
+# answering for, fails the job instead of skipping quietly (#48). The step's
+# logic is shared with deploy-aws-staging.yml in
+# .github/scripts/invalidate-cloudfront.sh.
 
 on:
   push:
@@ -71,13 +75,6 @@ jobs:
           done
 
       - name: Invalidate CloudFront
-        run: |
-          DIST_ID=$(aws cloudfront list-distributions \
-            --query "DistributionList.Items[?contains(Aliases.Items, '${SITE_DOMAIN}')].Id | [0]" \
-            --output text 2>/dev/null || true)
-          if [ -z "$DIST_ID" ] || [ "$DIST_ID" = "None" ]; then
-            echo "::warning::No CloudFront distribution for ${SITE_DOMAIN} yet — apply the instaloc-infra apexyard-site stack first. Skipping invalidation."
-            exit 0
-          fi
-          echo "Invalidating distribution ${DIST_ID}"
-          aws cloudfront create-invalidation --distribution-id "$DIST_ID" --paths "/*"
+        env:
+          STACK_HINT: the instaloc-infra apexyard-site stack
+        run: .github/scripts/invalidate-cloudfront.sh
