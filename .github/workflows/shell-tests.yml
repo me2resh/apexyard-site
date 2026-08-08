@@ -1,0 +1,48 @@
+name: Shell Tests
+
+# Runs the deploy-script regression guards. These cover shell logic that only
+# ever executes inside a deploy — the CloudFront invalidation guard from #48 is
+# the first — so without this job the behaviour is untested until it runs
+# against production. lychee's path filter (*.html / *.md) means a change to
+# the deploy workflows otherwise lands with no CI at all.
+#
+# Fast and dependency-free: the tests stub `aws` and `curl` on PATH, so nothing
+# here touches AWS or the network.
+
+on:
+  pull_request:
+    paths:
+      - ".github/scripts/**"
+      - ".github/tests/**"
+      - ".github/workflows/deploy-aws*.yml"
+      - ".github/workflows/shell-tests.yml"
+  push:
+    branches: [main]
+    paths:
+      - ".github/scripts/**"
+      - ".github/tests/**"
+      - ".github/workflows/deploy-aws*.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  shell-tests:
+    name: deploy script guards
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lint deploy scripts
+        run: shellcheck .github/scripts/*.sh .github/tests/*.sh
+
+      - name: Run test suites
+        run: |
+          shopt -s nullglob
+          for t in .github/tests/test-*.sh; do
+            echo "::group::$t"
+            "$t"
+            echo "::endgroup::"
+          done
