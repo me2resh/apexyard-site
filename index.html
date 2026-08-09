@@ -1942,6 +1942,12 @@ a:hover { color: var(--accent); }
         <div class="line muted">&nbsp;&nbsp;Security Auditor review required, regardless of author.</div>
         <div class="line">&nbsp;</div>
         <div class="line sys">→ security-reviewer checks <a href="https://github.com/me2resh/apexyard/commit/512d2537884f9e7962d09616a075c45b30d0c6fd" target="_blank" rel="noopener">512d253</a> ... <span class="ok">APPROVED</span></div>
+        <!-- 55 → 56 is deliberate and must NOT be synced to the current hook count.
+             It counts hook WIRING ENTRIES in .claude/settings.json at PR #787's own
+             merge commit (3fc95fb) — verified 55 before, 56 after. That is a different
+             metric from the .claude/hooks/*.sh file count quoted elsewhere on the site
+             (51 at v5.4.0), and a different point in time. Editing it to today's number
+             would make the one line in this section that is checkable, wrong. -->
         <div class="line muted">&nbsp;&nbsp;settings.json diff: 55 → 56 hooks, zero removed or altered</div>
         <div class="line muted">&nbsp;&nbsp;new hook exits 0 on every path — cannot block or allow</div>
         <div class="line muted">&nbsp;&nbsp;no marker writes, no injection surface, no secret read</div>
@@ -2331,7 +2337,7 @@ confirm it skips the missing column before you ship."</span></pre>
       <div class="layer__num">guardrails that fire themselves</div>
       <h3 class="layer__title">Guardrails that stop bad code from shipping — automatically</h3>
       <p class="layer__desc">
-        Every edit needs a real ticket behind it. Every database change needs a rollback plan. Every merge needs a real review. Secrets in code get caught before they're committed. <span class="dim">Mechanically enforced — 49 small scripts that fire at the right moments, so you don't have to remember to check.</span>
+        Every edit needs a real ticket behind it. Every database change needs a rollback plan. Every merge needs a real review. Secrets in code get caught before they're committed. <span class="dim">Mechanically enforced — 51 small scripts that fire at the right moments, so you don't have to remember to check.</span>
       </p>
     </article>
 

@@ -25,8 +25,8 @@ Fork apexyard once and treat the fork as your ops repo. Add an entry to `apexyar
 Declares what's true and what's enforced:
 
 - **Registry** (`apexyard.projects.yaml`) — lists every managed project
-- **Hooks** (`.claude/hooks/`) — 49 shell gates: merge gate, ticket-first, secrets scan, AgDR for architecture, migration gate, red-CI block, branch/PR-title validation, leak protection
-- **Rules** (`.claude/rules/`) — 11 modular self-discipline guides
+- **Hooks** (`.claude/hooks/`) — 51 shell gates: merge gate, ticket-first, secrets scan, AgDR for architecture, migration gate, red-CI block, branch/PR-title validation, leak protection
+- **Rules** (`.claude/rules/`) — 19 modular self-discipline guides
 - **Onboarding** (`onboarding.yaml`) — company name, mission, team, tech stack
 
 ### Layer 2 — Capability (forest-green)
