@@ -5,9 +5,18 @@
 #   templates/*.html  --(count substitution + headless Chromium)-->  *.png
 #                     --(pngquant)-->  optimised <200KB PNG in place
 #
-# Framework-only component counts are derived from the apexyard ops-fork's
-# `main` ref (released), EXCLUDING premium-injected items. Override the repo
-# path with APEXYARD_REPO, or hard-pin counts with ROLES=/SKILLS=/HOOKS=.
+# Framework-only component counts are derived from the apexyard ops-fork at a
+# RELEASE TAG (default: the newest `v*` tag in that repo), EXCLUDING
+# premium-injected items. Override the repo path with APEXYARD_REPO, the ref
+# with APEXYARD_REF, or hard-pin counts with ROLES=/SKILLS=/HOOKS=.
+#
+# Two stale-count defences, both learned the hard way (see issue #49):
+#   1. The repo path is DISCOVERED, not hardcoded — a hardcoded absolute path
+#      goes stale the moment the fork moves, and the fallback was to hand-pin
+#      counts, which then rot silently.
+#   2. The default ref is an immutable release TAG, not `main` — a fork's local
+#      `main` can lag upstream by dozens of commits and derive old counts
+#      without any visible signal.
 #
 # Requires: node + playwright (chromium), pngquant. Install:
 #   brew install pngquant
@@ -16,17 +25,60 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-APEXYARD_REPO="${APEXYARD_REPO:-/Users/ahmed/Projects/Apex/apexyard}"
-REF="${APEXYARD_REF:-main}"   # released. use APEXYARD_REF=dev for pre-release.
+# --- Locate the apexyard ops fork -----------------------------------------
+# A directory is the fork if it is a git repo carrying the framework's own
+# layout. Walk up from this script and test each ancestor plus its `apexyard`
+# child, so this works from a normal checkout AND from a git worktree (which
+# sits several levels deeper under .claude/worktrees/).
+is_apexyard_repo() {
+  [[ -e "$1/.git" && -d "$1/roles" && -d "$1/.claude/skills" && -d "$1/.claude/hooks" ]]
+}
+
+discover_apexyard_repo() {
+  local dir; dir="$(cd .. && pwd)"
+  while [[ -n "$dir" && "$dir" != "/" ]]; do
+    is_apexyard_repo "$dir"            && { echo "$dir"; return 0; }
+    is_apexyard_repo "$dir/apexyard"   && { echo "$dir/apexyard"; return 0; }
+    dir="$(dirname "$dir")"
+  done
+  return 1
+}
+
+APEXYARD_REPO="${APEXYARD_REPO:-$(discover_apexyard_repo || true)}"
+if [[ -z "$APEXYARD_REPO" ]] || ! is_apexyard_repo "$APEXYARD_REPO"; then
+  echo "ERROR: could not locate the apexyard ops fork." >&2
+  echo "  Searched upward from $(pwd) for a git repo containing roles/," >&2
+  echo "  .claude/skills/ and .claude/hooks/. Set APEXYARD_REPO=<path> to point" >&2
+  echo "  at it explicitly." >&2
+  exit 1
+fi
+
+# Default to the newest release tag — immutable and printed, so a stale ref is
+# never silent the way a lagging local `main` was.
+if [[ -z "${APEXYARD_REF:-}" ]]; then
+  # `head -1` can SIGPIPE git, which set -o pipefail would turn into a silent
+  # abort — read the sorted list into a var first, then take its first line.
+  all_tags=$(git -C "$APEXYARD_REPO" tag -l 'v*' --sort=-v:refname)
+  REF=${all_tags%%$'\n'*}
+  if [[ -z "$REF" ]]; then
+    echo "ERROR: no v* release tag found in $APEXYARD_REPO. Fetch tags, or set" >&2
+    echo "  APEXYARD_REF=<ref> explicitly." >&2
+    exit 1
+  fi
+else
+  REF="$APEXYARD_REF"
+fi
+if ! git -C "$APEXYARD_REPO" rev-parse --verify --quiet "${REF}^{commit}" >/dev/null; then
+  echo "ERROR: ref '$REF' does not resolve in $APEXYARD_REPO." >&2
+  exit 1
+fi
 
 derive_counts() {
   if [[ -n "${ROLES:-}" && -n "${SKILLS:-}" && -n "${HOOKS:-}" ]]; then
-    echo "Using hard-pinned counts: ROLES=$ROLES SKILLS=$SKILLS HOOKS=$HOOKS"
+    echo "WARNING: using hard-pinned counts ROLES=$ROLES SKILLS=$SKILLS HOOKS=$HOOKS" >&2
+    echo "         Pinned counts do NOT track the framework and WILL go stale." >&2
+    echo "         Unset ROLES/SKILLS/HOOKS to derive them from the repo." >&2
     return
-  fi
-  if [[ ! -d "$APEXYARD_REPO/.git" ]]; then
-    echo "ERROR: apexyard repo not found at $APEXYARD_REPO (set APEXYARD_REPO)" >&2
-    exit 1
   fi
   echo "Deriving framework-only counts from $APEXYARD_REPO @ $REF ..."
 
@@ -43,6 +95,17 @@ derive_counts() {
   # hooks: top-level *.sh in .claude/hooks/, excluding _lib* helpers and the tests/ subdir.
   HOOKS=$(git -C "$APEXYARD_REPO" ls-tree --name-only "$REF" -- .claude/hooks/ \
     | sed 's#\.claude/hooks/##' | grep '\.sh$' | grep -v '^_lib' | wc -l | tr -d ' ')
+
+  # A zero count means the layout moved under us and a glob stopped matching —
+  # rendering a card that reads "0 skills" is worse than not rendering at all.
+  for pair in "ROLES=$ROLES" "SKILLS=$SKILLS" "HOOKS=$HOOKS"; do
+    if [[ "${pair#*=}" -eq 0 ]]; then
+      echo "ERROR: derived ${pair%%=*}=0 from $APEXYARD_REPO @ $REF." >&2
+      echo "  The framework layout likely changed and this script's globs need" >&2
+      echo "  updating. Refusing to render cards with a zero count." >&2
+      exit 1
+    fi
+  done
 
   echo "Derived: ROLES=$ROLES SKILLS=$SKILLS HOOKS=$HOOKS"
 }
