@@ -58,7 +58,10 @@ fi
 if [[ -z "${APEXYARD_REF:-}" ]]; then
   # `head -1` can SIGPIPE git, which set -o pipefail would turn into a silent
   # abort — read the sorted list into a var first, then take its first line.
-  all_tags=$(git -C "$APEXYARD_REPO" tag -l 'v*' --sort=-v:refname)
+  # Plain vX.Y.Z only: git's versionsort ranks `v5.5.0-rc1` ABOVE `v5.5.0`, so
+  # an unfiltered list would quietly render the cards from a release candidate.
+  all_tags=$(git -C "$APEXYARD_REPO" tag -l 'v*' --sort=-v:refname \
+    | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$') || true
   REF=${all_tags%%$'\n'*}
   if [[ -z "$REF" ]]; then
     echo "ERROR: no v* release tag found in $APEXYARD_REPO. Fetch tags, or set" >&2
@@ -82,27 +85,35 @@ derive_counts() {
   fi
   echo "Deriving framework-only counts from $APEXYARD_REPO @ $REF ..."
 
+  # Each pipeline ends in `|| true` on purpose. A grep that matches nothing
+  # exits 1, and under `set -o pipefail` that aborts the assignment via set -e
+  # BEFORE the zero-count guard below can run — turning the exact failure the
+  # guard exists to explain into a silent exit 1. Swallowing the status lets
+  # the count land as 0 and the guard report it properly.
+
   # roles: tracked *.md under roles/, minus README, minus premium roles/growth/*
   ROLES=$(git -C "$APEXYARD_REPO" ls-tree -r --name-only "$REF" -- roles \
-    | grep '\.md$' | grep -v 'README.md' | grep -v '^roles/growth/' | wc -l | tr -d ' ')
+    | grep '\.md$' | grep -v 'README.md' | grep -v '^roles/growth/' | wc -l | tr -d ' ') || true
 
   # skills: skill dirs (those carrying a SKILL.md) on the released ref.
   # Premium skills are never committed to the framework repo's main, so this
   # is framework-only by construction.
   SKILLS=$(git -C "$APEXYARD_REPO" ls-tree -r --name-only "$REF" -- .claude/skills \
-    | grep '/SKILL\.md$' | wc -l | tr -d ' ')
+    | grep '/SKILL\.md$' | wc -l | tr -d ' ') || true
 
   # hooks: top-level *.sh in .claude/hooks/, excluding _lib* helpers and the tests/ subdir.
   HOOKS=$(git -C "$APEXYARD_REPO" ls-tree --name-only "$REF" -- .claude/hooks/ \
-    | sed 's#\.claude/hooks/##' | grep '\.sh$' | grep -v '^_lib' | wc -l | tr -d ' ')
+    | sed 's#\.claude/hooks/##' | grep '\.sh$' | grep -v '^_lib' | wc -l | tr -d ' ') || true
 
   # A zero count means the layout moved under us and a glob stopped matching —
   # rendering a card that reads "0 skills" is worse than not rendering at all.
-  for pair in "ROLES=$ROLES" "SKILLS=$SKILLS" "HOOKS=$HOOKS"; do
-    if [[ "${pair#*=}" -eq 0 ]]; then
-      echo "ERROR: derived ${pair%%=*}=0 from $APEXYARD_REPO @ $REF." >&2
-      echo "  The framework layout likely changed and this script's globs need" >&2
-      echo "  updating. Refusing to render cards with a zero count." >&2
+  # Tested as a string, not with -eq: a non-numeric value (e.g. "1x") makes -eq
+  # raise an arithmetic error and take the false branch, sliding past the guard.
+  for pair in "ROLES=${ROLES:-}" "SKILLS=${SKILLS:-}" "HOOKS=${HOOKS:-}"; do
+    if [[ ! "${pair#*=}" =~ ^[1-9][0-9]*$ ]]; then
+      echo "ERROR: derived ${pair%%=*}='${pair#*=}' from $APEXYARD_REPO @ $REF." >&2
+      echo "  Expected a positive integer. The framework layout likely changed" >&2
+      echo "  and this script's globs need updating. Refusing to render." >&2
       exit 1
     fi
   done
