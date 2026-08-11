@@ -2,6 +2,18 @@
 
 > A walkthrough of one realistic day using ApexYard, written for someone who isn't an engineer. No terminal output, no jargon. By the end you'll know exactly what using the tool feels like.
 
+## What is it?
+
+ApexYard is a walkthrough of one realistic day: open your inbox, work on a change while the framework auto-reviews, approve a contractor's PR, run a launch-readiness check, ship by evening.
+
+## What can it do?
+
+Adds review, guardrails, and process around every change you make with Claude Code — so the work that ships is the work a real engineering team would have shipped.
+
+## What's needed to start?
+
+Fork apexyard, run `/setup`, register your projects. The walkthrough below is a narrative; the install steps live on the [home page](https://yard.apexscript.com/index.md).
+
 ## The shape of a day with ApexYard
 
 You're a founder. You're building software with an AI assistant — Claude Code, Cursor, something similar. You may have a contractor or two helping. You don't have a traditional engineering team to lean on for reviews, releases, and quality control.

@@ -111,10 +111,6 @@ Sync the framework, parallelise independent work, cut a release, debug something
 - `/pdf` — Convert markdown / HTML / process-diagram to PDF (pandoc / md-to-pdf / wkhtmltopdf / bpmn-to-image).
 - `/fan-out <task1, task2, ...>` — Spawn N parallel Agent calls in a single assistant message, optionally with worktree isolation.
 
-## Deprecated
-
-- `/onboard` — Use `/setup` for framework configuration, `/handover` for adding a project to the portfolio. This skill redirects to the correct flow.
-
 ## Links
 
 - Home: <https://yard.apexscript.com/index.md>
