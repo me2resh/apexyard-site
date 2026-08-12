@@ -185,35 +185,71 @@ out=$("$lib" --print "$fw2" v9.9.9 2>&1); rc=$?
 if [ "$rc" = 2 ]; then ok "--print exits 2 when it cannot derive"
 else bad "--print exits 2 when it cannot derive" "got $rc: $out"; fi
 
-# --- case 6b: the guard survives every caller shape, on THIS bash -----------
-# derive-counts.sh keeps a `|| true` so a failing `grep -c` cannot abort the
-# assignment before the zero-count guard runs. Whether errexit would really
-# fire there depends on the call shape and on the bash version — macOS ships
-# 3.2, CI runs 5.x, and they differ on errexit propagation into a
-# command-substitution subshell.
+# --- case 6b: the zero-count guard is reachable under `set -e` --------------
+# derive-counts.sh keeps a `|| true` so a failing counting grep cannot abort the
+# assignment before the guard runs. Which caller that protects is a claim about
+# bash's errexit rules, and this repo does not keep those in comments — so it is
+# asserted here, against whatever bash is running the suite.
 #
-# That is exactly the kind of claim that rots in a comment, so assert it
-# instead: on whatever bash is running this suite, both caller shapes must
-# reach the guard and get the named diagnostic rather than a bare exit code.
+# Three shapes. `direct` is the one with teeth: removing `|| true` makes it fail
+# (verified by the mutant probe below). The two `$( )` shapes mirror the shipped
+# callers and are reachability smoke tests — errexit is off inside a `||` list,
+# so they would pass with or without the line.
+#
+# `$BASH` rather than `bash`: probe the interpreter running this suite, not
+# whichever one is first on PATH. On macOS those differ.
 
-for shape in bare guarded; do
-  # The $( ) below must survive as literal text into the inner `bash -c`, so the
-  # single quotes are the point: expanding here would run the derivation in THIS
-  # shell, which has no errexit and would test nothing.
-  # shellcheck disable=SC2016
-  case "$shape" in
-    bare)    call='n=$(apexyard_derive_count skills "'"$fw2"'" v9.9.9); echo REACHED' ;;
-    guarded) call='n=$(apexyard_derive_count skills "'"$fw2"'" v9.9.9) || echo HANDLED' ;;
+# The $( ) below must survive as literal text into the inner shell; expanding it
+# here would run the derivation in THIS shell, which has no errexit.
+# shellcheck disable=SC2016
+guard_shape() {
+  case "$1" in
+    direct)     printf 'apexyard_derive_count skills "%s" v9.9.9' "$fw2" ;;
+    subst-bare) printf 'n=$(apexyard_derive_count skills "%s" v9.9.9)' "$fw2" ;;
+    subst-or)   printf 'n=$(apexyard_derive_count skills "%s" v9.9.9) || :' "$fw2" ;;
   esac
-  out=$(bash -c "set -euo pipefail; . '$lib'; $call" 2>&1)
-  case "$out" in
-    *"expected a positive integer"*)
-      ok "the zero-count guard is reached from a $shape set -e caller" ;;
-    *)
-      bad "the zero-count guard is reached from a $shape set -e caller" \
-          "no diagnostic — errexit aborted before the guard on $(bash --version | head -1). got: '$out'" ;;
-  esac
+}
+
+guard_reached() { # $1=lib $2=shape -> "YES"/"NO"
+  local out
+  out=$("$BASH" -c "set -euo pipefail; . '$1'; $(guard_shape "$2")" 2>&1)
+  case "$out" in *"expected a positive integer"*) echo YES ;; *) echo NO ;; esac
+}
+
+for shape in direct subst-bare subst-or; do
+  if [ "$(guard_reached "$lib" "$shape")" = YES ]; then
+    ok "the zero-count guard is reached from a $shape set -e caller"
+  else
+    bad "the zero-count guard is reached from a $shape set -e caller" \
+        "no diagnostic — errexit aborted before the guard on $("$BASH" --version | head -1)"
+  fi
 done
+
+# Mutant probe — REPORTS, does not assert. Strip `|| true` and print which
+# shapes still reach the guard. If a future bash makes the line inert
+# everywhere, that is worth knowing (delete it), not worth failing a build over
+# — so this records the answer in the CI log instead of turning a non-defect
+# into a red run.
+mutant="$workdir/derive-counts-mutant.sh"
+
+# Both patterns below are deliberately literal: they match the SHELL SOURCE of
+# derive-counts.sh, so `$(eval "$recipe")` must reach sed/grep unexpanded.
+# shellcheck disable=SC2016
+{
+  sed 's/n=$(eval "$recipe") || true/n=$(eval "$recipe")/' "$lib" > "$mutant"
+  mutated=no
+  grep -q 'n=\$(eval "\$recipe")$' "$mutant" && mutated=yes
+}
+
+if [ "$mutated" = yes ]; then
+  printf '  note  with the fallback stripped, guard reached:'
+  for shape in direct subst-bare subst-or; do
+    printf ' %s=%s' "$shape" "$(guard_reached "$mutant" "$shape")"
+  done
+  printf '  (on %s)\n' "$("$BASH" --version | head -1 | sed 's/ (.*//')"
+else
+  printf '  note  mutant probe skipped — the fallback line was not found to strip\n'
+fi
 
 # --- case 7: sourcing the library has no side effects -----------------------
 # Both callers source it before doing their own argument handling. If it ever

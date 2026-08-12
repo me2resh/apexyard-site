@@ -31,12 +31,21 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-# shellcheck source=../.github/scripts/derive-counts.sh
-. ../.github/scripts/derive-counts.sh || {
-  echo "ERROR: cannot source ../.github/scripts/derive-counts.sh — it holds the" >&2
-  echo "  count definitions this script stamps onto the cards. Refusing to render." >&2
+# Test readability FIRST rather than trusting `. lib || { … }`. Under `set -e`
+# above, a `.` that cannot open its file aborts the shell inside the builtin,
+# before the `||` is ever evaluated — so the handler never runs and you get
+# bash's bare "No such file or directory" from the script whose entire design
+# is loud failure. (verify-counts.sh gets away with that idiom only because it
+# runs `set -uo pipefail` with no `-e`.)
+DERIVE_LIB=../.github/scripts/derive-counts.sh
+if [[ ! -r "$DERIVE_LIB" ]]; then
+  echo "ERROR: cannot read $DERIVE_LIB (from $(pwd))." >&2
+  echo "  It holds the count definitions this script stamps onto the cards." >&2
+  echo "  Refusing to render." >&2
   exit 1
-}
+fi
+# shellcheck source=../.github/scripts/derive-counts.sh
+. "$DERIVE_LIB"
 
 # --- Locate the apexyard ops fork -----------------------------------------
 # A directory is the fork if it is a git repo carrying the framework's own

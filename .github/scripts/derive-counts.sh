@@ -132,27 +132,29 @@ apexyard_derive_count() {
 
   recipe=$(apexyard_count_recipe "$what") || return 1
 
-  # A recipe ends in `grep -c`, which prints 0 and exits 1 when nothing matches
-  # — precisely the case the guard below exists to explain. `|| true` keeps that
-  # status from aborting this assignment under a caller's `set -e`, so the 0
-  # reaches the guard and gets named instead of surfacing as a bare exit code.
+  # Every recipe ends in a counting grep (`grep -c` / `grep -vc`), which prints
+  # 0 and exits 1 when nothing matches — precisely the case the guard below
+  # exists to explain. `|| true` keeps that status from aborting this assignment
+  # under a caller's `set -e`, so the 0 reaches the guard and gets named instead
+  # of surfacing as a bare exit code.
   #
-  # Whether errexit would actually fire here is not something to assert in a
-  # comment: it varies with the CALL SHAPE (both shipped callers wrap the call
-  # on the left of a `||` list, where bash disables errexit) and with the BASH
-  # VERSION (errexit propagation into a command-substitution subshell differs
-  # between the 3.2 that ships with macOS and the 5.x on CI). On macOS 3.2 the
-  # guard is demonstrably still reached with this line removed.
+  # WHICH CALLER THIS ACTUALLY PROTECTS. Not the two shipped ones: both wrap the
+  # call as `$(…)` on the left of a `||` list, and errexit is off in that whole
+  # context — removing this line changes nothing for them. It is load-bearing
+  # for a DIRECT, unguarded call under `set -e`:
   #
-  # So the line stays for the case that does not depend on either: a future
-  # caller writing a bare `n=$(apexyard_derive_count …)` under `set -e`. Rather
-  # than trust this paragraph, test-derive-counts.sh asserts the guard is
-  # reachable — on whichever bash CI runs.
+  #     set -e; apexyard_derive_count skills "$repo" "$ref"
   #
-  # Not a pipefail defence, despite where this line came from. Pre-refactor the
-  # pipelines ended in `tr`, so a failing grep mid-pipe needed pipefail to be
-  # seen at all; now `grep -c` is the last command and its status is the
-  # pipeline's.
+  # With this line the guard runs and names the problem; without it the shell
+  # aborts inside the function and the caller gets silence. Verified by mutation
+  # rather than assumed, and test-derive-counts.sh keeps checking it — including
+  # a non-asserting mutant probe whose result is printed, so the answer on CI's
+  # bash is recorded rather than inferred from this comment.
+  #
+  # Not a pipefail defence, despite the wording this replaced. That belonged to
+  # render.sh's old pipelines, which ended in `tr` — a failing grep mid-pipe
+  # needed pipefail to be seen at all. Here the counting grep is the last
+  # command, so its status is the pipeline's either way.
   n=$(eval "$recipe") || true
 
   # A zero means a glob stopped matching because the framework layout moved.
