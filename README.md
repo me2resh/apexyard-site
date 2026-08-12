@@ -51,7 +51,7 @@ gh api --paginate repos/me2resh/apexyard/releases --jq '.[].tag_name' | grep -c 
 ```
 <!-- END derive-counts.sh --recipes -->
 
-Or skip the copy-paste entirely: `.github/scripts/derive-counts.sh --print /path/to/apexyard v5.4.0` runs all five tag-derived recipes and prints the numbers.
+The `v5.4.0` on the first line is illustrative and tracks nothing — pass the tag you actually mean. Or skip the copy-paste entirely: `.github/scripts/derive-counts.sh --print /path/to/apexyard v5.4.0` runs all five tag-derived recipes and prints the numbers.
 
 At **v5.4.0**: 66 skills · 51 hooks · 23 agents · 20 roles · 19 rules · 6 departments · 29 published releases.
 

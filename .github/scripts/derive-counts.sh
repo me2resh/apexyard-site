@@ -103,6 +103,11 @@ RECIPE
 # check that fails when you are offline stops being run.
 APEXYARD_TAG_PRIMITIVES=(skills hooks agents roles rules)
 
+# The preamble's `v5.4.0` is ILLUSTRATIVE and tracks nothing. It is there so the
+# block below is copy-pasteable, and it is the one string in this file that can
+# still go stale — an empty placeholder would be worse (paste it and every
+# recipe silently fails). Nothing derives from it; both callers take the ref
+# from their own environment.
 apexyard_count_recipes() {
   local p
   echo 'REPO=/path/to/apexyard REF=v5.4.0'
@@ -127,11 +132,27 @@ apexyard_derive_count() {
 
   recipe=$(apexyard_count_recipe "$what") || return 1
 
-  # `|| true` is load-bearing. A grep matching nothing exits 1, which under the
-  # callers' `set -e`/`set -o pipefail` would abort the assignment BEFORE the
-  # guard below can run — turning the exact failure the guard exists to explain
-  # into a silent non-zero exit. Swallowing the status lets the count land as 0
-  # and be reported properly.
+  # A recipe ends in `grep -c`, which prints 0 and exits 1 when nothing matches
+  # — precisely the case the guard below exists to explain. `|| true` keeps that
+  # status from aborting this assignment under a caller's `set -e`, so the 0
+  # reaches the guard and gets named instead of surfacing as a bare exit code.
+  #
+  # Whether errexit would actually fire here is not something to assert in a
+  # comment: it varies with the CALL SHAPE (both shipped callers wrap the call
+  # on the left of a `||` list, where bash disables errexit) and with the BASH
+  # VERSION (errexit propagation into a command-substitution subshell differs
+  # between the 3.2 that ships with macOS and the 5.x on CI). On macOS 3.2 the
+  # guard is demonstrably still reached with this line removed.
+  #
+  # So the line stays for the case that does not depend on either: a future
+  # caller writing a bare `n=$(apexyard_derive_count …)` under `set -e`. Rather
+  # than trust this paragraph, test-derive-counts.sh asserts the guard is
+  # reachable — on whichever bash CI runs.
+  #
+  # Not a pipefail defence, despite where this line came from. Pre-refactor the
+  # pipelines ended in `tr`, so a failing grep mid-pipe needed pipefail to be
+  # seen at all; now `grep -c` is the last command and its status is the
+  # pipeline's.
   n=$(eval "$recipe") || true
 
   # A zero means a glob stopped matching because the framework layout moved.
@@ -142,7 +163,8 @@ apexyard_derive_count() {
   # arithmetic error and take the false branch, sliding past the guard.
   if [[ ! "$n" =~ ^[1-9][0-9]*$ ]]; then
     echo "ERROR: derived $what='$n' from $REPO @ $REF (expected a positive integer —" >&2
-    echo "  the framework layout likely moved and this script's globs need updating)." >&2
+    echo "  either REPO/REF do not point where you think, or the framework layout" >&2
+    echo "  moved and this script's globs need updating)." >&2
     return 1
   fi
   echo "$n"

@@ -168,17 +168,52 @@ else bad "a one-word README edit would be rejected" "mutation did not change the
 out=$("$lib" --print "$fw" v9.9.9 2>&1); rc=$?
 if [ "$rc" = 0 ]; then ok "--print exits 0 on a derivable repo"
 else bad "--print exits 0 on a derivable repo" "got $rc: $out"; fi
+# Report once, but only if every primitive was actually present — an
+# unconditional ok() after a loop that can fail inflates the pass count and
+# makes the suite's own tally untrustworthy.
+missing=""
 for p in "${APEXYARD_TAG_PRIMITIVES[@]}"; do
   case "$out" in
     *"$p"*) ;;
-    *) bad "--print reports $p" "$out" ;;
+    *) missing="$missing $p" ;;
   esac
 done
-ok "--print reports every tag-derived primitive"
+if [ -z "$missing" ]; then ok "--print reports every tag-derived primitive"
+else bad "--print reports every tag-derived primitive" "missing:$missing"; fi
 
 out=$("$lib" --print "$fw2" v9.9.9 2>&1); rc=$?
 if [ "$rc" = 2 ]; then ok "--print exits 2 when it cannot derive"
 else bad "--print exits 2 when it cannot derive" "got $rc: $out"; fi
+
+# --- case 6b: the guard survives every caller shape, on THIS bash -----------
+# derive-counts.sh keeps a `|| true` so a failing `grep -c` cannot abort the
+# assignment before the zero-count guard runs. Whether errexit would really
+# fire there depends on the call shape and on the bash version — macOS ships
+# 3.2, CI runs 5.x, and they differ on errexit propagation into a
+# command-substitution subshell.
+#
+# That is exactly the kind of claim that rots in a comment, so assert it
+# instead: on whatever bash is running this suite, both caller shapes must
+# reach the guard and get the named diagnostic rather than a bare exit code.
+
+for shape in bare guarded; do
+  # The $( ) below must survive as literal text into the inner `bash -c`, so the
+  # single quotes are the point: expanding here would run the derivation in THIS
+  # shell, which has no errexit and would test nothing.
+  # shellcheck disable=SC2016
+  case "$shape" in
+    bare)    call='n=$(apexyard_derive_count skills "'"$fw2"'" v9.9.9); echo REACHED' ;;
+    guarded) call='n=$(apexyard_derive_count skills "'"$fw2"'" v9.9.9) || echo HANDLED' ;;
+  esac
+  out=$(bash -c "set -euo pipefail; . '$lib'; $call" 2>&1)
+  case "$out" in
+    *"expected a positive integer"*)
+      ok "the zero-count guard is reached from a $shape set -e caller" ;;
+    *)
+      bad "the zero-count guard is reached from a $shape set -e caller" \
+          "no diagnostic — errexit aborted before the guard on $(bash --version | head -1). got: '$out'" ;;
+  esac
+done
 
 # --- case 7: sourcing the library has no side effects -----------------------
 # Both callers source it before doing their own argument handling. If it ever

@@ -32,7 +32,11 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 # shellcheck source=../.github/scripts/derive-counts.sh
-. ../.github/scripts/derive-counts.sh
+. ../.github/scripts/derive-counts.sh || {
+  echo "ERROR: cannot source ../.github/scripts/derive-counts.sh — it holds the" >&2
+  echo "  count definitions this script stamps onto the cards. Refusing to render." >&2
+  exit 1
+}
 
 # --- Locate the apexyard ops fork -----------------------------------------
 # A directory is the fork if it is a git repo carrying the framework's own
