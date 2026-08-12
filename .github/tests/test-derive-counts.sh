@@ -191,13 +191,27 @@ else bad "--print exits 2 when it cannot derive" "got $rc: $out"; fi
 # bash's errexit rules, and this repo does not keep those in comments — so it is
 # asserted here, against whatever bash is running the suite.
 #
-# Three shapes. `direct` is the one with teeth: removing `|| true` makes it fail
-# (verified by the mutant probe below). The two `$( )` shapes mirror the shipped
-# callers and are reachability smoke tests — errexit is off inside a `||` list,
-# so they would pass with or without the line.
+# Three shapes, and only one of them has teeth:
 #
-# `$BASH` rather than `bash`: probe the interpreter running this suite, not
-# whichever one is first on PATH. On macOS those differ.
+#   direct      the shape `|| true` actually protects. Strip the fallback and
+#               this assertion fails — that is the mutation sensitivity the
+#               first version of this case lacked.
+#   subst-or    what all six shipped call sites look like: a `$( )` on the LHS
+#               of a `||`, where errexit is off regardless. Smoke test.
+#   subst-bare  mirrors no shipped caller. Kept because it is the shape someone
+#               would most plausibly add next, and it is the one whose result
+#               is bash-dependent — on 3.2 errexit does not propagate into a
+#               `$( )` subshell at all.
+#
+# All three ASSERT yes against the shipped library, on any bash: `|| true`
+# guarantees the diagnostic reaches stderr before the `return 1`. The probe
+# below is what varies, and `subst-bare=NO` appearing there is a real result,
+# not a contradiction of the assertion above it.
+#
+# `$BASH` rather than `bash`: probe the interpreter actually running this suite.
+# The two CAN differ — e.g. a Homebrew bash 5 ahead of macOS's /bin/bash on
+# PATH, or an explicit `bash5 test-derive-counts.sh` — though on a stock macOS
+# with no second bash installed they resolve to the same binary.
 
 # The $( ) below must survive as literal text into the inner shell; expanding it
 # here would run the derivation in THIS shell, which has no errexit.
