@@ -65,13 +65,17 @@ A phrase is only matched where it follows the number immediately, so the site's 
 ```
 $ sed -i 's/19 rule files/19 core rules/' architecture.html && APEXYARD_REPO=… REF=v5.4.0 .github/scripts/verify-counts.sh
 UNVERIFIED [rules]            architecture.html:659  "19 core rules" — no listed phrase matches
-OK (with gaps): 58 count claim(s) checked and agreeing with v5.4.0,
+OK (with gaps): 60 count claim(s) checked and agreeing with v5.4.0,
                 but 1 unverified claim(s) above matched no listed phrase.
 ```
 
 That does not fail the run — unknown is not the same as wrong — but a clean pass can never quietly mean "the check never looked there". When you see one, add the page's wording to the noun list, or reword the page if it is the odd one out.
 
-**Know what this does not cover.** The sweep is anchored on a *known noun*, so it catches an unfamiliar adjective but not an unfamiliar **noun**. `11 files`, `11 guides`, `eleven rule files`, and `11&nbsp;rule files` are all silent — neither checked nor reported. That is exactly why `architecture.html` was reworded from `19 files` to `19 rule files` in #69 rather than adding `files` to the rule nouns: `files` is too generic to check safely, so the page was made checkable instead. Prefer that fix when you hit this.
+**Know what this does not cover.** Three gaps, all deliberate and all worth knowing before you read a clean pass as a full one:
+
+- **An unfamiliar noun.** The sweep is anchored on a *known noun*, so it catches an unfamiliar adjective but not an unfamiliar noun. `11 files`, `11 guides`, `eleven rule files`, and `11&nbsp;rule files` are all silent — neither checked nor reported.
+- **`6 departments`** (`README.md`, `llms.txt`, `llms-full.txt`) is checked by nothing. It is derivable — `git -C "$REPO" ls-tree -d --name-only "$REF" -- roles/ | wc -l` — and has been stable at 6 since v4.4.0, which is why it has never drifted, not why it is safe.
+- **The release count** is checked only under `--releases`, and the unverified sweep does not run for it at all, so an unlisted release wording is silent with no signal. That is exactly why `architecture.html` was reworded from `19 files` to `19 rule files` in #69 rather than adding `files` to the rule nouns: `files` is too generic to check safely, so the page was made checkable instead. Prefer that fix when you hit this.
 
 None of this is hypothetical caution. The first version of this script omitted `active slash commands` and left 9 of the 10 skill claims on `skills.html` unchecked while reporting a clean pass — on the page whose entire subject is that count. And the bare `19 files` on `architecture.html` was the same line that had read `11 files` two releases running. Both were found in review, not by the script.
 
