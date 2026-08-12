@@ -58,9 +58,21 @@ APEXYARD_REPO=/path/to/apexyard REF=v5.4.0 .github/scripts/verify-counts.sh --re
 
 It exits `0` when every surface agrees, `1` naming each stale claim, and `2` when it cannot derive — if a glob stops matching because the framework layout moved, it refuses outright rather than reporting that a primitive has dropped to zero and inviting you to rewrite every correct page.
 
-The important part is *how* it searches. It does not look for the numbers it expects in a list of files it knows about; it finds every `<number> <primitive-noun>` on every tracked file and checks each one. A page added next year with a copied-forward count fails the check without anyone remembering to register it. That is the direct answer to the failure this section already describes — the rules count sat wrong at 11 for two releases because each sync only fixed what someone happened to notice.
+The important part is *how* it searches. It does not look for the numbers it expects in a list of files it knows about; it scans every tracked file for `<number> <primitive-noun>` and checks each match. A page added next year with a copied-forward count fails the check without anyone remembering to register it. That is the direct answer to the failure this section already describes — the rules count sat wrong at 11 for two releases because each sync only fixed what someone happened to notice.
 
-Run it whenever you sync counts, and again before you merge. Adding a wording the site has not used before (a new phrase like "guard scripts") needs that phrase adding to the noun lists in the script, or the claim goes unchecked — the lists are at the top of the file with a comment saying to prefer over-listing.
+It has one real limit, and it reports rather than hides it. A phrase is only matched where it follows the number immediately, so the site's exact wording has to be in the noun lists at the top of the script — `66 active slash commands` is not matched by `slash commands`. Anything that looks like a count but matches no listed phrase is printed as `UNVERIFIED` and counted in the verdict:
+
+```
+UNVERIFIED [rules]   architecture.html:659  "19 modular files" — no listed phrase matches
+OK (with gaps): 60 count claim(s) checked and agreeing with v5.4.0,
+                but 1 unverified claim(s) above matched no listed phrase.
+```
+
+That does not fail the run — unknown is not the same as wrong — but it means a clean pass can never quietly mean "the check didn't look there". When you see one, add the page's wording to the noun list, or reword the page if it is the odd one out.
+
+This is not hypothetical caution. The first version of this script omitted `active slash commands` and left 9 of the 10 skill claims on `skills.html` unchecked while reporting a clean pass, on the page whose entire subject is that count. The sweep exists because of it.
+
+Run it whenever you sync counts, and again before you merge.
 
 Two numbers on the site look like primitive counts but are not, and must be left alone:
 

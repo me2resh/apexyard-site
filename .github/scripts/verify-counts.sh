@@ -80,19 +80,29 @@ derive() {
 }
 
 # --- the noun phrases each primitive is quoted with --------------------------
-# Extend these when a page introduces new wording. A phrase listed here is
-# checked everywhere it appears; a phrase missing from here is not checked at
-# all, so prefer over-listing.
+# A phrase is matched only where it starts IMMEDIATELY after the number, so an
+# adjective in between defeats it: "66 active slash commands" is not matched by
+# "slash commands". List the full phrase the page actually uses, longest first.
+#
+# Getting this wrong is not a theoretical risk — it shipped. The first version
+# of this script omitted "active slash commands" and left 9 of the 10 skill
+# claims on skills.html unchecked, on the page whose entire subject is that
+# count. Hence the unverified sweep below: a phrase missing from these lists is
+# now reported, not silently skipped.
 
-nouns_skills='slash commands?|active skills?|skills'
-nouns_hooks='shell hooks?|shell gates|small scripts|enforcement scripts|hooks'
+nouns_skills='active slash commands?|slash commands?|active skills?|skills'
+nouns_hooks='mechanical enforcement scripts|shell hooks?|shell gates|small scripts|enforcement scripts|hooks'
 nouns_agents='specialised (sub-)?agents?|specialised reviewer agents?|sub-agents?|agents'
 nouns_roles='role definitions?|roles'
-nouns_rules='modular rule files|modular self-discipline guides|rules'
+nouns_rules='modular rule files|modular self-discipline guides|rule files|rules'
 
 # --- lines that look like counts but are not --------------------------------
-# Every entry needs a reason. These are the two the v5.4.0 audit identified,
-# plus the harness that renders them.
+# Every entry needs a reason, and the reason has to be the one that is actually
+# doing the work — a comment describing an effect an entry does not have is
+# worse than no comment, because the next person trusts it.
+#
+# The first two both cover the gate-replay line, and neither is redundant: they
+# catch different SPELLINGS of it. The third is inert today and says so.
 
 is_excluded() {
   local file="$1" line="$2"
@@ -104,12 +114,16 @@ is_excluded() {
   # the one line a reader can verify. It carries an inline HTML comment saying so.
   [[ "$line" == *"settings.json diff:"* ]] && return 0
 
-  # The README's own prose about the line above, which quotes it verbatim in
-  # order to tell the next person not to sync it. Excluding the thing and not
-  # its documentation would fail the check on the warning against the check.
+  # The same claim in its en-dash spelling. Two places use it: the README's own
+  # prose quoting the line above to tell the next person not to sync it, and any
+  # rendering that uses "→" rather than "->". Excluding the thing but not its
+  # documentation would fail the check on the warning against the check.
   [[ "$line" == *'55 → 56 hooks'* ]] && return 0
 
   # "5-20 structured tickets" in the /tickets-batch description is a range.
+  # INERT TODAY, kept deliberately: no noun list contains "tickets", so nothing
+  # currently reaches this line. It fires only if "tickets" is ever added as a
+  # primitive noun — at which point a range would start reading as a count.
   [[ "$line" == *"structured tickets"* ]] && return 0
 
   # The scripted fan-out demo narrates "Spawning 3 agents..." — that is how many
@@ -117,9 +131,26 @@ is_excluded() {
   # framework ships. It is illustrative copy inside a JS transcript array.
   [[ "$line" == *"Spawning "*" agents"* ]] && return 0
 
+  # "18 department agents" is a COMPONENT of the total, not the total: the
+  # sentence reads "23 specialised sub-agents: 4 utility + Tariq + 18 department
+  # agents". 4 + 1 + 18 = 23, and the 23 on that same line IS checked. Treating
+  # the breakdown as a total would report correct arithmetic as drift and invite
+  # someone to "fix" it to 23, breaking the sum.
+  [[ "$line" == *"department agents"* ]] && return 0
+
+  # "4 named rules" in the hooks callout counts the rules named in that one
+  # paragraph, not the framework's rule files.
+  [[ "$line" == *"named rules"* ]] && return 0
+
   # og/render.sh and this script derive the counts; they quote the nouns in
   # comments and shell code, not as site claims.
   [[ "$file" == "og/render.sh" || "$file" == ".github/scripts/verify-counts.sh" ]] && return 0
+
+  # apexdock/ is a different product's docs. Its pages describe ApexYard skills
+  # in prose ("2-5 role agents in a debate") but carry none of the proof claims
+  # this script guards, and their numbers are ranges and examples rather than
+  # counts of anything at the tag.
+  [[ "$file" == apexdock/* ]] && return 0
 
   return 1
 }
@@ -128,6 +159,8 @@ is_excluded() {
 
 drift=0
 checked=0
+unverified=0
+
 
 scan_primitive() {
   local what="$1" nouns="$2" want="$3"
@@ -165,6 +198,56 @@ scan_primitive() {
   done <<< "$hits"
 }
 
+# --- the unverified sweep ----------------------------------------------------
+# The strict pass above only sees a number when a listed phrase follows it
+# immediately. This finds the near-misses — a number, then up to four words,
+# then a known noun — and reports any whose line the strict pass did not
+# already cover for that primitive.
+#
+# It does NOT fail the run: these are claims of unknown correctness, not known
+# drift, and failing on them would make the script something people stop
+# running. It prints them, and the verdict line carries the count, so "the
+# check passed" can never quietly mean "the check didn't look".
+#
+# The fix for an entry appearing here is to add the page's actual phrase to the
+# noun list above — or to reword the page, if it is the odd one out.
+
+sweep_unverified() {
+  local what="$1" nouns="$2"
+  local hits file lineno line
+
+  hits=$(git ls-files -z \
+    | xargs -0 grep -HIniE "\b[0-9]+( [a-zA-Z][a-zA-Z-]*){1,2} (${nouns})\b" 2>/dev/null \
+    | grep -vE '^(\.github/|og/README\.md)' || true)
+
+  while IFS= read -r hit; do
+    [ -n "$hit" ] || continue
+    file="${hit%%:*}"; hit="${hit#*:}"
+    lineno="${hit%%:*}"; line="${hit#*:}"
+
+    is_excluded "$file" "$line" && continue
+
+    # Judge each near-miss on its own text, not by whether the LINE was seen.
+    # Two traps a line-level test falls into: the loose pattern re-matches a
+    # claim the strict pass already caught (a listed phrase that itself starts
+    # with a word — "66 active slash commands" is matched strictly, and loosely
+    # by treating "active" as filler), and a line can carry one covered claim
+    # beside one uncovered one, which is exactly the case that would hide a
+    # stale count sitting next to a correct one.
+    #
+    # So: re-test each matched phrase against the STRICT pattern anchored whole.
+    # If it passes, the strict pass already owns it. If not, nothing checked it.
+    while IFS= read -r m; do
+      [ -n "$m" ] || continue
+      printf '%s' "$m" | grep -qiE "^[0-9]+ (${nouns})$" && continue
+      printf '  UNVERIFIED %-19s %s:%s  "%s" — no listed phrase matches\n' \
+        "[$what]" "$file" "$lineno" "$m" >&2
+      unverified=$((unverified + 1))
+    done < <(printf '%s\n' "$line" \
+      | grep -oiE "\b[0-9]+( [a-zA-Z][a-zA-Z-]*){1,2} (${nouns})\b" || true)
+  done <<< "$hits"
+}
+
 echo "Verifying site counts against $APEXYARD_REPO @ $REF"
 echo
 
@@ -179,6 +262,7 @@ for p in skills hooks agents roles rules; do
   want=$(derive "$p") || exit 2
   printf '  %-8s tag says %s\n' "$p" "$want"
   scan_primitive "$p" "$nouns" "$want"
+  sweep_unverified "$p" "$nouns"
 done
 
 # --- releases (opt-in; needs network + gh auth) ------------------------------
@@ -202,8 +286,14 @@ fi
 
 echo
 if [ "$drift" -gt 0 ]; then
-  echo "FAIL: $drift stale count(s) across the site; $checked claim(s) checked." >&2
+  echo "FAIL: $drift stale count(s) across the site; $checked claim(s) checked, $unverified unverified." >&2
   echo "      Refresh from the tag — do not copy forward the last sync's numbers." >&2
   exit 1
 fi
-echo "OK: $checked count claim(s) checked, all agree with $REF."
+if [ "$unverified" -gt 0 ]; then
+  echo "OK (with gaps): $checked count claim(s) checked and agreeing with $REF," >&2
+  echo "                but $unverified unverified claim(s) above matched no listed phrase." >&2
+  echo "                Add each page's actual wording to the noun lists before trusting this as a full pass." >&2
+  exit 0
+fi
+echo "OK: $checked count claim(s) checked, all agree with $REF. No unverified claims."

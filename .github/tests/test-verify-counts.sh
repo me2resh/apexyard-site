@@ -121,7 +121,41 @@ commit_site "$site"
 res=$(run_case "$site"); rc="${res%%|*}"; out="${res#*|}"
 if [ "$rc" = 0 ]; then ok "documented non-counts are not flagged"; else bad "documented non-counts are not flagged" "got $rc: $out"; fi
 
-# --- case 5: cannot derive -> refuse (exit 2), never guess ------------------
+# --- case 5: a wording no listed phrase matches is REPORTED, not skipped ----
+# The sibling of case 3. Case 3 guards against a file allowlist; this guards
+# against a PHRASE allowlist, which is the failure that actually shipped: the
+# first version of the script omitted "active slash commands" and left 9 of the
+# 10 skill claims on skills.html unchecked while reporting a clean pass.
+#
+# "2 brand new slash commands" is deliberately not in any noun list. It must
+# surface as UNVERIFIED — a claim of unknown correctness — rather than pass
+# silently. It must NOT fail the run: unknown is not the same as wrong.
+site=$(new_site site-unlisted)
+printf '<p>2 slash commands, and 2 brand new slash commands.</p>\n' > "$site/index.html"
+commit_site "$site"
+res=$(run_case "$site"); rc="${res%%|*}"; out="${res#*|}"
+case "$out" in
+  *UNVERIFIED*index.html*) ok "an unlisted wording is reported as UNVERIFIED" ;;
+  *) bad "an unlisted wording is reported as UNVERIFIED" "$out" ;;
+esac
+if [ "$rc" = 0 ]; then ok "UNVERIFIED alone does not fail the run"; else bad "UNVERIFIED alone does not fail the run" "got $rc: $out"; fi
+case "$out" in
+  *"unverified"*) ok "the verdict line carries the unverified count" ;;
+  *) bad "the verdict line carries the unverified count" "$out" ;;
+esac
+
+# A line already covered by the strict pass for that primitive must NOT also be
+# reported as unverified — otherwise every multi-claim line reads as a gap.
+site=$(new_site site-nodupe)
+printf '<p>2 slash commands</p>\n' > "$site/index.html"
+commit_site "$site"
+res=$(run_case "$site"); out="${res#*|}"
+case "$out" in
+  *UNVERIFIED*) bad "a strictly-checked line is not double-reported" "$out" ;;
+  *) ok "a strictly-checked line is not double-reported" ;;
+esac
+
+# --- case 6: cannot derive -> refuse (exit 2), never guess ------------------
 site=$(new_site site-clean2)
 printf '<p>2 slash commands</p>\n' > "$site/index.html"
 commit_site "$site"
@@ -132,7 +166,7 @@ if [ "$rc" = 2 ]; then ok "missing APEXYARD_REPO exits 2"; else bad "missing APE
 out=$(APEXYARD_REPO="$fw" REF=v0.0.0-nope SITE_ROOT="$site" "$script" 2>&1); rc=$?
 if [ "$rc" = 2 ]; then ok "unresolvable REF exits 2"; else bad "unresolvable REF exits 2" "got $rc: $out"; fi
 
-# --- case 6: framework layout moved -> refuse, don't report zero ------------
+# --- case 7: framework layout moved -> refuse, don't report zero ------------
 # An empty .claude/skills/ means the glob stopped matching. Reporting "the site
 # should say 0 skills" would be worse than not running: it would rewrite every
 # correct page to a wrong number.
