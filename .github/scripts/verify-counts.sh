@@ -20,6 +20,12 @@
 # Adding a new page with a stale count fails this check without anyone
 # extending a list of files.
 #
+# WHERE THE DEFINITIONS LIVE
+# Not here. Every count is derived by .github/scripts/derive-counts.sh, which
+# og/render.sh and the README's definition table also read from — so the cards,
+# the pages, and the docs cannot disagree about what a count means (#72). This
+# script owns the SCANNING; that one owns the ARITHMETIC.
+#
 # Env (same contract as og/render.sh, so the cards and the pages agree):
 #   APEXYARD_REPO  (required) path to a clone of me2resh/apexyard
 #   REF            (required) the released tag to derive from, e.g. v5.4.0
@@ -37,6 +43,10 @@ set -uo pipefail
 
 fail() { echo "ERROR: $*" >&2; exit 2; }
 
+# shellcheck source=derive-counts.sh
+. "$(dirname "${BASH_SOURCE[0]}")/derive-counts.sh" \
+  || fail "cannot source derive-counts.sh next to this script."
+
 APEXYARD_REPO="${APEXYARD_REPO:-}"
 REF="${REF:-}"
 [ -n "$APEXYARD_REPO" ] || fail "APEXYARD_REPO is unset — point it at a clone of me2resh/apexyard."
@@ -52,30 +62,15 @@ check_releases=0
 [ "${1:-}" = "--releases" ] && check_releases=1
 
 # --- derive from the tag ----------------------------------------------------
-# These are the README's definitions verbatim. If you change one, change it in
-# three places at once: here, the README table, and og/render.sh — they are the
-# same contract, and the audit exists because they once drifted apart.
+# The arithmetic lives in derive-counts.sh so this script, og/render.sh, and the
+# README quote one definition rather than three hand-synced copies (#72). All
+# this wrapper adds is THIS script's exit code: "cannot derive" is exit 2, a
+# different outcome from "found drift", which is exit 1.
 
 derive() {
-  local what="$1" n
-  case "$what" in
-    skills) n=$(git -C "$APEXYARD_REPO" ls-tree -r --name-only "$REF" -- .claude/skills \
-                 | grep -c '/SKILL\.md$') ;;
-    hooks)  n=$(git -C "$APEXYARD_REPO" ls-tree --name-only "$REF" -- .claude/hooks/ \
-                 | sed 's#\.claude/hooks/##' | grep '\.sh$' | grep -vc '^_lib') ;;
-    agents) n=$(git -C "$APEXYARD_REPO" ls-tree -r --name-only "$REF" -- .claude/agents \
-                 | grep -c '\.md$') ;;
-    roles)  n=$(git -C "$APEXYARD_REPO" ls-tree -r --name-only "$REF" -- roles \
-                 | grep '\.md$' | grep -vc 'README.md') ;;
-    rules)  n=$(git -C "$APEXYARD_REPO" ls-tree -r --name-only "$REF" -- .claude/rules \
-                 | grep -c '\.md$') ;;
-    *) fail "unknown primitive '$what'" ;;
-  esac
-  # A zero means a glob stopped matching because the framework layout moved.
-  # Reporting "the site should say 0 skills" would be worse than refusing.
-  # Tested as a string: a non-numeric value makes -eq raise an arithmetic error
-  # and take the false branch, sliding past the guard.
-  [[ "$n" =~ ^[1-9][0-9]*$ ]] || fail "derived $what='$n' from $APEXYARD_REPO @ $REF (expected a positive integer — the framework layout likely moved and this script's globs need updating)."
+  local n
+  n=$(apexyard_derive_count "$1" "$APEXYARD_REPO" "$REF") \
+    || fail "cannot derive '$1' — see the diagnostic above."
   echo "$n"
 }
 
@@ -170,9 +165,14 @@ is_excluded() {
   # framework ships. It is illustrative copy inside a JS transcript array.
   [[ "$line" == *"Spawning "*" agents"* ]] && return 0
 
-  # og/render.sh and this script derive the counts; they quote the nouns in
-  # comments and shell code, not as site claims.
-  [[ "$file" == "og/render.sh" || "$file" == ".github/scripts/verify-counts.sh" ]] && return 0
+  # og/render.sh quotes the primitive nouns in comments and shell code, not as
+  # site claims. It no longer carries the derivations themselves (#72 moved
+  # those to derive-counts.sh), but the exclusion stays: it is not the file's
+  # arithmetic that matched here, it is its prose.
+  #
+  # Nothing under .github/ needs listing — the scan's own filter drops that
+  # whole tree, which is why derive-counts.sh and this script are not named.
+  [[ "$file" == "og/render.sh" ]] && return 0
 
   # apexdock/ is a different product's docs. Its pages describe ApexYard skills
   # in prose ("2-5 role agents in a debate") but carry none of the proof claims
@@ -301,8 +301,13 @@ if [ "$check_releases" = 1 ]; then
   if ! command -v gh >/dev/null 2>&1; then
     echo "  releases  SKIPPED — gh not installed" >&2
   else
-    rel=$(gh api --paginate repos/me2resh/apexyard/releases --jq '.[].tag_name' 2>/dev/null | grep -c . || true)
-    if [[ "$rel" =~ ^[1-9][0-9]*$ ]]; then
+    # Same library, same recipe as the README quotes. Its "cannot derive"
+    # diagnostic is suppressed here on purpose: for the release count, failing
+    # to derive is the ordinary offline case, and this script reports that as
+    # SKIPPED rather than as an error. The five tag-derived counts keep the
+    # loud diagnostic — for those, not deriving IS the anomaly.
+    rel=$(apexyard_derive_count releases "" "" 2>/dev/null) || rel=""
+    if [ -n "$rel" ]; then
       printf '  %-8s API says %s (published Releases, NOT git tags)\n' "releases" "$rel"
       scan_primitive "releases" 'production releases shipped|published releases|releases' "$rel"
     else

@@ -1,14 +1,23 @@
 name: Shell Tests
 
-# Runs the deploy-script regression guards. These cover shell logic that only
-# ever executes inside a deploy — the CloudFront invalidation guard from #48 is
-# the first — so without this job the behaviour is untested until it runs
-# against production. lychee's path filter (*.html / *.md) means a change to
-# the deploy workflows otherwise lands with no CI at all.
+# Runs the repo's shell regression guards. These cover logic that only ever
+# executes inside a deploy — the CloudFront invalidation guard from #48 is the
+# first — so without this job the behaviour is untested until it runs against
+# production. lychee's path filter (*.html / *.md) means a change to the deploy
+# workflows otherwise lands with no CI at all.
 #
-# Fast and dependency-free: the tests stub `aws` and `curl` on PATH, so nothing
-# here touches AWS or the network.
+# Fast and dependency-free: the tests stub `aws` and `curl` on PATH and build
+# synthetic git repos in a tempdir, so nothing here touches AWS, the real
+# framework clone, or the network.
+#
+# README.md and og/render.sh are in the path filter because #72 bound both to
+# .github/scripts/derive-counts.sh: the README's definition block is asserted
+# byte-identical to `--recipes`, and render.sh sources the library. Editing
+# either outside .github/ can now break a test, so both have to trigger the run.
 
+# The two path lists are duplicated rather than shared via a YAML anchor:
+# GitHub Actions' workflow parser does not support anchors/aliases, so `&`/`*`
+# here would fail to parse rather than de-duplicate. Keep them in step.
 on:
   pull_request:
     paths:
@@ -16,6 +25,8 @@ on:
       - ".github/tests/**"
       - ".github/workflows/deploy-aws*.yml"
       - ".github/workflows/shell-tests.yml"
+      - "og/render.sh"
+      - "README.md"
   push:
     branches: [main]
     paths:
@@ -23,6 +34,8 @@ on:
       - ".github/tests/**"
       - ".github/workflows/deploy-aws*.yml"
       - ".github/workflows/shell-tests.yml"
+      - "og/render.sh"
+      - "README.md"
   workflow_dispatch:
 
 permissions:
@@ -36,8 +49,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Lint deploy scripts
-        run: shellcheck .github/scripts/*.sh .github/tests/*.sh
+      # -x + --source-path=SCRIPTDIR so shellcheck follows the `.` into
+      # derive-counts.sh from both callers and resolves it relative to each
+      # script's own directory — og/render.sh reaches it via a different
+      # relative path than verify-counts.sh does.
+      - name: Lint shell scripts
+        run: |
+          shellcheck -x --source-path=SCRIPTDIR \
+            .github/scripts/*.sh .github/tests/*.sh og/render.sh
 
       - name: Run test suites
         run: |

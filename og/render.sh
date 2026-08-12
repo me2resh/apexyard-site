@@ -10,6 +10,12 @@
 # premium-injected items. Override the repo path with APEXYARD_REPO, the ref
 # with APEXYARD_REF, or hard-pin counts with ROLES=/SKILLS=/HOOKS=.
 #
+# WHAT COUNTS AS A ROLE/SKILL/HOOK IS NOT DECIDED HERE. The definitions live in
+# ../.github/scripts/derive-counts.sh, shared with the count verifier and the
+# README's definition table, so a card can no longer disagree with the page it
+# is the preview for (#72). This script owns finding the fork and picking the
+# ref; that one owns the arithmetic.
+#
 # Two stale-count defences, both learned the hard way (see issue #49):
 #   1. The repo path is DISCOVERED, not hardcoded — a hardcoded absolute path
 #      goes stale the moment the fork moves, and the fallback was to hand-pin
@@ -24,6 +30,9 @@
 # ====================================================================
 set -euo pipefail
 cd "$(dirname "$0")"
+
+# shellcheck source=../.github/scripts/derive-counts.sh
+. ../.github/scripts/derive-counts.sh
 
 # --- Locate the apexyard ops fork -----------------------------------------
 # A directory is the fork if it is a git repo carrying the framework's own
@@ -85,38 +94,14 @@ derive_counts() {
   fi
   echo "Deriving framework-only counts from $APEXYARD_REPO @ $REF ..."
 
-  # Each pipeline ends in `|| true` on purpose. A grep that matches nothing
-  # exits 1, and under `set -o pipefail` that aborts the assignment via set -e
-  # BEFORE the zero-count guard below can run — turning the exact failure the
-  # guard exists to explain into a silent exit 1. Swallowing the status lets
-  # the count land as 0 and the guard report it properly.
-
-  # roles: tracked *.md under roles/, minus README, minus premium roles/growth/*
-  ROLES=$(git -C "$APEXYARD_REPO" ls-tree -r --name-only "$REF" -- roles \
-    | grep '\.md$' | grep -v 'README.md' | grep -v '^roles/growth/' | wc -l | tr -d ' ') || true
-
-  # skills: skill dirs (those carrying a SKILL.md) on the released ref.
-  # Premium skills are never committed to the framework repo's main, so this
-  # is framework-only by construction.
-  SKILLS=$(git -C "$APEXYARD_REPO" ls-tree -r --name-only "$REF" -- .claude/skills \
-    | grep '/SKILL\.md$' | wc -l | tr -d ' ') || true
-
-  # hooks: top-level *.sh in .claude/hooks/, excluding _lib* helpers and the tests/ subdir.
-  HOOKS=$(git -C "$APEXYARD_REPO" ls-tree --name-only "$REF" -- .claude/hooks/ \
-    | sed 's#\.claude/hooks/##' | grep '\.sh$' | grep -v '^_lib' | wc -l | tr -d ' ') || true
-
-  # A zero count means the layout moved under us and a glob stopped matching —
-  # rendering a card that reads "0 skills" is worse than not rendering at all.
-  # Tested as a string, not with -eq: a non-numeric value (e.g. "1x") makes -eq
-  # raise an arithmetic error and take the false branch, sliding past the guard.
-  for pair in "ROLES=${ROLES:-}" "SKILLS=${SKILLS:-}" "HOOKS=${HOOKS:-}"; do
-    if [[ ! "${pair#*=}" =~ ^[1-9][0-9]*$ ]]; then
-      echo "ERROR: derived ${pair%%=*}='${pair#*=}' from $APEXYARD_REPO @ $REF." >&2
-      echo "  Expected a positive integer. The framework layout likely changed" >&2
-      echo "  and this script's globs need updating. Refusing to render." >&2
-      exit 1
-    fi
-  done
+  # The zero-count guard, and the reason it is a string test rather than -eq,
+  # both live in derive-counts.sh — as does the `|| true` that lets a
+  # non-matching glob reach that guard instead of aborting the assignment under
+  # `set -e`. All these three lines add is the render-specific verdict: a card
+  # reading "0 skills" is worse than no card, so refuse rather than render.
+  ROLES=$(apexyard_derive_count roles  "$APEXYARD_REPO" "$REF") || { echo "  Refusing to render." >&2; exit 1; }
+  SKILLS=$(apexyard_derive_count skills "$APEXYARD_REPO" "$REF") || { echo "  Refusing to render." >&2; exit 1; }
+  HOOKS=$(apexyard_derive_count hooks  "$APEXYARD_REPO" "$REF") || { echo "  Refusing to render." >&2; exit 1; }
 
   echo "Derived: ROLES=$ROLES SKILLS=$SKILLS HOOKS=$HOOKS"
 }
