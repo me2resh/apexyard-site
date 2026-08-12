@@ -155,7 +155,30 @@ case "$out" in
   *) ok "a strictly-checked line is not double-reported" ;;
 esac
 
-# --- case 6: cannot derive -> refuse (exit 2), never guess ------------------
+# --- case 6: an excluded sub-total must not un-check its own line -----------
+# Regression guard for a defect this suite did not catch the first time. The
+# architecture pages carry "1 sub-agents: 4 utility + 18 department agents" on
+# ONE line — a total plus its breakdown. The breakdown must be ignored (it is
+# not the total) while the total is still checked. Scoping that exclusion to
+# the whole LINE silently stopped checking the total too, so any value passed.
+site=$(new_site site-subtotal)
+printf '<p>1 sub-agents: 0 utility + 18 department agents</p>\n' > "$site/index.html"
+commit_site "$site"
+res=$(run_case "$site"); rc="${res%%|*}"; out="${res#*|}"
+if [ "$rc" = 0 ]; then ok "a correct total beside an excluded sub-total passes"; else bad "a correct total beside an excluded sub-total passes" "got $rc: $out"; fi
+case "$out" in
+  *UNVERIFIED*) bad "the excluded sub-total is not reported as unverified" "$out" ;;
+  *) ok "the excluded sub-total is not reported as unverified" ;;
+esac
+
+# The load-bearing half: break the TOTAL on that same line. It must be caught.
+site=$(new_site site-subtotal-broken)
+printf '<p>99 sub-agents: 0 utility + 18 department agents</p>\n' > "$site/index.html"
+commit_site "$site"
+res=$(run_case "$site"); rc="${res%%|*}"; out="${res#*|}"
+if [ "$rc" = 1 ]; then ok "a stale total is still caught beside an excluded sub-total"; else bad "a stale total is still caught beside an excluded sub-total" "got $rc: $out"; fi
+
+# --- case 7: cannot derive -> refuse (exit 2), never guess ------------------
 site=$(new_site site-clean2)
 printf '<p>2 slash commands</p>\n' > "$site/index.html"
 commit_site "$site"
@@ -166,7 +189,7 @@ if [ "$rc" = 2 ]; then ok "missing APEXYARD_REPO exits 2"; else bad "missing APE
 out=$(APEXYARD_REPO="$fw" REF=v0.0.0-nope SITE_ROOT="$site" "$script" 2>&1); rc=$?
 if [ "$rc" = 2 ]; then ok "unresolvable REF exits 2"; else bad "unresolvable REF exits 2" "got $rc: $out"; fi
 
-# --- case 7: framework layout moved -> refuse, don't report zero ------------
+# --- case 8: framework layout moved -> refuse, don't report zero ------------
 # An empty .claude/skills/ means the glob stopped matching. Reporting "the site
 # should say 0 skills" would be worse than not running: it would rewrite every
 # correct page to a wrong number.

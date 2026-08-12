@@ -60,17 +60,20 @@ It exits `0` when every surface agrees, `1` naming each stale claim, and `2` whe
 
 The important part is *how* it searches. It does not look for the numbers it expects in a list of files it knows about; it scans every tracked file for `<number> <primitive-noun>` and checks each match. A page added next year with a copied-forward count fails the check without anyone remembering to register it. That is the direct answer to the failure this section already describes — the rules count sat wrong at 11 for two releases because each sync only fixed what someone happened to notice.
 
-It has one real limit, and it reports rather than hides it. A phrase is only matched where it follows the number immediately, so the site's exact wording has to be in the noun lists at the top of the script — `66 active slash commands` is not matched by `slash commands`. Anything that looks like a count but matches no listed phrase is printed as `UNVERIFIED` and counted in the verdict:
+A phrase is only matched where it follows the number immediately, so the site's exact wording has to be in the noun lists at the top of the script — `66 active slash commands` is not matched by `slash commands`. When an **unlisted adjective** sits in front of a known noun, the script says so rather than passing quietly:
 
 ```
-UNVERIFIED [rules]   architecture.html:659  "19 modular files" — no listed phrase matches
-OK (with gaps): 60 count claim(s) checked and agreeing with v5.4.0,
+$ sed -i 's/19 rule files/19 core rules/' architecture.html && APEXYARD_REPO=… REF=v5.4.0 .github/scripts/verify-counts.sh
+UNVERIFIED [rules]            architecture.html:659  "19 core rules" — no listed phrase matches
+OK (with gaps): 58 count claim(s) checked and agreeing with v5.4.0,
                 but 1 unverified claim(s) above matched no listed phrase.
 ```
 
-That does not fail the run — unknown is not the same as wrong — but it means a clean pass can never quietly mean "the check didn't look there". When you see one, add the page's wording to the noun list, or reword the page if it is the odd one out.
+That does not fail the run — unknown is not the same as wrong — but a clean pass can never quietly mean "the check never looked there". When you see one, add the page's wording to the noun list, or reword the page if it is the odd one out.
 
-This is not hypothetical caution. The first version of this script omitted `active slash commands` and left 9 of the 10 skill claims on `skills.html` unchecked while reporting a clean pass, on the page whose entire subject is that count. The sweep exists because of it.
+**Know what this does not cover.** The sweep is anchored on a *known noun*, so it catches an unfamiliar adjective but not an unfamiliar **noun**. `11 files`, `11 guides`, `eleven rule files`, and `11&nbsp;rule files` are all silent — neither checked nor reported. That is exactly why `architecture.html` was reworded from `19 files` to `19 rule files` in #69 rather than adding `files` to the rule nouns: `files` is too generic to check safely, so the page was made checkable instead. Prefer that fix when you hit this.
+
+None of this is hypothetical caution. The first version of this script omitted `active slash commands` and left 9 of the 10 skill claims on `skills.html` unchecked while reporting a clean pass — on the page whose entire subject is that count. And the bare `19 files` on `architecture.html` was the same line that had read `11 files` two releases running. Both were found in review, not by the script.
 
 Run it whenever you sync counts, and again before you merge.
 

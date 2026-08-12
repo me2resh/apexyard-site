@@ -96,13 +96,47 @@ nouns_agents='specialised (sub-)?agents?|specialised reviewer agents?|sub-agents
 nouns_roles='role definitions?|roles'
 nouns_rules='modular rule files|modular self-discipline guides|rule files|rules'
 
-# --- lines that look like counts but are not --------------------------------
-# Every entry needs a reason, and the reason has to be the one that is actually
-# doing the work — a comment describing an effect an entry does not have is
-# worse than no comment, because the next person trusts it.
+# --- things that look like counts but are not -------------------------------
+# Two lists below: one scoped to a matched PHRASE, one to a whole LINE. Every
+# entry needs a reason, and the reason has to be the one actually doing the
+# work — a comment describing an effect an entry does not have is worse than no
+# comment, because the next person trusts it. Two entries here are annotated as
+# inert precisely so nobody assumes otherwise.
+
+# Phrase-scoped exclusions, applied to ONE matched phrase rather than a whole
+# line. These exist because line-scoping is dangerous where a line carries more
+# than one claim: excluding the line to silence a sub-total also stops checking
+# the total sitting beside it. That is not hypothetical — an earlier revision of
+# this file excluded the line containing "18 department agents" and thereby
+# un-checked the "23 specialised sub-agents" on the same line, so setting the 23
+# to any value passed. Caught in review; hence the split.
 #
-# The first two both cover the gate-replay line, and neither is redundant: they
-# catch different SPELLINGS of it. The third is inert today and says so.
+# Use this list for phrases that are only ever reached by the sweep. A phrase
+# the STRICT pass matches has to be handled in is_excluded() below, because by
+# then the number has already been compared.
+is_excluded_phrase() {
+  local m="$1" file="${2:-}"
+
+  # The README's worked example of this script's own UNVERIFIED output. Without
+  # this, documenting the feature permanently trips it — the same shape as the
+  # "55 → 56 hooks" quote below, where the warning against a check would
+  # otherwise fail the check. Scoped to README.md so the phrase is still
+  # reported if it ever appears on an actual page.
+  [[ "$file" == "README.md" && "$m" == *"core rules"* ]] && return 0
+
+  # "18 department agents" is a COMPONENT of a total, not a total: the sentence
+  # reads "23 specialised sub-agents: 4 utility + Tariq + 18 department agents".
+  # 4 + 1 + 18 = 23, verified against the agent files at v5.4.0. The 23 on the
+  # same line is checked normally — that is the point of scoping this to the
+  # phrase.
+  [[ "$m" == *"department agents"* ]] && return 0
+
+  # "4 named rules" counts the rules named in one callout paragraph, not the
+  # framework's rule files.
+  [[ "$m" == *"named rules"* ]] && return 0
+
+  return 1
+}
 
 is_excluded() {
   local file="$1" line="$2"
@@ -112,6 +146,11 @@ is_excluded() {
   # fixed point in history, not today's hook-file count. The section promises
   # every line is checkable, so syncing it to the current count would falsify
   # the one line a reader can verify. It carries an inline HTML comment saying so.
+  #
+  # INERT ON THE SITE TODAY: index.html renders that line with an en-dash, which
+  # the next entry catches first. This one matches the ASCII-arrow spelling, and
+  # is currently load-bearing only in test-verify-counts.sh case 4. Kept so the
+  # exclusion survives a re-render that changes the arrow.
   [[ "$line" == *"settings.json diff:"* ]] && return 0
 
   # The same claim in its en-dash spelling. Two places use it: the README's own
@@ -130,17 +169,6 @@ is_excluded() {
   # agents the demo scenario spawns for three tickets, not how many the
   # framework ships. It is illustrative copy inside a JS transcript array.
   [[ "$line" == *"Spawning "*" agents"* ]] && return 0
-
-  # "18 department agents" is a COMPONENT of the total, not the total: the
-  # sentence reads "23 specialised sub-agents: 4 utility + Tariq + 18 department
-  # agents". 4 + 1 + 18 = 23, and the 23 on that same line IS checked. Treating
-  # the breakdown as a total would report correct arithmetic as drift and invite
-  # someone to "fix" it to 23, breaking the sum.
-  [[ "$line" == *"department agents"* ]] && return 0
-
-  # "4 named rules" in the hooks callout counts the rules named in that one
-  # paragraph, not the framework's rule files.
-  [[ "$line" == *"named rules"* ]] && return 0
 
   # og/render.sh and this script derive the counts; they quote the nouns in
   # comments and shell code, not as site claims.
@@ -240,6 +268,7 @@ sweep_unverified() {
     while IFS= read -r m; do
       [ -n "$m" ] || continue
       printf '%s' "$m" | grep -qiE "^[0-9]+ (${nouns})$" && continue
+      is_excluded_phrase "$m" "$file" && continue
       printf '  UNVERIFIED %-19s %s:%s  "%s" — no listed phrase matches\n' \
         "[$what]" "$file" "$lineno" "$m" >&2
       unverified=$((unverified + 1))
