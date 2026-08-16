@@ -140,5 +140,5 @@ no SaaS; no lock-in.
 ## Repository
 
 - Source: <https://github.com/me2resh/apexyard>
-- Marketing site: <https://yard.apexscript.com>
+- Marketing site: <https://apexyard.ai>
 - License: MIT

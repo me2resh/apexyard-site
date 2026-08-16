@@ -41,5 +41,5 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
-Sitemap: https://yard.apexscript.com/sitemap.xml
-LLM-Sitemap: https://yard.apexscript.com/llms.txt
+Sitemap: https://apexyard.ai/sitemap.xml
+LLM-Sitemap: https://apexyard.ai/llms.txt
