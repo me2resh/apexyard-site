@@ -28,7 +28,7 @@ concurrency:
 
 env:
   BUCKET: apexyard-site-prod
-  SITE_DOMAIN: yard.apexscript.com
+  SITE_DOMAIN: apexyard.ai
   ROLE_ARN: arn:aws:iam::340541183783:role/github-actions-deployer
 
 jobs:

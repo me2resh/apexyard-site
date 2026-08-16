@@ -37,7 +37,7 @@
 # itself whether CloudFront is answering for it.
 #
 # Env:
-#   SITE_DOMAIN          (required) the distribution's alias, e.g. yard.apexscript.com
+#   SITE_DOMAIN          (required) the distribution's alias, e.g. apexyard.ai
 #   STACK_HINT           (optional) named in the pre-apply warning
 #   INVALIDATION_PATHS   (optional) defaults to /*
 
