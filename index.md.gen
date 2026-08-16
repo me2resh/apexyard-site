@@ -39,7 +39,7 @@ ApexYard is built using ApexYard. Verifiable from `github.com/me2resh/apexyard`:
 
 ## See a day with it
 
-Read [how it works](https://yard.apexscript.com/how-it-works) for a plain-English walkthrough of one realistic day — open the inbox in the morning, ship by evening, nothing gets lost.
+Read [how it works](https://apexyard.ai/how-it-works) for a plain-English walkthrough of one realistic day — open the inbox in the morning, ship by evening, nothing gets lost.
 
 ## Get started in three steps
 
@@ -101,8 +101,8 @@ Every pull request ties to a ticket. Every ticket has acceptance criteria. Code 
 ## Links
 
 - GitHub: <https://github.com/me2resh/apexyard>
-- How it works: <https://yard.apexscript.com/how-it-works.md>
-- Architecture: <https://yard.apexscript.com/architecture.md>
-- Skills: <https://yard.apexscript.com/skills.md>
+- How it works: <https://apexyard.ai/how-it-works.md>
+- Architecture: <https://apexyard.ai/architecture.md>
+- Skills: <https://apexyard.ai/skills.md>
 - Releases: <https://github.com/me2resh/apexyard/releases>
 - Setup guide: <https://github.com/me2resh/apexyard/blob/main/docs/multi-project.md>

@@ -7,11 +7,11 @@
 > no lock-in.
 
 This file is the LLM/agent-friendly concatenation of the apexyard marketing
-site (https://yard.apexscript.com/). Each page is a top-level section below.
+site (https://apexyard.ai/). Each page is a top-level section below.
 
 ---
 
-# Home (https://yard.apexscript.com/)
+# Home (https://apexyard.ai/)
 
 ## Ship AI-built software like a real engineering team — without hiring one.
 
@@ -157,7 +157,7 @@ checks, SEO checks.
 
 ---
 
-# How it works (https://yard.apexscript.com/how-it-works)
+# How it works (https://apexyard.ai/how-it-works)
 
 A walkthrough of one realistic day using ApexYard, written for someone
 who isn't an engineer.
@@ -226,7 +226,7 @@ you remember it or not.
 
 ---
 
-# Architecture (https://yard.apexscript.com/architecture)
+# Architecture (https://apexyard.ai/architecture)
 
 In plain English: ApexYard is one place that holds the rules, the
 tools, and the history for every product you build. The 5-layer model
@@ -291,7 +291,7 @@ Free with any project you don't want named publicly.
 
 ---
 
-# Skills (https://yard.apexscript.com/skills)
+# Skills (https://apexyard.ai/skills)
 
 66 slash commands grouped by what you're trying to do — not by what's
 under the hood. Each is a markdown SKILL.md file under

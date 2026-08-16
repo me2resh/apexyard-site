@@ -1,6 +1,6 @@
 # Open Graph images
 
-Four 1200×630 share-preview PNGs referenced from the `<meta property="og:image">` and `<meta name="twitter:image">` tags in `{index,architecture,skills,game}.html`. Served at `https://yard.apexscript.com/og/<page>.png`.
+Four 1200×630 share-preview PNGs referenced from the `<meta property="og:image">` and `<meta name="twitter:image">` tags in `{index,architecture,skills,game}.html`. Served at `https://apexyard.ai/og/<page>.png`.
 
 | File | Page it backs | Purpose |
 |------|---------------|---------|

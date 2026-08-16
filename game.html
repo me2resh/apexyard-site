@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>You vs. the LLM — an ApexYard game</title>
 <meta name="description" content="Think you understand how AI actually works? Prove it. A fast, fun game across tokens, embeddings, RAG, prompt injection, and the agent loop — score it and challenge your friends. An ApexYard game.">
-<link rel="canonical" href="https://yard.apexscript.com/game">
+<link rel="canonical" href="https://apexyard.ai/game">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ApexYard">
-<meta property="og:url" content="https://yard.apexscript.com/game">
+<meta property="og:url" content="https://apexyard.ai/game">
 <meta property="og:title" content="You vs. the LLM — an ApexYard game">
 <meta property="og:description" content="Think you understand how AI actually works? Prove it. 11 quick rounds — tokens, embeddings, RAG, prompt injection, the agent loop, loop engineering — score it and challenge your friends.">
-<meta property="og:image" content="https://yard.apexscript.com/og/game.png">
+<meta property="og:image" content="https://apexyard.ai/og/game.png">
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
@@ -23,7 +23,7 @@
 <meta name="twitter:creator" content="@me2resh">
 <meta name="twitter:title" content="You vs. the LLM — an ApexYard game">
 <meta name="twitter:description" content="Think you understand how AI actually works? Prove it — 11 quick rounds, then challenge your friends to beat your score.">
-<meta name="twitter:image" content="https://yard.apexscript.com/og/game.png">
+<meta name="twitter:image" content="https://apexyard.ai/og/game.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1188,7 +1188,7 @@ function renderOutro(){
   // channel (X, LinkedIn, WhatsApp, copied text), unlike an "@me2resh" mention
   // which only resolves on X. The credit is embedded in the message text so it
   // travels everywhere identically (no X-only intent params).
-  const GAME_URL = 'https://yard.apexscript.com/game';
+  const GAME_URL = 'https://apexyard.ai/game';
   const max = LEVELS.length * 100;
   const msg = `I scored ${state.score}/${max} on 'You vs. the LLM' 🧠 Think you can beat me?`;
   const fullLine = `${msg} ${GAME_URL} via #apexyard`;
@@ -1236,7 +1236,7 @@ function renderOutro(){
 
   clear(stage);
   stage.appendChild(card);
-  footnote.textContent = "Want to go deeper? Read 'Loop Engineering' → me2resh.com/blog/loop-engineering · Built with ApexYard (yard.apexscript.com)";
+  footnote.textContent = "Want to go deeper? Read 'Loop Engineering' → me2resh.com/blog/loop-engineering · Built with ApexYard (apexyard.ai)";
 }
 
 // =====================================================================

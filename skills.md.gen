@@ -4,7 +4,7 @@
 
 ## In plain English
 
-These are the commands you type into Claude Code to get ApexYard to do something. They're grouped by what you're trying to do — keep quality high, move work forward, see everything at once, onboard new code, run things — not by what's under the hood. If you'd rather see a real day with these, read [how it works](https://yard.apexscript.com/how-it-works.md).
+These are the commands you type into Claude Code to get ApexYard to do something. They're grouped by what you're trying to do — keep quality high, move work forward, see everything at once, onboard new code, run things — not by what's under the hood. If you'd rather see a real day with these, read [how it works](https://apexyard.ai/how-it-works.md).
 
 ## What is it?
 
@@ -113,7 +113,7 @@ Sync the framework, parallelise independent work, cut a release, debug something
 
 ## Links
 
-- Home: <https://yard.apexscript.com/index.md>
-- How it works: <https://yard.apexscript.com/how-it-works.md>
-- Architecture: <https://yard.apexscript.com/architecture.md>
+- Home: <https://apexyard.ai/index.md>
+- How it works: <https://apexyard.ai/how-it-works.md>
+- Architecture: <https://apexyard.ai/architecture.md>
 - GitHub source for each skill: <https://github.com/me2resh/apexyard/tree/main/.claude/skills>

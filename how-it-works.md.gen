@@ -12,7 +12,7 @@ Adds review, guardrails, and process around every change you make with Claude Co
 
 ## What's needed to start?
 
-Fork apexyard, run `/setup`, register your projects. The walkthrough below is a narrative; the install steps live on the [home page](https://yard.apexscript.com/index.md).
+Fork apexyard, run `/setup`, register your projects. The walkthrough below is a narrative; the install steps live on the [home page](https://apexyard.ai/index.md).
 
 ## The shape of a day with ApexYard
 
@@ -98,8 +98,8 @@ Free and open source. Plain markdown and shell. No SaaS, no monthly fee, no lock
 
 ## Links
 
-- Home: <https://yard.apexscript.com/index.md>
-- Architecture: <https://yard.apexscript.com/architecture.md>
-- Skills: <https://yard.apexscript.com/skills.md>
+- Home: <https://apexyard.ai/index.md>
+- Architecture: <https://apexyard.ai/architecture.md>
+- Skills: <https://apexyard.ai/skills.md>
 - GitHub: <https://github.com/me2resh/apexyard>
 - Setup guide: <https://github.com/me2resh/apexyard/blob/main/docs/multi-project.md>

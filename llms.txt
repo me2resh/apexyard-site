@@ -8,14 +8,14 @@
 
 ## Pages
 
-- [Home](https://yard.apexscript.com/) — what apexyard does for non-technical founders, who it's for, how to get started
-- [How it works](https://yard.apexscript.com/how-it-works) — a plain-English walkthrough of one realistic day with apexyard
-- [Architecture](https://yard.apexscript.com/architecture) — the technical 5-layer model + portfolio model
-- [Skills](https://yard.apexscript.com/skills) — full slash-command reference (66 skills) grouped by outcome
+- [Home](https://apexyard.ai/) — what apexyard does for non-technical founders, who it's for, how to get started
+- [How it works](https://apexyard.ai/how-it-works) — a plain-English walkthrough of one realistic day with apexyard
+- [Architecture](https://apexyard.ai/architecture) — the technical 5-layer model + portfolio model
+- [Skills](https://apexyard.ai/skills) — full slash-command reference (66 skills) grouped by outcome
 
 ## Full-content companion
 
-- [llms-full.txt](https://yard.apexscript.com/llms-full.txt) — all page content in one markdown file for one-shot consumption
+- [llms-full.txt](https://apexyard.ai/llms-full.txt) — all page content in one markdown file for one-shot consumption
 
 ## Who this is for
 
