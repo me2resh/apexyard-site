@@ -122,6 +122,17 @@ Three of the four were written at **v2.0.0** and have not been touched since; th
 
 Do not refresh these by picking a plausible query. Two need a decision first — what counts as a "bug caught before users hit them", and whether a rolling 90-day window belongs on a hand-maintained static page at all. Tracked in [#70](https://github.com/me2resh/apexyard-site/issues/70).
 
+## Light / dark theme
+
+Every themed page (`index.html`, `architecture.html`, `skills.html`, `how-it-works.html`, `404.html`) follows the OS through `@media (prefers-color-scheme: dark)` and needs no JS for that. The titlebar toggle (`theme-toggle.js`) pins a choice on top: it sets `data-theme="light"` or `data-theme="dark"` on `<html>` and stores it under the `localStorage` key `ay-theme` (next to `ay-consent`). Picking the theme the OS already uses clears the override, so the page goes back to following the OS instead of freezing on today's choice. With JS off the button stays hidden and nothing changes.
+
+Two things are hand-synced per page, the same way the primitive counts are:
+
+- The dark token block exists twice — `:root:not([data-theme="light"])` inside the media query (the OS default) and `:root[data-theme="dark"]` (pinned by the toggle). Change a colour in both. `architecture.html` carries a third pair inside the diagram's inline SVG `<style>`.
+- The inline `<script>` just above `<style>` in `<head>` applies the stored choice before first paint so the page never flashes the wrong palette. It is the same few lines on every themed page.
+
+`game.html` and `apexdock/` have no dark palette, so they carry neither the toggle nor the snippet. `404.html` has no titlebar, so it honours a stored choice but shows no button.
+
 ## CI
 
 `.github/workflows/link-check.yml` runs lychee on every PR and weekly to catch broken links in HTML and Markdown files.

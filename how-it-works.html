@@ -83,6 +83,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
+<!-- Theme: apply a stored light/dark choice before first paint so the page
+     never flashes the wrong palette. theme-toggle.js owns the button; this
+     snippet is repeated verbatim in every themed page (index, architecture,
+     skills, how-it-works, 404). -->
+<script>
+(function () {
+  var t = null;
+  try { t = localStorage.getItem('ay-theme'); } catch (e) {}
+  if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+
 <style>
 /* ============================================================
    ApexYard — how-it-works page
@@ -111,8 +123,11 @@
   --gutter: clamp(1.25rem, 4vw, 3rem);
 }
 
+/* Dark tokens, two ways in: the OS setting (this media block — skipped when
+   the toggle pinned light) and the toggle pinning dark (data-theme on <html>,
+   set by theme-toggle.js). Same values in both blocks — keep them in sync. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --paper:    #0B1226;
     --paper-2:  #121A30;
     --paper-3:  #1B2540;
@@ -125,6 +140,19 @@
     --rule:        #F7F9FC;
     --rule-faint:  #283349;
   }
+}
+:root[data-theme="dark"] {
+  --paper:    #0B1226;
+  --paper-2:  #121A30;
+  --paper-3:  #1B2540;
+  --ink:       #F7F9FC;
+  --ink-soft:  #C3CCDB;
+  --ink-faint: #8B95A7;
+  --ink-ghost: #4A5468;
+  --accent:      #5B8CFF;
+  --accent-soft: #84A8FF;
+  --rule:        #F7F9FC;
+  --rule-faint:  #283349;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -235,6 +263,24 @@ a:hover { color: var(--accent); }
   .nav-enhanced.is-open .nav-toggle > span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
   .nav-enhanced.is-open .nav-toggle > span:nth-child(2) { opacity: 0; }
   .nav-enhanced.is-open .nav-toggle > span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+}
+/* light / dark toggle — last item in the nav (progressive enhancement:
+   theme-toggle.js adds .theme-enhanced; with JS off the button stays hidden
+   and the page keeps following the OS setting via prefers-color-scheme). */
+.theme-toggle { display: none; }
+.theme-enhanced .theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  align-self: stretch; aspect-ratio: 1; padding: 0 0.45rem;
+  background: none; border: 1px solid var(--rule); color: var(--ink); cursor: pointer;
+}
+.theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+.theme-toggle svg { width: 14px; height: 14px; }
+.theme-toggle .theme-toggle__sun { display: none; }
+.theme-toggle.is-dark .theme-toggle__sun { display: block; }
+.theme-toggle.is-dark .theme-toggle__moon { display: none; }
+@media (max-width: 700px) {
+  /* inside the hamburger dropdown it becomes a full-width row, like the CTA chips */
+  .nav-enhanced .titlebar__right .theme-toggle { aspect-ratio: auto; margin-top: 0.6rem; padding: 0.65rem; }
 }
 .titlebar__right a { color: var(--ink-faint); transition: color 0.15s ease; }
 .titlebar__right a:hover { color: var(--accent); }
@@ -642,6 +688,10 @@ main { background: var(--paper); }
       <a href="/game" class="always">play the game</a>
       <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">changelog →</a>
       <a href="https://github.com/me2resh/apexyard" class="is-cta" target="_blank" rel="noopener">github →</a>
+      <button class="theme-toggle" type="button" aria-label="Switch to dark theme">
+        <svg class="theme-toggle__moon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10.3 3.2A9 9 0 1 0 20.8 13.7A7.5 7.5 0 0 1 10.3 3.2z"/></svg>
+        <svg class="theme-toggle__sun" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.64 5.64l1.77 1.77M16.59 16.59l1.77 1.77M5.64 18.36l1.77-1.77M16.59 7.41l1.77-1.77"/></svg>
+      </button>
     </nav>
   </div>
 </header>
@@ -913,5 +963,6 @@ main { background: var(--paper); }
 
 <script src="/copy-for-ai.js" defer></script>
 <script src="/nav-toggle.js" defer></script>
+<script src="/theme-toggle.js" defer></script>
 </body>
 </html>
