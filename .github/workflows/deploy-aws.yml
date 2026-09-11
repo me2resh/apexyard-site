@@ -1,17 +1,12 @@
-name: Deploy to AWS (S3 + CloudFront)
+name: Deploy to AWS (staging then production)
 
-# Syncs the static site to S3 (apexyard-site-prod) and invalidates CloudFront —
-# the Egypt-reachable path off Netlify (instaloc-infra#14, GH-11). Runs ALONGSIDE
-# Netlify (both stay in sync) until the DNS cutover. Auth is via OIDC into the
-# apexscript-prod `github-actions-deployer` role — no long-lived AWS keys.
+# Every main push first deploys to the protected staging distribution. The
+# production job depends on that deployment and pauses at the GitHub `production`
+# environment until its required reviewers approve the run. Configure the
+# environment protection rule in repository Settings → Environments.
 #
-# Prereq: the instaloc-infra `apexyard-site` stack must be APPLIED first (the
-# bucket + distribution have to exist). Until then the invalidation step warns
-# and no-ops instead of failing — but ONLY when it can show the distribution
-# genuinely isn't there. A lookup that errors, or a domain CloudFront is already
-# answering for, fails the job instead of skipping quietly (#48). The step's
-# logic is shared with deploy-aws-staging.yml in
-# .github/scripts/invalidate-cloudfront.sh.
+# Both jobs use OIDC into the same AWS deployer role. No long-lived AWS keys are
+# stored in this repository.
 
 on:
   push:
@@ -19,23 +14,30 @@ on:
   workflow_dispatch:
 
 permissions:
-  id-token: write # assume the AWS role via OIDC
+  id-token: write
   contents: read
 
-concurrency:
-  group: deploy-aws
-  cancel-in-progress: true
-
 env:
-  BUCKET: apexyard-site-prod
-  SITE_DOMAIN: apexyard.ai
+  BUCKET_PROD: apexyard-site-prod
+  BUCKET_STAGING: apexyard-site-staging
+  SITE_DOMAIN_PROD: apexyard.ai
+  SITE_DOMAIN_STAGING: staging.apexyard.ai
   ROLE_ARN: arn:aws:iam::340541183783:role/github-actions-deployer
 
+concurrency:
+  group: deploy-aws-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  deploy:
-    name: s3 sync + invalidate
+  deploy-staging:
+    name: deploy staging
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    environment:
+      name: staging
+      url: https://staging.apexyard.ai/
+    env:
+      SITE_DOMAIN: staging.apexyard.ai
     steps:
       - uses: actions/checkout@v4
 
@@ -45,9 +47,9 @@ jobs:
           role-to-assume: ${{ env.ROLE_ARN }}
           aws-region: eu-west-1
 
-      - name: Sync static site to S3
+      - name: Sync static site to staging S3
         run: |
-          aws s3 sync . "s3://${BUCKET}" \
+          aws s3 sync . "s3://${BUCKET_STAGING}" \
             --delete \
             --exclude ".git/*" \
             --exclude ".github/*" \
@@ -61,20 +63,77 @@ jobs:
             --exclude ".gitignore" \
             --exclude ".lycheeignore"
 
-      - name: Publish markdown alternates at clean .md keys
+      - name: Publish markdown alternates to staging
         run: |
-          # Netlify served the .md.gen files at /skills.md etc. via _redirects.
-          # On CloudFront we publish each .md.gen at its bare .md key so the
-          # LLM-consumer alternates keep resolving.
           shopt -s nullglob
           for f in *.md.gen; do
             key="${f%.gen}"
-            echo "publish $f -> s3://${BUCKET}/${key}"
-            aws s3 cp "$f" "s3://${BUCKET}/${key}" \
+            echo "publish $f -> s3://${BUCKET_STAGING}/${key}"
+            aws s3 cp "$f" "s3://${BUCKET_STAGING}/${key}" \
               --content-type "text/markdown; charset=utf-8"
           done
 
-      - name: Invalidate CloudFront
+      - name: Publish staging robots.txt
+        run: |
+          printf '%s\n' \
+            '# Staging environment — not for indexing or crawling.' \
+            '# The CloudFront layer also sets X-Robots-Tag: noindex, nofollow.' \
+            'User-agent: *' \
+            'Disallow: /' > /tmp/staging-robots.txt
+          aws s3 cp /tmp/staging-robots.txt "s3://${BUCKET_STAGING}/robots.txt" \
+            --content-type "text/plain; charset=utf-8"
+
+      - name: Invalidate staging CloudFront
+        env:
+          STACK_HINT: the instaloc-infra apexyard-site-staging stack
+        run: .github/scripts/invalidate-cloudfront.sh
+
+  deploy-production:
+    name: deploy production
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: production
+      url: https://apexyard.ai/
+    env:
+      SITE_DOMAIN: apexyard.ai
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.ROLE_ARN }}
+          aws-region: eu-west-1
+
+      - name: Sync static site to production S3
+        run: |
+          aws s3 sync . "s3://${BUCKET_PROD}" \
+            --delete \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --exclude "og/node_modules/*" \
+            --exclude "og/templates/*" \
+            --exclude "og/render*" \
+            --exclude "og/package*.json" \
+            --exclude "og/.gitignore" \
+            --exclude "og/README.md" \
+            --exclude "README.md" \
+            --exclude ".gitignore" \
+            --exclude ".lycheeignore"
+
+      - name: Publish markdown alternates to production
+        run: |
+          shopt -s nullglob
+          for f in *.md.gen; do
+            key="${f%.gen}"
+            echo "publish $f -> s3://${BUCKET_PROD}/${key}"
+            aws s3 cp "$f" "s3://${BUCKET_PROD}/${key}" \
+              --content-type "text/markdown; charset=utf-8"
+          done
+
+      - name: Invalidate production CloudFront
         env:
           STACK_HINT: the instaloc-infra apexyard-site stack
         run: .github/scripts/invalidate-cloudfront.sh
