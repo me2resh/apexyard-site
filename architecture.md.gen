@@ -14,6 +14,8 @@ ApexYard governs a portfolio of repos as one organisation. The architecture is a
 
 A single ops fork holds the registry, hooks, rules, skills, agents, templates, and handbooks. Managed projects clone in as gitignored workspace dirs. Cross-project portfolio skills (`/inbox`, `/status`, `/tasks`) aggregate across the registry.
 
+The current release also supports evidence-grounded review records, cross-harness quality regression, split issue and review tracker hosts, and controlled technical writing for new artifacts.
+
 ## What's needed to start?
 
 Fork apexyard once and treat the fork as your ops repo. Add an entry to `apexyard.projects.yaml` for every project you want governed. Skills resolve transparently whether you're in single-fork or split-portfolio mode.
@@ -25,16 +27,16 @@ Fork apexyard once and treat the fork as your ops repo. Add an entry to `apexyar
 Declares what's true and what's enforced:
 
 - **Registry** (`apexyard.projects.yaml`) — lists every managed project
-- **Hooks** (`.claude/hooks/`) — 51 shell gates: merge gate, ticket-first, secrets scan, AgDR for architecture, migration gate, red-CI block, branch/PR-title validation, leak protection
-- **Rules** (`.claude/rules/`) — 19 modular self-discipline guides
+- **Hooks** (`.claude/hooks/`) — 49 shell gates: merge gate, ticket-first, secrets scan, AgDR for architecture, migration gate, red-CI block, branch/PR-title validation, leak protection
+- **Rules** (`.claude/rules/`) — 18 modular self-discipline guides
 - **Onboarding** (`onboarding.yaml`) — company name, mission, team, tech stack
 
 ### Layer 2 — Capability (forest-green)
 
 What the agent can DO:
 
-- **Skills** (`.claude/skills/`) — 66 slash commands: `/feature`, `/handover`, `/c4`, `/threat-model`, `/process`, `/dfd`, `/journey`, `/update`, `/release`, and 57 more
-- **Agents** (`.claude/agents/`) — 23 specialised sub-agents: 4 utility (Rex code review, Hakim security audit, Naqid the Contrarian, Munir dependency audit) + Tariq (solution architecture) + 18 department agents across engineering / product / design / security / data
+- **Skills** (`.claude/skills/`) — 66 slash commands: `/feature`, `/handover`, `/c4`, `/threat-model`, `/process`, `/dfd`, `/journey`, `/update`, `/release`, and 56 more
+- **Agents** (`.claude/agents/`) — 23 specialised sub-agents: 5 utility (Rex code review, Hakim security audit, Munir deps, Tariq PR, Idris tickets) + 18 dept-aligned agents across engineering / product / design / security / data
 
 ### Layer 3 — Framework defaults (ochre)
 

@@ -51,10 +51,10 @@
   "url": "https://apexyard.ai/",
   "description": "Ship AI-built software like a real engineering team. Automatic code review, launch-readiness checks, one inbox for every product — on Claude Code.",
   "license": "https://opensource.org/licenses/MIT",
-  "softwareVersion": "5.4.0",
+  "softwareVersion": "5.5.1",
   "downloadUrl": "https://github.com/me2resh/apexyard",
   "datePublished": "2026-04-09",
-  "dateModified": "2026-08-11",
+  "dateModified": "2026-09-11",
   "copyrightYear": "2026",
   "copyrightHolder": {
     "@type": "Person",
@@ -1758,7 +1758,7 @@ a:hover { color: var(--accent); }
   <div class="hero__inner">
 
     <div class="hero__eyebrow rise rise-1">
-      <span class="pill">apexyard v5.4 — just shipped</span>
+      <span class="pill">apexyard v5.5.1 — just shipped</span>
       <span>open source · built for founders shipping with AI</span>
       <button class="copy-for-ai" data-md-url="/index.md" type="button" style="margin-left:auto;font-size:0.75rem;padding:0.25rem 0.6rem;border:1px solid currentColor;border-radius:4px;background:transparent;color:inherit;cursor:pointer;font-family:inherit;">Copy as Markdown for AI</button>
     </div>
@@ -1766,17 +1766,17 @@ a:hover { color: var(--accent); }
     <h1 class="hero__title rise rise-2">apexyard</h1>
 
     <p class="hero__version rise rise-2" style="margin:-0.5em 0 0.5em;font-size:13px;opacity:0.55;letter-spacing:0.05em;">
-      <a href="https://github.com/me2resh/apexyard/releases/tag/v5.4.0" style="color:inherit;text-decoration:none;" target="_blank" rel="noopener">v5.4.0</a>
+      <a href="https://github.com/me2resh/apexyard/releases/tag/v5.5.1" style="color:inherit;text-decoration:none;" target="_blank" rel="noopener">v5.5.1</a>
       &nbsp;·&nbsp;
       <a href="https://github.com/me2resh/apexyard/blob/main/CHANGELOG.md" style="color:inherit;text-decoration:underline;text-underline-offset:3px;" target="_blank" rel="noopener">changelog</a>
     </p>
 
     <p class="hero__tagline rise rise-3">
-      Your AI engineering org, governed.
+      Ship AI-built software like a real engineering team — without hiring one.
     </p>
 
     <p class="hero__sub rise rise-3" id="ai-lead">
-      Ship AI-built software like a real engineering team — without hiring one. ApexYard is the SDLC framework that makes AI agents ship production software — with the same gates, reviews, and receipts a real engineering org runs on. It governs its own development; <a href="#gate-replay" class="uline">check the log</a>. <a href="/how-it-works" class="uline" style="white-space:nowrap;">See a day with it →</a>
+      ApexYard is the SDLC framework that makes AI agents ship production software — with the same gates, reviews, and receipts a real engineering org runs on. It governs its own development; <a href="#gate-replay" class="uline">check the log</a>. <a href="/how-it-works" class="uline" style="white-space:nowrap;">See a day with it →</a>
     </p>
 
     <div class="hero__cta rise rise-4">
@@ -1809,6 +1809,7 @@ a:hover { color: var(--accent); }
     <p class="section__lede">
       No setup beyond <code>/setup</code>. No new dashboards to learn. Three things you start getting from day one.
     </p>
+    <p class="section__lede" style="margin-top:0.75rem;">The v5.5 release adds evidence-grounded review records, cross-harness quality regression, controlled technical writing, and split issue/review tracker hosts. The v5.5.1 patch keeps the public documentation current.</p>
   </div>
 
   <div class="outcome-tiles">
@@ -1886,20 +1887,20 @@ a:hover { color: var(--accent); }
 
   <div class="hero__metrics" aria-label="ApexYard's own engineering activity" style="max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); border-left: 1px solid var(--rule); border-right: 1px solid var(--rule);">
     <div class="hero__metric">
-      <strong>343</strong>
+      <strong>304</strong>
       <span>PRs reviewed &amp; merged · last 90 days</span>
     </div>
     <div class="hero__metric">
-      <strong>29</strong>
-      <span>Production releases shipped (v0.2.0 → v5.4)</span>
+      <strong>31</strong>
+      <span>Releases shipped (v0.1.0 → v5.5.1)</span>
     </div>
     <div class="hero__metric">
-      <strong>72</strong>
+      <strong>144</strong>
       <span>Technical decisions on record (released to main)</span>
     </div>
     <div class="hero__metric">
-      <strong>52</strong>
-      <span>Bugs caught and fixed before users hit them</span>
+      <strong>8 / 48 / 21</strong>
+      <span>Features / fixes / improvements in v5.5.0</span>
     </div>
   </div>
 </section>
@@ -1942,12 +1943,6 @@ a:hover { color: var(--accent); }
         <div class="line muted">&nbsp;&nbsp;Security Auditor review required, regardless of author.</div>
         <div class="line">&nbsp;</div>
         <div class="line sys">→ security-reviewer checks <a href="https://github.com/me2resh/apexyard/commit/512d2537884f9e7962d09616a075c45b30d0c6fd" target="_blank" rel="noopener">512d253</a> ... <span class="ok">APPROVED</span></div>
-        <!-- 55 → 56 is deliberate and must NOT be synced to the current hook count.
-             It counts hook WIRING ENTRIES in .claude/settings.json at PR #787's own
-             merge commit (3fc95fb) — verified 55 before, 56 after. That is a different
-             metric from the .claude/hooks/*.sh file count quoted elsewhere on the site
-             (51 at v5.4.0), and a different point in time. Editing it to today's number
-             would make the one line in this section that is checkable, wrong. -->
         <div class="line muted">&nbsp;&nbsp;settings.json diff: 55 → 56 hooks, zero removed or altered</div>
         <div class="line muted">&nbsp;&nbsp;new hook exits 0 on every path — cannot block or allow</div>
         <div class="line muted">&nbsp;&nbsp;no marker writes, no injection surface, no secret read</div>
@@ -2337,7 +2332,7 @@ confirm it skips the missing column before you ship."</span></pre>
       <div class="layer__num">guardrails that fire themselves</div>
       <h3 class="layer__title">Guardrails that stop bad code from shipping — automatically</h3>
       <p class="layer__desc">
-        Every edit needs a real ticket behind it. Every database change needs a rollback plan. Every merge needs a real review. Secrets in code get caught before they're committed. <span class="dim">Mechanically enforced — 51 small scripts that fire at the right moments, so you don't have to remember to check.</span>
+        Every edit needs a real ticket behind it. Every database change needs a rollback plan. Every merge needs a real review. Secrets in code get caught before they're committed. <span class="dim">Mechanically enforced — 49 small scripts that fire at the right moments, so you don't have to remember to check.</span>
       </p>
     </article>
 
