@@ -25,11 +25,15 @@ brew install pngquant            # one-time
 
 `render.sh`:
 
-1. **Derives the framework-only component counts** from the apexyard ops-fork's `main` ref (released), excluding premium-injected items:
+1. **Derives the framework-only component counts** from the apexyard ops-fork at a **release tag**, excluding premium-injected items. Both halves of that sentence are stale-count defences (see issue #49):
+   - The **repo path is discovered**, not hardcoded — the script walks up from `og/` looking for a git repo carrying `roles/`, `.claude/skills/` and `.claude/hooks/`, so it keeps working when the fork moves and from inside a git worktree. It previously defaulted to one operator's absolute path; once that path vanished the only way to render was hand-pinning counts, which then rotted silently.
+   - The **default ref is the newest `v*` tag**, not `main` — a fork's local `main` can lag upstream by dozens of commits and derive old counts with no visible signal. The resolved tag is printed on every run, and a zero derived count aborts the render rather than baking "0 skills" into a card.
+
+   The counts themselves:
    - **roles**: tracked `*.md` under `roles/` minus `README.md` minus the premium `roles/growth/*` pack
    - **skills**: skill dirs (those carrying a `SKILL.md`) under `.claude/skills/` — premium skills are never committed to the framework `main`, so this is framework-only by construction
    - **hooks**: top-level `*.sh` in `.claude/hooks/` excluding `_lib*` helpers and the `tests/` subdir
-   - Override the repo path with `APEXYARD_REPO=…`, the ref with `APEXYARD_REF=…` (default `main`), or hard-pin with `ROLES= SKILLS= HOOKS=`.
+   - Override the repo path with `APEXYARD_REPO=…` or the ref with `APEXYARD_REF=…` (e.g. `APEXYARD_REF=dev` for pre-release counts). Hard-pinning via `ROLES= SKILLS= HOOKS=` still works but now prints a loud warning — pinned counts don't track the framework and are exactly how the cards went stale in the first place.
 2. Substitutes the counts into the `{{ROLES}}/{{SKILLS}}/{{HOOKS}}` placeholders (the committed templates stay count-agnostic).
 3. Renders each `templates/<card>.html` to a 1200×630 PNG via headless Chromium (`render.js`).
 4. Optimises with `pngquant --quality=70-90` and verifies every card is exactly 1200×630 and < 200 KB.

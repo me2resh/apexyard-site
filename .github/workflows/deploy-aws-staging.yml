@@ -9,7 +9,11 @@ name: Deploy to AWS Staging (S3 + CloudFront)
 #
 # Prereq: the instaloc-infra `apexyard-site-staging` stack must be APPLIED
 # first (the bucket + distribution have to exist). Until then the invalidation
-# step warns and no-ops instead of failing, same as deploy-aws.yml.
+# step warns and no-ops instead of failing, same as deploy-aws.yml — but ONLY
+# when it can show the distribution genuinely isn't there. This environment is
+# where #48 was observed: the domain was serving 200 from CloudFront while the
+# lookup returned nothing and the step exited 0. Shared logic lives in
+# .github/scripts/invalidate-cloudfront.sh.
 
 on:
   push:
@@ -33,6 +37,7 @@ jobs:
   deploy:
     name: s3 sync + invalidate
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -71,14 +76,30 @@ jobs:
               --content-type "text/markdown; charset=utf-8"
           done
 
-      - name: Invalidate CloudFront
+      - name: Publish a staging-specific robots.txt (Disallow)
         run: |
-          DIST_ID=$(aws cloudfront list-distributions \
-            --query "DistributionList.Items[?contains(Aliases.Items, '${SITE_DOMAIN}')].Id | [0]" \
-            --output text 2>/dev/null || true)
-          if [ -z "$DIST_ID" ] || [ "$DIST_ID" = "None" ]; then
-            echo "::warning::No CloudFront distribution for ${SITE_DOMAIN} yet — apply the instaloc-infra apexyard-site-staging stack first. Skipping invalidation."
-            exit 0
-          fi
-          echo "Invalidating distribution ${DIST_ID}"
-          aws cloudfront create-invalidation --distribution-id "$DIST_ID" --paths "/*"
+          # The s3 sync above lands PRODUCTION's robots.txt (Allow: /), which
+          # reads as "crawl everything" — the wrong signal for a pre-prod env.
+          # Overwrite the key with a staging robots that disallows crawling.
+          # This is belt-and-suspenders with the `X-Robots-Tag: noindex,
+          # nofollow` response header the CloudFront layer already sets on every
+          # response (instaloc-infra apexyard-site-staging/cloudfront.tf) — the
+          # header is what actually keeps staging out of the index; this stops a
+          # compliant crawler from fetching in the first place. Staging only —
+          # deploy-aws.yml (prod) keeps prod's Allow: / untouched. See #50.
+          # printf (not a heredoc) so YAML space-indentation can't leak leading
+          # whitespace into the robots directives.
+          printf '%s\n' \
+            '# Staging environment — not for indexing or crawling.' \
+            '# See also the X-Robots-Tag: noindex, nofollow response header set' \
+            '# at the CloudFront layer (instaloc-infra apexyard-site-staging).' \
+            'User-agent: *' \
+            'Disallow: /' > /tmp/staging-robots.txt
+          echo "publish staging robots.txt -> s3://${BUCKET}/robots.txt"
+          aws s3 cp /tmp/staging-robots.txt "s3://${BUCKET}/robots.txt" \
+            --content-type "text/plain; charset=utf-8"
+
+      - name: Invalidate CloudFront
+        env:
+          STACK_HINT: the instaloc-infra apexyard-site-staging stack
+        run: .github/scripts/invalidate-cloudfront.sh
