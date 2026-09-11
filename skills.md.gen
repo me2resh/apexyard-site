@@ -1,14 +1,14 @@
 # ApexYard Skills
 
-> 65 slash commands grouped by what you're trying to do — not by what's under the hood. Drop into your Claude Code session inside an apexyard fork.
+> 66 slash commands grouped by what you're trying to do — not by what's under the hood. Drop into your Claude Code session inside an apexyard fork.
 
 ## In plain English
 
-These are the commands you type into Claude Code to get ApexYard to do something. They're grouped by what you're trying to do — keep quality high, move work forward, see everything at once, onboard new code, run things — not by what's under the hood. If you'd rather see a real day with these, read [how it works](https://yard.apexscript.com/how-it-works.md).
+These are the commands you type into Claude Code to get ApexYard to do something. They're grouped by what you're trying to do — keep quality high, move work forward, see everything at once, onboard new code, run things — not by what's under the hood. If you'd rather see a real day with these, read [how it works](https://apexyard.ai/how-it-works.md).
 
 ## What is it?
 
-ApexYard ships 65 slash commands grouped under outcome headings — Keep quality high, Move work forward, See everything at once, Onboard new code, Run things.
+ApexYard ships 66 slash commands grouped under outcome headings — Keep quality high, Move work forward, See everything at once, Onboard new code, Run things.
 
 ## What can it do?
 
@@ -87,6 +87,23 @@ Fresh fork, new project handed to you, codebase you want to understand. These sk
 - `/journey` — Self-contained HTML user-journey map (boxes/arrows with per-page modals) — preview between PRD and tech-design.
 - `/codify-rule` — Turn a human (or Copilot) review comment that caught a Rex-miss into a draft handbook entry.
 
+## Added in the v5.5 release line
+
+These commands are part of the current 66-skill framework surface:
+
+- `/approve-architecture` — record approval for an architecture review.
+- `/challenge` — challenge a plan or decision before implementation.
+- `/design-review` — review a user-facing design against its brief and evidence.
+- `/design-sync` — align design decisions with the implementation record.
+- `/eval-agents` — evaluate agent behavior against a focused fixture set.
+- `/onboard` — route legacy onboarding requests to the current setup flows.
+- `/prototype` and `/prototype-close` — run and close a time-boxed prototype.
+- `/release-sync` — bring a released `main` state back into `dev`.
+- `/report-apexyard-bug` — report a framework bug with a structured evidence record.
+- `/request-apexyard-feature` — propose a framework feature with acceptance criteria.
+- `/tutorial` — create a guided walkthrough for a workflow.
+- `/walking-skeleton` — define the smallest end-to-end path through a feature.
+
 ## Run things
 
 Sync the framework, parallelise independent work, cut a release, debug something hairy, share a PDF with a non-technical stakeholder.
@@ -104,7 +121,7 @@ Sync the framework, parallelise independent work, cut a release, debug something
 
 ## Links
 
-- Home: <https://yard.apexscript.com/index.md>
-- How it works: <https://yard.apexscript.com/how-it-works.md>
-- Architecture: <https://yard.apexscript.com/architecture.md>
+- Home: <https://apexyard.ai/index.md>
+- How it works: <https://apexyard.ai/how-it-works.md>
+- Architecture: <https://apexyard.ai/architecture.md>
 - GitHub source for each skill: <https://github.com/me2resh/apexyard/tree/main/.claude/skills>

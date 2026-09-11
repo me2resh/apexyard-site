@@ -16,11 +16,11 @@
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
 
 # Canonicalize the .netlify.app hostname to the production subdomain.
-# Dormant until DNS flips yard.apexscript.com onto this Netlify site;
+# Dormant until DNS flips apexyard.ai onto this Netlify site;
 # after that, visits to apexyard.netlify.app get 301'd so search
 # engines consolidate SEO signals on the custom domain.
 [[redirects]]
   from = "https://apexyard.netlify.app/*"
-  to = "https://yard.apexscript.com/:splat"
+  to = "https://apexyard.ai/:splat"
   status = 301
   force = true

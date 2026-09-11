@@ -1,6 +1,6 @@
 # apexyard-site
 
-The ApexYard marketing and docs site — static HTML, deployed on Netlify at [yard.apexscript.com](https://yard.apexscript.com).
+The ApexYard marketing and docs site — static HTML, deployed on Netlify at [apexyard.ai](https://apexyard.ai).
 
 ## What's here
 
@@ -10,7 +10,7 @@ Hand-authored HTML pages (`index.html`, `architecture.html`, `skills.html`, `how
 
 Native Netlify git deploy — push to `main` triggers a deploy automatically. No build step. Publish directory is the repo root (Netlify default).
 
-Security headers and the canonical 301 redirect from `apexyard.netlify.app` to `yard.apexscript.com` are set in `netlify.toml`. Markdown-alternate `Link:` response headers and MIME types are in `_headers`. Clean-URL rewrites and markdown-alternate rewrites are in `_redirects`.
+Security headers and the canonical 301 redirect from `apexyard.netlify.app` to `apexyard.ai` are set in `netlify.toml`. Markdown-alternate `Link:` response headers and MIME types are in `_headers`. Clean-URL rewrites and markdown-alternate rewrites are in `_redirects`.
 
 ## Manually maintained content
 

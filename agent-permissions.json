@@ -5,11 +5,11 @@
       "allow": ["read"],
       "rate_limit": null,
       "preferred_endpoints": [
-        "https://yard.apexscript.com/llms.txt",
-        "https://yard.apexscript.com/llms-full.txt",
-        "https://yard.apexscript.com/index.md",
-        "https://yard.apexscript.com/architecture.md",
-        "https://yard.apexscript.com/skills.md"
+        "https://apexyard.ai/llms.txt",
+        "https://apexyard.ai/llms-full.txt",
+        "https://apexyard.ai/index.md",
+        "https://apexyard.ai/architecture.md",
+        "https://apexyard.ai/skills.md"
       ]
     }
   }

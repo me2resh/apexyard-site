@@ -2,7 +2,7 @@ name: Deploy to AWS Staging (S3 + CloudFront)
 
 # Syncs the static site to S3 (apexyard-site-staging) and invalidates
 # CloudFront — the staging mirror of deploy-aws.yml, for previewing changes on
-# staging.yard.apexscript.com before they land on main / production. Auth is
+# staging.apexyard.ai before they land on main / production. Auth is
 # via OIDC into the SAME apexscript-prod `github-actions-deployer` role prod
 # uses (the staging bucket + distro live in the same AWS account — see
 # instaloc-infra AgDR-0003) — no long-lived AWS keys.
@@ -26,7 +26,7 @@ concurrency:
 
 env:
   BUCKET: apexyard-site-staging
-  SITE_DOMAIN: staging.yard.apexscript.com
+  SITE_DOMAIN: staging.apexyard.ai
   ROLE_ARN: arn:aws:iam::340541183783:role/github-actions-deployer
 
 jobs:

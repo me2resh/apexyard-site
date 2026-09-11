@@ -23,8 +23,9 @@ organisation. Three load-bearing outcomes:
    surfaced from every registered project in one prompt.
 
 Persistent decision-log across every managed project; strict merge gates
-(code-reviewer agent + per-PR CEO approval); 65 slash commands grouped by
-what you're trying to do:
+(code-reviewer agent + per-PR CEO approval); evidence-grounded review records;
+cross-harness quality regression; split issue and review tracker hosts; and 66
+slash commands grouped by what you're trying to do:
 
 - **Keep quality high** (`/code-review`, `/security-review`, `/audit-deps`,
   `/launch-check`, `/threat-model`, `/accessibility-audit`,
@@ -43,7 +44,12 @@ what you're trying to do:
 - **Run things** (`/update`, `/split-portfolio`, `/release`, `/debug`,
   `/pdf`, `/fan-out`)
 
-42 shell hooks enforce SDLC rules mechanically — ticket-first, migration
+The release line also adds `/approve-architecture`, `/challenge`, `/design-review`,
+`/design-sync`, `/eval-agents`, `/onboard`, `/prototype`, `/prototype-close`,
+`/release-sync`, `/report-apexyard-bug`, `/request-apexyard-feature`,
+`/tutorial`, and `/walking-skeleton`.
+
+49 shell hooks enforce SDLC rules mechanically — ticket-first, migration
 gate, two-marker merge gate, red-CI block, secrets scanning, branch / PR
 title validation, decision-record-required-for-architecture, upstream-drift
 banner, leak protection. 20 role definitions activate on triggers (label,
@@ -132,5 +138,5 @@ diff path, prompt). Plain markdown + shell; open source; no SaaS; no lock-in.
 ## Repository
 
 - Source: <https://github.com/me2resh/apexyard>
-- Marketing site: <https://yard.apexscript.com>
+- Marketing site: <https://apexyard.ai>
 - License: MIT
