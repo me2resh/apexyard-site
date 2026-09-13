@@ -15,7 +15,7 @@ ApexYard adds the reviews, guardrails, and process behind every change you make 
 - **Flexible tracker setup.** Keep issue tracking and code review on different hosts when your workflow needs it.
 - **Clear technical writing.** New artifacts use short, consistent language while keeping the decision context.
 - **A real engineering team's worth of reviewers.** Touch auth code → a security reviewer takes a look. Touch the database → someone walks you through the rollback plan. 20 role definitions, 23 specialised reviewer agents
-- **Guardrails that fire themselves.** 49 small scripts catch ticket-first edits, missing rollback plans, secrets in code, red CI before merge — so you don't have to remember
+- **Guardrails that fire themselves.** 57 small scripts catch ticket-first edits, missing rollback plans, secrets in code, red CI before merge — so you don't have to remember
 - **A decision-log that follows you.** Every meaningful technical decision is recorded with reasoning — search it next year, the answer's there
 
 ## Who this is for
@@ -36,9 +36,9 @@ ApexYard adds the reviews, guardrails, and process behind every change you make 
 ApexYard is built using ApexYard. Verifiable from `github.com/me2resh/apexyard`:
 
 - **304 PRs reviewed and merged in the last 90 days**, under the same guardrails the tool installs in your fork
-- **31 releases shipped** (v0.1.0 through v5.5.1)
+- **32 releases shipped** (v0.1.0 through v5.5.2)
 - **144 technical decisions recorded** (released to main) — every meaningful call in an audit trail
-- v5.5.0 shipped 8 features, 48 fixes, and 21 improvements; v5.5.1 follows with the latest documentation update.
+- v5.5.0 shipped 8 features, 48 fixes, and 21 improvements; v5.5.2 follows with the latest review and release workflow updates.
 
 ## See a day with it
 
@@ -78,9 +78,9 @@ The reviewer changes based on what you're working on. Touching auth code? A secu
 
 Want to adopt a project you've inherited? `/handover`. Want to capture an idea before it evaporates? `/idea`. Want to know what's waiting on you across every product? `/inbox`. Want a launch-readiness check before customers see it? `/launch-check`. 66 of these in total — each one is a focused workflow with safety rails.
 
-### Guardrails that stop bad code from shipping · 49 hooks
+### Guardrails that stop bad code from shipping · 57 hooks
 
-Every edit needs a real ticket behind it. Every database change needs a rollback plan. Every merge needs a real review. Secrets in code get caught before they're committed. Mechanically enforced — 49 small scripts that fire at the right moments.
+Every edit needs a real ticket behind it. Every database change needs a rollback plan. Every merge needs a real review. Secrets in code get caught before they're committed. Mechanically enforced — 57 small scripts that fire at the right moments.
 
 ### Reviewers that don't rubber-stamp · 23 agents
 

@@ -53,7 +53,7 @@ gh api --paginate repos/me2resh/apexyard/releases --jq '.[].tag_name' | grep -c 
 
 The `v5.4.0` on the first line is illustrative and tracks nothing — pass the tag you actually mean. Or skip the copy-paste entirely: `.github/scripts/derive-counts.sh --print /path/to/apexyard v5.4.0` runs all five tag-derived recipes and prints the numbers.
 
-At **v5.4.0**: 66 skills · 51 hooks · 23 agents · 20 roles · 19 rules · 6 departments · 29 published releases.
+At **v5.4.0**: 66 skills · 57 hooks · 23 agents · 20 roles · 25 rules · 6 departments · 32 published releases.
 
 Three of those definitions had already drifted between their copies before they were unified, none of them visibly, because none of the differences changed a number at v5.4.0: `og/render.sh` excluded premium `roles/growth/` where the other two did not, this README counted releases with `wc -l` where the verifier used `grep -c .`, and the `sed` above left a dot unescaped. The unified `roles` recipe keeps the exclusion — it is the stricter reading, and it is the one that keeps the published count reproducible by a reader who only has the open framework.
 
@@ -73,7 +73,7 @@ The important part is *how* it searches. It does not look for the numbers it exp
 A phrase is only matched where it follows the number immediately, so the site's exact wording has to be in the noun lists at the top of the script — `66 active slash commands` is not matched by `slash commands`. When an **unlisted adjective** sits in front of a known noun, the script says so rather than passing quietly:
 
 ```
-$ sed -i 's/19 rule files/19 core rules/' architecture.html && APEXYARD_REPO=… REF=v5.4.0 .github/scripts/verify-counts.sh
+$ sed -i 's/25 rule files/25 core rules/' architecture.html && APEXYARD_REPO=… REF=v5.4.0 .github/scripts/verify-counts.sh
 UNVERIFIED [rules]            architecture.html:659  "19 core rules" — no listed phrase matches
 OK (with gaps): 60 count claim(s) checked and agreeing with v5.4.0,
                 but 1 unverified claim(s) above matched no listed phrase.
@@ -85,7 +85,7 @@ That does not fail the run — unknown is not the same as wrong — but a clean 
 
 - **An unfamiliar noun.** The sweep is anchored on a *known noun*, so it catches an unfamiliar adjective but not an unfamiliar noun. `11 files`, `11 guides`, `eleven rule files`, and `11&nbsp;rule files` are all silent — neither checked nor reported.
 - **`6 departments`** is checked by nothing, and five files state it: `README.md`, `index.html`, `index.md.gen`, `llms.txt`, `llms-full.txt`. Re-derive that list with `git grep -lE '[0-9]+ departments'` before you edit rather than trusting the one written here — a list of hand-edit sites is itself hand-maintained, and missing one is exactly how a count goes stale on a single page. The number is derivable — `git -C "$REPO" ls-tree -d --name-only "$REF" -- roles/ | wc -l` — and has been stable at 6 since v4.4.0, which is why it has never drifted, not why it is safe.
-- **The release count** is checked only under `--releases`, and the unverified sweep does not run for it at all, so an unlisted release wording is silent with no signal. That is exactly why `architecture.html` was reworded from `19 files` to `19 rule files` in #69 rather than adding `files` to the rule nouns: `files` is too generic to check safely, so the page was made checkable instead. Prefer that fix when you hit this.
+- **The release count** is checked only under `--releases`, and the unverified sweep does not run for it at all, so an unlisted release wording is silent with no signal. That is exactly why `architecture.html` was reworded from `25 files` to `25 rule files` in #69 rather than adding `files` to the rule nouns: `files` is too generic to check safely, so the page was made checkable instead. Prefer that fix when you hit this.
 
 None of this is hypothetical caution. The first version of this script omitted `active slash commands` and left 9 of the 10 skill claims on `skills.html` unchecked while reporting a clean pass — on the page whose entire subject is that count. And the bare `19 files` on `architecture.html` was the same line that had read `11 files` two releases running. Both were found in review, not by the script.
 
