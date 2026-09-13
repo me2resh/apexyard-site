@@ -114,7 +114,7 @@ The four figures in the `03 / PROOF` section of `index.html` are a different fam
 | Figure | On the page | Basis |
 |---|---|---|
 | PRs reviewed & merged, last 90 days | 343 | undocumented; a **rolling window**, so it is wrong again a week after any fix |
-| Production releases shipped | 29 | published GitHub Releases — the one that *is* documented, and current |
+| Production releases shipped | 32 | published GitHub Releases — the one that *is* documented, and current |
 | Technical decisions on record | 72 | undocumented; reads as `docs/agdr/` on the framework's `main` |
 | Bugs caught and fixed before users hit them | 52 | undocumented — no query is known to reproduce it |
 
