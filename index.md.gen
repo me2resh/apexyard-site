@@ -1,10 +1,10 @@
 # ApexYard
 
-> Ship AI-built software like a real engineering team. Automatic code review, launch-readiness checks, and one place for all your products — built on top of Claude Code. Open source, plain markdown and shell.
+> Ship AI-built software like a real engineering team. Automatic code review, launch-readiness checks, and one place for all your products — built around canonical hooks with adapters for Claude Code, Codex, OpenCode, Pi, and Cursor. Open source, plain markdown and shell.
 
 ## What is it?
 
-ApexYard adds the reviews, guardrails, and process behind every change you make with Claude Code. Catch the mistakes before your customers do — automatically, without checking every commit yourself. 66 skills grouped by what you're trying to do, plus a persistent decision-log across the whole portfolio.
+ApexYard adds the reviews, guardrails, and process behind work driven by your AI coding harness. Claude Code is the canonical hook runtime; adapters connect Codex, OpenCode, Pi, and Cursor. Catch mistakes before your customers do — automatically, without checking every commit yourself. 66 skills grouped by what you're trying to do, plus a persistent decision-log across the whole portfolio.
 
 ## What can it do?
 
@@ -36,9 +36,9 @@ ApexYard adds the reviews, guardrails, and process behind every change you make 
 ApexYard is built using ApexYard. Verifiable from `github.com/me2resh/apexyard`:
 
 - **304 PRs reviewed and merged in the last 90 days**, under the same guardrails the tool installs in your fork
-- **32 releases shipped** (v0.1.0 through v5.5.2)
+- **35 releases shipped** (v0.1.0 through v5.6.2)
 - **144 technical decisions recorded** (released to main) — every meaningful call in an audit trail
-- v5.5.0 shipped 8 features, 48 fixes, and 21 improvements; v5.5.2 follows with the latest review and release workflow updates.
+- The v5.6 release line adds framework-level adapter defaults; v5.6.2 adds safer repo-less drift checks and preserves path safety.
 
 ## See a day with it
 
@@ -109,3 +109,4 @@ Every pull request ties to a ticket. Every ticket has acceptance criteria. Code 
 - Skills: <https://apexyard.ai/skills.md>
 - Releases: <https://github.com/me2resh/apexyard/releases>
 - Setup guide: <https://github.com/me2resh/apexyard/blob/main/docs/multi-project.md>
+- Community Slack: <https://app.slack.com/client/T0BD7E3SYD8/C0BD5BF7XAA>

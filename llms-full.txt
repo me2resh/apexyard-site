@@ -2,7 +2,7 @@
 
 > ApexYard lets founders ship AI-built software like a real engineering team —
 > without hiring one. Automatic code review, launch-readiness checks, and
-> one place for all your products, built on top of Claude Code. 66 skills,
+> one place for all your products, built around canonical hooks with adapters for Claude Code, Codex, OpenCode, Pi, and Cursor. 66 skills,
 > 57 hooks, 20 role definitions. Open source, plain markdown and shell, no SaaS,
 > no lock-in.
 
@@ -15,9 +15,10 @@ site (https://apexyard.ai/). Each page is a top-level section below.
 
 ## Ship AI-built software like a real engineering team — without hiring one.
 
-ApexYard adds the reviews, guardrails, and process behind every change you
-make with Claude Code. Catch the mistakes before your customers do —
-automatically, without checking every commit yourself.
+ApexYard adds the reviews, guardrails, and process behind work driven by
+your AI coding harness. Claude Code is the canonical hook runtime; adapters
+connect Codex, OpenCode, Pi, and Cursor. Catch mistakes before your customers
+do — automatically, without checking every commit yourself.
 
 ## What you get
 
@@ -42,7 +43,7 @@ need a look, issues someone's stuck on, anything that needs your attention
 ## Who this is for
 
 - **Solo founders shipping with AI** — you're building the product alone,
-  with Claude Code or Cursor doing most of the typing. You need the
+  with Claude Code, Codex, OpenCode, Pi, or Cursor doing most of the typing. You need the
   guardrails a real team would give you — without a real team.
 - **Non-technical founders managing contractors or a small dev team** —
   you need to know the work is solid before it goes live, without reading
@@ -58,11 +59,15 @@ framework's own GitHub history — every change went through the same
 review and guardrails the tool installs in your fork.
 
 - **304 PRs reviewed and merged in the last 90 days**
-- **32 releases shipped to date** (v0.1.0 through v5.5.2)
+- **35 releases shipped to date** (v0.1.0 through v5.6.2)
 - **144 technical decisions recorded** (released to main; every meaningful
   choice in an audit trail)
-- v5.5.0 shipped 8 features, 48 fixes, and 21 improvements; v5.5.2 follows with the latest review and release workflow updates.
+- The v5.6 release line adds framework-level adapter defaults; v5.6.2 adds safer repo-less drift checks and preserves path safety.
 - 613 issues closed all-time
+
+## Community
+
+Open the [ApexYard Slack community](https://app.slack.com/client/T0BD7E3SYD8/C0BD5BF7XAA) for questions, ideas, and maintainer discussion. Report bugs, request features, and record decisions in GitHub.
 
 ## Get started in three steps
 
@@ -424,5 +429,6 @@ https://github.com/me2resh/apexyard
 ## Generated
 
 This file is hand-written and refreshed when `site/*.html` changes
-significantly. Last refresh: 2026-09-11 (tone rewrite for non-technical
-founders — outcomes-first, layered with technical detail below).
+significantly. Last refresh: 2026-09-14 (v5.6.2 release, multi-harness
+support, and community link refresh — outcomes-first, layered with technical
+detail below).
