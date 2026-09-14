@@ -53,7 +53,7 @@ gh api --paginate repos/me2resh/apexyard/releases --jq '.[].tag_name' | grep -c 
 
 The `v5.4.0` on the first line is illustrative and tracks nothing — pass the tag you actually mean. Or skip the copy-paste entirely: `.github/scripts/derive-counts.sh --print /path/to/apexyard v5.4.0` runs all five tag-derived recipes and prints the numbers.
 
-At **v5.4.0**: 66 skills · 57 hooks · 23 agents · 20 roles · 25 rules · 6 departments · 32 published releases.
+At **v5.6.2**: 66 skills · 57 hooks · 23 agents · 20 roles · 25 rules · 6 departments · 35 published releases.
 
 Three of those definitions had already drifted between their copies before they were unified, none of them visibly, because none of the differences changed a number at v5.4.0: `og/render.sh` excluded premium `roles/growth/` where the other two did not, this README counted releases with `wc -l` where the verifier used `grep -c .`, and the `sed` above left a dot unescaped. The unified `roles` recipe keeps the exclusion — it is the stricter reading, and it is the one that keeps the published count reproducible by a reader who only has the open framework.
 
