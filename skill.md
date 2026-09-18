@@ -49,7 +49,7 @@ The release line also adds `/approve-architecture`, `/challenge`, `/design-revie
 `/release-sync`, `/report-apexyard-bug`, `/request-apexyard-feature`,
 `/tutorial`, and `/walking-skeleton`.
 
-57 shell hooks enforce SDLC rules mechanically — ticket-first, migration
+60 shell hooks enforce SDLC rules mechanically — ticket-first, migration
 gate, two-marker merge gate, red-CI block, secrets scanning, branch / PR
 title validation, decision-record-required-for-architecture, upstream-drift
 banner, leak protection. 20 role definitions activate on triggers (label,
