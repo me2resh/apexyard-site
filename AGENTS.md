@@ -35,7 +35,7 @@ shellcheck -x --source-path=SCRIPTDIR \
   .github/scripts/*.sh .github/tests/*.sh og/render.sh
 
 # verify published primitive counts (needs a local apexyard clone + a release tag)
-APEXYARD_REPO=/path/to/apexyard REF=v5.6.2 .github/scripts/verify-counts.sh
+APEXYARD_REPO=/path/to/apexyard REF=v5.6.3 .github/scripts/verify-counts.sh
 
 # run / dev
 # Open HTML files locally, or use Netlify/AWS preview. No `npm run dev`.
