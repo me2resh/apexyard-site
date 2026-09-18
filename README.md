@@ -1,5 +1,7 @@
 # apexyard-site
 
+[![Governed by ApexYard](https://img.shields.io/badge/governed_by-ApexYard-2F6DF6?style=flat-square)](https://github.com/me2resh/apexyard)
+
 The ApexYard marketing and docs site — static HTML, deployed on Netlify at [apexyard.ai](https://apexyard.ai).
 
 ## What's here
