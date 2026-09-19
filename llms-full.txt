@@ -1,10 +1,10 @@
 # ApexYard — Full Content
 
-> ApexYard lets founders ship AI-built software like a real engineering team —
-> without adding a full engineering team. Automatic code review, launch-readiness checks, and
-> one place for all your products, built around canonical hooks with adapters for Claude Code, Codex, OpenCode, Pi, and Cursor. 66 skills,
-> 60 hooks, 20 role definitions. Open source, plain markdown and shell, no SaaS,
-> no vendor lock-in.
+> ApexYard helps teams use AI coding agents with a controlled engineering process.
+> It provides automatic code review, release checks, and one view of all managed projects.
+> It uses canonical hooks with adapters for Claude Code, Codex, OpenCode, Pi, and Cursor. 66 skills,
+> 60 hooks, 20 role definitions. Open source, plain markdown and shell,
+> no SaaS, no vendor lock-in.
 
 This file is the LLM/agent-friendly concatenation of the apexyard marketing
 site (https://apexyard.ai/). Each page is a top-level section below.
@@ -15,30 +15,26 @@ site (https://apexyard.ai/). Each page is a top-level section below.
 
 ## Use AI coding agents with a controlled engineering process.
 
-ApexYard adds the reviews, guardrails, and process behind work driven by
-your AI coding harness. Claude Code is the canonical hook runtime; adapters
-connect Codex, OpenCode, Pi, and Cursor. Catch mistakes before your customers
-do — automatically, without checking every commit yourself.
+ApexYard adds review, guardrails, and process to work driven by an AI coding harness.
+Claude Code is the canonical hook runtime. Adapters connect Codex, OpenCode, Pi, and Cursor.
+Review records show what the reviewer checked before release.
 
 ## What you get
 
 ### 1. Automatic code review
 
-Every change you make — or that a contractor makes — gets reviewed by a
-senior-engineering-level reviewer before it ships. You see exactly what
-was caught and why, and decide what to do about it.
+A reviewer checks each change before it can ship. The review covers the changed
+code and its system impact. You see what was caught and why, then decide what to do.
 
 ### 2. Launch-readiness checks
 
-Before you push to customers, run one command and find out what is still
-missing — security, performance, accessibility, the lot. No surprise
-emails from users telling you about it.
+Before release, run one command to check security, performance, accessibility,
+monitoring, and documentation. Find missing work before users report it.
 
 ### 3. One view for all your products
 
-One inbox lists each project you manage. Pull requests that
-need a look, issues someone's stuck on, anything that needs your attention
-— You can review this work from one screen.
+One inbox lists each project you manage. Pull requests that need review,
+blocked issues, and other actions appear in one screen.
 
 ## Who can use ApexYard
 
@@ -114,7 +110,7 @@ framework refuses to let you touch the database until the plan is real
 
 ## What you actually get when you fork it
 
-### Reviews from a full engineering team — without adding a full engineering team
+### Reviews from specialised engineering roles
 
 The reviewer changes based on what you are working on. Touching auth code?
 A security reviewer takes a look. Touching the database? Someone who
@@ -132,9 +128,9 @@ focused workflow with safety rails.
 
 ### Guardrails that stop bad code from shipping — automatically
 
-Every edit must have a ticket. Every database change needs a
+Every edit must have a ticket. Every database change must have a
 rollback plan. Every merge must have a review. Secrets in code get
-caught before they are committed. Mechanically enforced — 49 small
+caught before they are committed. Mechanically enforced — 60 small
 scripts that fire at the right moments, so you do not have to remember
 to check.
 

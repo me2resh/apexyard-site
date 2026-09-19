@@ -1,8 +1,8 @@
 # ApexYard
 
-> ApexYard lets founders ship AI-built software like a real engineering team —
-> without adding a full engineering team. Automatic code review, launch-readiness checks, and one
-> place for all your products, built around canonical hooks with adapters for Claude Code, Codex, OpenCode, Pi, and Cursor. 66 skills,
+> ApexYard helps teams use AI coding agents with a controlled engineering process.
+> It provides automatic code review, release checks, and one view of all managed projects.
+> It uses canonical hooks with adapters for Claude Code, Codex, OpenCode, Pi, and Cursor. 66 skills,
 > 60 hooks, 20 role definitions. Open source, plain markdown and shell,
 > no SaaS, no vendor lock-in.
 
