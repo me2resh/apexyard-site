@@ -295,7 +295,7 @@ a:hover { color: var(--accent); }
 }
 @media (max-width: 700px) {
   /* On mobile, drop the copy-for-ai button to a new line below the pill + subtitle so it
-     doesn't compete with the page-header rhythm. Inline margin-left:auto already pushes it
+     does not compete with the page-header rhythm. Inline margin-left:auto already pushes it
      right on desktop. */
   .page-header__eyebrow .copy-for-ai { margin-left: 0; flex-basis: 100%; }
 }
@@ -579,12 +579,12 @@ a:hover { color: var(--accent); }
       </div>
       <h1>Architecture</h1>
       <p class="tagline" style="border-left: 3px solid var(--accent); padding-left: 1rem; margin-bottom: 1rem; background: var(--paper-2); padding: 0.75rem 1rem; font-weight: 500;">
-        <strong>In plain English:</strong> ApexYard is one place that holds the rules, the tools, and the history for every product you build. The diagram below shows the five layers that make that work — useful if you want the technical detail; you don't need it to start. If you'd rather see a day with it, read <a href="/how-it-works" class="uline" style="border-bottom: 1px solid currentColor;">how it works</a>.
+        <strong>In plain English:</strong> ApexYard stores the rules, tools, and history for each product you manage. The diagram below shows the five layers that make that work — useful if you want the technical detail; you do not need it to start. If you'd rather see a day with it, read <a href="/how-it-works" class="uline" style="border-bottom: 1px solid currentColor;">how it works</a>.
       </p>
       <p class="tagline" id="ai-lead">
-        <strong>What is it?</strong> ApexYard governs a portfolio of repos as one organisation: 5 layers (governance, capability, framework defaults, customisation overlay, per-project data) plus an optional split-portfolio private-sibling repo.
-        <strong>What can it do?</strong> One ops fork holds the registry, hooks, rules, skills, agents, templates, and handbooks; managed projects clone in as gitignored workspace dirs.
-        <strong>What's needed to start?</strong> Fork apexyard, register your projects, and read this page if you're deciding how to lay out the fork for your team. The diagram below is the canonical mental model.
+        <strong>What ApexYard is</strong> ApexYard governs a portfolio of repos as one organisation: 5 layers (governance, capability, framework defaults, customisation overlay, per-project data) plus an optional split-portfolio private-sibling repo.
+        <strong>What ApexYard does</strong> One ops fork holds the registry, hooks, rules, skills, agents, templates, and handbooks; managed projects clone in as gitignored workspace dirs.
+        <strong>What you need to start</strong> Fork apexyard, register your projects, and read this page if you are deciding how to lay out the fork for your team. The diagram below is the canonical mental model.
       </p>
       <p class="meta">
         See also: <a href="/">overview</a> · <a href="/skills">skills</a> · <a href="https://github.com/me2resh/apexyard/blob/main/docs/multi-project.md" target="_blank" rel="noopener">setup guide ↗</a>
@@ -746,7 +746,7 @@ a:hover { color: var(--accent); }
   <text x="1404" y="170" font-size="18" font-weight="700" fill="#14181F">[lock] Sibling Private Repo</text>
   <text x="1404" y="192" font-size="12" fill="#3D4554" font-style="italic">Optional — split-portfolio v2 mode</text>
 
-  <text x="1404" y="225" font-size="12" fill="#14181F">For adopters on GitHub Free who don't want</text>
+  <text x="1404" y="225" font-size="12" fill="#14181F">For adopters on GitHub Free who do not want</text>
   <text x="1404" y="242" font-size="12" fill="#14181F">portfolio names on a public repo. Resolved via</text>
   <text x="1404" y="259" font-size="12" fill="#14181F"><tspan font-weight="700">portfolio.*</tspan> keys in <tspan font-weight="700">.claude/project-config.json</tspan></text>
 
@@ -804,7 +804,7 @@ a:hover { color: var(--accent); }
       <div class="note">
         <h3>The 5-layer model</h3>
         <p>
-          <strong>Governance</strong> declares what's true (registry, onboarding) and what's enforced
+          <strong>Governance</strong> declares what is true (registry, onboarding) and what is enforced
           (hooks, rules). <strong>Capability</strong> is what the agent can DO — skills + sub-agents.
           <strong>Framework defaults</strong> ship with the fork: templates and handbooks.
           <strong>Customisation</strong> is your overrides; the <span class="kw">red border</span> in
@@ -847,7 +847,7 @@ a:hover { color: var(--accent); }
       <div class="note note--wide">
         <h3>Optional private sibling repo</h3>
         <p>
-          The <strong>dashed box on the right</strong> is opt-in. Adopters on GitHub Free who don't want
+          The <strong>dashed box on the right</strong> is opt-in. Adopters on GitHub Free who do not want
           portfolio names on a public fork put the registry, onboarding, <code>projects/</code>, <code>workspace/</code>,
           and the <code>custom-*</code> trees in a sibling private repo. Skills resolve paths via the
           <code>portfolio.*</code> keys in <code>.claude/project-config.json</code> — the public
@@ -862,7 +862,7 @@ a:hover { color: var(--accent); }
 
   <section class="cta-close" aria-label="Closing call to action">
     <div class="cta-close__inner">
-      <p class="cta-close__lede"><strong>Convinced this is the shape your fork needs?</strong><br>Three steps and you're configured — under five minutes.</p>
+      <p class="cta-close__lede"><strong>Convinced this is the shape your fork needs?</strong><br>Three steps and you are configured — under five minutes.</p>
       <div class="cta-close__actions">
         <a class="cta-close__btn cta-close__btn--primary" href="/#quickstart">Quickstart — fork &amp; <code>/setup</code> in minutes →</a>
         <a class="cta-close__btn" href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener">⑂ Fork on GitHub ↗</a>
@@ -931,7 +931,7 @@ a:hover { color: var(--accent); }
     record(btn.getAttribute('data-consent'));
   });
   // Escape dismisses the banner as "denied" - keyboard users without
-  // a mouse shouldn't be stuck with a fixed-bottom banner they can't
+  // a mouse shouldn't be stuck with a fixed-bottom banner they cannot
   // dismiss. "Denied" is the non-consenting default per Consent Mode v2.
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !el.hidden) {

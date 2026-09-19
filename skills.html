@@ -274,7 +274,7 @@ a:hover { color: var(--accent); }
 }
 @media (max-width: 700px) {
   /* On mobile, drop the copy-for-ai button to a new line below the pill + subtitle so it
-     doesn't compete with the page-header rhythm. Inline margin-left:auto already pushes it
+     does not compete with the page-header rhythm. Inline margin-left:auto already pushes it
      right on desktop. */
   .page-header__eyebrow .copy-for-ai { margin-left: 0; flex-basis: 100%; }
 }
@@ -578,12 +578,12 @@ main {
       </div>
       <h1>Skills</h1>
       <p class="tagline" style="border-left: 3px solid var(--accent); padding-left: 1rem; margin-bottom: 1rem; background: var(--paper-2); padding: 0.75rem 1rem; font-weight: 500;">
-        <strong>In plain English:</strong> these are the commands you type into Claude Code to get ApexYard to do something. They're grouped by what you're trying to do — keep quality high, move work forward, see everything at once, onboard new code, run things — not by what's under the hood. If you'd rather see a real day with these, read <a href="/how-it-works" class="uline" style="border-bottom: 1px solid currentColor;">how it works</a>.
+        <strong>In plain English:</strong> these are the commands you type into Claude Code to get ApexYard to do something. They are grouped by what you are trying to do — keep quality high, move work forward, see everything at once, onboard new code, run things — not by what is under the hood. If you'd rather see a real day with these, read <a href="/how-it-works" class="uline" style="border-bottom: 1px solid currentColor;">how it works</a>.
       </p>
       <p class="tagline" id="ai-lead">
-        <strong>What is it?</strong> ApexYard ships 66 active slash commands grouped under outcome headings — Keep quality high, Move work forward, See everything at once, Onboard new code, Run things.
-        <strong>What can it do?</strong> Each <code>/&lt;name&gt;</code> is a structured workflow with safety rails — the right framework checks fire at the right moments, so <code>/approve-merge</code> writes a record that the merge gate verifies before the merge actually runs.
-        <strong>What's needed to start?</strong> Browse below; invoke any from a Claude Code session inside an apexyard fork. Every skill ships in <code>.claude/skills/&lt;name&gt;/SKILL.md</code>.
+        <strong>What ApexYard is</strong> ApexYard ships 66 active slash commands grouped under outcome headings — Keep quality high, Move work forward, See everything at once, Onboard new code, Run things.
+        <strong>What ApexYard does</strong> Each <code>/&lt;name&gt;</code> is a structured workflow with safety rails — the right framework checks fire at the right moments, so <code>/approve-merge</code> writes a record that the merge gate verifies before the merge actually runs.
+        <strong>What you need to start</strong> Browse below; invoke any from a Claude Code session inside an apexyard fork. Every skill ships in <code>.claude/skills/&lt;name&gt;/SKILL.md</code>.
       </p>
       <p class="meta">
         New here? Start with <a href="#onboard"><code>/setup</code></a> on a fresh fork, then
@@ -749,9 +749,9 @@ main {
     <article class="skill">
       <header class="skill__head">
         <code class="skill__name">/decide</code>
-        <code class="skill__args">&lt;what you're deciding&gt;</code>
+        <code class="skill__args">&lt;what you are deciding&gt;</code>
       </header>
-      <p class="skill__desc">Make a technical decision with structured reasoning and record it permanently — what you considered, what you picked, and why. Use when choosing between libraries, frameworks, implementation approaches, or architectural patterns; the record means the next person (or future you) doesn't have to re-litigate the call.</p>
+      <p class="skill__desc">Make a technical decision with structured reasoning and record it permanently — what you considered, what you picked, and why. Use when choosing between libraries, frameworks, implementation approaches, or architectural patterns; the record means the next person (or future you) does not have to re-litigate the call.</p>
     </article>
 
     <article class="skill">
@@ -767,7 +767,7 @@ main {
         <code class="skill__name">/validate-idea</code>
         <code class="skill__args">&lt;IDEA-NNN | project-name | free-form description&gt;</code>
       </header>
-      <p class="skill__desc">Lightweight 5-question idea validation. Sits between <code>/idea</code> and <code>/write-spec</code> as a 10-minute gate that catches "this isn't worth speccing" without heavyweight strategy ceremony.</p>
+      <p class="skill__desc">Lightweight 5-question idea validation. Sits between <code>/idea</code> and <code>/write-spec</code> as a 10-minute gate that catches "this is not worth speccing" without heavyweight strategy ceremony.</p>
     </article>
 
     <article class="skill">
@@ -853,7 +853,7 @@ main {
 
   <section class="section" id="see">
     <h2>See everything at once</h2>
-    <p class="section__intro">When you have more than one product going at the same time, the question that costs you the most is "what's waiting on me right now?" These skills answer it without you opening five different GitHub tabs.</p>
+    <p class="section__intro">When you have more than one product going at the same time, the question that costs you the most is "what is waiting on me right now?" These skills answer it without you opening five different GitHub tabs.</p>
 
     <article class="skill">
       <header class="skill__head"><code class="skill__name">/projects</code></header>
@@ -933,7 +933,7 @@ main {
         <code class="skill__name">/dfd</code>
         <code class="skill__args">[project-name | . | --scope-all] [--format=mermaid|dragon|all]</code>
       </header>
-      <p class="skill__desc">Extract a data-flow diagram from a codebase — what data moves where, what trust boundaries it crosses, what's sensitive. Renders on GitHub as a markdown diagram; feeds into <code>/threat-model</code> and <code>/compliance-check</code> automatically. Threat-Dragon JSON export available via <code>--format=dragon</code>.</p>
+      <p class="skill__desc">Extract a data-flow diagram from a codebase — what data moves where, what trust boundaries it crosses, what is sensitive. Renders on GitHub as a markdown diagram; feeds into <code>/threat-model</code> and <code>/compliance-check</code> automatically. Threat-Dragon JSON export available via <code>--format=dragon</code>.</p>
     </article>
 
     <article class="skill">
@@ -981,13 +981,13 @@ main {
         <code class="skill__name">/codify-rule</code>
         <code class="skill__args">[&lt;pr-comment-url&gt;]</code>
       </header>
-      <p class="skill__desc">Turn a human review comment that caught a Rex-miss into a draft handbook entry so the same miss doesn't happen again. Y/N gate, source-PR footer for traceability, auto-routes by file:line context to the right handbook bucket (architecture / general / language / domain).</p>
+      <p class="skill__desc">Turn a human review comment that caught a Rex-miss into a draft handbook entry so the same miss does not happen again. Y/N gate, source-PR footer for traceability, auto-routes by file:line context to the right handbook bucket (architecture / general / language / domain).</p>
     </article>
   </section>
 
   <section class="section" id="run">
     <h2>Run things</h2>
-    <p class="section__intro">Sync the framework when there's an update, parallelise independent work, cut a release, debug something hairy, share a PDF with a non-technical stakeholder.</p>
+    <p class="section__intro">Sync the framework when there is an update, parallelise independent work, cut a release, debug something hairy, share a PDF with a non-technical stakeholder.</p>
 
     <article class="skill">
       <header class="skill__head">
@@ -1018,7 +1018,7 @@ main {
         <code class="skill__name">/debug</code>
         <code class="skill__args">[symptom summary]</code>
       </header>
-      <p class="skill__desc">Structured hypothesis-driven debugging for issues whose cause isn't immediately obvious. Forces architecture-first reading and evidence-before-fix to prevent ad-hoc patching loops. Invoke when a bug has resisted one or more naïve fix attempts.</p>
+      <p class="skill__desc">Structured hypothesis-driven debugging for issues whose cause is not immediately obvious. Forces architecture-first reading and evidence-before-fix to prevent ad-hoc patching loops. Invoke when a bug has resisted one or more naïve fix attempts.</p>
     </article>
 
     <article class="skill">
@@ -1130,7 +1130,7 @@ main {
     record(btn.getAttribute('data-consent'));
   });
   // Escape dismisses the banner as "denied" - keyboard users without
-  // a mouse shouldn't be stuck with a fixed-bottom banner they can't
+  // a mouse shouldn't be stuck with a fixed-bottom banner they cannot
   // dismiss. "Denied" is the non-consenting default per Consent Mode v2.
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !el.hidden) {
