@@ -161,59 +161,61 @@ checks, SEO checks.
 
 # How it works (https://apexyard.ai/how-it-works)
 
-A walkthrough of one realistic day using ApexYard, written for someone
-who is not an engineer.
+ApexYard adds review, guardrails, and records around each change made
+with an AI coding assistant. The workflow stays in your repositories and
+tracker. This example shows one working day.
 
 ## Morning — open your inbox
 
-You open Claude Code with a coffee. The first thing you do is ask it
-for your inbox. One screen comes back with every product you are
-building. The pull request that is waiting on your approval. The issue
-your contractor commented on yesterday. The bug a customer reported
-that nobody's picked up yet.
+You start the day by asking ApexYard for the portfolio inbox. The
+response lists the projects you manage, pull requests that need review,
+blocked issues, unanswered comments, and open checks. Items are grouped
+by the action they need.
 
-You do not open five GitHub tabs. You pick the highest-priority item and
-tell Claude Code to keep working on it.
+The inbox is generated from registered repositories. It is a view of
+current tracker data, not a second list that you must maintain. You
+choose the highest-priority item and continue the work in the coding
+assistant.
 
 ## Mid-morning — the AI writes, the framework reviews
 
-You describe the change you want. The AI writes the code. When the AI
-is done, ApexYard automatically runs a real code review against
-everything that changed. Not a checklist — a senior-engineering-level
-review.
+You describe the change. The AI writes the code. ApexYard records the
+ticket that authorises the edit. When the change is ready, the configured
+review checks the diff and its surrounding system impact.
 
-This morning's review catches three things. One is a missing test for
-an edge case. One is a security issue. One is a question for you. You
-look at each one, decide what to do, and hit approve.
+The review can identify a missing edge-case test, a data exposure in an
+error log, and a question about whether an endpoint requires
+authentication. You resolve each finding and submit the review again.
 
 ## Lunch — a contractor finishes their piece
 
-A contractor opens a new PR on a different product. Before you click on
-it, ApexYard has already reviewed it. You see what was flagged. The
-contractor has already responded to the quality issues. You weigh in on
-the product question, they push the fix, the review re-runs, you
-approve.
+A contractor finishes work on another project. A new pull request
+appears in the portfolio inbox. The review reports quality findings, a
+copy question, and any security findings.
 
-You did not have to read every line yourself to know the work was solid.
+The contractor resolves the engineering findings. You answer the product
+question. The review runs again against the new commit. When the findings
+are resolved, you approve the pull request.
 
 ## Afternoon — getting ready to launch
 
-You are getting close to launching. You ask for a launch-readiness check.
-It comes back with a structured report: is the site secure, accessible,
-fast, monitored, documented. Today the report flags three things — a
-missing privacy policy, no error monitoring, an accessibility issue.
+The billing change is ready for release. You run a launch-readiness check.
+It produces a structured report for security, accessibility, performance,
+privacy, monitoring, documentation, and other configured dimensions.
 
-You fix all three. You re-run the readiness check. Three greens. You
-ship.
+The report identifies missing items. You correct them and run the check
+again. The report now shows the release criteria as complete.
 
 ## End of day — nothing gets lost
 
-Every technical decision you made today is recorded automatically. The
-reviews are saved. The launch checks are stored. Next time anyone needs
-to understand why something is the way it is, the answer is there.
+Technical decisions are stored with their reasons. Reviews, launch
+checks, approvals, and contractor changes remain part of the project
+history. When someone later needs to understand why a choice was made,
+the record is available.
 
-On Friday, you ask for a stakeholder update. The framework writes it
-from real activity. You tweak a sentence and send it.
+At the end of the week, you request a stakeholder update. It summarises
+recorded activity across the portfolio. You review it, edit it if needed,
+and send it.
 
 ## What you do not have to do
 
@@ -230,43 +232,29 @@ you remember it or not.
 
 # Architecture (https://apexyard.ai/architecture)
 
-In plain English: ApexYard is one place that holds the rules, the
-tools, and the history for every product you build. The 5-layer model
-below shows how that works — useful if you want the technical detail;
-you do not need it to start.
+In plain English: ApexYard stores the rules, tools, and history for each
+product you manage. The five layers below show where each part belongs.
+You can start with the setup guide and return to this page when you need
+the model.
 
 ## The 5-layer model
 
-ApexYard is a single ops fork organised into five conceptual layers,
-each owned by different parts of the framework:
+ApexYard is an operations fork organised into five conceptual layers:
 
-1. **Governance layer** — the markdown spec: `CLAUDE.md`, `roles/`,
-   `workflows/`, `templates/`, `handbooks/`. The "what good looks like"
-   for the framework.
-2. **Capability layer** — the runnable spec: `.claude/skills/` (66
-   slash commands), `.claude/agents/` (23 sub-agents incl. Rex), and
-   `.claude/hooks/` (60 mechanical enforcement scripts).
-3. **Framework defaults layer** — `.claude/project-config.defaults.json`
-   ships the framework's opinions; adopters override per-repo in
-   `.claude/project-config.json` (shallow merge).
-4. **Customisation overlay** — adopter-authored `custom-skills/`,
-   `custom-handbooks/`, and `custom-templates/` (path-mirrored override
-   of framework templates). For split-portfolio adopters, this layer
-   lives in the private sibling repo.
-5. **Per-project data layer** — `apexyard.projects.yaml` registry,
-   `projects/<name>/` per-project docs, `workspace/<name>/` working
-   clones (gitignored).
+1. **Governance** defines the registry and controls that must run.
+2. **Capability** defines the skills and agents that perform the work.
+3. **Framework defaults** provide reusable templates and handbooks.
+4. **Customisation** adds adopter-specific rules and workflows.
+5. **Per-project data** records the projects governed by the fork.
 
 ## One fork, every project
 
-The repo that holds `CLAUDE.md` is your "ops repo" — a fork of
-`me2resh/apexyard` cloned into your organisation. The registry file
-`apexyard.projects.yaml` lists every project under management.
+The repository that holds `CLAUDE.md` is your operations repository: a
+fork of `me2resh/apexyard` cloned into your organisation. The registry
+file `apexyard.projects.yaml` lists every governed project.
 
-Skills like `/projects`, `/inbox`, `/status`, `/tasks`, and
-`/stakeholder-update` aggregate across the registry. Even if you only
-have one repo to govern, you still fork apexyard and register that
-single repo.
+Skills such as `/projects`, `/inbox`, `/status`, `/tasks`, and
+`/stakeholder-update` read the registry and combine current project data.
 
 ## Customisation overlay
 
