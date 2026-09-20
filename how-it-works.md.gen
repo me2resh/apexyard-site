@@ -1,100 +1,100 @@
 # ApexYard — How it works
 
-> A walkthrough of one realistic day using ApexYard, written for someone who isn't an engineer. No terminal output, no jargon. By the end you'll know exactly what using the tool feels like.
+> This page describes one day with ApexYard. It uses plain language and no terminal output. It shows what the tool does and when you use it.
 
-## What is it?
+## What ApexYard is
 
-ApexYard is a walkthrough of one realistic day: open your inbox, work on a change while the framework auto-reviews, approve a contractor's PR, run a launch-readiness check, ship by evening.
+ApexYard supports a daily workflow. You review work, respond to findings, check release readiness, and record the result.
 
-## What can it do?
+## What ApexYard does
 
-Adds review, guardrails, and process around every change you make with Claude Code — so the work that ships is the work a real engineering team would have shipped.
+ApexYard adds review, guardrails, and process to each change made with Claude Code.
 
-## What's needed to start?
+## What you need to start
 
 Fork apexyard, run `/setup`, register your projects. The walkthrough below is a narrative; the install steps live on the [home page](https://apexyard.ai/index.md).
 
 ## The shape of a day with ApexYard
 
-You're a founder. You're building software with an AI assistant — Claude Code, Cursor, something similar. You may have a contractor or two helping. You don't have a traditional engineering team to lean on for reviews, releases, and quality control.
+You are building software with an AI coding assistant. You may work alone or with contractors. You need a repeatable way to review changes, prepare releases, and keep decisions available after the work is complete.
 
-ApexYard plugs into the AI you already use. It quietly adds a layer of **review, guardrails, and process** around everything you (or your contractors) do, so the work that ships is the work a real engineering team would have shipped. Below is what a typical day with it feels like.
+ApexYard works with the coding assistant you already use. It adds **review, guardrails, and records** around each change. The workflow stays in your repositories and tracker. The following example shows one working day.
 
 ## Morning — open your inbox
 
-You open Claude Code with a coffee. The first thing you do is ask it for your inbox.
+You start the day by asking ApexYard for the portfolio inbox.
 
-One screen comes back with every product you're building. The pull request that's waiting on your approval. The issue your contractor commented on yesterday. The bug a customer reported that nobody's picked up yet. The launch checklist you started last week and forgot about.
+The response lists the projects you manage, the pull requests that need review, blocked issues, unanswered comments, and checks that are still open.
 
-You don't open five GitHub tabs. You don't flip between three Slack channels. Everything that needs your attention is in one place, sorted by what's most overdue.
+You can start with one view instead of searching across several repositories and message channels. Items are grouped by the action they need.
 
-> **What's new here:** the inbox is generated from real data — the actual PRs, issues, and comments across every product you've registered. Not a separate list you have to maintain.
+> **What is new here:** the inbox is generated from the registered repositories. It is a view of current tracker data, not a second list that you must maintain.
 
-You pick the highest-priority item: a change to your billing system you started yesterday. You tell Claude Code to keep working on it.
+You choose the highest-priority item and continue the work in the coding assistant.
 
 ## Mid-morning — the AI writes, the framework reviews
 
-You describe the change you want. The AI writes the code. So far, nothing different — that's how you've always worked.
+You describe the change. The AI writes the code. ApexYard records the ticket that authorises the edit.
 
-The difference: when the AI is done, ApexYard automatically runs a real code review against everything that changed. Not a checklist. A senior-engineering-level review that reads the code, looks at how it fits with the rest of the system, and flags things you'd want someone competent to flag.
+When the change is ready, ApexYard runs the configured code review against the diff and its surrounding system impact. The reviewer checks quality, tests, security, and required decisions.
 
-This morning's review catches three things. One is a missing test for an edge case. One is a security issue — the change accidentally exposes a customer's email address in an error log. One is just a question: "are you sure you want this to be public, or should it require login?"
+The review can identify a missing edge-case test, a data exposure in an error log, and a question about whether a new endpoint requires authentication.
 
-You look at each one. The missing test, you have the AI add. The security issue, you fix on the spot. The question, you confirm — yes, public, that's the point. You hit approve.
+You resolve each finding. The AI adds the test, you correct the logging issue, and you record the authentication decision. The review is then submitted again.
 
-> **What's new here:** the review happens before the change goes live, not after a customer reports a problem. You see exactly what was caught and why, and you decide what to do about each one.
+> **What is new here:** the review is part of the merge path. It does not depend on a customer finding the problem after release.
 
 ## Lunch — a contractor finishes their piece
 
-Your inbox pings: a contractor has finished work on a different product. There's a new pull request waiting for you.
+A contractor finishes work on another project. A new pull request appears in the portfolio inbox.
 
-Before you even click on it, ApexYard has already reviewed the contractor's work. The same kind of review it did for you this morning. You see what was flagged: a couple of small quality issues, a question about the user-facing copy, no security concerns.
+The review has already run. It reports two quality findings, one copy question, and no security findings.
 
-The contractor has already responded to the quality issues. The copy question is something you need to weigh in on — it's a product decision, not an engineering one. You think about it for a minute, write a one-line answer, and ask them to make the change.
+The contractor can resolve the quality findings. You answer the copy question because it is a product decision. The contractor then updates the branch.
 
-A short while later, the contractor pushes the fix. The review re-runs automatically against the new version. Clean. You hit approve.
+The review runs again against the new commit. When the findings are resolved, you approve the pull request.
 
-> **What's new here:** you didn't have to read every line yourself to know the work was solid. The review caught what an experienced engineer would have caught, and you got to spend your time on the product decision — which is the only thing only you could decide.
+> **What is new here:** the review handles the engineering checklist while you make the product decision.
 
 ## Afternoon — getting ready to launch
 
-You're getting close to launching the new billing system. Before customers see it, you want to know what's still missing.
+The billing change is ready for release. Before customers see it, you run a launch-readiness check.
 
-You ask Claude Code to run a launch-readiness check. It comes back with a structured report across every dimension that matters: is the site secure, is it accessible, does it load fast enough, is there a privacy policy, is there error monitoring set up, is there a way to know when something breaks.
+The check produces a structured report for security, accessibility, performance, privacy, monitoring, documentation, and other configured dimensions.
 
-Today the report says you're nearly ready — three things still missing. One is a privacy policy you forgot to publish. One is that you don't have error monitoring set up, so if something breaks at 2am you won't know until a customer emails you. The third is a small accessibility issue with a contrast level on one button.
+The report identifies three missing items: a privacy policy, error monitoring, and a contrast issue on one button.
 
-The privacy policy you fix in ten minutes — there's a generator that handles the boilerplate. The error monitoring you ask Claude Code to wire up; that's a half-hour job. The accessibility issue is a one-line change in the design.
+You publish the privacy policy, add error monitoring, and correct the button contrast.
 
-You re-run the readiness check. Three greens. You're good to ship.
+You run the check again. The report now shows the release criteria as complete.
 
-> **What's new here:** the things that usually surface a week after launch — privacy holes, no monitoring, accessibility complaints from real users — get caught the day before instead. You're shipping a product that won't embarrass you tomorrow.
+> **What is new here:** release checks surface gaps before deployment instead of after users report them.
 
 ## End of day — nothing gets lost
 
-You shut down. Before you do, the framework has already quietly recorded everything that mattered today.
+You finish the day. The framework has recorded the work that matters.
 
-The technical decisions you made — why you picked one library over another, why you chose to handle a feature this way and not that way — are written down with the reasoning. The reviews are saved. The launch checks are stored. The contractor's work, with its approvals, is part of the history.
+Technical decisions are stored with their reasons. Reviews, launch checks, approvals, and contractor changes remain part of the project history.
 
-The next time you (or anyone you bring in) needs to understand *why* something is the way it is, the answer is there. No "what was I thinking?" three months from now. No re-deciding the same thing because you forgot you'd already decided it.
+When someone later needs to understand *why* a choice was made, the record is available. The team does not need to repeat a decision because its context was lost.
 
-On Friday, you ask the framework for a stakeholder update. It writes one for you — what shipped this week, across every product, with the highlights. You skim it, tweak a sentence, and send it to your investor. Five minutes total. The hardest part was deciding which font to use in the email.
+At the end of the week, you request a stakeholder update. It summarises recorded activity across the portfolio. You review it, edit it if needed, and send it.
 
-> **What's new here:** the framework is your engineering memory. The work you did today is searchable next year. The Friday update writes itself from what actually happened, not from what you remember happening.
+> **What is new here:** the framework preserves engineering context and produces reports from recorded activity.
 
-## What you don't have to do
+## What you do not have to do
 
-You don't have to remember to run a code review. You don't have to remember to check security. You don't have to remember to think about rollback before a database change. You don't have to remember to write down why you made a decision.
+You do not have to remember to run a code review. You do not have to remember to check security. You do not have to remember to plan a rollback before a database change. You do not have to remember to record the reason for a decision.
 
-The framework does it. You make the calls — the product decisions, the priority calls, the trade-offs. The engineering process that surrounds every change happens whether you remember it or not.
+The framework runs the controls. You make product decisions, set priorities, and accept trade-offs. The engineering process that surrounds every change happens whether you remember it or not.
 
-That's the point. You get the engineering rigor without becoming an engineer. Your team — if you have one — stays small and stays fast. Your work ships under the same kind of process a 30-person team would have. And nothing gets lost.
+That is the point. You get the engineering rigor without becoming an engineer. Your team — if you have one — stays small and stays fast. Your work ships under the same kind of process a 30-person team would have. And nothing gets lost.
 
 ## Start your first day
 
 Fork apexyard. Run `/setup`. Start your first day.
 
-Free and open source. Plain markdown and shell. No SaaS, no monthly fee, no lock-in. Fork it, edit anything to match how you work, and ship like you finally have the team.
+Free and open source. Plain markdown and shell. No SaaS, no monthly fee, no vendor lock-in. Fork it, edit anything to match how you work, and ship with a repeatable process.
 
 ## Links
 

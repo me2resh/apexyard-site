@@ -1,14 +1,14 @@
 # ApexYard
 
-> ApexYard lets founders ship AI-built software like a real engineering team —
-> without hiring one. Automatic code review, launch-readiness checks, and one
-> place for all your products, built around canonical hooks with adapters for Claude Code, Codex, OpenCode, Pi, and Cursor. 66 skills,
+> ApexYard helps teams use AI coding agents with a controlled engineering process.
+> It provides automatic code review, release checks, and one view of all managed projects.
+> It uses canonical hooks with adapters for Claude Code, Codex, OpenCode, Pi, and Cursor. 66 skills,
 > 60 hooks, 20 role definitions. Open source, plain markdown and shell,
-> no SaaS, no lock-in.
+> no SaaS, no vendor lock-in.
 
 ## Pages
 
-- [Home](https://apexyard.ai/) — what apexyard does for non-technical founders, who it's for, how to get started
+- [Home](https://apexyard.ai/) — what apexyard does for non-technical founders, who it is for, how to get started
 - [How it works](https://apexyard.ai/how-it-works) — a plain-English walkthrough of one realistic day with apexyard
 - [Architecture](https://apexyard.ai/architecture) — the technical 5-layer model + portfolio model
 - [Skills](https://apexyard.ai/skills) — full slash-command reference (66 skills) grouped by outcome
@@ -17,7 +17,7 @@
 
 - [llms-full.txt](https://apexyard.ai/llms-full.txt) — all page content in one markdown file for one-shot consumption
 
-## Who this is for
+## Who can use ApexYard
 
 - **Solo founders shipping with AI** (Claude Code, Codex, OpenCode, Pi, Cursor) — needing the
   guardrails a real team would give them, without a real team
@@ -30,9 +30,9 @@
 
 - **Automatic code review.** Every change you make — or that a contractor makes
   — gets reviewed by a senior-engineering-level AI reviewer before it ships.
-- **Launch-readiness checks.** Before customers see it, find out what's still
+- **Launch-readiness checks.** Before customers see it, find out what is still
   missing across security, performance, accessibility, monitoring, docs, SEO.
-- **One place for all your products.** Every project in one inbox — PRs,
+- **One view for all your products.** Every project in one inbox — PRs,
   issues, comments, blockers — all in one screen across N products.
 - **Evidence-grounded quality gates.** Review records cite the source they checked, and quality regression can run across Claude, Cursor, Codex, pi, and opencode.
 - **Flexible tracker setup.** Issue tracking and code review can use different hosts.
@@ -40,10 +40,10 @@
 ## Key concepts (the under-the-hood story for the technical evaluator)
 
 - **One ops repo forks the upstream framework + governs every project.** You
-  don't add apexyard to a project — projects get forged inside it. The fork
+  do not add apexyard to a project — projects get forged inside it. The fork
   IS the ops repo; no nested installs, no symlinks.
 - **Strict merge gates — two-marker (code-reviewer agent + per-PR CEO approval).**
-  Plan-level "go" doesn't authorize a merge; each PR requires explicit per-PR
+  Plan-level "go" does not authorize a merge; each PR requires explicit per-PR
   approval recorded via `/approve-merge <pr>`. Mechanically enforced.
 - **Persistent decision-log across the portfolio.** Every technical decision
   lands as a markdown file in `docs/agdr/`; the `/agdr` skill searches
@@ -88,7 +88,7 @@
 
 ## License
 
-MIT — plain markdown and shell, no SaaS, no lock-in. Claude Code is the
+MIT — plain markdown and shell, no SaaS, no vendor lock-in. Claude Code is the
 canonical hook runtime; adapters connect Codex, OpenCode, Pi, and Cursor.
 
 ## Repository

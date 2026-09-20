@@ -1,10 +1,10 @@
 # ApexYard — Full Content
 
-> ApexYard lets founders ship AI-built software like a real engineering team —
-> without hiring one. Automatic code review, launch-readiness checks, and
-> one place for all your products, built around canonical hooks with adapters for Claude Code, Codex, OpenCode, Pi, and Cursor. 66 skills,
-> 60 hooks, 20 role definitions. Open source, plain markdown and shell, no SaaS,
-> no lock-in.
+> ApexYard helps teams use AI coding agents with a controlled engineering process.
+> It provides automatic code review, release checks, and one view of all managed projects.
+> It uses canonical hooks with adapters for Claude Code, Codex, OpenCode, Pi, and Cursor. 66 skills,
+> 60 hooks, 20 role definitions. Open source, plain markdown and shell,
+> no SaaS, no vendor lock-in.
 
 This file is the LLM/agent-friendly concatenation of the apexyard marketing
 site (https://apexyard.ai/). Each page is a top-level section below.
@@ -13,42 +13,38 @@ site (https://apexyard.ai/). Each page is a top-level section below.
 
 # Home (https://apexyard.ai/)
 
-## Ship AI-built software like a real engineering team — without hiring one.
+## Use AI coding agents with a controlled engineering process.
 
-ApexYard adds the reviews, guardrails, and process behind work driven by
-your AI coding harness. Claude Code is the canonical hook runtime; adapters
-connect Codex, OpenCode, Pi, and Cursor. Catch mistakes before your customers
-do — automatically, without checking every commit yourself.
+ApexYard adds review, guardrails, and process to work driven by an AI coding harness.
+Claude Code is the canonical hook runtime. Adapters connect Codex, OpenCode, Pi, and Cursor.
+Review records show what the reviewer checked before release.
 
 ## What you get
 
 ### 1. Automatic code review
 
-Every change you make — or that a contractor makes — gets reviewed by a
-senior-engineering-level reviewer before it ships. You see exactly what
-was caught and why, and decide what to do about it.
+A reviewer checks each change before it can ship. The review covers the changed
+code and its system impact. You see what was caught and why, then decide what to do.
 
 ### 2. Launch-readiness checks
 
-Before you push to customers, run one command and find out what's still
-missing — security, performance, accessibility, the lot. No surprise
-emails from users telling you about it.
+Before release, run one command to check security, performance, accessibility,
+monitoring, and documentation. Find missing work before users report it.
 
-### 3. One place for all your products
+### 3. One view for all your products
 
-Every project you're building shows up in one inbox. Pull requests that
-need a look, issues someone's stuck on, anything that needs your attention
-— all in one screen, no tab-juggling.
+One inbox lists each project you manage. Pull requests that need review,
+blocked issues, and other actions appear in one screen.
 
-## Who this is for
+## Who can use ApexYard
 
-- **Solo founders shipping with AI** — you're building the product alone,
+- **Solo founders shipping with AI** — you are building the product alone,
   with Claude Code, Codex, OpenCode, Pi, or Cursor doing most of the typing. You need the
   guardrails a real team would give you — without a real team.
 - **Non-technical founders managing contractors or a small dev team** —
   you need to know the work is solid before it goes live, without reading
   every commit yourself.
-- **Small teams with no engineering process yet** — you've shipped your
+- **Small teams with no engineering process yet** — you have shipped your
   first version. Now you need real review, real testing, real release
   discipline before things get harder to fix.
 
@@ -102,7 +98,7 @@ review and a real launch sign-off in the middle. The reviewer is a
 senior-engineering-level AI agent (Rex) and the sign-off is yours —
 both have to happen before anything ships.
 
-**Five products, one inbox.** One screen for every project you're
+**Five products, one inbox.** One screen for every project you are
 building. No tab-juggling, no five different GitHub repos. The same
 registry powers the Friday stakeholder update — generated from the
 actual week's activity, not from what you remember.
@@ -114,9 +110,9 @@ framework refuses to let you touch the database until the plan is real
 
 ## What you actually get when you fork it
 
-### Reviews from a full engineering team — without hiring one
+### Reviews from specialised engineering roles
 
-The reviewer changes based on what you're working on. Touching auth code?
+The reviewer changes based on what you are working on. Touching auth code?
 A security reviewer takes a look. Touching the database? Someone who
 specialises in database changes walks you through the rollback plan.
 Behind the scenes: 20 role definitions across 6 departments, each with
@@ -124,18 +120,18 @@ its own checklist and boundaries.
 
 ### Tools for every step of shipping software
 
-Want to adopt a project you've inherited? `/handover`. Want to capture
-an idea before it evaporates? `/idea`. Want to know what's waiting on
+Want to adopt a project you have inherited? `/handover`. Want to capture
+an idea before it evaporates? `/idea`. Want to know what is waiting on
 you across every product? `/inbox`. Want a launch-readiness check before
 customers see it? `/launch-check`. 66 of these in total — each one is a
 focused workflow with safety rails.
 
 ### Guardrails that stop bad code from shipping — automatically
 
-Every edit needs a real ticket behind it. Every database change needs a
-rollback plan. Every merge needs a real review. Secrets in code get
-caught before they're committed. Mechanically enforced — 49 small
-scripts that fire at the right moments, so you don't have to remember
+Every edit must have a ticket. Every database change must have a
+rollback plan. Every merge must have a review. Secrets in code get
+caught before they are committed. Mechanically enforced — 60 small
+scripts that fire at the right moments, so you do not have to remember
 to check.
 
 ### A real code review on every change
@@ -150,7 +146,7 @@ specialised reviewer agents under the hood.
 ### Every product, one screen
 
 Run `/inbox` and see every pull request waiting on you, every issue
-stuck, every comment unanswered — across every product you're building.
+stuck, every comment unanswered — across every product you are building.
 Run `/stakeholder-update weekly` on Friday and the rollup writes itself
 from the actual week's activity. Backed by a one-file registry at your
 fork root.
@@ -165,65 +161,67 @@ checks, SEO checks.
 
 # How it works (https://apexyard.ai/how-it-works)
 
-A walkthrough of one realistic day using ApexYard, written for someone
-who isn't an engineer.
+ApexYard adds review, guardrails, and records around each change made
+with an AI coding assistant. The workflow stays in your repositories and
+tracker. This example shows one working day.
 
 ## Morning — open your inbox
 
-You open Claude Code with a coffee. The first thing you do is ask it
-for your inbox. One screen comes back with every product you're
-building. The pull request that's waiting on your approval. The issue
-your contractor commented on yesterday. The bug a customer reported
-that nobody's picked up yet.
+You start the day by asking ApexYard for the portfolio inbox. The
+response lists the projects you manage, pull requests that need review,
+blocked issues, unanswered comments, and open checks. Items are grouped
+by the action they need.
 
-You don't open five GitHub tabs. You pick the highest-priority item and
-tell Claude Code to keep working on it.
+The inbox is generated from registered repositories. It is a view of
+current tracker data, not a second list that you must maintain. You
+choose the highest-priority item and continue the work in the coding
+assistant.
 
 ## Mid-morning — the AI writes, the framework reviews
 
-You describe the change you want. The AI writes the code. When the AI
-is done, ApexYard automatically runs a real code review against
-everything that changed. Not a checklist — a senior-engineering-level
-review.
+You describe the change. The AI writes the code. ApexYard records the
+ticket that authorises the edit. When the change is ready, the configured
+review checks the diff and its surrounding system impact.
 
-This morning's review catches three things. One is a missing test for
-an edge case. One is a security issue. One is a question for you. You
-look at each one, decide what to do, and hit approve.
+The review can identify a missing edge-case test, a data exposure in an
+error log, and a question about whether an endpoint requires
+authentication. You resolve each finding and submit the review again.
 
 ## Lunch — a contractor finishes their piece
 
-A contractor opens a new PR on a different product. Before you click on
-it, ApexYard has already reviewed it. You see what was flagged. The
-contractor has already responded to the quality issues. You weigh in on
-the product question, they push the fix, the review re-runs, you
-approve.
+A contractor finishes work on another project. A new pull request
+appears in the portfolio inbox. The review reports quality findings, a
+copy question, and any security findings.
 
-You didn't have to read every line yourself to know the work was solid.
+The contractor resolves the engineering findings. You answer the product
+question. The review runs again against the new commit. When the findings
+are resolved, you approve the pull request.
 
 ## Afternoon — getting ready to launch
 
-You're getting close to launching. You ask for a launch-readiness check.
-It comes back with a structured report: is the site secure, accessible,
-fast, monitored, documented. Today the report flags three things — a
-missing privacy policy, no error monitoring, an accessibility issue.
+The billing change is ready for release. You run a launch-readiness check.
+It produces a structured report for security, accessibility, performance,
+privacy, monitoring, documentation, and other configured dimensions.
 
-You fix all three. You re-run the readiness check. Three greens. You
-ship.
+The report identifies missing items. You correct them and run the check
+again. The report now shows the release criteria as complete.
 
 ## End of day — nothing gets lost
 
-Every technical decision you made today is recorded automatically. The
-reviews are saved. The launch checks are stored. Next time anyone needs
-to understand why something is the way it is, the answer is there.
+Technical decisions are stored with their reasons. Reviews, launch
+checks, approvals, and contractor changes remain part of the project
+history. When someone later needs to understand why a choice was made,
+the record is available.
 
-On Friday, you ask for a stakeholder update. The framework writes it
-from real activity. You tweak a sentence and send it.
+At the end of the week, you request a stakeholder update. It summarises
+recorded activity across the portfolio. You review it, edit it if needed,
+and send it.
 
-## What you don't have to do
+## What you do not have to do
 
-You don't have to remember to run a code review. You don't have to
-remember to check security. You don't have to remember to think about
-rollback before a database change. You don't have to remember to write
+You do not have to remember to run a code review. You do not have to
+remember to check security. You do not have to remember to think about
+rollback before a database change. You do not have to remember to write
 down why you made a decision.
 
 The framework does it. You make the calls — the product decisions, the
@@ -234,43 +232,29 @@ you remember it or not.
 
 # Architecture (https://apexyard.ai/architecture)
 
-In plain English: ApexYard is one place that holds the rules, the
-tools, and the history for every product you build. The 5-layer model
-below shows how that works — useful if you want the technical detail;
-you don't need it to start.
+In plain English: ApexYard stores the rules, tools, and history for each
+product you manage. The five layers below show where each part belongs.
+You can start with the setup guide and return to this page when you need
+the model.
 
 ## The 5-layer model
 
-ApexYard is a single ops fork organised into five conceptual layers,
-each owned by different parts of the framework:
+ApexYard is an operations fork organised into five conceptual layers:
 
-1. **Governance layer** — the markdown spec: `CLAUDE.md`, `roles/`,
-   `workflows/`, `templates/`, `handbooks/`. The "what good looks like"
-   for the framework.
-2. **Capability layer** — the runnable spec: `.claude/skills/` (66
-   slash commands), `.claude/agents/` (23 sub-agents incl. Rex), and
-   `.claude/hooks/` (60 mechanical enforcement scripts).
-3. **Framework defaults layer** — `.claude/project-config.defaults.json`
-   ships the framework's opinions; adopters override per-repo in
-   `.claude/project-config.json` (shallow merge).
-4. **Customisation overlay** — adopter-authored `custom-skills/`,
-   `custom-handbooks/`, and `custom-templates/` (path-mirrored override
-   of framework templates). For split-portfolio adopters, this layer
-   lives in the private sibling repo.
-5. **Per-project data layer** — `apexyard.projects.yaml` registry,
-   `projects/<name>/` per-project docs, `workspace/<name>/` working
-   clones (gitignored).
+1. **Governance** defines the registry and controls that must run.
+2. **Capability** defines the skills and agents that perform the work.
+3. **Framework defaults** provide reusable templates and handbooks.
+4. **Customisation** adds adopter-specific rules and workflows.
+5. **Per-project data** records the projects governed by the fork.
 
 ## One fork, every project
 
-The repo that holds `CLAUDE.md` is your "ops repo" — a fork of
-`me2resh/apexyard` cloned into your organisation. The registry file
-`apexyard.projects.yaml` lists every project under management.
+The repository that holds `CLAUDE.md` is your operations repository: a
+fork of `me2resh/apexyard` cloned into your organisation. The registry
+file `apexyard.projects.yaml` lists every governed project.
 
-Skills like `/projects`, `/inbox`, `/status`, `/tasks`, and
-`/stakeholder-update` aggregate across the registry. Even if you only
-have one repo to govern, you still fork apexyard and register that
-single repo.
+Skills such as `/projects`, `/inbox`, `/status`, `/tasks`, and
+`/stakeholder-update` read the registry and combine current project data.
 
 ## Customisation overlay
 
@@ -292,14 +276,14 @@ customisations. Private sibling holds `apexyard.projects.yaml`,
 custom-skills and custom-handbooks dirs.
 
 The config block at `.claude/project-config.json → portfolio.*`
-resolves the paths transparently. Use this mode if you're on GitHub
-Free with any project you don't want named publicly.
+resolves the paths transparently. Use this mode if you are on GitHub
+Free with any project you do not want named publicly.
 
 ---
 
 # Skills (https://apexyard.ai/skills)
 
-66 slash commands grouped by what you're trying to do — not by what's
+66 slash commands grouped by what you are trying to do — not by what is
 under the hood. Each is a markdown SKILL.md file under
 `.claude/skills/<name>/`.
 
@@ -361,7 +345,7 @@ everything that turns half-formed thoughts into shipped software.
 ## See everything at once
 
 When you have more than one product going at the same time, the
-question that costs you the most is "what's waiting on me right now?"
+question that costs you the most is "what is waiting on me right now?"
 
 - `/projects` — list every managed project with status, branch, open
   PRs, open issue counts.

@@ -283,7 +283,7 @@ a:hover { color: var(--accent); }
 }
 @media (max-width: 700px) {
   /* On mobile, drop the copy-for-ai button to a new line below the pill + subtitle so it
-     doesn't compete with the page-header rhythm. Inline margin-left:auto already pushes it
+     does not compete with the page-header rhythm. Inline margin-left:auto already pushes it
      right on desktop. */
   .page-header__eyebrow .copy-for-ai { margin-left: 0; flex-basis: 100%; }
 }
@@ -657,12 +657,12 @@ main { background: var(--paper); }
       </div>
       <h1>How it works</h1>
       <p class="tagline">
-        A walkthrough of one realistic day using ApexYard, written for someone who isn't an engineer. No terminal output, no jargon. By the end you'll know exactly what using the tool feels like.
+        This page describes one day with ApexYard. It uses plain language and no terminal output. It shows what the tool does and when you use it.
       </p>
       <p class="tagline ai-lead-hidden" id="ai-lead" aria-hidden="false">
-        <strong>What is it?</strong> ApexYard is a walkthrough of one realistic day: open your inbox, work on a change while the framework auto-reviews, approve a contractor's PR, run a launch-readiness check, ship by evening.
-        <strong>What can it do?</strong> Adds review, guardrails, and process around every change you make with Claude Code — so the work that ships is the work a real engineering team would have shipped.
-        <strong>What's needed to start?</strong> Fork apexyard, run <code>/setup</code>, register your projects. The page below is a narrative; see <a href="/#quickstart" class="uline">quickstart</a> for the install steps.
+        <strong>What ApexYard is</strong> ApexYard supports a daily workflow. You review work, respond to findings, check release readiness, and record the result.
+        <strong>What ApexYard does</strong> ApexYard adds review, guardrails, and process to each change made with Claude Code.
+        <strong>What you need to start</strong> Fork apexyard, run <code>/setup</code>, register your projects. The page below is a narrative; see <a href="/#quickstart" class="uline">quickstart</a> for the install steps.
       </p>
       <p class="meta">
         See also: <a href="/">overview</a> · <a href="/skills">skills</a> · <a href="/architecture">architecture</a>
@@ -674,10 +674,10 @@ main { background: var(--paper); }
     <div class="intro-panel__inner">
       <h2>The shape of a day with ApexYard</h2>
       <p>
-        You're a founder. You're building software with an AI assistant — Claude Code, Cursor, something similar. You may have a contractor or two helping. You don't have a traditional engineering team to lean on for reviews, releases, and quality control.
+        You are building software with an AI coding assistant. You may work alone or with contractors. You need a repeatable way to review changes, prepare releases, and keep decisions available after the work is complete.
       </p>
       <p>
-        ApexYard plugs into the AI you already use. It quietly adds a layer of <strong>review, guardrails, and process</strong> around everything you (or your contractors) do, so the work that ships is the work a real engineering team would have shipped. Below is what a typical day with it feels like.
+        ApexYard works with the coding assistant you already use. It adds <strong>review, guardrails, and records</strong> around each change. The workflow stays in your repositories and tracker. The following example shows one working day.
       </p>
     </div>
   </section>
@@ -690,19 +690,19 @@ main { background: var(--paper); }
       </div>
       <div class="day__body">
         <p class="lede">
-          You open Claude Code with a coffee. The first thing you do is ask it for your inbox.
+          You start the day by asking ApexYard for the portfolio inbox.
         </p>
         <p>
-          One screen comes back with every product you're building. The pull request that's waiting on your approval. The issue your contractor commented on yesterday. The bug a customer reported that nobody's picked up yet. The launch checklist you started last week and forgot about.
+          The response lists the projects you manage, the pull requests that need review, blocked issues, unanswered comments, and checks that are still open.
         </p>
         <p>
-          You don't open five GitHub tabs. You don't flip between three Slack channels. Everything that needs your attention is in one place, sorted by what's most overdue.
+          You can start with one view instead of searching across several repositories and message channels. Items are grouped by the action they need.
         </p>
         <div class="aside">
-          <strong>What's new here:</strong> the inbox is generated from real data — the actual PRs, issues, and comments across every product you've registered, not a separate list you have to maintain.
+          <strong>What is new here:</strong> the inbox is generated from the registered repositories. It is a view of current tracker data, not a second list that you must maintain.
         </div>
         <p>
-          You pick the highest-priority item: a change to your billing system you started yesterday. You tell Claude Code to keep working on it.
+          You choose the highest-priority item and continue the work in the coding assistant.
         </p>
       </div>
     </div>
@@ -716,19 +716,19 @@ main { background: var(--paper); }
       </div>
       <div class="day__body">
         <p class="lede">
-          You describe the change you want. The AI writes the code. So far, nothing different — that's how you've always worked.
+          You describe the change. The AI writes the code. ApexYard records the ticket that authorises the edit.
         </p>
         <p>
-          The difference: when the AI is done, ApexYard automatically runs a real code review against everything that changed. Not a checklist. A senior-engineering-level review that reads the code, looks at how it fits with the rest of the system, and flags things you'd want someone competent to flag.
+          When the change is ready, ApexYard runs the configured code review against the diff and its surrounding system impact. The reviewer checks quality, tests, security, and required decisions.
         </p>
         <p>
-          This morning's review catches three things. One is a missing test for an edge case. One is a security issue — the change accidentally exposes a customer's email address in an error log. One is just a question: "are you sure you want this to be public, or should it require login?"
+          The review can identify a missing edge-case test, a data exposure in an error log, and a question about whether a new endpoint requires authentication.
         </p>
         <p>
-          You look at each one. The missing test, you have the AI add. The security issue, you fix on the spot. The question, you confirm — yes, public, that's the point. You hit approve.
+          You resolve each finding. The AI adds the test, you correct the logging issue, and you record the authentication decision. The review is then submitted again.
         </p>
         <div class="aside">
-          <strong>What's new here:</strong> the review happens before the change goes live, not after a customer reports a problem.
+          <strong>What is new here:</strong> the review is part of the merge path. It does not depend on a customer finding the problem after release.
         </div>
       </div>
     </div>
@@ -742,19 +742,19 @@ main { background: var(--paper); }
       </div>
       <div class="day__body">
         <p class="lede">
-          Your inbox pings: a contractor has finished work on a different product. There's a new pull request waiting for you.
+          A contractor finishes work on another project. A new pull request appears in the portfolio inbox.
         </p>
         <p>
-          Before you even click on it, ApexYard has already reviewed the contractor's work. The same kind of review it did for you this morning. You see what was flagged: a couple of small quality issues, a question about the user-facing copy, no security concerns.
+          The review has already run. It reports two quality findings, one copy question, and no security findings.
         </p>
         <p>
-          The contractor has already responded to the quality issues. The copy question is something you need to weigh in on — it's a product decision, not an engineering one. You think about it for a minute, write a one-line answer, and ask them to make the change.
+          The contractor can resolve the quality findings. You answer the copy question because it is a product decision. The contractor then updates the branch.
         </p>
         <p>
-          A short while later, the contractor pushes the fix. The review re-runs automatically against the new version. Clean. You hit approve.
+          The review runs again against the new commit. When the findings are resolved, you approve the pull request.
         </p>
         <div class="aside">
-          <strong>What's new here:</strong> you didn't have to read every line yourself to trust the work — the review caught what an experienced engineer would have, freeing you for the product decision only you could make.
+          <strong>What is new here:</strong> the review handles the engineering checklist while you make the product decision.
         </div>
       </div>
     </div>
@@ -768,22 +768,22 @@ main { background: var(--paper); }
       </div>
       <div class="day__body">
         <p class="lede">
-          You're getting close to launching the new billing system. Before customers see it, you want to know what's still missing.
+          The billing change is ready for release. Before customers see it, you run a launch-readiness check.
         </p>
         <p>
-          You ask Claude Code to run a launch-readiness check. It comes back with a structured report across every dimension that matters: is the site secure, is it accessible, does it load fast enough, is there a privacy policy, is there error monitoring set up, is there a way to know when something breaks.
+          The check produces a structured report for security, accessibility, performance, privacy, monitoring, documentation, and other configured dimensions.
         </p>
         <p>
-          Today the report says you're nearly ready — three things still missing. One is a privacy policy you forgot to publish. One is that you don't have error monitoring set up, so if something breaks at 2am you won't know until a customer emails you. The third is a small accessibility issue with a contrast level on one button.
+          The report identifies three missing items: a privacy policy, error monitoring, and a contrast issue on one button.
         </p>
         <p>
-          The privacy policy you fix in ten minutes — there's a generator that handles the boilerplate. The error monitoring you ask Claude Code to wire up; that's a half-hour job. The accessibility issue is a one-line change in the design.
+          You publish the privacy policy, add error monitoring, and correct the button contrast.
         </p>
         <p>
-          You re-run the readiness check. Three greens. You're good to ship.
+          You run the check again. The report now shows the release criteria as complete.
         </p>
         <div class="aside">
-          <strong>What's new here:</strong> the things that usually surface a week after launch — privacy holes, no monitoring, accessibility complaints from real users — get caught the day before instead.
+          <strong>What is new here:</strong> release checks surface gaps before deployment instead of after users report them.
         </div>
       </div>
     </div>
@@ -797,19 +797,19 @@ main { background: var(--paper); }
       </div>
       <div class="day__body">
         <p class="lede">
-          You shut down. Before you do, the framework has already quietly recorded everything that mattered today.
+          You finish the day. The framework has recorded the work that matters.
         </p>
         <p>
-          The technical decisions you made — why you picked one library over another, why you chose to handle a feature this way and not that way — are written down with the reasoning. The reviews are saved. The launch checks are stored. The contractor's work, with its approvals, is part of the history.
+          Technical decisions are stored with their reasons. Reviews, launch checks, approvals, and contractor changes remain part of the project history.
         </p>
         <p>
-          The next time you (or anyone you bring in) needs to understand <em>why</em> something is the way it is, the answer is there. No "what was I thinking?" three months from now. No re-deciding the same thing because you forgot you'd already decided it.
+          When someone later needs to understand <em>why</em> a choice was made, the record is available. The team does not need to repeat a decision because its context was lost.
         </p>
         <p>
-          On Friday, you ask the framework for a stakeholder update. It writes one for you — what shipped this week, across every product, with the highlights. You skim it, tweak a sentence, and send it to your investor. Five minutes total. The hardest part was deciding which font to use in the email.
+          At the end of the week, you request a stakeholder update. It summarises recorded activity across the portfolio. You review it, edit it if needed, and send it.
         </p>
         <div class="aside">
-          <strong>What's new here:</strong> the framework is your engineering memory — today's work is searchable next year, and Friday's update writes itself from what actually happened.
+          <strong>What is new here:</strong> the framework preserves engineering context and produces reports from recorded activity.
         </div>
       </div>
     </div>
@@ -820,7 +820,7 @@ main { background: var(--paper); }
       <div>
         <h2>Fork apexyard.<br>Run <span class="acc">/setup</span>.<br>Start your first day.</h2>
         <p>
-          Free and open source. Plain markdown and shell. No SaaS, no monthly fee, no lock-in. Fork it, edit anything to match how you work, and ship like you finally have the team.
+          Free and open source. Plain markdown and shell. No SaaS, no monthly fee, no vendor lock-in. Fork it, edit anything to match how you work, and ship with a repeatable process.
         </p>
       </div>
       <div class="final__actions">
@@ -900,7 +900,7 @@ main { background: var(--paper); }
     record(btn.getAttribute('data-consent'));
   });
   // Escape dismisses the banner as "denied" - keyboard users without
-  // a mouse shouldn't be stuck with a fixed-bottom banner they can't
+  // a mouse shouldn't be stuck with a fixed-bottom banner they cannot
   // dismiss. "Denied" is the non-consenting default per Consent Mode v2.
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !el.hidden) {

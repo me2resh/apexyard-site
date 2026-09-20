@@ -4,27 +4,27 @@
 
 ## In plain English
 
-ApexYard is one place that holds the rules, the tools, and the history for every product you build. The 5-layer model below shows how that works — useful if you want the technical detail; you don't need it to start. If you'd rather see a day with it, read [how it works](https://apexyard.ai/how-it-works.md).
+ApexYard stores the rules, tools, and history for each product you manage. The five layers below show where each part belongs. You can start with the setup guide and return to this page when you need the model.
 
-## What is it?
+## What ApexYard is
 
-ApexYard governs a portfolio of repos as one organisation. The architecture is a 5-layer model inside a single fork of `me2resh/apexyard`, plus an optional private-sibling repo for adopters who don't want portfolio names on a public GitHub.
+ApexYard governs several repositories as one portfolio. One operations fork holds the framework and its registry. An optional private sibling stores portfolio names and project records when those details should not be public.
 
-## What can it do?
+## What ApexYard does
 
-A single ops fork holds the registry, hooks, rules, skills, agents, templates, and handbooks. Managed projects clone in as gitignored workspace dirs. Cross-project portfolio skills (`/inbox`, `/status`, `/tasks`) aggregate across the registry.
+The operations fork holds the registry, hooks, rules, skills, agents, templates, and handbooks. Managed projects are cloned into gitignored workspace directories. Portfolio skills such as `/inbox`, `/status`, and `/tasks` read the registry and combine the current project data.
 
-The current release also supports evidence-grounded review records, cross-harness quality regression, split issue and review tracker hosts, and controlled technical writing for new artifacts.
+The current release also supports evidence-grounded review records, cross-harness quality checks, separate issue and review tracker hosts, and controlled technical writing for new artifacts.
 
-## What's needed to start?
+## What you need to start
 
-Fork apexyard once and treat the fork as your ops repo. Add an entry to `apexyard.projects.yaml` for every project you want governed. Skills resolve transparently whether you're in single-fork or split-portfolio mode.
+Fork ApexYard once and use that fork as your operations repository. Add one entry to `apexyard.projects.yaml` for each governed project. The skills use the same paths in single-fork and split-portfolio mode.
 
 ## The 5-layer model
 
 ### Layer 1 — Governance (slate-blue in the diagram)
 
-Declares what's true and what's enforced:
+Declares what is true and what is enforced:
 
 - **Registry** (`apexyard.projects.yaml`) — lists every managed project
 - **Hooks** (`.claude/hooks/`) — 60 shell gates: merge gate, ticket-first, secrets scan, AgDR for architecture, migration gate, red-CI block, branch/PR-title validation, leak protection
@@ -66,7 +66,7 @@ One repo: your fork of `me2resh/apexyard`. Registry + projects + onboarding + wo
 
 ### Split-portfolio mode (v2)
 
-Two repos: the public framework fork + a separate private repo for the portfolio. Resolved via a `portfolio:` config block in `.claude/project-config.json`. The public fork holds only framework files plus your customisations; the private sibling holds portfolio data, company config, and managed-project clones. Use this if you're on GitHub Free with any project you don't want named publicly.
+Two repos: the public framework fork + a separate private repo for the portfolio. Resolved via a `portfolio:` config block in `.claude/project-config.json`. The public fork holds only framework files plus your customisations; the private sibling holds portfolio data, company config, and managed-project clones. Use this if you are on GitHub Free with any project you do not want named publicly.
 
 ## Optional private sibling repo (the dashed box in the diagram)
 
