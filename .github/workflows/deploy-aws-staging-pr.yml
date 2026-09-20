@@ -1,0 +1,123 @@
+name: Deploy pull request to AWS staging
+
+# This workflow publishes the PR head to the shared staging site. It never
+# writes to the production bucket. A later push to main runs the merged-main workflow and
+# replaces this preview with the merged site before the existing production gate.
+#
+# pull_request_target is intentional. The workflow comes from the base branch,
+# while the PR files are checked out into `preview` as static input. No script
+# from the PR checkout runs with AWS credentials.
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "*.html"
+      - "*.md.gen"
+      - "llms.txt"
+      - "llms-full.txt"
+      - "skill.md"
+      - "favicon.*"
+      - "apple-touch-icon.png"
+      - "brand/**"
+      - "apexdock/**"
+      - "_headers"
+      - "_redirects"
+      - "robots.txt"
+      - "sitemap.xml"
+      - "nav-toggle.js"
+      - "copy-for-ai.js"
+      - ".github/workflows/deploy-aws-staging-pr.yml"
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Commit, branch, or tag to preview"
+        required: true
+        default: "main"
+        type: string
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: apexyard-staging-preview
+  cancel-in-progress: true
+
+env:
+  BUCKET: apexyard-site-staging
+  SITE_DOMAIN: staging.apexyard.ai
+  ROLE_ARN: arn:aws:iam::340541183783:role/github-actions-deployer
+
+jobs:
+  deploy:
+    name: publish PR preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: staging
+      url: https://staging.apexyard.ai/
+    steps:
+      - name: Check out workflow base
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          path: base
+
+      - name: Check out preview source
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.event.repository.full_name }}
+          ref: ${{ github.event.pull_request.head.sha || inputs.ref }}
+          path: preview
+          fetch-depth: 1
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.ROLE_ARN }}
+          aws-region: eu-west-1
+
+      - name: Sync PR preview to staging S3
+        run: |
+          aws s3 sync preview "s3://${BUCKET}" \
+            --delete \
+            --no-follow-symlinks \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --exclude "og/node_modules/*" \
+            --exclude "og/templates/*" \
+            --exclude "og/render*" \
+            --exclude "og/package*.json" \
+            --exclude "og/.gitignore" \
+            --exclude "og/README.md" \
+            --exclude "README.md" \
+            --exclude ".gitignore" \
+            --exclude ".lycheeignore"
+
+      - name: Publish markdown alternates to staging
+        run: |
+          shopt -s nullglob
+          for f in preview/*.md.gen; do
+            key="$(basename "${f%.gen}")"
+            echo "publish ${f} -> s3://${BUCKET}/${key}"
+            aws s3 cp "$f" "s3://${BUCKET}/${key}" \
+              --content-type "text/markdown; charset=utf-8"
+          done
+
+      - name: Publish staging robots.txt
+        run: |
+          printf '%s\n' \
+            '# Staging environment - not for indexing or crawling.' \
+            '# The CloudFront layer also sets X-Robots-Tag: noindex, nofollow.' \
+            'User-agent: *' \
+            'Disallow: /' > /tmp/staging-robots.txt
+          aws s3 cp /tmp/staging-robots.txt "s3://${BUCKET}/robots.txt" \
+            --content-type "text/plain; charset=utf-8"
+
+      - name: Invalidate staging CloudFront
+        working-directory: base
+        env:
+          STACK_HINT: the instaloc-infra apexyard-site-staging stack
+        run: .github/scripts/invalidate-cloudfront.sh
