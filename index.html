@@ -2027,7 +2027,7 @@ a:hover { color: var(--accent); }
     <span class="section__num">06 / FOR THE TECHNICALLY CURIOUS</span>
     <h2 class="section__title">What one day looks like, in real terminal</h2>
     <p class="section__lede">
-      If you'd rather skim the plain-English version, read <a href="/how-it-works" class="uline">how it works</a>. The replay below is for the technical friend you will show this to.
+      Read <a href="/how-it-works" class="uline">how it works</a> for the short explanation. Use this replay when you need to inspect the commands, checks, and evidence behind one governed change.
     </p>
   </div>
 
@@ -2154,7 +2154,7 @@ a:hover { color: var(--accent); }
     <span class="section__num">07 / QUICKSTART</span>
     <h2 class="section__title">How do I get started?</h2>
     <p class="section__lede">
-      From fork to first command. Everything is public; no invite needed. This is the real path, not a highlight reel — three commands, three <code>/setup</code> questions, and you are wired into your first ticket. No separate install, no waitlist, no trial account. If you'd rather see a day with it before installing, read <a href="/how-it-works" class="uline">how it works</a> first.
+      Start with a fork and one project. Run <code>/setup</code>, answer its three questions, and create the first governed ticket. No separate service or account is required. Read <a href="/how-it-works" class="uline">how it works</a> first if you want to see the complete daily loop.
     </p>
   </div>
 
@@ -2183,7 +2183,7 @@ claude
     <article class="step step--wide" style="grid-column: 1 / -1;">
       <div class="step__num">03 - bring a project in, or capture an idea</div>
       <h3 class="step__title">Adopt, or originate</h3>
-      <p class="step__desc">Two entry points depending on what you walked in with. <code>/handover</code> takes an existing repo and generates an assessment of its shape, plus a starter architecture diagram, plus the registry entry. <code>/idea</code> captures a new product concept to the shared backlog so it does not evaporate.</p>
+      <p class="step__desc">Choose the entry point that matches your project. <code>/handover</code> records the shape of an existing repository and adds it to the registry. <code>/idea</code> records a new product concept and keeps it available for later planning.</p>
       <pre class="step__code"><span class="acc">/handover</span> &lt;repo-url&gt;   <span class="cm"># existing project → assessment + registry + architecture stub</span>
 <span class="acc">/idea</span>                  <span class="cm"># new concept → ideas-backlog.md, optional GitHub issue</span></pre>
     </article>
@@ -2207,7 +2207,7 @@ claude
     <span class="section__num">08 / WALKTHROUGHS</span>
     <h2 class="section__title">Three real situations, three real outcomes</h2>
     <p class="section__lede">
-      Each walkthrough starts with a moment you will recognise — and shows what apexyard does about it. Below the screens are technical captions for the friend who's vetting this with you.
+      Each walkthrough starts with a common delivery problem. It then shows the command, the control that runs, and the evidence that remains. Use the captions to check the technical path.
     </p>
   </div>
 
@@ -2235,7 +2235,7 @@ claude
 <span class="you">› /approve-merge 178     <span class="muted">(per-PR CEO nod)</span></span>
 <span class="you">› gh pr merge 178</span>
 <span class="ok">  ✓ merged · #178 → QA state, not Done yet</span></pre>
-      <div class="demo__caption">From idea to live feature, with a real code review and a real launch sign-off in the middle. The reviewer is a senior-engineering-level AI agent (Rex) and the sign-off is yours — both have to happen before anything ships, and the framework refuses to merge until they do.</div>
+      <div class="demo__caption">The framework carries one change from idea to release. Rex reviews the code, you approve the release, and the merge gate checks both records before the change can ship.</div>
     </article>
 
     <article class="demo">
@@ -2261,7 +2261,7 @@ claude
 <span class="you">› /stakeholder-update weekly</span>
 <span class="ok">  Drafted projects/updates/2026-04-17.md
   - rollup across all 5 projects</span></pre>
-      <div class="demo__caption">One screen for every project you are building. No tab-juggling, no five different GitHub repos. The same registry powers the Friday stakeholder update — generated from the actual week's activity, not from what you remember.</div>
+      <div class="demo__caption">The portfolio view combines every managed project. The same registry powers the stakeholder update from recorded activity, so the report does not depend on memory.</div>
     </article>
 
     <article class="demo demo--wide">
@@ -2289,7 +2289,7 @@ claude
 
 <span class="ag">Rex: "analytics job reads this column every night —
 confirm it skips the missing column before you ship."</span></pre>
-      <div class="demo__caption">The "I forgot to think about rollback" mistake gets caught at 5pm on Friday instead of at 2am on Saturday. The framework refuses to let you touch the database until the plan is real — and the reviewer catches the downstream system you forgot about.</div>
+      <div class="demo__caption">A database change stops until its plan and rollback path are recorded. The review also checks the systems that depend on the database.</div>
     </article>
 
   </div>
@@ -2306,7 +2306,7 @@ confirm it skips the missing column before you ship."</span></pre>
     <span class="section__num">09 / WHAT IS IN THE BOX</span>
     <h2 class="section__title">What is in the toolbox</h2>
     <p class="section__lede">
-      Section 01 told you what ApexYard does for you. This section is the inventory — the actual reviews, audits, ticketing, and portfolio surfaces you get when you fork it. Outcome on the left of each row, technical detail (counts, names, file paths) on the right.
+      Section 01 explains the result. This section explains the controls that produce it. Each row names one control, the problem it prevents, and the part of the framework that enforces it.
     </p>
   </div>
 
@@ -2316,7 +2316,7 @@ confirm it skips the missing column before you ship."</span></pre>
       <div class="layer__num">reviews like a real team</div>
       <h3 class="layer__title">Reviews from specialised engineering roles</h3>
       <p class="layer__desc">
-        The reviewer changes based on what you are working on. Touching auth code? A security reviewer takes a look. Touching the database? Someone who specialises in database changes walks you through the rollback plan. <span class="dim">Behind the scenes: 20 role definitions across 6 departments, each with its own checklist and boundaries.</span>
+        The review role follows the change. A security-sensitive change gets a security review. A data change gets a review of migration and rollback risk. <span class="dim">Each role has a defined scope and checklist.</span>
       </p>
     </article>
 

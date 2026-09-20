@@ -8,13 +8,13 @@ ApexYard adds the reviews, guardrails, and process behind work driven by your AI
 
 ## What ApexYard does
 
-- **Automatic code review.** Every change — yours or your contractor's — gets a senior-engineering-level review before it ships
+- **Automatic code review.** A reviewer checks each change before it can ship. The review covers the changed code and its system impact.
 - **Launch-readiness checks.** Find out what is missing across security, performance, accessibility, monitoring, docs before customers tell you
 - **One inbox across all your products.** Every PR, issue, comment, blocker in one screen, no tab-juggling
 - **Evidence-grounded quality gates.** Review records cite the source they checked, and quality regression can run across Claude, Cursor, Codex, pi, and opencode.
 - **Flexible tracker setup.** Keep issue tracking and code review on different hosts when your workflow needs it.
 - **Clear technical writing.** New artifacts use short, consistent language while keeping the decision context.
-- **A real engineering team's worth of reviewers.** Touch auth code → a security reviewer takes a look. Touch the database → someone walks you through the rollback plan. 20 role definitions, 23 specialised reviewer agents
+- **Specialised review roles.** A security-sensitive change gets a security review. A data change gets a review of migration and rollback risk. Each role has a defined scope and checklist.
 - **Guardrails that fire themselves.** 60 small scripts catch ticket-first edits, missing rollback plans, secrets in code, red CI before merge — so you do not have to remember
 - **A decision-log that follows you.** Every meaningful technical decision is recorded with reasoning — search it next year, the answer's there
 
@@ -42,7 +42,7 @@ ApexYard is built using ApexYard. Verifiable from `github.com/me2resh/apexyard`:
 
 ## See a day with it
 
-Read [how it works](https://apexyard.ai/how-it-works) for a plain-English walkthrough of one realistic day — open the inbox in the morning, ship by evening, nothing gets lost.
+Read [how it works](https://apexyard.ai/how-it-works) for the short explanation. Use the site examples to inspect the commands, checks, and evidence behind one governed change.
 
 ## Get started in three steps
 
@@ -72,7 +72,7 @@ claude
 
 ### Reviews from specialised engineering roles
 
-The reviewer changes based on what you are working on. Touching auth code? A security reviewer takes a look. Touching the database? Someone who specialises in database changes walks you through the rollback plan. Behind the scenes: 20 role definitions across 6 departments, each with its own checklist and boundaries.
+The review role follows the change. A security-sensitive change gets a security review. A data change gets a review of migration and rollback risk. Each role has a defined scope and checklist.
 
 ### Tools for every step of shipping software · 66 slash commands
 
