@@ -4,7 +4,7 @@
 
 ## In plain English
 
-These are the commands you type into Claude Code to get ApexYard to do something. They are grouped by what you are trying to do — keep quality high, move work forward, see everything at once, onboard new code, run things — not by what is under the hood. If you'd rather see a real day with these, read [how it works](https://apexyard.ai/how-it-works.md).
+These are the commands you use inside an ApexYard fork. They are grouped by the outcome you need: check quality, move work forward, see the portfolio, onboard code, or run framework operations.
 
 ## What ApexYard is
 
@@ -12,11 +12,11 @@ ApexYard ships 66 slash commands grouped under outcome headings — Keep quality
 
 ## What ApexYard does
 
-Each `/<name>` is a structured workflow with safety rails. The right framework checks fire at the right moments — `/approve-merge` writes a record that the merge gate verifies before the merge actually runs. Every skill ships in `.claude/skills/<name>/SKILL.md`.
+Each `/<name>` is a structured workflow with safety rails. Checks run at the point where they matter. For example, `/approve-merge` writes a record that the merge gate verifies before the merge runs. Every skill is defined in `.claude/skills/<name>/SKILL.md`.
 
 ## What you need to start
 
-Browse below; invoke any skill from a Claude Code session inside an apexyard fork. New here? Start with `/setup` on a fresh fork, then `/feature` or `/idea` to capture work, then `/code-review` and `/approve-merge` when a PR is ready to ship.
+Start with `/setup` in a fresh fork. Use `/feature` or `/idea` to capture work. Use `/code-review` and `/approve-merge` when a pull request is ready to ship.
 
 ---
 
@@ -24,13 +24,13 @@ Browse below; invoke any skill from a Claude Code session inside an apexyard for
 
 The skills that catch mistakes before they reach customers — reviews, audits, security checks.
 
-- `/code-review <pr>` — invoke the Code Reviewer agent (Rex) on a PR.
+- `/code-review <pr>` — ask Rex to review a pull request against the repository rules.
 - `/security-review <pr>` — invoke the Security Reviewer agent (Hakim) on a PR.
 - `/design-review <pr>` — review a technical design / migration decision-record / feature spec for architectural soundness before Build; invokes the Solution Architect agent (Tariq), the non-code analog of `/code-review`.
 - `/challenge <idea | feature | decision | plan>` — invoke The Contrarian (Naqid) to steelman then challenge a premise; advisory only, never blocks a gate.
 - `/eval-agents <rex | hakim | tariq>` — score a review agent against a labelled PR corpus; headline metric is approve-precision, not a prose rubric.
 - `/audit-deps` — audit dependencies for vulnerabilities, outdated packages, licences.
-- `/launch-check` — production readiness audit — multi-dimension go/no-go sweep at milestone boundaries.
+- `/launch-check` — production readiness audit across the dimensions that matter at a release boundary.
 - `/threat-model` — threat modelling across 6 attack categories (spoofing, tampering, repudiation, disclosure, denial of service, elevation of privilege).
 - `/accessibility-audit` — WCAG 2.1 AA audit.
 - `/compliance-check` — GDPR + ePrivacy audit (consent, privacy policy, data handling, right to deletion, DPAs).
@@ -74,7 +74,7 @@ Capture an idea, file a ticket, record a decision, approve a merge — everythin
 When you have more than one product going at the same time, the question that costs you the most is "what is waiting on me right now?"
 
 - `/projects` — List all managed projects with status, branch, open PRs, open issue counts.
-- `/inbox` — Items needing your attention across the portfolio: PRs, assigned issues, comments, blockers.
+- `/inbox` — Items that need your attention across the portfolio: pull requests, assigned issues, comments, and blockers.
 - `/status [--briefing | -b]` — Per-project git + CI snapshot; `--briefing` for the 4-line compact form.
 - `/tasks` — Aggregated, scored, sorted task list across the portfolio with direct URLs.
 - `/roadmap [add | remove | reorder | show] [item]` — Update, create, or reprioritise the product roadmap. Renders a markdown table per milestone.

@@ -578,12 +578,12 @@ main {
       </div>
       <h1>Skills</h1>
       <p class="tagline" style="border-left: 3px solid var(--accent); padding-left: 1rem; margin-bottom: 1rem; background: var(--paper-2); padding: 0.75rem 1rem; font-weight: 500;">
-        <strong>In plain English:</strong> these are the commands you type into Claude Code to get ApexYard to do something. They are grouped by what you are trying to do — keep quality high, move work forward, see everything at once, onboard new code, run things — not by what is under the hood. If you'd rather see a real day with these, read <a href="/how-it-works" class="uline" style="border-bottom: 1px solid currentColor;">how it works</a>.
+        <strong>In plain English:</strong> these are the commands you use inside an ApexYard fork. They are grouped by the outcome you need: check quality, move work forward, see the portfolio, onboard code, or run framework operations.
       </p>
       <p class="tagline" id="ai-lead">
-        <strong>What ApexYard is</strong> ApexYard ships 66 active slash commands grouped under outcome headings — Keep quality high, Move work forward, See everything at once, Onboard new code, Run things.
-        <strong>What ApexYard does</strong> Each <code>/&lt;name&gt;</code> is a structured workflow with safety rails — the right framework checks fire at the right moments, so <code>/approve-merge</code> writes a record that the merge gate verifies before the merge actually runs.
-        <strong>What you need to start</strong> Browse below; invoke any from a Claude Code session inside an apexyard fork. Every skill ships in <code>.claude/skills/&lt;name&gt;/SKILL.md</code>.
+        <strong>What ApexYard is</strong> ApexYard ships 66 slash commands grouped by outcome.
+        <strong>What ApexYard does</strong> Each <code>/&lt;name&gt;</code> is a structured workflow with safety rails. For example, <code>/approve-merge</code> writes a record that the merge gate verifies before the merge runs.
+        <strong>What you need to start</strong> Run <code>/setup</code> in a fork, then use the command that matches your next task. Every skill is defined in <code>.claude/skills/&lt;name&gt;/SKILL.md</code>.
       </p>
       <p class="meta">
         New here? Start with <a href="#onboard"><code>/setup</code></a> on a fresh fork, then
@@ -853,7 +853,7 @@ main {
 
   <section class="section" id="see">
     <h2>See everything at once</h2>
-    <p class="section__intro">When you have more than one product going at the same time, the question that costs you the most is "what is waiting on me right now?" These skills answer it without you opening five different GitHub tabs.</p>
+    <p class="section__intro">When you manage more than one project, these skills show what needs your attention without requiring a separate search in every repository.</p>
 
     <article class="skill">
       <header class="skill__head"><code class="skill__name">/projects</code></header>
@@ -862,7 +862,7 @@ main {
 
     <article class="skill">
       <header class="skill__head"><code class="skill__name">/inbox</code></header>
-      <p class="skill__desc">Every item across managed projects that needs your attention — PRs to review, issues assigned to you, comments to respond to, blockers. Use to triage the day.</p>
+      <p class="skill__desc">List items that need your attention across managed projects: pull requests, assigned issues, comments, and blockers. Use it to triage the day.</p>
     </article>
 
     <article class="skill">
@@ -888,7 +888,7 @@ main {
         <code class="skill__name">/stakeholder-update</code>
         <code class="skill__args">weekly | monthly | launch</code>
       </header>
-      <p class="skill__desc">Generate a stakeholder update tailored to audience. Synthesises recent PRs, closed issues, decisions, and the roadmap into a narrative — written from real activity, not from what you remember.</p>
+      <p class="skill__desc">Generate a stakeholder update from recent pull requests, closed issues, decisions, and roadmap changes. Review the draft before sending it.</p>
     </article>
 
     <article class="skill">
@@ -902,7 +902,7 @@ main {
 
   <section class="section" id="onboard">
     <h2>Onboard new code</h2>
-    <p class="section__intro">Fresh fork, new project handed to you, codebase you want to understand. These skills get you oriented fast — generating diagrams, feature inventories, process flows from real code instead of from memory.</p>
+    <p class="section__intro">Use these skills when you start with a fresh fork, inherit a project, or need to understand a codebase. They generate artifacts from the repository rather than from memory.</p>
 
     <article class="skill">
       <header class="skill__head">

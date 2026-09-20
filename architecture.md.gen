@@ -4,21 +4,21 @@
 
 ## In plain English
 
-ApexYard stores the rules, tools, and history for each product you manage. The 5-layer model below explains the structure. You can start without learning the full model. If you'd rather see a day with it, read [how it works](https://apexyard.ai/how-it-works.md).
+ApexYard stores the rules, tools, and history for each product you manage. The five layers below show where each part belongs. You can start with the setup guide and return to this page when you need the model.
 
 ## What ApexYard is
 
-ApexYard governs several repositories as one portfolio. The architecture is a 5-layer model inside a single fork of `me2resh/apexyard`, plus an optional private-sibling repo for adopters who do not want portfolio names on a public GitHub.
+ApexYard governs several repositories as one portfolio. One operations fork holds the framework and its registry. An optional private sibling stores portfolio names and project records when those details should not be public.
 
 ## What ApexYard does
 
-One ops fork holds the registry, hooks, rules, skills, agents, templates, and handbooks. Managed projects clone in as gitignored workspace dirs. Cross-project portfolio skills (`/inbox`, `/status`, `/tasks`) aggregate across the registry.
+The operations fork holds the registry, hooks, rules, skills, agents, templates, and handbooks. Managed projects are cloned into gitignored workspace directories. Portfolio skills such as `/inbox`, `/status`, and `/tasks` read the registry and combine the current project data.
 
-The current release also supports evidence-grounded review records, cross-harness quality regression, split issue and review tracker hosts, and controlled technical writing for new artifacts.
+The current release also supports evidence-grounded review records, cross-harness quality checks, separate issue and review tracker hosts, and controlled technical writing for new artifacts.
 
 ## What you need to start
 
-Fork ApexYard once. Use the fork as your operations repository. Add an entry to `apexyard.projects.yaml` for every project you want governed. Skills resolve transparently whether you are in single-fork or split-portfolio mode.
+Fork ApexYard once and use that fork as your operations repository. Add one entry to `apexyard.projects.yaml` for each governed project. The skills use the same paths in single-fork and split-portfolio mode.
 
 ## The 5-layer model
 

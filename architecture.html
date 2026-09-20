@@ -804,26 +804,24 @@ a:hover { color: var(--accent); }
       <div class="note">
         <h3>The 5-layer model</h3>
         <p>
-          <strong>Governance</strong> declares what is true (registry, onboarding) and what is enforced
-          (hooks, rules). <strong>Capability</strong> is what the agent can DO — skills + sub-agents.
-          <strong>Framework defaults</strong> ship with the fork: templates and handbooks.
-          <strong>Customisation</strong> is your overrides; the <span class="kw">red border</span> in
-          the diagram is the override semantic. <strong>Per-project data</strong> lives at the bottom
-          — one entry per row in the registry.
+        <strong>Governance</strong> defines the registry and the controls that must run.
+          <strong>Capability</strong> defines the skills and agents that perform the work.
+          <strong>Framework defaults</strong> provide reusable templates and handbooks.
+          <strong>Customisation</strong> adds adopter-specific rules and workflows.
+          <strong>Per-project data</strong> records the projects governed by the fork.
         </p>
       </div>
 
       <div class="note">
         <h3>Customisation overlay</h3>
         <p>
-          The framework ships defaults; <span class="kw">custom-templates/</span>,
+          The framework ships defaults. <span class="kw">custom-templates/</span>,
           <span class="kw">custom-skills/</span>, and <span class="kw">custom-handbooks/</span>
-          let you override them per file (templates), add proprietary slash commands (skills),
-          or layer company-confidential coding standards alongside the public ones (handbooks).
+          let you adapt the workflow without editing the framework files.
         </p>
         <p>
-          Path-mirroring is the convention — drop your version at the same relative path as the
-          framework default, and it wins on collision.
+          Path mirroring is the convention. Put an override at the same relative path as the
+          framework default and the custom version takes precedence.
         </p>
       </div>
 
@@ -832,26 +830,25 @@ a:hover { color: var(--accent); }
       <div class="note">
         <h3>One fork, every project</h3>
         <p>
-          You fork ApexYard once and treat the fork as your ops repo. Every project you want
-          governed gets a row in <code>apexyard.projects.yaml</code> and a folder under
+          Fork ApexYard once and use the fork as your operations repository. Each governed
+          project gets a row in <code>apexyard.projects.yaml</code> and a folder under
           <code>projects/&lt;name&gt;/</code>. Skills like <code>/inbox</code>,
           <code>/status</code>, and <code>/tasks</code> aggregate across the registry — one
           command surveys the whole portfolio.
         </p>
         <p>
-          Live working copies (<code>workspace/&lt;name&gt;/</code>) are gitignored from the fork
-          itself; each is a real clone of the managed repo with its own branches, PRs, and CI.
+          Live working copies (<code>workspace/&lt;name&gt;/</code>) are gitignored from the fork.
+          Each is a real clone of the managed repository with its own branches, pull requests, and CI.
         </p>
       </div>
 
       <div class="note note--wide">
         <h3>Optional private sibling repo</h3>
         <p>
-          The <strong>dashed box on the right</strong> is opt-in. Adopters on GitHub Free who do not want
-          portfolio names on a public fork put the registry, onboarding, <code>projects/</code>, <code>workspace/</code>,
-          and the <code>custom-*</code> trees in a sibling private repo. Skills resolve paths via the
-          <code>portfolio.*</code> keys in <code>.claude/project-config.json</code> — the public
-          fork stays slim, the private data never leaks upstream.
+          The <strong>dashed box on the right</strong> is optional. Put the registry, onboarding,
+          <code>projects/</code>, <code>workspace/</code>, and <code>custom-*</code> trees in a private
+          sibling repository when portfolio names must stay private. Skills resolve these paths via
+          the <code>portfolio.*</code> keys in <code>.claude/project-config.json</code>.
           Full setup walkthrough lives in
           <a href="https://github.com/me2resh/apexyard/blob/main/docs/multi-project.md" target="_blank" rel="noopener">docs/multi-project.md ↗</a>.
         </p>
