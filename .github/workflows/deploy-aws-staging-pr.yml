@@ -83,6 +83,7 @@ jobs:
         run: |
           aws s3 sync preview "s3://${BUCKET}" \
             --delete \
+            --no-follow-symlinks \
             --exclude ".git/*" \
             --exclude ".github/*" \
             --exclude "og/node_modules/*" \
