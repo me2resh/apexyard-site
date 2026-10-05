@@ -65,8 +65,27 @@ else
   echo "  skip  environment check (PyYAML not installed)"
 fi
 
+# deploy-production must need approve-production and have no if: that can bypass it.
+prod_needs_approval() {
+  python3 - "$wf/deploy-aws.yml" <<'PY'
+import sys, yaml
+job = yaml.safe_load(open(sys.argv[1]))["jobs"]["deploy-production"]
+needs = job.get("needs")
+needs = [needs] if isinstance(needs, str) else (needs or [])
+cond = str(job.get("if", ""))
+if "approve-production" not in needs or "always()" in cond or "cancelled()" in cond:
+    sys.exit(1)
+PY
+}
+
 assert "staging dispatch is manual only"            bash -c "! grep -qE '^\s*push:' '$wf/deploy-aws-staging.yml'"
 assert "staging dispatch guarded to main"           has "$wf/deploy-aws-staging.yml" "github.ref == 'refs/heads/main'"
+assert "deploy-production needs approve-production" prod_needs_approval
+assert "deploy uses one fixed concurrency group"    has "$deploy" 'group: apexyard-staging-preview'
+assert "deploy cancels older previews"              has "$deploy" 'cancel-in-progress: true'
+assert "fork PR lookup lists open PRs"              has "$deploy" 'pulls\?state=open'
+assert "fork PR lookup matches head repository"     has "$deploy" 'head\.repo\.full_name'
+assert "unknown PR number does not fail the job"    has "$deploy" 'PR number unknown'
 assert "production approval is its own job"         has "$wf/deploy-aws.yml" '^  approve-production:'
 
 echo

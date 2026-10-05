@@ -1,6 +1,6 @@
 # AgDR-0001: Pull-request previews use the shared staging environment
 
-- **Status:** Accepted
+- **Status:** Superseded by AgDR-0002
 - **Date:** 2026-09-20
 - **Decision owners:** ApexYard maintainers
 

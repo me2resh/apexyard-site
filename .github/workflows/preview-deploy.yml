@@ -42,9 +42,11 @@ jobs:
       github.event.workflow_run.event == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    # One fixed group for every preview: two previews must never sync the
+    # shared bucket root at the same time. A newer run cancels an older one.
     concurrency:
-      group: preview-deploy-${{ github.event.workflow_run.head_sha }}
-      cancel-in-progress: false
+      group: apexyard-staging-preview
+      cancel-in-progress: true
     steps:
       # Trusted code only: the default branch, for the helper scripts.
       - name: Check out default branch
@@ -52,28 +54,36 @@ jobs:
         with:
           persist-credentials: false
 
+      # The number is used for logs and the summary only. A missing number
+      # never stops the deploy.
       - name: Resolve the pull request number
         id: pr
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          HEAD_REPO: ${{ github.event.workflow_run.head_repository.full_name }}
           PAYLOAD_PR: ${{ github.event.workflow_run.pull_requests[0].number }}
         run: |
-          set -euo pipefail
+          set -uo pipefail
           pr="$PAYLOAD_PR"
           if [ -z "$pr" ]; then
-            # Fork pull requests leave the payload list empty. Ask the API
-            # which open PR in this repository has this exact head commit.
-            [[ "$HEAD_SHA" =~ ^[0-9a-f]{40}$ ]] || { echo "::error::bad head sha"; exit 1; }
-            pr=$(gh api "repos/${REPO}/commits/${HEAD_SHA}/pulls" \
-              --jq "[.[] | select(.state == \"open\" and .base.repo.full_name == \"${REPO}\" and .head.sha == \"${HEAD_SHA}\")][0].number // empty")
+            # Fork pull requests leave the payload list empty, and the
+            # commit-to-PR endpoint returns nothing for a fork head. List the
+            # open PRs and match the head commit and the head repository.
+            if [[ "$HEAD_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+              found=$(gh api --paginate "repos/${REPO}/pulls?state=open&per_page=100" \
+                --jq ".[] | select(.head.sha == \"${HEAD_SHA}\" and .head.repo.full_name == \"${HEAD_REPO}\") | .number" \
+                2>/dev/null) || found=""
+              pr="${found%%$'\n'*}"
+            fi
           fi
-          if ! [[ "$pr" =~ ^[0-9]+$ ]]; then
-            echo "::error::could not resolve a numeric pull request number"
-            exit 1
+          if [[ "$pr" =~ ^[0-9]+$ ]]; then
+            echo "number=${pr}" >> "$GITHUB_OUTPUT"
+          else
+            echo "PR number unknown; continuing without it"
+            echo "number=unknown" >> "$GITHUB_OUTPUT"
           fi
-          echo "number=${pr}" >> "$GITHUB_OUTPUT"
 
       - name: Download preview artifact
         uses: actions/download-artifact@v4
@@ -97,8 +107,7 @@ jobs:
           PR_NUMBER: ${{ steps.pr.outputs.number }}
         run: |
           set -euo pipefail
-          [[ "$PR_NUMBER" =~ ^[0-9]+$ ]] || { echo "::error::bad PR number"; exit 1; }
-          echo "publish preview of PR #${PR_NUMBER} to s3://${BUCKET}"
+          echo "publish preview of PR ${PR_NUMBER} to s3://${BUCKET}"
           aws s3 sync artifact "s3://${BUCKET}" \
             --delete \
             --no-follow-symlinks \
@@ -144,4 +153,4 @@ jobs:
         env:
           PR_NUMBER: ${{ steps.pr.outputs.number }}
         run: |
-          echo "Preview of PR #${PR_NUMBER}: https://${SITE_DOMAIN}/" >> "$GITHUB_STEP_SUMMARY"
+          echo "Preview of PR ${PR_NUMBER}: https://${SITE_DOMAIN}/" >> "$GITHUB_STEP_SUMMARY"
