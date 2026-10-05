@@ -1,0 +1,79 @@
+name: Build PR preview
+
+# Step 1 of 2 for the pull request staging preview (#91).
+#
+# This workflow runs pull request code, which can come from a fork. It has no
+# AWS access and no secrets: `pull_request` (not `pull_request_target`), only
+# `contents: read`, and no `id-token`. It assembles the site into a folder and
+# uploads that folder as an artifact. Nothing else.
+#
+# Step 2 is preview-deploy.yml. It runs from the default branch after this
+# workflow ends, downloads only the artifact, validates it, and publishes it.
+# Do not add AWS credentials, secrets, or `id-token: write` to this workflow.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "*.html"
+      - "*.md.gen"
+      - "llms.txt"
+      - "llms-full.txt"
+      - "skill.md"
+      - "favicon.*"
+      - "apple-touch-icon.png"
+      - "brand/**"
+      - "apexdock/**"
+      - "_headers"
+      - "_redirects"
+      - "robots.txt"
+      - "sitemap.xml"
+      - "nav-toggle.js"
+      - "copy-for-ai.js"
+      - ".github/workflows/preview-build.yml"
+      - ".github/workflows/preview-deploy.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: preview-build-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: build preview artifact
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out pull request
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Assemble site output
+        run: |
+          # -r without -l: symbolic links are skipped, not copied. The deploy
+          # job checks again, because it must not trust this artifact.
+          rsync -rt \
+            --exclude "/site/" \
+            --exclude ".git/" \
+            --exclude ".github/" \
+            --exclude "og/node_modules/" \
+            --exclude "og/templates/" \
+            --exclude "og/render*" \
+            --exclude "og/package*.json" \
+            --exclude "og/.gitignore" \
+            --exclude "og/README.md" \
+            --exclude "/README.md" \
+            --exclude ".gitignore" \
+            --exclude ".lycheeignore" \
+            ./ site/
+
+      - name: Upload preview artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-site
+          path: site
+          if-no-files-found: error
+          retention-days: 7

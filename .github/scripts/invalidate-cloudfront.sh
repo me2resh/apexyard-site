@@ -47,7 +47,7 @@
 set -uo pipefail
 
 : "${SITE_DOMAIN:?SITE_DOMAIN must be set}"
-STACK_HINT="${STACK_HINT:-the instaloc-infra stack for ${SITE_DOMAIN}}"
+STACK_HINT="${STACK_HINT:-the infrastructure stack for ${SITE_DOMAIN}}"
 INVALIDATION_PATHS="${INVALIDATION_PATHS:-/*}"
 
 summary_file="${GITHUB_STEP_SUMMARY:-/dev/null}"

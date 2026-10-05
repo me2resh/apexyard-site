@@ -67,4 +67,5 @@ APEXYARD_REPO=/path/to/apexyard REF=v5.6.3 .github/scripts/verify-counts.sh
 - CSP in `netlify.toml` allows `'unsafe-inline'` for script and style. That is required for inline CSS, gtag, and animation JS.
 - No coverage threshold. Shell tests passing does not mean HTML/JS is covered.
 - `og/package.json` is gitignored. OG render dependencies are throwaway.
-- Production AWS deploy waits on the GitHub `production` environment. Staging deploys from `staging` via `deploy-aws-staging.yml`.
+- Production AWS deploy waits on the GitHub `production` environment, through the `approve-production` job (no AWS access). Jobs that assume the AWS role must not declare `environment:`: the shared role trusts the `main` branch only. Staging deploys from `main` only (`deploy-aws.yml`, or a manual `deploy-aws-staging.yml` run from `main`).
+- PR previews (AgDR-0002, supersedes AgDR-0001): `preview-build.yml` (`pull_request`, no AWS, no secrets) uploads an artifact. `preview-deploy.yml` (`workflow_run`, default branch) validates it and syncs it to the staging bucket root (same behaviour as the old single-job preview). Never check out PR code in a job that has AWS credentials. One fixed concurrency group serves every preview.
