@@ -1,23 +1,19 @@
 name: Deploy to AWS Staging (S3 + CloudFront)
 
 # Syncs the static site to S3 (apexyard-site-staging) and invalidates
-# CloudFront — the staging mirror of deploy-aws.yml, for previewing changes on
-# staging.apexyard.ai before they land on main / production. Auth is
-# via OIDC into the SAME apexscript-prod `github-actions-deployer` role prod
-# uses (the staging bucket + distro live in the same AWS account — see
-# instaloc-infra AgDR-0003) — no long-lived AWS keys.
+# CloudFront, the staging mirror of deploy-aws.yml. Auth is via OIDC into the
+# shared deploy role, which trusts the `main` branch only (#91). No long-lived
+# AWS keys. This workflow runs by manual dispatch, and only from `main`. The
+# job guard below fails fast for any other ref. Pull request previews use
+# preview-build.yml and preview-deploy.yml.
 #
-# Prereq: the instaloc-infra `apexyard-site-staging` stack must be APPLIED
-# first (the bucket + distribution have to exist). Until then the invalidation
-# step warns and no-ops instead of failing, same as deploy-aws.yml — but ONLY
-# when it can show the distribution genuinely isn't there. This environment is
-# where #48 was observed: the domain was serving 200 from CloudFront while the
-# lookup returned nothing and the step exited 0. Shared logic lives in
-# .github/scripts/invalidate-cloudfront.sh.
+# Prereq: the apexyard-site-staging infrastructure stack must be APPLIED
+# first (the bucket and distribution have to exist). Until then the invalidation
+# step warns and no-ops instead of failing, same as deploy-aws.yml, but ONLY
+# when it can show the distribution genuinely isn't there (see #48). Shared
+# logic lives in .github/scripts/invalidate-cloudfront.sh.
 
 on:
-  push:
-    branches: [staging]
   workflow_dispatch:
 
 permissions:
@@ -36,6 +32,7 @@ env:
 jobs:
   deploy:
     name: s3 sync + invalidate
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -83,7 +80,7 @@ jobs:
           # Overwrite the key with a staging robots that disallows crawling.
           # This is belt-and-suspenders with the `X-Robots-Tag: noindex,
           # nofollow` response header the CloudFront layer already sets on every
-          # response (instaloc-infra apexyard-site-staging/cloudfront.tf) — the
+          # response (apexyard-site-staging CloudFront stack) — the
           # header is what actually keeps staging out of the index; this stops a
           # compliant crawler from fetching in the first place. Staging only —
           # deploy-aws.yml (prod) keeps prod's Allow: / untouched. See #50.
@@ -92,7 +89,7 @@ jobs:
           printf '%s\n' \
             '# Staging environment — not for indexing or crawling.' \
             '# See also the X-Robots-Tag: noindex, nofollow response header set' \
-            '# at the CloudFront layer (instaloc-infra apexyard-site-staging).' \
+            '# at the CloudFront layer (apexyard-site-staging stack).' \
             'User-agent: *' \
             'Disallow: /' > /tmp/staging-robots.txt
           echo "publish staging robots.txt -> s3://${BUCKET}/robots.txt"
@@ -101,5 +98,5 @@ jobs:
 
       - name: Invalidate CloudFront
         env:
-          STACK_HINT: the instaloc-infra apexyard-site-staging stack
+          STACK_HINT: the apexyard-site-staging stack
         run: .github/scripts/invalidate-cloudfront.sh

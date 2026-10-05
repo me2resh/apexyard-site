@@ -1,12 +1,15 @@
 name: Deploy to AWS (staging then production)
 
-# Every main push first deploys to the protected staging distribution. The
-# production job depends on that deployment and pauses at the GitHub `production`
-# environment until its required reviewers approve the run. Configure the
-# environment protection rule in repository Settings → Environments.
+# Every main push first deploys to the staging distribution. Production then
+# waits for approval on the GitHub `production` environment (required
+# reviewers). Configure the protection rule in repository Settings, Environments.
 #
-# Both jobs use OIDC into the same AWS deployer role. No long-lived AWS keys are
-# stored in this repository.
+# The shared AWS deploy role trusts the `main` branch subject only. A job that
+# declares `environment:` presents an environment subject instead, so it cannot
+# assume the role. The approval therefore lives in its own job, `approve-production`,
+# which has no AWS access. `deploy-production` has no `environment:` and runs only
+# after the approval job passes. Do not add `environment:` to a job that assumes
+# the role. No long-lived AWS keys are stored in this repository.
 
 on:
   push:
@@ -33,9 +36,7 @@ jobs:
     name: deploy staging
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    environment:
-      name: staging
-      url: https://staging.apexyard.ai/
+    if: github.ref == 'refs/heads/main'
     env:
       SITE_DOMAIN: staging.apexyard.ai
     steps:
@@ -85,17 +86,28 @@ jobs:
 
       - name: Invalidate staging CloudFront
         env:
-          STACK_HINT: the instaloc-infra apexyard-site-staging stack
+          STACK_HINT: the apexyard-site-staging stack
         run: .github/scripts/invalidate-cloudfront.sh
 
-  deploy-production:
-    name: deploy production
+  approve-production:
+    name: approve production
     needs: deploy-staging
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    # Approval gate only. This job must not assume the AWS role.
+    permissions: {}
     environment:
       name: production
       url: https://apexyard.ai/
+    steps:
+      - name: Production approved
+        run: echo "Production deploy approved by the environment reviewers."
+
+  deploy-production:
+    name: deploy production
+    needs: approve-production
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
       SITE_DOMAIN: apexyard.ai
     steps:
@@ -135,5 +147,5 @@ jobs:
 
       - name: Invalidate production CloudFront
         env:
-          STACK_HINT: the instaloc-infra apexyard-site stack
+          STACK_HINT: the apexyard-site stack
         run: .github/scripts/invalidate-cloudfront.sh

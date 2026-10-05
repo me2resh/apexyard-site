@@ -69,7 +69,7 @@ run() {
 
   out=$(PATH="$workdir/bin:$PATH" \
         SITE_DOMAIN="staging.yard.apexscript.com" \
-        STACK_HINT="the instaloc-infra apexyard-site-staging stack" \
+        STACK_HINT="the apexyard-site-staging stack" \
         GITHUB_STEP_SUMMARY="$summary" \
         STUB_LOOKUP="$lookup" STUB_INVALIDATE="$invalidate" STUB_CURL="$curlmode" \
         "$script" 2>&1)
