@@ -1,0 +1,69 @@
+{
+  "specVersion": "0.1",
+  "id": "plan-release-sync",
+  "revision": 1,
+  "project": {
+    "id": "apexyard-site"
+  },
+  "title": "Keep apexyard.ai in sync with every framework release",
+  "intent": "The site never claims a stale framework state. Every version, count, and list on apexyard.ai matches one declared apexyard release tag. A release is not done until the site declares it.",
+  "outcomes": [
+    {
+      "id": "content-current",
+      "title": "Site content matches the framework release the site declares, and that release is the latest.",
+      "intent": "Version, primitive counts, skill list, agent manifests, and OG cards agree with the declared tag. The declared tag is the newest published release."
+    },
+    {
+      "id": "sync-verified",
+      "title": "A release sync is a declared, verified step.",
+      "intent": "One tracked file declares the tag. CI fails any pull request whose pages disagree with it. The site stays hand-authored and verified, not generated."
+    }
+  ],
+  "acceptanceCriteria": [
+    {
+      "id": "ac1-1",
+      "outcomeId": "content-current",
+      "statement": "Every page and manifest names the framework version that the declared tag names, in both the v-prefixed and bare forms."
+    },
+    {
+      "id": "ac1-2",
+      "outcomeId": "content-current",
+      "statement": "The primitive counts on every page and manifest equal the counts derived from the declared tag."
+    },
+    {
+      "id": "ac1-3",
+      "outcomeId": "content-current",
+      "statement": "skill.md lists every skill shipped at the declared tag and no retired skill."
+    },
+    {
+      "id": "ac1-4",
+      "outcomeId": "content-current",
+      "statement": "The OG card images show the declared tag's version and counts."
+    },
+    {
+      "id": "ac1-5",
+      "outcomeId": "content-current",
+      "statement": "The declared tag is the newest published apexyard release."
+    },
+    {
+      "id": "ac2-1",
+      "outcomeId": "sync-verified",
+      "statement": "One tracked file declares the framework tag the site describes, and nothing else states the tag as a source."
+    },
+    {
+      "id": "ac2-2",
+      "outcomeId": "sync-verified",
+      "statement": "Every pull request fails CI when any page or manifest disagrees with the declared tag."
+    },
+    {
+      "id": "ac2-3",
+      "outcomeId": "sync-verified",
+      "statement": "The README sync section names the declared-tag file and lists the release-line prose as the only manual step."
+    },
+    {
+      "id": "ac2-4",
+      "outcomeId": "sync-verified",
+      "statement": "No open issue in the site tracker duplicates work this Plan covers."
+    }
+  ]
+}
