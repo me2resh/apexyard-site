@@ -2,10 +2,10 @@
 
 ## Interview
 
-- 2026-10-16, q1-outcome: Site stays in sync on every release. A repeatable sync so each framework release updates the site without manual drift, including the one-off catch-up to v5.9.0.
-- 2026-10-16, q2-intent: Site never claims a stale framework state. Every number, version, and list on apexyard.ai is derived from a released apexyard tag, and a release is not done until the site reflects it.
+- 2026-10-16, q1-outcome: Site stays in sync on every release. Each framework release updates the site by a repeatable sync, including the one-off catch-up to v5.9.0.
+- 2026-10-16, q2-intent: Site never claims a stale framework state. Every number, version, and list on apexyard.ai derives from a released apexyard tag. A release is not done until the site reflects it.
 - 2026-10-16, q3-outcomes: Site content matches the latest release. Sync is a scripted, verified step.
-- 2026-10-16, q4-acceptance: ac1-1 version string, ac1-2 primitive counts, ac1-3 skill list, ac1-4 OG cards. ac2-1 one regenerate command, ac2-2 CI blocks drift, ac2-3 README is the runbook, ac2-4 verify runs on every PR. Revised after the Naqid challenge: the version is parameterised through a declared-tag file (ac2-1), regeneration is dropped to honour issue #72, ac2-2 and ac2-4 are merged, ac1-5 and a backlog criterion (ac2-4) are added.
+- 2026-10-16, q4-acceptance: ac1-1 version string, ac1-2 primitive counts, ac1-3 skill list, ac1-4 OG cards. ac2-1 one regenerate command, ac2-2 CI blocks drift, ac2-3 README is the runbook, ac2-4 verify runs on every PR. Revised after the Naqid challenge. The version is parameterised through a declared-tag file (ac2-1). Regeneration is dropped to honour issue #72. ac2-2 and ac2-4 are merged. ac1-5 and a backlog criterion (ac2-4) are added. After the Rex review, ac1-4 covers counts only, because the OG templates have no version slot.
 - 2026-10-16, q5-constraints: Counts derive from the released tag. No build step on the site. Deploy path unchanged. Single reviewed PR per sync.
 - 2026-10-16, q6-save: Revise per Naqid, then save. Verdict was proceed-with-changes.
 
@@ -16,18 +16,21 @@
 - Constraint: this Plan does not decide Netlify versus AWS. Deploy workflows are out of scope.
 - Constraint: each release sync ships as one PR through Rex review and human merge approval, never a direct push to main.
 - Constraint: the release-line prose (features, fixes, improvements per release) is written by hand. No script derives it.
+- Constraint: issue #72 closes only after an AgDR records its hand-authored decision. Closing it as a duplicate would drop that record.
 
 ## Proof
 
-- ac1-1: with `TAG=$(cat <declared-tag file>)`, a grep for `v[0-9]+\.[0-9]+\.[0-9]+` and for `"softwareVersion": "[0-9.]+"` across every tracked `*.html`, `*.md.gen`, `llms*.txt`, `skill.md`, and `AGENTS.md` returns only the declared tag.
-- ac1-2: `APEXYARD_REPO=<framework clone> APEXYARD_REF=$TAG .github/scripts/verify-counts.sh` exits 0 against the site tree.
+Set `TAG=$(cat <declared-tag file>)` and `PREV=<the tag the site declared before this sync>` before each check.
+
+- ac1-1: for each tracked `*.html`, `*.md.gen`, `llms*.txt`, `skill.md`, and `AGENTS.md`, the framework version slots equal `$TAG`. The slots are the release pill, the `softwareVersion` JSON-LD value, and the version line of each manifest. A grep for `$PREV` across those files returns nothing. Other version strings are not framework version slots and are ignored. Examples are the `v0.1.0` release-range start, the ApexDock `v0.8.0`, and the `v1.2.0` argument example in `skills.html`.
+- ac1-2: `APEXYARD_REPO=<framework clone> REF=$TAG .github/scripts/verify-counts.sh` exits 0 against the site tree.
 - ac1-3: the skill names in `skill.md` equal the directory names from `git -C <framework> ls-tree -r --name-only $TAG -- .claude/skills | grep '/SKILL\.md$'`.
-- ac1-4: `og/*.png` were rendered by `og/render.sh` with `APEXYARD_REF=$TAG`, and that render commit is on main.
-- ac1-5: `gh release view --repo me2resh/apexyard --json tagName` returns the declared tag.
-- ac2-1: `git ls-files` shows exactly one file that declares the tag, and `verify-counts.sh` and `og/render.sh` read it when `APEXYARD_REF` is unset.
+- ac1-4: `og/*.png` were rendered by `og/render.sh` with `APEXYARD_REF=$TAG`, and that render commit is on main. The three counts on the cards equal `derive-counts.sh --print` at `$TAG`.
+- ac1-5: `gh release view --repo me2resh/apexyard --json tagName` returns `$TAG`.
+- ac2-1: `git ls-files` shows exactly one file that declares the tag. `verify-counts.sh` reads it when `REF` is unset. `og/render.sh` reads it when `APEXYARD_REF` is unset.
 - ac2-2: a workflow runs on every `pull_request` with no path filter, clones `me2resh/apexyard` with tags, and runs `verify-counts.sh`. A pull request that changes one count on `index.html` to a wrong value gets a failing required check.
 - ac2-3: the README sync section names the declared-tag file and lists the release-line prose as the only hand edit.
-- ac2-4: `gh issue list --repo me2resh/apexyard-site --state open` shows none of #85, #72, #66, #64, #61, #60, #55, #54 open without a comment that links this Plan.
+- ac2-4: `gh issue list --repo me2resh/apexyard-site --state open --json number` contains none of #85, #72, #69, #66, #64, #61, #60, #55, #54, #49, and #46. Each is closed with a comment that links this Plan.
 
 ## Order
 
