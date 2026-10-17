@@ -11,7 +11,7 @@
     }
   },
   "objective": "One tracked file, .github/apexyard-tag, declares the framework tag the site describes. The count verifier and the OG renderer read it when no ref is given. A required check runs the verifier on every pull request. The README names the file and states which edits CI checks and which one it cannot.",
-  "why": "The baseline reconciliation finds every sync-verified criterion contradicted. No file declares the tag. verify-counts.sh exists but no workflow runs it. shell-tests.yml only lints it and has a paths filter. The README says counts are updated by hand. The Plan orders sync-verified before content-current because a sync without a gate drifts again within one release. This slice builds the gate first. The file declares v5.6.3, the tag the site describes today, so the check is green on main from day one. Measured on 2026-10-17: REF=v5.6.3 gives exit 0 with 51 claims agreeing, and REF=v5.9.0 gives exit 1 with 40 stale counts. The content-current slice bumps the file and must fix every count in the same PR, which is the one-PR-per-sync constraint enforced by CI. Partial: ac2-2 is delivered for counts only. Version slots and the skill list are checked in the content-current slice, after main is made consistent.",
+  "why": "The baseline reconciliation finds every sync-verified criterion contradicted. No file declares the tag. verify-counts.sh exists. shell-tests.yml shellchecks it and runs its unit test against a synthetic repo, behind a paths filter. No workflow runs it against the site tree and a real framework tag. The README says counts are updated by hand. The Plan orders sync-verified before content-current because a sync without a gate drifts again within one release. This slice builds the gate first. The file declares v5.6.3, the tag the site describes today, so the check is green on main from day one. Measured on 2026-10-17: REF=v5.6.3 gives exit 0 with 51 claims agreeing, and REF=v5.9.0 gives exit 1 with 40 stale counts. The content-current slice bumps the file and must fix every count in the same PR, which is the one-PR-per-sync constraint enforced by CI. Partial: ac2-2 is delivered for counts only. Version slots and the skill list are checked in the content-current slice, after main is made consistent.",
   "contributesTo": [
     "ac2-1",
     "ac2-2",
@@ -27,7 +27,8 @@
       "A README sync section that names .github/apexyard-tag as the one input. It states that every version, count, and list is edited by hand and verified against the file by CI. It names the release-line prose as the only edit CI cannot check. README line 58 (At v5.6.3: 66 skills ...) is rewritten to point at the file instead of stating the tag.",
       "Bash tests under .github/tests for the declared-tag read path in both scripts. Cases: present file, missing file, empty file, CRLF file, and REF or APEXYARD_REF taking precedence. The render.sh test stubs node on PATH and asserts the Deriving line.",
       "One deliberate count mutation on index.html in a scratch run shows the new check red with exit 1. The PR body records it as the ac2-2 proof.",
-      "shellcheck clean on every changed script."
+      "shellcheck clean on every changed script.",
+      "verify-counts.sh excludes docs/orbit/ from its scan, with a test case. ORBIT records quote stale counts as evidence and must never count as site drift."
     ],
     "exclude": [
       "Any change to a version string or count on a page or manifest. That is the content-current slice.",
@@ -36,7 +37,7 @@
       "Closing the eleven duplicate issues. That is ac2-4, after the content sync.",
       "Any change to deploy workflows or the Netlify versus AWS question.",
       "Replacing hand-authored HTML with a generator.",
-      "The AgDR for the cross-repo CI dependency and the hand-authored decision behind #72. It is written alongside this slice as its own records change and is named in the PR."
+      "The AgDR for the cross-repo CI dependency and the hand-authored decision behind #72. It ships under docs/agdr/ on the slice build branch with its ticket, not on an orbit/ branch, and the build PR names it."
     ]
   }
 }

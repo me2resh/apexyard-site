@@ -9,7 +9,7 @@
     "Observed me2resh/apexyard-site at 4e3771bf48c9e16593c633c7fda483d1eca17726.",
     "Baseline reconciliation for revision 1. Every criterion is contradicted: the site declares v5.6.3 while the newest release is v5.9.0, and no mechanism yet makes a stale declaration fail.",
     "Count verification used the ops fork at the v5.9.0 release commit 37f5689 as REF=main, because that clone has no release tags fetched. A tagged clone should confirm the same numbers before the sync PR.",
-    "Independent check on 2026-10-17 with a tagged clone. REF=v5.9.0 exits 1 with 40 stale counts across 51 claims. REF=v5.6.3 exits 0 with all 51 agreeing. The verifier exits 1 on drift when run unpiped."
+    "Independent check on 2026-10-17 with a tagged clone. REF=v5.9.0 exits 1 with 40 stale counts across 51 claims. REF=v5.6.3 exits 0 with all 51 agreeing. The verifier exits 1 on drift when run unpiped. Those totals include lines inside docs/orbit records, because the scan does not yet exclude that directory."
   ],
   "criterionAssessments": [
     {
@@ -72,9 +72,9 @@
       "criterionId": "ac2-2",
       "status": "contradicted",
       "evidence": [
-        "shell-tests.yml is the only workflow that mentions verify-counts.sh, and only to shellcheck it. No workflow runs it.",
+        "shell-tests.yml shellchecks verify-counts.sh and runs test-verify-counts.sh against a synthetic framework repo. No workflow runs the verifier against the site tree and a real framework tag.",
         "shell-tests.yml triggers on pull_request with a paths filter, so a page-only change does not run it at all.",
-        "link-check.yml and preview-build.yml run on every pull_request but check links and build artifacts, not counts."
+        "link-check.yml and preview-build.yml also carry paths filters. They check links and build artifacts, not counts. This PR, which changes only docs/orbit/, registered no check at all."
       ],
       "explanation": "Missing: A required check that runs verify-counts.sh against the declared tag on every pull request. Next: Add a workflow with no path filter that clones me2resh/apexyard with tags and runs the verifier."
     },
