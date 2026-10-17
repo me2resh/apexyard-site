@@ -39,4 +39,8 @@ Set `TAG=$(cat <declared-tag file>)` and `PREV=<the tag the site declared before
 
 ## Checks
 
+## Challenges
+
+- 2026-10-17, slice-release-sync-declared-tag-ci-gate: Naqid verdict proceed-with-changes. Accepted four fixes. The declared-tag file starts at v5.6.3, so the new check is green on main (measured: 51 of 51 claims agree). ac2-2 is recorded as counts-only in this slice; version slots and the skill list join the gate in the content-current slice. The ac2-3 README wording now says every version, count, and list is hand-edited and CI-verified, and the release-line prose is the only edit CI cannot check. The workflow clones with `--depth 1 --branch <tag>`, runs the verifier unpiped, and never sets `REF`. The cross-repo CI dependency and the hand-authored decision behind #72 get one AgDR alongside the slice.
+
 ## Withdrawn slices

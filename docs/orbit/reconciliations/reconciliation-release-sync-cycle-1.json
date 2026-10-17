@@ -1,0 +1,100 @@
+{
+  "specVersion": "0.1",
+  "id": "reconciliation-release-sync-cycle-1",
+  "planId": "plan-release-sync",
+  "planRevision": 1,
+  "projectSnapshotId": "snapshot-apexyard-site-cycle-1",
+  "reconciledAt": "2026-10-17T03:58:29.829Z",
+  "observations": [
+    "Observed me2resh/apexyard-site at 4e3771bf48c9e16593c633c7fda483d1eca17726.",
+    "Baseline reconciliation for revision 1. Every criterion is contradicted: the site declares v5.6.3 while the newest release is v5.9.0, and no mechanism yet makes a stale declaration fail.",
+    "Count verification used the ops fork at the v5.9.0 release commit 37f5689 as REF=main, because that clone has no release tags fetched. A tagged clone should confirm the same numbers before the sync PR.",
+    "Independent check on 2026-10-17 with a tagged clone. REF=v5.9.0 exits 1 with 40 stale counts across 51 claims. REF=v5.6.3 exits 0 with all 51 agreeing. The verifier exits 1 on drift when run unpiped."
+  ],
+  "criterionAssessments": [
+    {
+      "criterionId": "ac1-1",
+      "status": "contradicted",
+      "evidence": [
+        "index.html carries three different versions: v5.6.3 five times, 5.6.2 once (the softwareVersion JSON-LD value), and v5.5.0 once.",
+        "llms.txt, llms-full.txt, index.md.gen, and AGENTS.md say v5.6.3. The newest published release is v5.9.0.",
+        "how-it-works.html, architecture.html, skills.html, 404.html, skill.md, and agent-permissions.json carry no version string at all."
+      ],
+      "explanation": "Missing: One version per page and manifest, equal to the declared tag. Next: Add a declared-tag file (ac2-1), then rewrite every version slot from it in one sync PR."
+    },
+    {
+      "criterionId": "ac1-2",
+      "status": "contradicted",
+      "evidence": [
+        "APEXYARD_REPO=<ops fork> REF=main .github/scripts/verify-counts.sh at the v5.9.0 release commit 37f5689 reports FAIL: 39 stale counts across 50 claims.",
+        "Hooks drift: pages say 60, the tag derives 62. Rules drift: README and architecture.md.gen say 25, the tag derives 22.",
+        "The ops fork has no v5.9.0 tag fetched, so REF=main at the release commit stood in for the tag."
+      ],
+      "explanation": "Missing: Counts on every surface equal the counts derived from v5.9.0. Next: Run verify-counts.sh against the declared tag and fix every DRIFT line in the sync PR."
+    },
+    {
+      "criterionId": "ac1-3",
+      "status": "contradicted",
+      "evidence": [
+        "skill.md names 66 skills. The framework at the v5.9.0 release commit ships 68 skill directories.",
+        "Missing from skill.md: /orbit and /scaffold. No retired skill is listed."
+      ],
+      "explanation": "Missing: Two skills shipped since v5.6.3. Next: Regenerate the skill.md list from the framework tree at the declared tag."
+    },
+    {
+      "criterionId": "ac1-4",
+      "status": "contradicted",
+      "evidence": [
+        "og/*.png were last rendered on 2026-08-12 by commit 6c38f61 at APEXYARD_REF=v5.4.0 (PR #67).",
+        "The cards therefore show v5.4.0 counts, three releases behind the pages and five behind the newest release."
+      ],
+      "explanation": "Missing: Cards rendered at the declared tag. Next: Run og/render.sh with APEXYARD_REF set to the declared tag in the sync PR and commit the four PNGs."
+    },
+    {
+      "criterionId": "ac1-5",
+      "status": "contradicted",
+      "evidence": [
+        "The site declares v5.6.3. gh release view --repo me2resh/apexyard returns v5.9.0, published 2026-10-15.",
+        "v5.7.0 (2026-09-27) and v5.8.0 (2026-10-08) were also never declared."
+      ],
+      "explanation": "Missing: Three releases. Next: Declare v5.9.0 in the sync PR after ac2-1 exists."
+    },
+    {
+      "criterionId": "ac2-1",
+      "status": "contradicted",
+      "evidence": [
+        "git ls-files shows no file whose purpose is to declare the framework tag.",
+        "The tag is stated as a source in README.md line 58 (At v5.6.3), in index.html, and in the manifests. verify-counts.sh requires REF on the command line and og/render.sh falls back to the newest tag in the clone."
+      ],
+      "explanation": "Missing: The single declared-tag file. Next: Add one tracked file holding the tag, make verify-counts.sh and og/render.sh read it when REF is unset, and remove the prose claims."
+    },
+    {
+      "criterionId": "ac2-2",
+      "status": "contradicted",
+      "evidence": [
+        "shell-tests.yml is the only workflow that mentions verify-counts.sh, and only to shellcheck it. No workflow runs it.",
+        "shell-tests.yml triggers on pull_request with a paths filter, so a page-only change does not run it at all.",
+        "link-check.yml and preview-build.yml run on every pull_request but check links and build artifacts, not counts."
+      ],
+      "explanation": "Missing: A required check that runs verify-counts.sh against the declared tag on every pull request. Next: Add a workflow with no path filter that clones me2resh/apexyard with tags and runs the verifier."
+    },
+    {
+      "criterionId": "ac2-3",
+      "status": "contradicted",
+      "evidence": [
+        "README.md has no sync section. Its headings are What's here, How it deploys, Manually maintained content, CI.",
+        "README.md line 19 says the counts are updated by hand on each framework release."
+      ],
+      "explanation": "Missing: A sync section that names the declared-tag file and the release-line prose as the only hand edit. Next: Write it in the same PR that adds the file."
+    },
+    {
+      "criterionId": "ac2-4",
+      "status": "contradicted",
+      "evidence": [
+        "gh issue list --state open still contains all eleven: #46, #49, #54, #55, #60, #61, #64, #66, #69, #72, #85.",
+        "Each has at least one merged Refs PR, so the issues are open by convention, not because the work is missing."
+      ],
+      "explanation": "Missing: Eleven closures with a comment linking this Plan. Next: Close ten after the sync PR merges. Close #72 only after its AgDR exists, per the Plan constraints."
+    }
+  ]
+}
