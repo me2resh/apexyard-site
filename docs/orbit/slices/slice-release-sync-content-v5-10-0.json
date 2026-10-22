@@ -38,7 +38,7 @@
     ],
     "exclude": [
       "The .github/apexyard-tag file, the verify-counts.yml workflow, and the read path in verify-counts.sh and og/render.sh. Those belong to slice-release-sync-declared-tag-ci-gate, issue #95.",
-      "The #95 build declares the tag that main describes when it builds. After this slice merges, that tag is v5.10.0. The #95 docs/orbit/ exclusion is then already done.",
+      "The #95 build declares the tag that main describes when it builds. After this slice merges, that tag is v5.10.0. This slice builds the docs/orbit/ scan exclusion. #95 no longer includes it.",
       "Version-slot and skill-list checks in CI. They stay with the sync-verified outcome.",
       "Closing the duplicate site issues. That is ac2-4. The issues close after this slice merges, with a comment that links the Plan.",
       "Any change to deploy workflows or to the Netlify versus AWS question.",
