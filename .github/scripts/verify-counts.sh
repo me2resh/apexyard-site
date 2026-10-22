@@ -180,6 +180,14 @@ is_excluded() {
   # counts of anything at the tag.
   [[ "$file" == apexdock/* ]] && return 0
 
+  # docs/orbit/ holds ORBIT planning records (plans, snapshots,
+  # reconciliations, slices). A record quotes the stale counts it found as
+  # evidence, for example "the drift is skills from 66 to 69". Those quotes are
+  # history, not site claims, and the deploy does not publish them as pages.
+  # Only this one directory is excluded. A count elsewhere under docs/ is still
+  # checked.
+  [[ "$file" == docs/orbit/* ]] && return 0
+
   return 1
 }
 

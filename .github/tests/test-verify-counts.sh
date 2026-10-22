@@ -178,6 +178,28 @@ commit_site "$site"
 res=$(run_case "$site"); rc="${res%%|*}"; out="${res#*|}"
 if [ "$rc" = 1 ]; then ok "a stale total is still caught beside an excluded sub-total"; else bad "a stale total is still caught beside an excluded sub-total" "got $rc: $out"; fi
 
+# --- case 6b: ORBIT records under docs/orbit/ are not site claims -----------
+# An ORBIT record quotes the stale counts it found as evidence. The scan must
+# skip docs/orbit/, for both the strict pass and the unverified sweep. The
+# unsafe half: the same stale count one directory over, in docs/, must still
+# fail, so the exclusion cannot widen to all of docs/ unnoticed.
+site=$(new_site site-orbit)
+mkdir -p "$site/docs/orbit/slices"
+printf '<p>2 slash commands</p>\n' > "$site/index.html"
+printf '{"why": "The drift is 49 hooks and 11 rules, and 7 brand new slash commands."}\n' \
+  > "$site/docs/orbit/slices/slice-x.json"
+commit_site "$site"
+res=$(run_case "$site"); rc="${res%%|*}"; out="${res#*|}"
+if [ "$rc" = 0 ]; then ok "stale counts in docs/orbit/ do not fail the run"; else bad "stale counts in docs/orbit/ do not fail the run" "got $rc: $out"; fi
+case "$out" in
+  *docs/orbit/*) bad "docs/orbit/ is not reported at all" "$out" ;;
+  *) ok "docs/orbit/ is not reported at all" ;;
+esac
+printf 'Notes: 11 rules.\n' > "$site/docs/notes.md"
+commit_site "$site"
+res=$(run_case "$site"); rc="${res%%|*}"; out="${res#*|}"
+if [ "$rc" = 1 ]; then ok "a stale count elsewhere under docs/ is still caught"; else bad "a stale count elsewhere under docs/ is still caught" "got $rc: $out"; fi
+
 # --- case 7: cannot derive -> refuse (exit 2), never guess ------------------
 site=$(new_site site-clean2)
 printf '<p>2 slash commands</p>\n' > "$site/index.html"

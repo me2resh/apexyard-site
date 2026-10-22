@@ -1,6 +1,6 @@
 # ApexYard Skills
 
-> 66 slash commands grouped by what you are trying to do — not by what is under the hood. Drop into your Claude Code session inside an apexyard fork.
+> 69 slash commands grouped by what you are trying to do — not by what is under the hood. Drop into your Claude Code session inside an apexyard fork.
 
 ## In plain English
 
@@ -8,7 +8,7 @@ These are the commands you use inside an ApexYard fork. They are grouped by the 
 
 ## What ApexYard is
 
-ApexYard ships 66 slash commands grouped under outcome headings — Keep quality high, Move work forward, See everything at once, Onboard new code, Run things.
+ApexYard ships 69 slash commands grouped under outcome headings — Keep quality high, Move work forward, See everything at once, Onboard new code, Run things.
 
 ## What ApexYard does
 
@@ -55,6 +55,7 @@ Capture an idea, file a ticket, record a decision, approve a merge — everythin
 - `/validate-idea` — Lightweight 5-question pre-spec gate between `/idea` and `/write-spec`.
 - `/write-spec` — Generate a PRD or feature spec from a problem statement.
 - `/plan-initiative` — Initiative → milestones → tasks with dependency-aware sequencing.
+- `/orbit <plan | snapshot | reconcile | slice | validate | lint | status | handoff> --project <name>` — Run the opt-in ORBIT planning lifecycle for one managed project. The ORBIT CLI writes and validates the records under the project's `docs/orbit/` directory. ApexYard governance does not change.
 - `/feature` — Create a structured feature ticket (user story + acceptance criteria + design notes).
 - `/request-apexyard-feature` — Request a feature/enhancement for the apexyard framework *itself*, filed upstream. Distinct from `/feature`, which files into your own project.
 - `/bug` — Create a structured bug ticket (Given/When/Then + repro steps + severity).
@@ -85,8 +86,10 @@ When you have more than one product going at the same time, the question that co
 
 Fresh fork, new project handed to you, codebase you want to understand. These skills get you oriented fast — generating diagrams, feature inventories, process flows from real code instead of from memory.
 
+- `/preflight` — Check the local ApexYard environment before setup or when hooks fail. The check is read-only. It lists each FAIL and WARN row with one fix. Outside Claude Code, run `apexyard doctor`.
 - `/setup [--reset]` — First-run framework bootstrap for a new ApexYard fork. Three exchanges and the fork is configured.
 - `/handover <name> [path-or-url]` — Onboard an external repo into ApexYard management. Reads the target, synthesises a structured handover assessment, scores harnessability across 5 codebase dimensions.
+- `/scaffold <name> [PRD path]` — Interview the owner, sized to the project's scale, and write a validated scaffold spec. The skill then generates the project floor from that spec.
 - `/onboard` — Guided first-run onboarding — a capability tour, the handover-vs-new-project branch, and a guided first win via a real filed ticket. The front door for a brand-new fork.
 - `/tutorial` — Replay the capability tour and full glossary any time — roles, skills, and gates plus every core term, independent of `/setup` or `/handover`.
 - `/c4` — Generate architecture diagrams (Level 1 system context + Level 2 container detail) from a project's codebase.
@@ -100,7 +103,7 @@ Fresh fork, new project handed to you, codebase you want to understand. These sk
 
 ## Added in the v5.5 release line
 
-These commands are part of the current 66-skill framework surface:
+These commands are part of the current 69-skill framework surface:
 
 - `/approve-architecture` — record approval for an architecture review.
 - `/challenge` — challenge a plan or decision before implementation.
