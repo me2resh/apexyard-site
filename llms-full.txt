@@ -2,8 +2,8 @@
 
 > ApexYard helps teams use AI coding agents with a controlled engineering process.
 > It provides automatic code review, release checks, and one view of all managed projects.
-> It uses canonical hooks with adapters for Claude Code, Codex, OpenCode, Pi, and Cursor. 66 skills,
-> 60 hooks, 20 role definitions. Open source, plain markdown and shell,
+> It uses canonical hooks with adapters for Claude Code, Codex, OpenCode, Pi, and Cursor. 69 skills,
+> 66 hooks, 20 role definitions. Open source, plain markdown and shell,
 > no SaaS, no vendor lock-in.
 
 This file is the LLM/agent-friendly concatenation of the apexyard marketing
@@ -55,10 +55,10 @@ framework's own GitHub history — every change went through the same
 review and guardrails the tool installs in your fork.
 
 - **304 PRs reviewed and merged in the last 90 days**
-- **36 releases shipped to date** (v0.1.0 through v5.6.3)
+- **40 releases shipped to date** (v0.1.0 through v5.10.0)
 - **144 technical decisions recorded** (released to main; every meaningful
   choice in an audit trail)
-- The v5.6 release line adds framework-level adapter defaults; v5.6.3 adds centralized hook dispatch, stricter Rex review validation, and migration coverage.
+- Releases v5.7 to v5.10 add opt-in ORBIT planning, the `/scaffold` and `/preflight` skills, and a ticket marker in each working tree. v5.10.0 adds a review-depth tier for Rex and closes more gaps in the push, commit, and merge gates.
 - 613 issues closed all-time
 
 ## Community
@@ -123,14 +123,14 @@ its own checklist and boundaries.
 Want to adopt a project you have inherited? `/handover`. Want to capture
 an idea before it evaporates? `/idea`. Want to know what is waiting on
 you across every product? `/inbox`. Want a launch-readiness check before
-customers see it? `/launch-check`. 66 of these in total — each one is a
+customers see it? `/launch-check`. 69 of these in total — each one is a
 focused workflow with safety rails.
 
 ### Guardrails that stop bad code from shipping — automatically
 
 Every edit must have a ticket. Every database change must have a
 rollback plan. Every merge must have a review. Secrets in code get
-caught before they are committed. Mechanically enforced — 60 small
+caught before they are committed. Mechanically enforced — 66 small
 scripts that fire at the right moments, so you do not have to remember
 to check.
 
@@ -283,7 +283,7 @@ Free with any project you do not want named publicly.
 
 # Skills (https://apexyard.ai/skills)
 
-66 slash commands grouped by what you are trying to do — not by what is
+69 slash commands grouped by what you are trying to do — not by what is
 under the hood. Each is a markdown SKILL.md file under
 `.claude/skills/<name>/`.
 
@@ -313,6 +313,14 @@ audits, security checks.
   alerting, runbooks.
 - `/docs-audit` — Diataxis docs audit.
 - `/mutation-test` — mutation-testing sensor; milestone cadence.
+- `/design-review` — review a technical design / migration
+  decision-record / feature spec for architectural soundness before
+  Build; invokes the Solution Architect agent (Tariq), the non-code
+  analog of `/code-review`.
+- `/challenge` — invoke The Contrarian (Naqid) to steelman then
+  challenge a premise; advisory only, never blocks a gate.
+- `/eval-agents` — score a review agent against a labelled PR corpus;
+  headline metric is approve-precision, not a prose rubric.
 
 ## Move work forward
 
@@ -341,6 +349,25 @@ everything that turns half-formed thoughts into shipped software.
 - `/investigation` — create an investigation ticket + live-doc for
   sustained root-cause work.
 - `/tickets-batch` — file 5–20 structured tickets in one flow.
+- `/approve-architecture` — record per-PR architecture-review approval
+  so a design-artifact PR clears the architecture merge gate.
+- `/orbit` — run the opt-in ORBIT planning lifecycle for one managed
+  project. The ORBIT CLI writes and validates the records under the
+  project's `docs/orbit/` directory. ApexYard governance does not
+  change.
+- `/request-apexyard-feature` — request a feature/enhancement for the
+  apexyard framework *itself*, filed upstream. Distinct from `/feature`,
+  which files into your own project.
+- `/report-apexyard-bug` — report a bug in the apexyard framework
+  *itself* (hook misfire, skill gap, rule bug), filed upstream. Distinct
+  from `/bug`, which files into your own project.
+- `/prototype` — create a throwaway UX/demo prototype ticket — the "what
+  should it look and feel like?" sibling of `/spike`. Same exemptions.
+- `/prototype-close` — disposition gate for prototypes — the mirror of
+  `/spike-close`.
+- `/walking-skeleton` — scaffold a `[Feature]` for the thinnest
+  end-to-end slice through every layer. Unlike a spike it is *kept* and
+  grown — full SDLC, no exemptions.
 
 ## See everything at once
 
@@ -381,6 +408,18 @@ Fresh fork, new project handed to you, codebase you want to understand.
 - `/journey` — self-contained HTML user-journey map.
 - `/codify-rule` — turn a review comment that caught a Rex-miss into a
   draft handbook entry.
+- `/preflight` — check the local ApexYard environment before setup or
+  when hooks fail. The check is read-only. It lists each FAIL and WARN
+  row with one fix. Outside Claude Code, run `apexyard doctor`.
+- `/scaffold` — interview the owner, sized to the project's scale, and
+  write a validated scaffold spec. The skill then generates the project
+  floor from that spec.
+- `/onboard` — guided first-run onboarding — a capability tour, the
+  handover-vs-new-project branch, and a guided first win via a real
+  filed ticket. The front door for a brand-new fork.
+- `/tutorial` — replay the capability tour and full glossary any time —
+  roles, skills, and gates plus every core term, independent of `/setup`
+  or `/handover`.
 
 ## Run things
 
@@ -394,11 +433,12 @@ something hairy, share a PDF.
   fix attempts.
 - `/pdf` — convert markdown / HTML / process-diagram to PDF.
 - `/fan-out` — spawn N parallel Agent calls in one message.
-
-## Deprecated
-
-- `/onboard` — use `/setup` for framework configuration, `/handover`
-  for adding a project to the portfolio.
+- `/release-sync` — sync main back to dev after a squash-merge release,
+  so future release PRs do not accumulate merge conflicts
+  (framework-only).
+- `/design-sync` — sync a local component library to a claude.ai/design
+  design-system project incrementally, one component at a time. Drives
+  the DesignSync tool.
 
 ---
 
@@ -413,6 +453,6 @@ https://github.com/me2resh/apexyard
 ## Generated
 
 This file is hand-written and refreshed when `site/*.html` changes
-significantly. Last refresh: 2026-09-18 (v5.6.3 release, multi-harness
+significantly. Last refresh: 2026-10-22 (v5.10.0 release, multi-harness
 support, and community link refresh — outcomes-first, layered with technical
 detail below).

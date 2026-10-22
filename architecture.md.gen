@@ -27,15 +27,15 @@ Fork ApexYard once and use that fork as your operations repository. Add one entr
 Declares what is true and what is enforced:
 
 - **Registry** (`apexyard.projects.yaml`) — lists every managed project
-- **Hooks** (`.claude/hooks/`) — 60 shell gates: merge gate, ticket-first, secrets scan, AgDR for architecture, migration gate, red-CI block, branch/PR-title validation, leak protection
-- **Rules** (`.claude/rules/`) — 25 modular self-discipline guides
+- **Hooks** (`.claude/hooks/`) — 66 shell gates: merge gate, ticket-first, secrets scan, AgDR for architecture, migration gate, red-CI block, branch/PR-title validation, leak protection
+- **Rules** (`.claude/rules/`) — 22 modular self-discipline guides
 - **Onboarding** (`onboarding.yaml`) — company name, mission, team, tech stack
 
 ### Layer 2 — Capability (forest-green)
 
 What the agent can DO:
 
-- **Skills** (`.claude/skills/`) — 66 slash commands: `/feature`, `/handover`, `/c4`, `/threat-model`, `/process`, `/dfd`, `/journey`, `/update`, `/release`, and 56 more
+- **Skills** (`.claude/skills/`) — 69 slash commands: `/feature`, `/handover`, `/c4`, `/threat-model`, `/process`, `/dfd`, `/journey`, `/update`, `/release`, and 60 more
 - **Agents** (`.claude/agents/`) — 23 agents: 3 utility (Rex code review, Hakim security audit, Munir dependencies) + the remaining dept-aligned agents across engineering / product / design / security / data
 
 ### Layer 3 — Framework defaults (ochre)

@@ -24,7 +24,7 @@ organisation. Three load-bearing outcomes:
 
 Persistent decision-log across every managed project; strict merge gates
 (code-reviewer agent + per-PR CEO approval); evidence-grounded review records;
-cross-harness quality regression; split issue and review tracker hosts; and 66
+cross-harness quality regression; split issue and review tracker hosts; and 69
 slash commands grouped by what you are trying to do:
 
 - **Keep quality high** (`/code-review`, `/security-review`, `/audit-deps`,
@@ -34,13 +34,13 @@ slash commands grouped by what you are trying to do:
   `/mutation-test`)
 - **Move work forward** (`/start-ticket`, `/approve-merge`,
   `/approve-design`, `/decide`, `/idea`, `/validate-idea`, `/write-spec`,
-  `/plan-initiative`, `/feature`, `/bug`, `/task`, `/spike`, `/spike-close`,
-  `/migration`, `/investigation`, `/tickets-batch`)
+  `/plan-initiative`, `/orbit`, `/feature`, `/bug`, `/task`, `/spike`,
+  `/spike-close`, `/migration`, `/investigation`, `/tickets-batch`)
 - **See everything at once** (`/projects`, `/inbox`, `/status`, `/tasks`,
   `/roadmap`, `/stakeholder-update`, `/agdr`)
-- **Onboard new code** (`/setup`, `/handover`, `/extract-features`,
-  `/feature-diagram`, `/process`, `/c4`, `/dfd`, `/tech-vision`, `/journey`,
-  `/codify-rule`)
+- **Onboard new code** (`/preflight`, `/setup`, `/handover`, `/scaffold`,
+  `/extract-features`, `/feature-diagram`, `/process`, `/c4`, `/dfd`,
+  `/tech-vision`, `/journey`, `/codify-rule`)
 - **Run things** (`/update`, `/split-portfolio`, `/release`, `/debug`,
   `/pdf`, `/fan-out`)
 
@@ -49,7 +49,7 @@ The release line also adds `/approve-architecture`, `/challenge`, `/design-revie
 `/release-sync`, `/report-apexyard-bug`, `/request-apexyard-feature`,
 `/tutorial`, and `/walking-skeleton`.
 
-60 shell hooks enforce SDLC rules mechanically — ticket-first, migration
+66 shell hooks enforce SDLC rules mechanically — ticket-first, migration
 gate, two-marker merge gate, red-CI block, secrets scanning, branch / PR
 title validation, decision-record-required-for-architecture, upstream-drift
 banner, leak protection. 20 role definitions activate on triggers (label,
