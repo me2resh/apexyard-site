@@ -313,6 +313,14 @@ audits, security checks.
   alerting, runbooks.
 - `/docs-audit` — Diataxis docs audit.
 - `/mutation-test` — mutation-testing sensor; milestone cadence.
+- `/design-review` — review a technical design / migration
+  decision-record / feature spec for architectural soundness before
+  Build; invokes the Solution Architect agent (Tariq), the non-code
+  analog of `/code-review`.
+- `/challenge` — invoke The Contrarian (Naqid) to steelman then
+  challenge a premise; advisory only, never blocks a gate.
+- `/eval-agents` — score a review agent against a labelled PR corpus;
+  headline metric is approve-precision, not a prose rubric.
 
 ## Move work forward
 
@@ -341,6 +349,25 @@ everything that turns half-formed thoughts into shipped software.
 - `/investigation` — create an investigation ticket + live-doc for
   sustained root-cause work.
 - `/tickets-batch` — file 5–20 structured tickets in one flow.
+- `/approve-architecture` — record per-PR architecture-review approval
+  so a design-artifact PR clears the architecture merge gate.
+- `/orbit` — run the opt-in ORBIT planning lifecycle for one managed
+  project. The ORBIT CLI writes and validates the records under the
+  project's `docs/orbit/` directory. ApexYard governance does not
+  change.
+- `/request-apexyard-feature` — request a feature/enhancement for the
+  apexyard framework *itself*, filed upstream. Distinct from `/feature`,
+  which files into your own project.
+- `/report-apexyard-bug` — report a bug in the apexyard framework
+  *itself* (hook misfire, skill gap, rule bug), filed upstream. Distinct
+  from `/bug`, which files into your own project.
+- `/prototype` — create a throwaway UX/demo prototype ticket — the "what
+  should it look and feel like?" sibling of `/spike`. Same exemptions.
+- `/prototype-close` — disposition gate for prototypes — the mirror of
+  `/spike-close`.
+- `/walking-skeleton` — scaffold a `[Feature]` for the thinnest
+  end-to-end slice through every layer. Unlike a spike it is *kept* and
+  grown — full SDLC, no exemptions.
 
 ## See everything at once
 
@@ -381,6 +408,18 @@ Fresh fork, new project handed to you, codebase you want to understand.
 - `/journey` — self-contained HTML user-journey map.
 - `/codify-rule` — turn a review comment that caught a Rex-miss into a
   draft handbook entry.
+- `/preflight` — check the local ApexYard environment before setup or
+  when hooks fail. The check is read-only. It lists each FAIL and WARN
+  row with one fix. Outside Claude Code, run `apexyard doctor`.
+- `/scaffold` — interview the owner, sized to the project's scale, and
+  write a validated scaffold spec. The skill then generates the project
+  floor from that spec.
+- `/onboard` — guided first-run onboarding — a capability tour, the
+  handover-vs-new-project branch, and a guided first win via a real
+  filed ticket. The front door for a brand-new fork.
+- `/tutorial` — replay the capability tour and full glossary any time —
+  roles, skills, and gates plus every core term, independent of `/setup`
+  or `/handover`.
 
 ## Run things
 
@@ -394,11 +433,12 @@ something hairy, share a PDF.
   fix attempts.
 - `/pdf` — convert markdown / HTML / process-diagram to PDF.
 - `/fan-out` — spawn N parallel Agent calls in one message.
-
-## Deprecated
-
-- `/onboard` — use `/setup` for framework configuration, `/handover`
-  for adding a project to the portfolio.
+- `/release-sync` — sync main back to dev after a squash-merge release,
+  so future release PRs do not accumulate merge conflicts
+  (framework-only).
+- `/design-sync` — sync a local component library to a claude.ai/design
+  design-system project incrementally, one component at a time. Drives
+  the DesignSync tool.
 
 ---
 
