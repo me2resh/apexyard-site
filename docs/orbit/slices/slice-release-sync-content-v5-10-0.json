@@ -1,0 +1,50 @@
+{
+  "specVersion": "0.1",
+  "id": "slice-release-sync-content-v5-10-0",
+  "planId": "plan-release-sync",
+  "outcomeId": "content-current",
+  "basedOn": {
+    "planRevision": 1,
+    "reconciliationId": "reconciliation-release-sync-cycle-1",
+    "repositories": {
+      "me2resh/apexyard-site": "4e3771bf48c9e16593c633c7fda483d1eca17726"
+    }
+  },
+  "objective": "Every page, manifest, Markdown alternate, and OG card states framework v5.10.0. Each count, skill list, and release figure equals the value derived from the v5.10.0 tag.",
+  "why": "The cycle 2 check on 2026-10-22 at f1c0cd0 finds every content-current criterion still contradicted. The site states v5.6.3. GitHub Releases returns v5.10.0 as the newest release, published 2026-10-22. verify-counts.sh with REF=v5.10.0 exits 1 with 39 stale counts in 50 site claims outside docs/orbit. The drift is skills from 66 to 69, hooks from 60 to 66, and rules from 25 to 22. Agents stay at 23 and roles stay at 20. skill.md omits /orbit, /preflight, and /scaffold and lists no retired skill. index.html still carries 5.6.2 in softwareVersion and one v5.5.0 label. The OG cards still show the v5.4.0 counts. The homepage release metric says 36, and GitHub Releases returns 40. The Plan order puts sync-verified first. Its slice is filed as #95 and is open, so sync-verified cannot take a second slice. content-current is the first outcome with unmet criteria and no open slice. The owner wants the site on v5.10.0 now. This slice does not wait for #95. The two builds share README.md line 58, .github/scripts/verify-counts.sh, and its tests. The later build rebases on the earlier one. The evidence commit f1c0cd0 differs from basedOn 4e3771b. No status changed, so AgDR-0225 adds a Checks line and no new Reconciliation. Proof for ac1-1 and ac1-5 sets TAG=v5.10.0 by hand. Their full proof needs the declared-tag file from #95, so this slice advances them in part.",
+  "contributesTo": [
+    "ac1-1",
+    "ac1-2",
+    "ac1-3",
+    "ac1-4",
+    "ac1-5"
+  ],
+  "scope": {
+    "include": [
+      "Every framework version slot names v5.10.0. In index.html, the slots are the release pill, the release link, and the softwareVersion JSON-LD value 5.10.0. The manifests are llms.txt, llms-full.txt, index.md.gen, and AGENTS.md.",
+      "The stray 5.6.2 softwareVersion value and the v5.5.0 label in index.html are removed or set to v5.10.0.",
+      "Every count claim on every page and manifest equals derive-counts.sh --print at v5.10.0. verify-counts.sh with REF=v5.10.0 exits 0 with zero unverified claims.",
+      "verify-counts.sh excludes docs/orbit/ from its scan, with one test case. ORBIT records quote stale counts as evidence. They are not site drift.",
+      "skill.md, skills.html, and skills.md.gen list every skill shipped at v5.10.0 and no retired skill. The new entries are /orbit, /preflight, and /scaffold, each described from its own SKILL.md.",
+      "The Markdown alternates index.md.gen, architecture.md.gen, skills.md.gen, and how-it-works.md.gen agree with the HTML pages they mirror.",
+      "og/render.sh runs with APEXYARD_REF=v5.10.0 and re-renders the four og/*.png cards. The PNGs are committed in this PR.",
+      "The homepage release metric and its range state the published GitHub Releases count at sync time and v5.10.0. The PR body records the gh api output.",
+      "The release-line prose and the per-release features, fixes, and improvements metric describe v5.10.0. The text is written by hand from the GitHub release notes for v5.7.0 to v5.10.0.",
+      "The JSON-LD dateModified values and the sitemap.xml lastmod values of changed pages carry the sync date.",
+      "The README count line and the AGENTS.md verifier example name v5.10.0 and its counts.",
+      "The PR body carries a before-and-after table of every changed version, count, and list item.",
+      "The link check and the shell tests pass. The staging deploy is checked before the production approval, and the live pages are checked after it.",
+      "Before merge, gh release view confirms that v5.10.0 is still the newest release. A newer release moves this sync to that tag."
+    ],
+    "exclude": [
+      "The .github/apexyard-tag file, the verify-counts.yml workflow, and the read path in verify-counts.sh and og/render.sh. Those belong to slice-release-sync-declared-tag-ci-gate, issue #95.",
+      "The #95 build declares the tag that main describes when it builds. After this slice merges, that tag is v5.10.0. This slice builds the docs/orbit/ scan exclusion. #95 no longer includes it.",
+      "Version-slot and skill-list checks in CI. They stay with the sync-verified outcome.",
+      "Closing the duplicate site issues. That is ac2-4. The issues close after this slice merges, with a comment that links the Plan.",
+      "Any change to deploy workflows or to the Netlify versus AWS question.",
+      "Replacing hand-authored HTML with a generator.",
+      "New page copy beyond version, count, list, release-figure, and release-line changes.",
+      "The theme toggle in issue #96 and PR #76."
+    ]
+  }
+}
