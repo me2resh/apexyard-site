@@ -91,7 +91,7 @@ for s in "$apply" "$check"; do
 done
 
 # --- the real site accepts an overlay with the documented tokens ---
-real_json='{"TEAM_PRICE":"FakeValueP","TEAM_PRICE_NOTE":"FakeValueN","TEAM_SUMMARY":"FakeValueS","PLAN_HINT":"FakeValueH"}'
+real_json='{"TEAM_PRICE":"FakeValueP","TEAM_PRICE_NOTE":"FakeValueN","TEAM_SUMMARY":"FakeValueS","PLAN_HINT":"FakeValueH","FREE_REPO_LIMIT":"FakeValueF","TEAM_REPO_LIMIT":"FakeValueR","TEAM_SUPPORT":"FakeValueU","REVIEW_OFFER":"FakeValueO","REVIEW_PRICE":"FakeValueQ"}'
 rlog=$(OVERLAY_JSON="$real_json" "$apply" "$root" "$tmp/real" 2>&1)
 rrc=$?
 assert "the real site applies the documented tokens"  test "$rrc" -eq 0

@@ -38,6 +38,7 @@ on:
       - "*.txt"
       - "*.xml"
       - "skill.md"
+      - "claims.js"
       - "apexdock/**"
   push:
     branches: [main, staging]
@@ -55,6 +56,7 @@ on:
       - "*.txt"
       - "*.xml"
       - "skill.md"
+      - "claims.js"
       - "apexdock/**"
   workflow_dispatch:
 

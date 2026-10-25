@@ -32,6 +32,7 @@ on:
       - "copy-for-ai.js"
       - "product.css"
       - "product.js"
+      - "claims.js"
       - "img/**"
       - ".github/workflows/preview-build.yml"
       - ".github/workflows/preview-deploy.yml"

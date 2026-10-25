@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ApexYard pricing</title>
 <meta name="author" content="me2resh">
-<meta name="description" content="ApexYard pricing: the open-source framework is free under MIT, the hosted tier is free for one repository, and Team is for an organisation. Team pricing is to be announced.">
+<meta name="description" content="ApexYard pricing: the open-source framework, a free way to start, and Team plans for organisations. Team pricing is to be announced.">
 <link rel="canonical" href="https://apexyard.ai/pricing">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -20,14 +20,14 @@
 <meta property="og:site_name" content="ApexYard">
 <meta property="og:url" content="https://apexyard.ai/pricing">
 <meta property="og:title" content="ApexYard pricing">
-<meta property="og:description" content="ApexYard pricing: the open-source framework is free under MIT, the hosted tier is free for one repository, and Team is for an organisation. Team pricing is to be announced.">
+<meta property="og:description" content="ApexYard pricing: the open-source framework, a free way to start, and Team plans for organisations. Team pricing is to be announced.">
 <meta property="og:image" content="https://apexyard.ai/og/index.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://apexyard.ai/pricing">
 <meta name="twitter:title" content="ApexYard pricing">
-<meta name="twitter:description" content="ApexYard pricing: the open-source framework is free under MIT, the hosted tier is free for one repository, and Team is for an organisation. Team pricing is to be announced.">
+<meta name="twitter:description" content="ApexYard pricing: the open-source framework, a free way to start, and Team plans for organisations. Team pricing is to be announced.">
 <meta name="twitter:image" content="https://apexyard.ai/og/index.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,18 +86,30 @@
   <section class="page-head">
     <div class="wrap">
       <h1>Pricing</h1>
-      <p>Start with the free framework or the free hosted tier. Team is for an organisation.</p>
+      <p>Free to start. Team plans put the gate on your whole organisation.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="ladder-title">
+    <div class="wrap">
+      <h2 class="section__title" id="ladder-title">Go as deep as you need</h2>
+      <ol class="ladder">
+        <li><strong>Guide</strong><span>The open-source framework guides your agents with your rules.</span><em>Open source</em></li>
+        <li><strong>Check</strong><span>The hosted gate checks every pull request on GitHub.</span><em>Free to start</em></li>
+        <li><strong><span data-claim="evidence_export">Prove<span class="claim-coming" hidden> Coming</span></span></strong><span>The dashboard, the evidence record, and the <span data-claim="readiness_score">Production-Ready Score<span class="claim-coming" hidden> Coming</span></span>.</span><em>Team plans</em></li>
+        <li><strong><span data-claim="kb_mcp">Learn<span class="claim-coming" hidden> Coming</span></span></strong><span>The knowledge base over MCP. A miss becomes a new rule.</span><em>Team plans</em></li>
+        <li><strong>Run</strong><span>The Cockpit desktop app.</span><em>Coming</em></li>
+      </ol>
     </div>
   </section>
 
   <section aria-label="Plans">
     <div class="wrap plans">
       <article class="plan">
-        <h2>Free</h2>
-        <p class="plan__price">Open source, MIT</p>
-        <p class="plan__for">The open-source framework, in your own repositories.</p>
+        <h2>Open source</h2>
+        <p class="plan__price">MIT licence</p>
+        <p class="plan__for">The framework, in your own repositories.</p>
         <ul>
-          <li>Any number of repositories</li>
           <li>No account and no dashboard needed</li>
           <li>Rules, hooks, skills and review agents as plain files</li>
         </ul>
@@ -105,33 +117,40 @@
       </article>
 
       <article class="plan">
-        <h2>Hosted free</h2>
-        <p class="plan__price">Free for 1 repository</p>
-        <p class="plan__for">The hosted check and dashboard for one repository.</p>
+        <h2>Free to start</h2>
+        <p class="plan__price">Free to start</p>
+        <p class="plan__for">The hosted gate and dashboard.</p>
         <ul>
-          <li>1 repository</li>
+          <li><!--{{FREE_REPO_LIMIT}}-->A starter limit<!--/{{FREE_REPO_LIMIT}}--></li>
           <li>Sign in with GitHub</li>
           <li>The ApexYard check on each pull request</li>
-          <li>The dashboard is optional</li>
         </ul>
-        <a class="btn btn--primary" href="https://app.apexyard.ai">Start free with GitHub</a>
+        <a class="btn btn--quiet" href="https://app.apexyard.ai">Start free with GitHub</a>
       </article>
 
       <article class="plan plan--team" id="team">
-        <h2>Team</h2>
+        <h2>Team plans</h2>
         <p class="plan__price"><!--{{TEAM_PRICE}}-->Pricing to be announced<!--/{{TEAM_PRICE}}--></p>
         <p class="plan__for">For an organisation.</p>
         <ul>
           <li><!--{{TEAM_PRICE_NOTE}}-->Billing to be announced<!--/{{TEAM_PRICE_NOTE}}--></li>
+          <li><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->Your organisation<!--/{{TEAM_REPO_LIMIT}}--><span class="claim-coming" hidden> Coming</span></span></li>
+          <li><span data-claim="named_approval">A named approval on every merge<span class="claim-coming" hidden> Coming</span></span></li>
+          <li><span data-claim="evidence_export">An exportable record for each merge<span class="claim-coming" hidden> Coming</span></span></li>
+          <li><span data-claim="kb_mcp">Shared organisation rules over MCP<span class="claim-coming" hidden> Coming</span></span></li>
+          <li><!--{{TEAM_SUPPORT}}-->Team support<!--/{{TEAM_SUPPORT}}--></li>
           <li><!--{{TEAM_SUMMARY}}-->Details to be announced.<!--/{{TEAM_SUMMARY}}--></li>
         </ul>
-        <a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai">Talk to us from 19 November</a>
+        <a class="btn btn--primary" href="/#book-a-demo">Book a demo</a>
       </article>
     </div>
 
-    <div class="wrap plans-note">
-      <p>The framework stays open source under MIT on every plan.</p>
-      <p>The recording of the 18 November demo will be published on this page.</p>
+    <div class="wrap plans-note" id="readiness-review">
+      <h2 class="section__title">Not sure where you stand?</h2>
+      <p><!--{{REVIEW_OFFER}}-->We can review how your team ships with AI agents today. Details to be announced.<!--/{{REVIEW_OFFER}}--></p>
+      <p><!--{{REVIEW_PRICE}}-->Pricing to be announced<!--/{{REVIEW_PRICE}}--></p>
+      <p><a href="/#book-a-demo">Talk to us</a></p>
+      <p>The framework stays open source under MIT on every plan. The recording of the 18 November demo will be published on this page.</p>
     </div>
   </section>
 </main>
@@ -168,6 +187,7 @@
   </div>
 </div>
 
+<script src="/claims.js" defer></script>
 <script src="/product.js" defer></script>
 </body>
 </html>

@@ -20,6 +20,15 @@
     return;
   }
 
+  // Team claims: claims.js can flip any claim to "Coming" with one line.
+  var claims = window.APEXYARD_CLAIMS || {};
+  document.querySelectorAll('[data-claim]').forEach(function (el) {
+    if (claims[el.getAttribute('data-claim')] !== 'coming') return;
+    el.classList.add('is-coming');
+    var tag = el.querySelector('.claim-coming');
+    if (tag) tag.hidden = false;
+  });
+
   // Mobile nav toggle.
   var toggle = document.querySelector('.nav-toggle');
   var nav = document.getElementById('site-nav');

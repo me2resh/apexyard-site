@@ -387,3 +387,74 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 
 /* Grid children may not grow past the viewport because of a long command. */
 .oss > *, .feature > *, .teaser > *, .plans > * { min-width: 0; }
+
+/* ---------- v3 (#102) ---------- */
+.hero__risk { font-size: clamp(1rem, 1.5vw, 1.15rem); color: var(--ink-2); max-width: 60ch; margin-bottom: 1.25rem; }
+.thesis { padding: clamp(2.5rem, 6vw, 4rem) 0 0; }
+.thesis__line {
+  font-size: clamp(1.4rem, 3vw, 2.1rem); line-height: 1.25; letter-spacing: -0.02em;
+  font-weight: 650; font-variation-settings: 'wdth' 106; max-width: 30ch;
+}
+@media (min-width: 820px) { .proof .proof__two { grid-template-columns: repeat(2, 1fr); } }
+
+.loop { display: grid; gap: 2.5rem; align-items: center; }
+@media (min-width: 900px) { .loop { grid-template-columns: 7fr 5fr; gap: 4rem; } }
+.loop > * { min-width: 0; }
+.loop__steps { margin: 2rem 0 0; padding: 0; list-style: none; display: grid; gap: 0.9rem; }
+.loop__steps li { color: var(--ink-2); padding-left: 1rem; border-left: 2px solid var(--brand); }
+.loop__steps strong { color: var(--ink); }
+.loop__position { margin-top: 2rem; font-weight: 650; font-size: 1.1rem; max-width: 46ch; }
+.loop__figure { max-width: 380px; width: 100%; justify-self: center; }
+.loop__svg { width: 100%; height: auto; display: block; }
+.loop__ring { fill: none; stroke: var(--line); stroke-width: 2; }
+.loop__arc { fill: none; stroke: var(--brand); stroke-width: 3; }
+.loop__head { fill: var(--brand); }
+.loop__node rect { fill: var(--canvas); stroke: var(--ink); stroke-width: 1.5; }
+.loop__node text { fill: var(--ink); font: 650 16px var(--sans); text-anchor: middle; }
+.loop__core { fill: var(--ink-3); font: 500 14px var(--sans); text-anchor: middle; }
+
+.compare { margin-top: 2rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--canvas); }
+.compare table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 15px; }
+.compare th, .compare td { text-align: left; vertical-align: top; padding: 0.85rem 1rem; border-bottom: 1px solid var(--line); }
+.compare tbody tr:last-child th, .compare tbody tr:last-child td { border-bottom: 0; }
+.compare thead th { font-weight: 700; color: var(--ink); }
+.compare thead th:last-child { color: var(--brand); }
+.compare tbody th { font-weight: 650; color: var(--ink); width: 22%; }
+.compare td { color: var(--ink-2); }
+.compare__more { margin-top: 1.5rem; }
+
+.claim-coming {
+  display: inline-block; margin-left: 0.4rem; font-size: 0.8em; font-weight: 600; color: var(--brand);
+  border: 1px solid var(--brand); border-radius: 999px; padding: 0 0.5rem; vertical-align: middle;
+}
+.claim-coming[hidden] { display: none; }
+
+.trust { margin-top: 2rem; display: grid; gap: 2rem; }
+@media (min-width: 900px) { .trust { grid-template-columns: repeat(3, 1fr); gap: 3rem; } }
+.trust h3 { font-size: 1.1rem; margin-bottom: 0.75rem; }
+.trust ul { margin: 0 0 0.75rem; padding-left: 1.1rem; color: var(--ink-2); }
+.trust li + li { margin-top: 0.3rem; }
+.trust p { color: var(--ink-2); }
+.trust p + p { margin-top: 0.75rem; }
+.pending { border: 1.5px dashed var(--ink-3); border-radius: 6px; padding: 0.6rem 0.8rem; background: var(--slot); font-size: 15px; }
+
+.review__price { margin: 1rem 0 1.5rem; font-weight: 700; font-size: 1.15rem; }
+.slot--booking { min-height: 140px; }
+.book__mail { margin-top: 1rem; color: var(--ink-2); }
+.book__mail a { color: var(--brand); font-weight: 600; }
+
+.ladder { list-style: none; margin: 1.5rem 0 3rem; padding: 0; border-top: 1px solid var(--line); counter-reset: rung; }
+.ladder li {
+  counter-increment: rung; display: grid; gap: 0.25rem 1.5rem; padding: 1rem 0; border-bottom: 1px solid var(--line);
+  grid-template-columns: 2.5rem 1fr;
+}
+.ladder li::before { content: counter(rung); grid-row: span 3; font-weight: 760; color: var(--brand); font-size: 1.4rem; line-height: 1.2; }
+.ladder strong { font-size: 1.1rem; }
+.ladder span { color: var(--ink-2); }
+.ladder em { font-style: normal; font-size: 14px; color: var(--ink-3); }
+@media (min-width: 820px) {
+  .ladder li { grid-template-columns: 2.5rem 10rem 1fr 9rem; align-items: baseline; }
+  .ladder li::before { grid-row: auto; }
+  .ladder em { text-align: right; }
+}
+.plans-note .section__title { margin-bottom: 1rem; }
