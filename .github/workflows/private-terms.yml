@@ -1,0 +1,45 @@
+name: Private terms
+
+# #102. Fails when any tracked file holds a private term: a real price, a
+# real plan limit, an offer name or another term the owner keeps private.
+#
+# The terms are never in this repository; a committed list would publish
+# them. They come only from the PRIVATE_TERMS repo secret (one term per
+# line). .github/scripts/check-private-terms.sh masks each term before use
+# and prints only the file path and the term's index number on a hit.
+#
+# No path filter: a term can land in any tracked file.
+#
+# Without the secret (a pull request from a fork, or before the owner sets
+# it), the check skips with a notice. Set the repo variable
+# PRIVATE_TERMS_REQUIRED to true after the secret exists: from then on a
+# push to main or staging fails when the secret is missing, so the check
+# cannot fail open there.
+#
+# The staging deploy (deploy-staging-v2.yml) runs the same script with the
+# STAGING_OVERLAY values before it applies the overlay.
+
+on:
+  pull_request:
+  push:
+    branches: [main, staging]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  private-terms:
+    name: no private term in tracked files
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Check tracked files for private terms
+        env:
+          PRIVATE_TERMS: ${{ secrets.PRIVATE_TERMS }}
+          REQUIRE_PRIVATE_TERMS: ${{ github.event_name == 'push' && vars.PRIVATE_TERMS_REQUIRED == 'true' }}
+        run: .github/scripts/check-private-terms.sh .

@@ -49,7 +49,7 @@ jobs:
             --max-retries 3
             --retry-wait-time 2
             --root-dir "${{ github.workspace }}"
-            --exclude "/(game|skills|architecture|how-it-works)(\.md)?$"
+            --exclude "/(game|skills|architecture|how-it-works|pricing|docs)(\.md)?$"
             --exclude "/(index|architecture|skills|how-it-works|game)\.md$"
             --exclude "https?://(www\.)?me2resh\.com"
             "*.html"
