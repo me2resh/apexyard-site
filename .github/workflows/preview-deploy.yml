@@ -39,7 +39,8 @@ jobs:
     name: publish PR preview
     if: >-
       github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.event == 'pull_request'
+      github.event.workflow_run.event == 'pull_request' &&
+      vars.SITE_V2_ON_STAGING != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     # One fixed group for every preview: two previews must never sync the

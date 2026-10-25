@@ -88,6 +88,46 @@ assert "fork PR lookup matches head repository"     has "$deploy" 'head\.repo\.f
 assert "unknown PR number does not fail the job"    has "$deploy" 'PR number unknown'
 assert "production approval is its own job"         has "$wf/deploy-aws.yml" '^  approve-production:'
 
+# #102: SITE_V2_ON_STAGING=true pauses every writer to the staging bucket
+# except the site v2 overlay deploy. It must never touch production.
+pause_switch() {
+  python3 - "$wf" <<'PY'
+import os, sys, yaml
+wf = sys.argv[1]
+OFF = "vars.SITE_V2_ON_STAGING != 'true'"
+errors = []
+aws = yaml.safe_load(open(os.path.join(wf, "deploy-aws.yml")))["jobs"]
+staging = aws["deploy-staging"]
+if "SITE_V2_ON_STAGING" in str(staging.get("if", "")):
+    errors.append("deploy-staging must stay a job that succeeds; gate its steps, not the job")
+for step in staging["steps"]:
+    cond = str(step.get("if", ""))
+    if step.get("name") == "Staging paused for site v2":
+        if "vars.SITE_V2_ON_STAGING == 'true'" not in cond:
+            errors.append("the pause notice must run only when the switch is on")
+        continue
+    if OFF not in cond:
+        errors.append(f"deploy-staging step {step.get('name') or step.get('uses')} ignores the switch")
+for name in ("approve-production", "deploy-production"):
+    if "SITE_V2_ON_STAGING" in yaml.safe_dump(aws[name]):
+        errors.append(f"{name} must not read the switch")
+prev = yaml.safe_load(open(os.path.join(wf, "preview-deploy.yml")))["jobs"]["deploy"]
+if OFF not in str(prev.get("if", "")):
+    errors.append("preview deploy ignores the switch")
+man = yaml.safe_load(open(os.path.join(wf, "deploy-aws-staging.yml")))["jobs"]["deploy"]
+if OFF not in str(man.get("if", "")):
+    errors.append("manual staging deploy ignores the switch")
+for e in errors:
+    print("    " + e)
+sys.exit(1 if errors else 0)
+PY
+}
+if python3 -c 'import yaml' 2>/dev/null; then
+  assert "SITE_V2_ON_STAGING pauses staging writers only" pause_switch
+else
+  echo "  skip  pause switch check (PyYAML not installed)"
+fi
+
 echo
 echo "passed $pass, failed $fail"
 [ "$fail" -eq 0 ]
