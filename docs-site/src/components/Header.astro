@@ -1,0 +1,48 @@
+---
+// Docs header: the AY mark, the product nav, search and the theme control.
+// The nav items match the product site so a reader can move between them.
+import Search from 'virtual:starlight/components/Search';
+import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
+import SiteNav from './SiteNav.astro';
+import Mark from './Mark.astro';
+---
+
+<div class="ay-header">
+  <a href="/docs" class="ay-brand">
+    <Mark />
+    <span class="ay-brand__name">ApexYard</span>
+    <span class="ay-brand__section">Docs</span>
+  </a>
+  <div class="ay-header__search print:hidden">
+    <Search />
+  </div>
+  <div class="ay-header__right sl-hidden md:sl-flex print:hidden">
+    <SiteNav />
+    <ThemeSelect />
+  </div>
+</div>
+
+<script>
+  // Announce the search result count to screen readers. The search UI updates
+  // its message text, but the text is not a live region. The search opens as
+  // a modal dialog, which makes the page outside it inert, so the live region
+  // must sit inside the dialog.
+  const dialog = document.querySelector('site-search dialog');
+  const root = document.getElementById('starlight__search');
+  if (dialog && root) {
+    const status = document.createElement('p');
+    status.className = 'sr-only';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    status.dataset.searchStatus = '';
+    dialog.querySelector('.dialog-frame')?.append(status) ?? dialog.append(status);
+    let last = '';
+    new MutationObserver(() => {
+      const text = root.querySelector('.pagefind-ui__message')?.textContent?.trim() || '';
+      if (text && text !== last) {
+        last = text;
+        status.textContent = text;
+      }
+    }).observe(root, { childList: true, subtree: true, characterData: true });
+  }
+</script>

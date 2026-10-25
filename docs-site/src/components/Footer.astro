@@ -1,0 +1,16 @@
+---
+// Article footer: previous and next links, then the source line.
+import Pagination from 'virtual:starlight/components/Pagination';
+import nav from '../generated/nav.json';
+
+const { source } = nav;
+---
+
+<footer class="ay-footer">
+  <Pagination />
+  <p class="ay-footer__source">
+    These pages are generated from
+    <a href={`${source.url}/tree/${source.tag}`}>{source.repo} at {source.tag}</a>.
+    <a href="/docs/llms.txt">Page list for agents (llms.txt)</a>.
+  </p>
+</footer>
