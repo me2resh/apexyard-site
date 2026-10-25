@@ -23,10 +23,12 @@
   // Team claims: claims.js can flip any claim to "Coming" with one line.
   var claims = window.APEXYARD_CLAIMS || {};
   document.querySelectorAll('[data-claim]').forEach(function (el) {
-    if (claims[el.getAttribute('data-claim')] !== 'coming') return;
-    el.classList.add('is-coming');
+    var state = claims[el.getAttribute('data-claim')];
+    if (state !== 'coming' && state !== 'live') return; // keep the markup default
+    var coming = state === 'coming';
+    el.classList.toggle('is-coming', coming);
     var tag = el.querySelector('.claim-coming');
-    if (tag) tag.hidden = false;
+    if (tag) tag.hidden = !coming;
   });
 
   // Theme toggle. The page follows the system setting until the visitor
@@ -49,6 +51,35 @@
     if (dark.addEventListener) dark.addEventListener('change', sync);
     sync();
     themeBtn.hidden = false;
+  }
+
+  // Product menu (disclosure pattern). Without JS the list stays open.
+  var menuBtn = document.querySelector('.site-nav__menu');
+  var menu = document.getElementById('product-menu');
+  if (menuBtn && menu) {
+    var setMenu = function (open) {
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      menu.hidden = !open;
+    };
+    setMenu(false);
+    document.documentElement.classList.add('has-menu');
+    menuBtn.addEventListener('click', function () {
+      setMenu(menuBtn.getAttribute('aria-expanded') !== 'true');
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menuBtn.getAttribute('aria-expanded') === 'true') {
+        setMenu(false);
+        menuBtn.focus();
+        e.stopImmediatePropagation(); // a second Escape closes the mobile nav
+      }
+    });
+    document.addEventListener('click', function (e) {
+      if (!menu.hidden && !menuBtn.contains(e.target) && !menu.contains(e.target)) setMenu(false);
+    });
+    menu.addEventListener('focusout', function (e) {
+      if (window.matchMedia('(min-width: 980px)').matches && e.relatedTarget &&
+          !menu.contains(e.relatedTarget) && e.relatedTarget !== menuBtn) setMenu(false);
+    });
   }
 
   // Mobile nav toggle.
@@ -144,7 +175,7 @@
     var d = a.getAttribute('data-d');
     if (!u || !d) return;
     a.setAttribute('href', 'mail' + 'to:' + encodeURIComponent(u) + '@' + encodeURIComponent(d) +
-      '?subject=' + encodeURIComponent('ApexYard Team'));
+      '?subject=' + encodeURIComponent(a.getAttribute('data-s') || 'ApexYard Team'));
     a.addEventListener('click', function () { track('mailto_click'); });
   });
 

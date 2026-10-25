@@ -5,4 +5,14 @@
 # booking page replaces it. Switch-on checklist item in PR #106: "Replace the
 # placeholder booking URL https://cal.com/apexyard/demo with the real
 # booking page".
-^https://cal\.com/apexyard/demo$
+^https://cal\.com/apexyard/demo(\?.*)?$
+
+# Clean URLs of the three product pages (#102). The CDN serves /build,
+# /gate and /readiness from build.html, gate.html and readiness.html, so
+# the offline file check cannot resolve them. The CI workflow excludes the
+# older clean URLs the same way.
+^file://.*/(build|gate|readiness)$
+^file://.*/pricing#(build|gate|readiness)$
+# Their canonical production URLs return 404 until the pages reach
+# production. Remove this line after the switch-on deploy.
+^https://apexyard\.ai/(build|gate|readiness)$

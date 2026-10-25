@@ -11,13 +11,13 @@
 
 The site v2 pages need commercial values for review on `staging.apexyard.ai`. The repository is public. Files, branch names, commit messages, PR bodies, issue bodies and Actions logs must hold no such value. Production must never show one.
 
-The shared `github-actions-deployer` role trusts the `ref:refs/heads/main` subject only (instaloc-infra AgDR-0023). A job that declares `environment:` presents the `environment:<name>` subject. A job on the `staging` branch presents `ref:refs/heads/staging`. Neither subject can assume the shared role.
+The shared `github-actions-deployer` role trusts the `ref:refs/heads/main` subject only (AgDR-0023 in the infrastructure repo). A job that declares `environment:` presents the `environment:<name>` subject. A job on the `staging` branch presents `ref:refs/heads/staging`. Neither subject can assume the shared role.
 
 ## Options Considered
 
 | Option | Pros | Cons |
 |--------|------|------|
-| A. Environment secret on `staging`, one job on the `staging` branch, scoped AWS role | The branch policy limits the secret to the `staging` branch. The secret, the overlay and the S3 write stay in one job. | Needs a new role in instaloc-infra that trusts `environment:staging`. |
+| A. Environment secret on `staging`, one job on the `staging` branch, scoped AWS role | The branch policy limits the secret to the `staging` branch. The secret, the overlay and the S3 write stay in one job. | Needs a new role in the infrastructure repo that trusts `environment:staging`. |
 | B. Repository secret, a `main` workflow that checks out `staging` | Works with the shared role. No infrastructure change. | Every workflow on every branch can read a repository secret. No branch policy. |
 | C. Two jobs: overlay in an environment job, sync in a `main` job | Works with the shared role. | The overlaid site must move between jobs as an artifact. A public repository exposes artifacts to any signed-in user. |
 | D. Private overlay repository | Gives value history. | Adds a deploy key to rotate and a second repository. It does not solve the AWS subject problem. |
