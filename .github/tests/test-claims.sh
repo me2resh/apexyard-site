@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
-# Guard for #102: every Team claim on a page has one switch in claims.js,
-# every switch is 'live' or 'coming', and every claim can show its
-# "Coming" tag. A claim with no switch cannot flip on switch-on day.
+# Guard for #102: claim switches use live or coming, every page claim has
+# a switch, and every switch is used. Load claims.js before product.js.
+# Root pages must not render Coming labels or carry the old label classes.
 
 set -uo pipefail
 
@@ -13,32 +13,34 @@ import glob, os, re, sys
 
 root = sys.argv[1]
 cfg = open(os.path.join(root, "claims.js"), encoding="utf-8").read()
-switches = dict(re.findall(r"^\s*([a-z_]+):\s*'([a-z]+)'", cfg, re.M))
+switches = dict(re.findall(r"^\s*([a-z_]+):\s*'([^']*)'", cfg, re.M))
 errors = []
+if not switches:
+    errors.append("claims.js: no switches found")
 for key, value in switches.items():
     if value not in ("live", "coming"):
         errors.append(f"claims.js: {key} is '{value}', not 'live' or 'coming'")
 
 used = set()
 for path in sorted(glob.glob(os.path.join(root, "*.html"))):
-    text = open(path, encoding="utf-8").read()
     rel = os.path.basename(path)
-    for m in re.finditer(r'<span (class="is-coming" )?data-claim="([a-z_]+)">', text):
-        key = m.group(2)
+    if rel == "game.html":
+        continue
+    text = open(path, encoding="utf-8").read()
+    keys = re.findall(r'\bdata-claim\s*=\s*[\"\']([^\"\']+)[\"\']', text)
+    for key in keys:
         used.add(key)
         if key not in switches:
             errors.append(f"{rel}: claim {key} has no switch in claims.js")
-            continue
-        # The markup default should match claims.js, so the page is right
-        # without JavaScript. A mismatch is a note, not a failure: a claim
-        # must stay one config line to flip on switch-on day.
-        if bool(m.group(1)) != (switches[key] == "coming"):
-            print(f"  note  {rel}: claim {key} markup default differs from claims.js ('{switches[key]}'); JS applies claims.js")
-    if 'data-claim="' in text:
-        if text.count('data-claim="') != text.count('class="claim-coming" hidden'):
-            errors.append(f"{rel}: a claim has no hidden Coming tag")
-        if '/claims.js' not in text or text.index('/claims.js') > text.index('/product.js'):
+    if keys:
+        scripts = re.findall(r'<script\b[^>]*\bsrc=[\"\']([^\"\']+)[\"\']', text)
+        if '/claims.js' not in scripts or '/product.js' not in scripts or scripts.index('/claims.js') > scripts.index('/product.js'):
             errors.append(f"{rel}: claims.js must load before product.js")
+    for marker in ("claim-coming", "is-coming"):
+        if marker in text:
+            errors.append(f"{rel}: obsolete {marker} marker")
+    if re.search(r'>\s*Coming\s*<', text):
+        errors.append(f"{rel}: visible Coming label")
 
 for key in sorted(set(switches) - used):
     errors.append(f"claims.js: switch {key} matches no claim on any page")

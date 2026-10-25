@@ -233,21 +233,28 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 
 /* ---------- hero ---------- */
 .hero { padding: clamp(2.5rem, 7vw, 5.5rem) 0 clamp(3rem, 7vw, 5rem); }
-.hero__grid { display: grid; gap: 2.75rem; }
+/* The headline spans the full measure, so each sentence holds one line at
+   desktop width. The text and the ledger sit below it, side by side. */
+.hero__grid { display: grid; gap: 1.5rem; }
 .hero__grid > * { min-width: 0; }
+.hero__grid > .ledger { margin-top: 1.25rem; }
 @media (min-width: 1040px) {
-  .hero__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 3.5rem; align-items: center; }
+  .hero__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: 3.5rem; row-gap: 2.25rem; align-items: start; }
+  .hero__head { grid-column: 1 / -1; }
+  .hero__grid > .ledger { margin-top: 0; }
 }
 .hero__risk { font-size: clamp(1rem, 1.4vw, 1.1rem); color: var(--ink-2); max-width: 52ch; margin-bottom: 1.25rem; }
 .hero h1 {
-  font-size: clamp(2.4rem, 5.2vw, 4.1rem);
+  font-size: clamp(2.2rem, 5.6vw, 4.25rem);
   line-height: 1.02;
   letter-spacing: -0.03em;
   font-weight: 820;
-  font-stretch: 118%;
+  font-stretch: 112%;
+  max-width: 22ch;
 }
+@media (min-width: 1040px) { .hero h1 { max-width: none; font-size: clamp(3rem, 4.6vw, 3.7rem); } }
 .hero h1 span { display: block; }
-.hero__sub { margin-top: 1.5rem; font-size: clamp(1.05rem, 1.5vw, 1.2rem); line-height: 1.55; color: var(--ink-2); max-width: 56ch; }
+.hero__sub { margin-top: 0; font-size: clamp(1.05rem, 1.5vw, 1.2rem); line-height: 1.55; color: var(--ink-2); max-width: 56ch; }
 .hero__actions { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
 .hero__hint { margin-top: 1rem; font-size: 15px; color: var(--ink-2); }
 
@@ -326,15 +333,15 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 }
 .section__lede { margin-top: 1rem; color: var(--ink-2); max-width: 62ch; font-size: 18px; }
 
-/* proof: buyer numbers only */
+/* Sample outcome metrics */
 .proof { padding: clamp(2.5rem, 6vw, 4rem) 0; border-top: 1px solid var(--line); }
-.proof__two { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem; }
-.proof__two li { color: var(--ink-2); font-size: 18px; max-width: 30ch; }
-.proof__two strong {
+.proof__metrics { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem; }
+.proof__metrics li { color: var(--ink-2); font-size: 18px; max-width: 30ch; }
+.proof__figure {
   display: block; margin-bottom: 0.35rem; color: var(--ink);
   font: 820 clamp(2.6rem, 6vw, 4rem)/1 var(--display); font-stretch: 112%; letter-spacing: -0.02em;
 }
-@media (min-width: 820px) { .proof__two { grid-template-columns: repeat(2, 1fr); gap: 3rem; } }
+@media (min-width: 820px) { .proof__metrics { grid-template-columns: repeat(3, 1fr); gap: 3rem; } }
 
 /* the loop: a real sequence, so it is numbered */
 .loop { display: grid; gap: 2.5rem; align-items: center; }
@@ -365,16 +372,6 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 .compare td { color: var(--ink-2); }
 .compare__team { border-top: 4px solid var(--ink); }
 .compare__more { margin-top: 1.5rem; }
-
-/* A claim's "Coming" tag shows only when the claim carries .is-coming.
-   The markup sets .is-coming for the claims that default to "coming", so
-   the page is right without JavaScript; product.js applies claims.js. */
-.claim-coming {
-  display: none; margin-left: 0.4rem; padding: 0 0.5rem;
-  font-size: 0.8em; font-weight: 600; color: var(--brand);
-  border: 1px solid var(--brand); border-radius: 999px; vertical-align: middle;
-}
-.is-coming > .claim-coming { display: inline-block; }
 
 /* placeholder prices: visible until the overlay supplies the value */
 .price-flag {
@@ -426,7 +423,11 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 .works ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; }
 .works li { font: 700 clamp(1.1rem, 2vw, 1.35rem) var(--display); font-stretch: 106%; }
 
-/* open source + install tabs */
+.proof__sample { display: inline-block; padding: 0 0.45rem; border: 1px solid var(--line); border-radius: 4px; font-size: 14px; }
+.proof__access { margin-top: 2rem; color: var(--ink-2); }
+.plans-line__inner > p + p { margin-top: 1.5rem; }
+
+/* Install tabs */
 .oss { display: grid; gap: 2.5rem; }
 .oss > * { min-width: 0; }
 @media (min-width: 900px) { .oss { grid-template-columns: 5fr 7fr; gap: 4rem; align-items: start; } }
@@ -505,25 +506,27 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
   margin-top: 2rem; display: grid; gap: 1px;
   background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
 }
-.plan { display: flex; flex-direction: column; gap: 0.9rem; padding: 1.5rem; background: var(--surface); }
+.plan { position: relative; display: flex; flex-direction: column; gap: 0.9rem; padding: 1.5rem 1.25rem; background: var(--surface); }
 .plan > * { min-width: 0; }
-.plan--team { border-top: 4px solid var(--ink); padding-top: calc(1.5rem - 4px); }
-.plan h3 { font-size: 1.3rem; font-stretch: 108%; }
-.plan__price { font: 760 1.45rem/1.25 var(--display); font-stretch: 104%; }
-.plan__note { color: var(--ink-2); font-size: 15px; }
-.plan__for { color: var(--ink-2); }
-.plan ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
-.plan li { padding: 0.65rem 0; border-bottom: 1px solid var(--line); font-size: 15px; color: var(--ink-2); }
-.plan .btn { margin-top: auto; width: 100%; padding: 0.55rem 0.75rem; text-align: center; font-size: 15px; }
+.plan--team { border-top: 4px solid var(--ink); padding-top: 2.75rem; }
+.plan__flag { position: absolute; top: 0.6rem; left: 1.25rem; font: 600 14px/1.3 var(--text); color: var(--brand); }
+.plan__name { font: 760 1.3rem/1.3 var(--display); font-stretch: 108%; }
+.plan__for { color: var(--ink-2); font-size: 15px; }
+.plan__amount { font: 760 1.45rem/1.25 var(--display); font-stretch: 104%; }
+.plan__note { margin-top: 0.5rem; color: var(--ink-2); font-size: 15px; }
+.plan__points { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); align-self: start; width: 100%; }
+.plan__points li { padding: 0.65rem 0; border-bottom: 1px solid var(--line); font-size: 15px; color: var(--ink-2); }
+.plan__action { margin-top: auto; align-self: end; width: 100%; }
+.plan__action .btn { width: 100%; padding: 0.55rem 0.75rem; text-align: center; font-size: 15px; }
+/* The Team card note sits above the button and reads stronger than the price note. */
+.plan__action .plan__note { margin: 0 0 0.75rem; color: var(--ink); font-weight: 600; }
+.plans__fine { margin-top: 1rem; font-size: 14px; color: var(--ink-2); }
 @media (min-width: 700px) {
-  .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .plan:last-child { grid-column: 1 / -1; }
-}
-@media (min-width: 1100px) {
-  .plans { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-  .plan:last-child { grid-column: auto; }
-  .plan { padding: 1.5rem 1.25rem; }
-  .plan--team { padding-top: calc(1.5rem - 4px); }
+  .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; }
+  .plan { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 0.9rem; }
+  /* Every card keeps room for the Team flag, so the names share one line. */
+  .plans--4 .plan { padding-top: 2.75rem; }
+  .plans--4 .plan--team { padding-top: calc(2.75rem - 4px); }
 }
 
 /* services: two plain columns divided by a rule */
@@ -665,8 +668,215 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 .feature--text { grid-template-columns: 1fr; }
 .feature--text .feature__text { order: 0; }
 .feature--text p { max-width: 64ch; }
-.plan__flag { font: 600 14px/1.3 var(--text); color: var(--brand); }
-.plan__action { margin-top: auto; padding-top: 0.5rem; }
-.plan__action .btn { width: 100%; padding: 0.55rem 0.75rem; text-align: center; font-size: 15px; }
 .plan__price a { color: var(--ink); }
 .app-access__control { margin-top: 1.25rem; color: var(--ink); }
+
+/* ---------- staging review (#102) ---------- */
+
+/* proof strip: sample metrics, marked as samples until switch-on */
+.proof__metrics li { max-width: 32ch; }
+.proof__figure { color: var(--ink-2); }
+.proof__sample {
+  display: inline-block; margin-right: 0.35rem; padding: 0 0.45rem; vertical-align: 0.1em;
+  font: 600 12px/1.7 var(--text); color: var(--ink-2);
+  border: 1px dashed var(--ink-2); border-radius: 4px;
+}
+.proof__access { margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--line); color: var(--ink); font-weight: 600; }
+.proof__access a { font-weight: 400; margin-left: 0.25rem; }
+
+/* home: one plans line instead of the table */
+.plans-line { padding: clamp(2.5rem, 6vw, 4rem) 0; }
+.plans-line__inner { display: grid; gap: 1rem; }
+.plans-line__inner .section__lede { margin-top: 0; }
+.plans-line__inner > p + p { margin-top: 0.5rem; }
+@media (min-width: 900px) {
+  .plans-line__inner { grid-template-columns: 5fr 7fr; column-gap: 4rem; align-items: center; }
+  .plans-line__inner .section__title { grid-row: span 2; }
+}
+
+/* install: tabs by operating system */
+.install { border: 0; padding: 0; background: none; }
+.tabs .cmd { display: grid; gap: 0.6rem; padding: 0; background: none; }
+.tabs .cmd pre { min-width: 0; margin: 0; }
+.tabs .cmd code { white-space: pre; }
+.tabs .cmd button { justify-self: start; }
+.tabs__panel a { font-weight: 600; }
+
+/* ---------- the rule map: one rule, five stages ---------- */
+.rule-map { margin: clamp(2rem, 4vw, 3rem) 0 0; }
+.rule-map__board { position: relative; }
+.rule-map__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.rule-map__track { fill: none; stroke: var(--line); stroke-width: 2; }
+.rule-map__trail { fill: none; stroke: var(--brand); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 0 99999; }
+.rule-map__token rect { fill: var(--brand); stroke: var(--paper); stroke-width: 3; }
+.rule-map:not(.is-ready) .rule-map__token { display: none; }
+
+.rule-map__stages {
+  position: relative; list-style: none; margin: 0; padding: 0 2.25rem 0 0;
+  display: grid; gap: 1.25rem;
+}
+.rule-map__btn {
+  width: 100%; min-height: 64px; display: grid; gap: 0.1rem; align-content: center;
+  padding: 0.8rem 1rem; text-align: left; cursor: pointer;
+  color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  font: inherit;
+}
+.rule-map__btn:hover { border-color: var(--ink-2); }
+.rule-map__btn[aria-selected="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.rule-map__name {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font: 760 1.1rem/1.25 var(--display); font-stretch: 106%;
+}
+.rule-map__name::before {
+  content: ""; width: 10px; height: 10px; flex: none; border-radius: 2px;
+  border: 2px solid var(--line); transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.rule-map__stage.is-lit .rule-map__name::before { background: var(--brand); border-color: var(--brand); }
+.rule-map__what { font-size: 14px; color: var(--ink-2); }
+
+@media (min-width: 760px) {
+  .rule-map__stages { padding: 0; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: clamp(2rem, 4.5vw, 4rem); row-gap: 3.5rem; }
+  .rule-map__stage--miss { grid-column: 2 / 4; justify-self: center; width: min(100%, 17rem); }
+}
+
+.rule-map__examples { margin-top: 2rem; }
+.rule-map__example {
+  max-width: 880px; padding: clamp(1.25rem, 3vw, 1.75rem);
+  background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--ink);
+  border-radius: 4px 4px 10px 10px;
+}
+.rule-map__example + .rule-map__example { margin-top: 1.25rem; }
+.rule-map__example[hidden] { display: none; }
+.rule-map__example > * + * { margin-top: 0.9rem; }
+.rule-map__title { font-size: clamp(1.15rem, 2vw, 1.35rem); line-height: 1.25; font-stretch: 106%; }
+.rule-map__example p { color: var(--ink-2); max-width: 64ch; }
+.rule-map__file, .rule-map__check { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.rule-map__path, .rule-map__repo { padding: 0.5rem 0.9rem; font-size: 14px; background: var(--paper); border-bottom: 1px solid var(--line); }
+.rule-map__path { font-family: var(--mono); font-size: 13px; overflow-wrap: anywhere; }
+.rule-map__example .rule-map__path, .rule-map__example .rule-map__repo { max-width: none; }
+.rule-map__table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.rule-map__table th, .rule-map__table td { padding: 0.6rem 0.9rem; text-align: left; vertical-align: top; }
+.rule-map__table th { color: var(--ink-2); font-weight: 600; font-size: 14px; border-bottom: 1px solid var(--line); }
+.rule-map__table td { color: var(--ink); }
+.rule-map__term {
+  margin: 0; padding: 0.9rem 1rem; overflow-x: auto;
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+  font-size: 13.5px; line-height: 1.55; color: var(--ink);
+}
+.rule-map__example .rule-map__row {
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  padding: 0.6rem 0.9rem; color: var(--ink); max-width: none;
+}
+.rule-map__row + .rule-map__row { border-top: 1px solid var(--line); }
+.rule-map__level { display: block; font-size: 13px; color: var(--ink-2); }
+.rule-map__state { display: inline-flex; align-items: center; gap: 0.45rem; flex: none; font-weight: 600; font-size: 14px; }
+.rule-map__state::before { content: ""; width: 10px; height: 10px; flex: none; }
+.rule-map__state--pass { color: var(--pass-ink); }
+.rule-map__state--pass::before { background: var(--pass); border-radius: 50%; }
+.rule-map__state--warn { color: var(--wait-ink); }
+.rule-map__state--warn::before { background: var(--wait); border-radius: 2px; }
+.rule-map__state--block { color: var(--block-ink); }
+.rule-map__state--block::before { background: var(--block); transform: rotate(45deg) scale(0.85); }
+.rule-map__example .rule-map__source { font-size: 14px; }
+.one-rule__links { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: 0.5rem 1.75rem; font-weight: 600; }
+
+/* ---------- pricing: the product switcher (WAI-ARIA tabs) ---------- */
+.switcher { margin-top: 2rem; }
+.switcher__list {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px;
+  padding: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+}
+@media (min-width: 600px) { .switcher__list { display: inline-flex; } }
+.switcher__tab {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 0 1.15rem;
+  font: 600 15px/1.2 var(--text); color: var(--ink-2); text-decoration: none;
+  border-radius: 5px;
+}
+.switcher__tab:hover { color: var(--ink); background: var(--paper); }
+.switcher__tab[aria-selected="true"] { color: var(--paper); background: var(--ink); }
+.switcher__note { margin-top: 0.9rem; color: var(--ink-2); font-size: 15px; }
+.has-switcher .price-group { padding-top: clamp(1rem, 2vw, 1.5rem); }
+.has-switcher .price-group[hidden] { display: none; }
+/* Set before first paint by the head script of pricing.html (no layout shift). */
+[data-panel="build"] .price-group:not(#build),
+[data-panel="gate"] .price-group:not(#gate),
+[data-panel="readiness"] .price-group:not(#readiness),
+[data-panel="assessments"] .price-group:not(#assessments) { display: none; }
+.has-switcher .price-group__head .section__title {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.has-switcher .price-group__head .section__lede { margin-top: 0; }
+
+/* ---------- placeholders for features that are not built (#102) ---------- */
+/* Each mock is a fictional example with sample data and an Example caption. */
+.mock {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  overflow: hidden; font-size: 14px; color: var(--ink);
+}
+.mock p { margin-top: 0; max-width: none; color: inherit; }
+.mock__bar {
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  padding: 0.65rem 1rem; background: var(--paper); border-bottom: 1px solid var(--line);
+}
+.mock__title { font-weight: 600; }
+.mock__meta { color: var(--ink-2); font-size: 13px; overflow-wrap: anywhere; text-align: right; }
+.mock__body { padding: 1.1rem 1rem 1.25rem; display: grid; gap: 1rem; }
+.mock__caption { margin-top: 0.75rem; font-size: 14px; color: var(--ink-2); }
+.mock__tag {
+  display: inline-block; margin-right: 0.4rem; padding: 0 0.45rem;
+  font: 600 12px/1.7 var(--text); color: var(--ink-2);
+  border: 1px dashed var(--ink-2); border-radius: 4px;
+}
+
+/* readiness score card and trend */
+.mock-score__head { display: flex; justify-content: space-between; align-items: end; gap: 1rem; }
+.mock-score__repo { color: var(--ink-2); }
+.mock-score__value { font: 820 2.6rem/1 var(--display); font-stretch: 112%; }
+.mock-score__value span { font-size: 1rem; font-weight: 600; color: var(--ink-2); margin-left: 0.2rem; }
+.mock-score__trend { width: 100%; height: auto; display: block; }
+.mock-score__grid { stroke: var(--line); stroke-width: 1; }
+.mock-score__line { fill: none; stroke: var(--brand); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+.mock-score__dot { fill: var(--brand); }
+.mock-score__axis { fill: var(--ink-2); font: 400 11px var(--text); }
+.mock-score__areas { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+.mock-score__areas li { display: grid; grid-template-columns: 8.5rem 1fr 2rem; align-items: center; gap: 0.75rem; }
+.mock-score__areas b { font-weight: 600; text-align: right; }
+.mock-meter { height: 8px; background: var(--paper); border-radius: 4px; overflow: hidden; }
+.mock-meter::before { content: ""; display: block; height: 100%; background: var(--ink-2); border-radius: 4px; }
+.mock-meter--90::before { width: 90%; }
+.mock-meter--80::before { width: 80%; }
+.mock-meter--60::before { width: 60%; }
+.mock-meter--50::before { width: 50%; }
+
+/* a CI run */
+.mock-ci { list-style: none; margin: 0; padding: 0; }
+.mock-ci li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid var(--line); }
+.mock-ci li:last-child { border-bottom: 0; }
+.mock-ci li span:first-child { display: inline-flex; align-items: center; gap: 0.55rem; }
+.mock-ci li span:first-child::before { content: ""; width: 10px; height: 10px; flex: none; border-radius: 50%; background: var(--pass); }
+.mock-ci li span:last-child { color: var(--ink-2); white-space: nowrap; }
+.mock-ci__note { color: var(--ink-2); }
+
+/* the Cockpit window */
+.mock-window__dots { display: inline-flex; gap: 6px; }
+.mock-window__dots span { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.mock-cockpit { display: grid; grid-template-columns: 9.5rem 1fr; min-height: 15rem; }
+.mock-cockpit__side { padding: 1rem; border-right: 1px solid var(--line); display: grid; gap: 0.4rem; align-content: start; color: var(--ink-2); }
+.mock-cockpit__side b { color: var(--ink); font-weight: 600; }
+.mock-cockpit__main { padding: 1rem 1.1rem; display: grid; gap: 0.8rem; align-content: start; }
+.mock-cockpit__ticket { font: 700 1.05rem/1.3 var(--display); font-stretch: 104%; }
+.mock-cockpit__steps { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.mock-cockpit__steps li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.5rem 0; border-bottom: 1px solid var(--line); }
+.mock-cockpit__steps li span:last-child { color: var(--ink-2); }
+.mock-cockpit__next {
+  justify-self: start; padding: 0.45rem 0.9rem; border-radius: var(--radius);
+  background: var(--brand); color: var(--on-brand); font-weight: 600;
+}
+@media (max-width: 480px) {
+  .mock-cockpit { grid-template-columns: 1fr; }
+  .mock-cockpit__side { border-right: 0; border-bottom: 1px solid var(--line); }
+  .mock-score__areas li { grid-template-columns: 7rem 1fr 2rem; }
+}

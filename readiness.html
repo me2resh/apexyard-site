@@ -75,9 +75,9 @@
       <div class="site-nav__group">
         <button class="site-nav__menu" type="button" aria-expanded="false" aria-controls="product-menu">Product</button>
         <ul class="site-nav__sub" id="product-menu">
+          <li><a href="/build">Build</a></li>
           <li><a href="/gate">Gate</a></li>
           <li><a href="/readiness" aria-current="page">Readiness</a></li>
-          <li><a href="/build">Build</a></li>
         </ul>
       </div>
       <a href="/pricing">Pricing</a>
@@ -111,17 +111,56 @@
             <p>We run the readiness audit on your repository. You get a go or no-go, the gaps in each area and the top actions. It covers security, accessibility, compliance, analytics, search, AI search, performance, monitoring, documentation and behaviour quality.</p>
           </div>
         </article>
-        <article class="feature feature--text">
+        <article class="feature">
           <div class="feature__text">
-            <h3><span class="is-coming" data-claim="readiness_score">A readiness score for every repository<span class="claim-coming" hidden> Coming</span></span></h3>
-            <p>Each repository gets a score and a trend over time. <span class="is-coming" data-claim="readiness_weekly">The audit runs on a schedule, every week.<span class="claim-coming" hidden> Coming</span></span></p>
+            <h3><span data-claim="readiness_score">A readiness score for every repository</span></h3>
+            <p>Each repository gets a score and a trend over time. <span data-claim="readiness_weekly">The audit runs on a schedule, every week.</span></p>
           </div>
+          <figure class="feature__media">
+            <div class="mock" aria-hidden="true">
+              <div class="mock__bar"><span class="mock__title">Readiness</span><span class="mock__meta">example-co</span></div>
+              <div class="mock__body">
+                <div class="mock-score__head">
+                  <p class="mock-score__repo">example-co/payments-api</p>
+                  <p class="mock-score__value">70<span>/100</span></p>
+                </div>
+                <svg class="mock-score__trend" viewBox="0 0 320 100" focusable="false">
+                  <path class="mock-score__grid" d="M10 20H310M10 50H310M10 80H310"/>
+                  <polyline class="mock-score__line" points="10,60 52.9,60 95.7,50 138.6,40 181.4,40 224.3,40 267.1,30 310,20"/>
+                  <circle class="mock-score__dot" cx="310" cy="20" r="4"/>
+                  <text class="mock-score__axis" x="10" y="97">8 weeks ago</text>
+                  <text class="mock-score__axis" x="310" y="97" text-anchor="end">This week</text>
+                </svg>
+                <ul class="mock-score__areas">
+                  <li><span>Documentation</span><span class="mock-meter mock-meter--90"></span><b>90</b></li>
+                  <li><span>Security</span><span class="mock-meter mock-meter--80"></span><b>80</b></li>
+                  <li><span>Accessibility</span><span class="mock-meter mock-meter--60"></span><b>60</b></li>
+                  <li><span>Monitoring</span><span class="mock-meter mock-meter--50"></span><b>50</b></li>
+                </ul>
+              </div>
+            </div>
+            <figcaption class="mock__caption"><span class="mock__tag">Example</span>A score card with sample data.<span class="visually-hidden"> The fictional repository example-co/payments-api scores a sample 70 out of 100. The score rose over eight weeks. Sample area scores: documentation 90, security 80, accessibility 60, monitoring 50.</span></figcaption>
+          </figure>
         </article>
-        <article class="feature feature--text">
+        <article class="feature">
           <div class="feature__text">
-            <h3><span class="is-coming" data-claim="readiness_ci">Runs in your own CI<span class="claim-coming" hidden> Coming</span></span></h3>
+            <h3><span data-claim="readiness_ci">Runs in your own CI</span></h3>
             <p>The audit runs in your CI with your own model key. Only scores and findings reach the dashboard.</p>
           </div>
+          <figure class="feature__media">
+            <div class="mock" aria-hidden="true">
+              <div class="mock__bar"><span class="mock__title">readiness-audit</span><span class="mock__meta">example-co/payments-api, main</span></div>
+              <div class="mock__body">
+                <ol class="mock-ci">
+                  <li><span>Check out the repository</span><span>5 s</span></li>
+                  <li><span>Run the audit with your model key</span><span>3 min</span></li>
+                  <li><span>Send scores and findings to ApexYard</span><span>5 s</span></li>
+                </ol>
+                <p class="mock-ci__note">The source code stays in your CI.</p>
+              </div>
+            </div>
+            <figcaption class="mock__caption"><span class="mock__tag">Example</span>A CI run with sample data.<span class="visually-hidden"> The readiness audit runs in the CI of the fictional repository example-co/payments-api. Three steps pass: check out the repository, run the audit with your model key, and send scores and findings to ApexYard.</span></figcaption>
+          </figure>
         </article>
       </div>
     </div>
@@ -137,25 +176,27 @@
   <section class="section" aria-labelledby="plans-title">
     <div class="wrap">
       <h2 class="section__title" id="plans-title">Plans</h2>
-      <p class="section__lede">Start with one report. Reviews by people are on the pricing page.</p>
+      <p class="section__lede">Start with one report. Assessments by people are on the <a href="/pricing#assessments">pricing page</a>.</p>
       <div class="plans plans--2">
         <article class="plan">
-          <h3>Readiness report</h3>
-          <p class="plan__price"><!--{{READINESS_REPORT_PRICE}}-->From £00 a repository <span class="price-flag">Placeholder price</span><!--/{{READINESS_REPORT_PRICE}}--></p>
-          <ul>
+          <h3 class="plan__name">Readiness report</h3>
+          <p class="plan__for">For one repository before a launch.</p>
+          <div class="plan__price"><p class="plan__amount"><!--{{READINESS_REPORT_PRICE}}-->From £00 a repository <span class="price-flag">Placeholder price</span><!--/{{READINESS_REPORT_PRICE}}--></p></div>
+          <ul class="plan__points">
             <li>One repository, on demand</li>
             <li>A written report with the next steps</li>
           </ul>
-          <p class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/review?src=readiness-report" rel="noopener">Book a readiness call</a></p>
+          <div class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/review?src=readiness-report" rel="noopener">Book a readiness call</a></div>
         </article>
         <article class="plan">
-          <h3><!--{{READINESS_SCHEDULE_NAME}}-->Readiness on a schedule<!--/{{READINESS_SCHEDULE_NAME}}--></h3>
-          <p class="plan__price"><!--{{READINESS_SCHEDULE_PRICE}}-->From £00 a month <span class="price-flag">Placeholder price</span><!--/{{READINESS_SCHEDULE_PRICE}}--></p>
-          <ul>
-            <li><span class="is-coming" data-claim="readiness_weekly">Every repository, every week<span class="claim-coming" hidden> Coming</span></span></li>
+          <h3 class="plan__name"><!--{{READINESS_SCHEDULE_NAME}}-->Readiness on a schedule<!--/{{READINESS_SCHEDULE_NAME}}--></h3>
+          <p class="plan__for">For teams that want every repository checked over time.</p>
+          <div class="plan__price"><p class="plan__amount"><!--{{READINESS_SCHEDULE_PRICE}}-->From £00 a month <span class="price-flag">Placeholder price</span><!--/{{READINESS_SCHEDULE_PRICE}}--></p></div>
+          <ul class="plan__points">
+            <li><span data-claim="readiness_weekly">Every repository, every week</span></li>
             <li>The trend over time</li>
           </ul>
-          <p class="plan__action"><a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Notify me: Readiness on a schedule">Email us to get notified</a></p>
+          <div class="plan__action"><a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Notify me: Readiness on a schedule">Email us to get notified</a></div>
         </article>
       </div>
       <p class="plans__cta"><a class="plans__link" href="/pricing#readiness">Compare every plan</a></p>
@@ -167,9 +208,9 @@
 <footer class="site-footer">
   <div class="wrap site-footer__inner">
     <nav aria-label="Footer">
+      <a href="/build">Build</a>
       <a href="/gate">Gate</a>
       <a href="/readiness">Readiness</a>
-      <a href="/build">Build</a>
       <a href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
       <a href="/architecture">Architecture</a>

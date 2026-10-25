@@ -75,9 +75,9 @@
       <div class="site-nav__group">
         <button class="site-nav__menu" type="button" aria-expanded="false" aria-controls="product-menu">Product</button>
         <ul class="site-nav__sub" id="product-menu">
+          <li><a href="/build">Build</a></li>
           <li><a href="/gate" aria-current="page">Gate</a></li>
           <li><a href="/readiness">Readiness</a></li>
-          <li><a href="/build">Build</a></li>
         </ul>
       </div>
       <a href="/pricing">Pricing</a>
@@ -117,10 +117,11 @@
         <article class="feature">
           <div class="feature__text">
             <h3>An agent never approves its own work</h3>
-            <p>With named approval set up, the merge waits for a person your team named. <span data-claim="evidence_export">When an auditor asks, you export the record.<span class="claim-coming" hidden> Coming</span></span></p>
+            <p><span data-claim="named_approval">With named approval set up, the merge waits for a person your team named.</span> <span data-claim="evidence_export">When an auditor asks, you export the record.</span> <span data-claim="ci_attestation">Your CI can attest that each review ran.</span></p>
           </div>
           <figure class="feature__media">
-            <img src="/img/placeholder-evidence.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of an evidence record for a merged pull request, with the check result, the reviewer and the named approver">
+            <img src="/img/placeholder-evidence.svg" width="1200" height="800" loading="lazy" alt="Example evidence record for a merged pull request in a fictional repository. It shows the check result, the review attested by a CI run, the named approver and the merge time, with an Export button.">
+            <figcaption><span class="mock__tag">Example</span>An evidence record with sample data.</figcaption>
           </figure>
         </article>
         <article class="feature">
@@ -134,18 +135,19 @@
         </article>
         <article class="feature">
           <div class="feature__text">
-            <h3><span data-claim="org_dashboard">The organisation view<span class="claim-coming" hidden> Coming</span></span></h3>
-            <p>See which pull requests skipped a step, across every repository.</p>
+            <h3><span data-claim="org_dashboard">The organisation view</span></h3>
+            <p>See which pull requests skipped a step, across every repository. <span data-claim="team_trends">Trends by team show where steps get skipped.</span></p>
           </div>
           <figure class="feature__media">
-            <img src="/img/placeholder-org-dashboard.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of the organisation view, with repositories and their pull requests">
+            <img src="/img/placeholder-org-dashboard.svg" width="1200" height="800" loading="lazy" alt="Example organisation view for a fictional organisation with four teams and eight repositories. Each team shows its share of passed checks and a trend for the last seven days.">
+            <figcaption><span class="mock__tag">Example</span>An organisation view with sample teams.</figcaption>
           </figure>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="section section--tint app-access" aria-labelledby="app-access-title">
+  <section class="section section--tint app-access" id="app-access" aria-labelledby="app-access-title">
     <!-- Security review before switch-on: confirm this permission list and its wording. -->
     <div class="wrap app-access__inner">
       <h2 class="section__title" id="app-access-title">What the GitHub App can see</h2>
@@ -172,45 +174,50 @@
   <section class="section" aria-labelledby="plans-title">
     <div class="wrap">
       <h2 class="section__title" id="plans-title">Plans</h2>
-      <p class="section__lede">Start on one repository at no cost. Grow into every repository you own.</p>
+      <p class="section__lede">Start on GitHub at no cost. Grow into every repository you own.</p>
       <div class="plans plans--4">
         <article class="plan">
-          <h3>Free</h3>
-          <p class="plan__price">Free</p>
-          <ul>
-            <li><!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}--></li>
+          <h3 class="plan__name">Free</h3>
+          <p class="plan__for">For one developer who wants to try the check.</p>
+          <div class="plan__price"><p class="plan__amount">No cost</p></div>
+          <ul class="plan__points">
             <li>The hosted check on every pull request, in warning mode</li>
             <li>Sign in with GitHub</li>
           </ul>
-          <p class="plan__action"><a class="btn btn--quiet" href="https://app.apexyard.ai/signin?src=gate-free" rel="noopener">Start free with GitHub</a></p>
+          <div class="plan__action"><a class="btn btn--quiet" href="https://app.apexyard.ai/signin?src=gate-free" rel="noopener">Start free with GitHub</a></div>
         </article>
         <article class="plan">
-          <h3>Startup</h3>
-          <p class="plan__price"><!--{{STARTUP_PRICE}}-->From £00 a month <span class="price-flag">Placeholder price</span><!--/{{STARTUP_PRICE}}--></p>
-          <ul>
+          <h3 class="plan__name">Startup</h3>
+          <p class="plan__for">For small teams that are getting started.</p>
+          <div class="plan__price"><p class="plan__amount"><!--{{STARTUP_PRICE}}-->From £00 a month <span class="price-flag">Placeholder price</span><!--/{{STARTUP_PRICE}}--></p></div>
+          <ul class="plan__points">
             <li><!--{{STARTUP_LIMITS}}-->Up to N repositories<!--/{{STARTUP_LIMITS}}--></li>
           </ul>
-          <p class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/demo?src=gate-startup" rel="noopener">Book a call to start</a></p>
+          <div class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/demo?src=gate-startup" rel="noopener">Book a call to start</a></div>
         </article>
         <article class="plan plan--team">
           <p class="plan__flag">Most teams start here</p>
-          <h3>Team</h3>
-          <p class="plan__price"><!--{{TEAM_PRICE}}-->From £000 a month <span class="price-flag">Placeholder price</span><!--/{{TEAM_PRICE}}--></p>
-          <p class="plan__note"><!--{{TEAM_PRICE_NOTE}}-->Or £0,000 a year.<!--/{{TEAM_PRICE_NOTE}}--></p>
-          <ul>
-            <li><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->All repositories, up to N developers<!--/{{TEAM_REPO_LIMIT}}--><span class="claim-coming" hidden> Coming</span></span></li>
+          <h3 class="plan__name">Team</h3>
+          <p class="plan__for">For engineering leads who must show who approved each change.</p>
+          <div class="plan__price"><p class="plan__amount"><!--{{TEAM_PRICE}}-->From £000 a month <span class="price-flag">Placeholder price</span><!--/{{TEAM_PRICE}}--></p>
+          <p class="plan__note"><!--{{TEAM_PRICE_NOTE}}-->Or £0,000 a year.<!--/{{TEAM_PRICE_NOTE}}--></p></div>
+          <ul class="plan__points">
+            <li><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->All repositories, up to N developers<!--/{{TEAM_REPO_LIMIT}}--></span></li>
             <li><!--{{TEAM_SUPPORT}}-->Team support<!--/{{TEAM_SUPPORT}}--></li>
           </ul>
-          <p class="plan__action"><a class="btn btn--primary" href="https://cal.com/apexyard/demo?src=gate-team" rel="noopener">Book a call to start</a></p>
+          <div class="plan__action"><a class="btn btn--primary" href="https://cal.com/apexyard/demo?src=gate-team" rel="noopener">Book a call to start</a></div>
         </article>
         <article class="plan">
-          <h3>Enterprise</h3>
-          <p class="plan__price"><a href="https://cal.com/apexyard/demo?src=gate-enterprise" rel="noopener">Talk to us</a></p>
-          <ul>
+          <h3 class="plan__name">Enterprise</h3>
+          <p class="plan__for">For organisations with procurement and security reviews.</p>
+          <div class="plan__price"><p class="plan__amount">Custom</p></div>
+          <ul class="plan__points">
             <li><!--{{ENTERPRISE_LIMITS}}-->Over N developers<!--/{{ENTERPRISE_LIMITS}}--></li>
           </ul>
+          <div class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/demo?src=gate-enterprise" rel="noopener">Talk to us</a></div>
         </article>
       </div>
+      <p class="plans__fine">Free plan limit: <!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}-->.</p>
       <p class="plans__cta"><a class="plans__link" href="/pricing#gate">Compare every plan</a></p>
     </div>
   </section>
@@ -220,9 +227,9 @@
 <footer class="site-footer">
   <div class="wrap site-footer__inner">
     <nav aria-label="Footer">
+      <a href="/build">Build</a>
       <a href="/gate">Gate</a>
       <a href="/readiness">Readiness</a>
-      <a href="/build">Build</a>
       <a href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
       <a href="/architecture">Architecture</a>

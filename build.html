@@ -75,9 +75,9 @@
       <div class="site-nav__group">
         <button class="site-nav__menu" type="button" aria-expanded="false" aria-controls="product-menu">Product</button>
         <ul class="site-nav__sub" id="product-menu">
+          <li><a href="/build" aria-current="page">Build</a></li>
           <li><a href="/gate">Gate</a></li>
           <li><a href="/readiness">Readiness</a></li>
-          <li><a href="/build" aria-current="page">Build</a></li>
         </ul>
       </div>
       <a href="/pricing">Pricing</a>
@@ -97,7 +97,7 @@
       <p class="product-head__name">Build</p>
       <h1 id="product-title">Your agents plan before they code, and every change meets a reviewer before it leaves your machine.</h1>
       <p class="product-head__who">For founders and engineering leads who want agent speed without losing the process.</p>
-      <p class="product-head__cta"><a class="btn btn--primary" href="/#quickstart">Install free</a></p>
+      <p class="product-head__cta"><a class="btn btn--primary" href="/#quickstart">Install the framework</a></p>
     </div>
   </section>
 
@@ -132,11 +132,35 @@
             <img src="/img/placeholder-build-terminal.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of a terminal that sets up ApexYard in an existing project">
           </figure>
         </article>
-        <article class="feature feature--text">
+        <article class="feature">
           <div class="feature__text">
             <h3>Runs on your machine</h3>
-            <p>The framework and the command line run where your developers already work. <span class="is-coming" data-claim="cockpit_app">The Cockpit desktop app gives the same steps to people who never open a terminal.<span class="claim-coming" hidden> Coming</span></span></p>
+            <p>The framework and the command line run where your developers already work. <span data-claim="cockpit_app">The Cockpit desktop app gives the same steps to people who never open a terminal.</span></p>
           </div>
+          <figure class="feature__media">
+            <div class="mock" aria-hidden="true">
+              <div class="mock__bar"><span class="mock-window__dots"><span></span><span></span><span></span></span><span class="mock__title">Cockpit</span><span class="mock__meta">example-co</span></div>
+              <div class="mock-cockpit">
+                <div class="mock-cockpit__side">
+                  <b>Projects</b>
+                  <span>payments-api</span>
+                  <span>web-shop</span>
+                  <span>mobile-app</span>
+                </div>
+                <div class="mock-cockpit__main">
+                  <p class="mock-cockpit__ticket">Ticket 42: Add refund limits</p>
+                  <ul class="mock-cockpit__steps">
+                    <li><span>Spec</span><span>Approved</span></li>
+                    <li><span>Plan</span><span>Approved</span></li>
+                    <li><span>Code</span><span>In progress</span></li>
+                    <li><span>Review</span><span>Waiting</span></li>
+                  </ul>
+                  <span class="mock-cockpit__next">Run the next step</span>
+                </div>
+              </div>
+            </div>
+            <figcaption class="mock__caption"><span class="mock__tag">Example</span>A Cockpit window with sample data.<span class="visually-hidden"> The fictional organisation example-co has three projects. Ticket 42, Add refund limits, has an approved spec and plan. The code is in progress and the review is waiting.</span></figcaption>
+          </figure>
         </article>
       </div>
     </div>
@@ -155,22 +179,24 @@
       <p class="section__lede">Start today, with no sign-up and no card.</p>
       <div class="plans plans--2">
         <article class="plan">
-          <h3>Open source</h3>
-          <p class="plan__price">MIT licence</p>
-          <ul>
+          <h3 class="plan__name">Open source</h3>
+          <p class="plan__for">For developers who want the process on their own machine.</p>
+          <div class="plan__price"><p class="plan__amount">MIT licence</p></div>
+          <ul class="plan__points">
             <li>Rules, roles, handbooks and hooks as plain files</li>
             <li>No account and no dashboard needed</li>
           </ul>
-          <p class="plan__action"><a class="btn btn--quiet" href="/#quickstart">Install free</a></p>
+          <div class="plan__action"><a class="btn btn--quiet" href="/#quickstart">Install the framework</a></div>
         </article>
         <article class="plan">
-          <h3><!--{{COCKPIT_PLAN_NAME}}-->Cockpit desktop app<!--/{{COCKPIT_PLAN_NAME}}--></h3>
-          <p class="plan__price"><!--{{COCKPIT_PRICE}}-->From £00 for each seat <span class="price-flag">Placeholder price</span><!--/{{COCKPIT_PRICE}}--></p>
-          <ul>
-            <li><span class="is-coming" data-claim="cockpit_app">The Cockpit desktop app<span class="claim-coming" hidden> Coming</span></span></li>
+          <h3 class="plan__name"><!--{{COCKPIT_PLAN_NAME}}-->Cockpit desktop app<!--/{{COCKPIT_PLAN_NAME}}--></h3>
+          <p class="plan__for">For people who do not use a terminal.</p>
+          <div class="plan__price"><p class="plan__amount"><!--{{COCKPIT_PRICE}}-->From £00 for each seat <span class="price-flag">Placeholder price</span><!--/{{COCKPIT_PRICE}}--></p></div>
+          <ul class="plan__points">
+            <li><span data-claim="cockpit_app">The Cockpit desktop app</span></li>
             <li>Guided setup and the same gates, without a terminal</li>
           </ul>
-          <p class="plan__action"><a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Notify me: Cockpit">Email us to get notified</a></p>
+          <div class="plan__action"><a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Notify me: Cockpit">Email us to get notified</a></div>
         </article>
       </div>
       <p class="plans__cta"><a class="plans__link" href="/pricing#build">Compare every plan</a></p>
@@ -182,9 +208,9 @@
 <footer class="site-footer">
   <div class="wrap site-footer__inner">
     <nav aria-label="Footer">
+      <a href="/build">Build</a>
       <a href="/gate">Gate</a>
       <a href="/readiness">Readiness</a>
-      <a href="/build">Build</a>
       <a href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
       <a href="/architecture">Architecture</a>

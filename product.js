@@ -1,5 +1,5 @@
 /* ApexYard product pages (#102): nav, live star count, install tabs,
-   copy buttons, mail links, cookie consent, and redirects for the old
+   copy buttons, claim state attributes, mail links, cookie consent, and redirects for the old
    home-page anchors that now live on /docs. No dependencies. */
 (function () {
   'use strict';
@@ -20,15 +20,13 @@
     return;
   }
 
-  // Team claims: claims.js can flip any claim to "Coming" with one line.
+  // Claims set a data attribute only. No state renders a visible label.
   var claims = window.APEXYARD_CLAIMS || {};
   document.querySelectorAll('[data-claim]').forEach(function (el) {
     var state = claims[el.getAttribute('data-claim')];
-    if (state !== 'coming' && state !== 'live') return; // keep the markup default
-    var coming = state === 'coming';
-    el.classList.toggle('is-coming', coming);
-    var tag = el.querySelector('.claim-coming');
-    if (tag) tag.hidden = !coming;
+    if (state === 'live' || state === 'coming') {
+      el.setAttribute('data-claim-state', state);
+    }
   });
 
   // Theme toggle. The page follows the system setting until the visitor
@@ -154,6 +152,8 @@
       });
       if (focus) tab.focus();
     }
+    var initial = tabs.find(function (tab) { return tab.getAttribute('aria-selected') === 'true'; });
+    if (initial) select(initial, false);
     tabs.forEach(function (tab, i) {
       tab.addEventListener('click', function () { select(tab, false); });
       tab.addEventListener('keydown', function (e) {
@@ -168,6 +168,79 @@
       });
     });
   });
+
+  // Pricing product switcher (WAI-ARIA tabs pattern). Without JavaScript the
+  // links jump to each product and every panel stays visible. The URL hash
+  // selects the tab; an id inside a panel (for example #team) selects that
+  // panel. The old #reviews anchor selects Assessments.
+  var switcher = document.querySelector('[data-switcher]');
+  if (switcher) {
+    var sTabs = Array.prototype.slice.call(switcher.querySelectorAll('.switcher__tab'));
+    var sPanels = sTabs.map(function (t) { return document.getElementById(t.getAttribute('href').slice(1)); });
+    if (sPanels.every(Boolean)) {
+      var sList = switcher.querySelector('.switcher__list');
+      switcher.setAttribute('role', 'none');
+      sList.setAttribute('role', 'tablist');
+      sList.setAttribute('aria-label', 'Products');
+      sTabs.forEach(function (t, i) {
+        t.setAttribute('role', 'tab');
+        t.setAttribute('aria-controls', sPanels[i].id);
+        sPanels[i].setAttribute('role', 'tabpanel');
+        sPanels[i].setAttribute('aria-labelledby', t.id);
+      });
+      document.documentElement.classList.add('has-switcher');
+
+      var sSelect = function (i, focus) {
+        sTabs.forEach(function (t, j) {
+          var on = i === j;
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          t.tabIndex = on ? 0 : -1;
+          sPanels[j].hidden = !on;
+        });
+        // The head script of pricing.html set data-panel before first paint,
+        // so the page does not shift. Keep it in step with the selected tab.
+        document.documentElement.setAttribute('data-panel', sPanels[i].id);
+        if (focus) sTabs[i].focus();
+      };
+      // The tab with data-default (Gate) opens when the hash names no panel.
+      var sDefault = Math.max(0, sTabs.findIndex(function (t) { return t.hasAttribute('data-default'); }));
+      var fromHash = function () {
+        var h = '';
+        try { h = decodeURIComponent((location.hash || '').slice(1)); } catch (e) {}
+        if (h === 'reviews') h = 'assessments';
+        if (!h) return sDefault;
+        var el = document.getElementById(h);
+        for (var i = 0; i < sPanels.length; i++) {
+          if (el && (sPanels[i] === el || sPanels[i].contains(el))) return i;
+        }
+        return sDefault;
+      };
+      var setHash = function (i) {
+        if (window.history && history.replaceState) history.replaceState(null, '', '#' + sPanels[i].id);
+      };
+      sSelect(fromHash(), false);
+      window.addEventListener('hashchange', function () { sSelect(fromHash(), false); });
+      sTabs.forEach(function (t, i) {
+        t.addEventListener('click', function (e) {
+          e.preventDefault();
+          sSelect(i, false);
+          setHash(i);
+        });
+        t.addEventListener('keydown', function (e) {
+          var next = -1;
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (i + 1) % sTabs.length;
+          else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (i - 1 + sTabs.length) % sTabs.length;
+          else if (e.key === 'Home') next = 0;
+          else if (e.key === 'End') next = sTabs.length - 1;
+          else if (e.key === ' ') { e.preventDefault(); sSelect(i, false); setHash(i); return; }
+          if (next < 0) return;
+          e.preventDefault();
+          sSelect(next, true);
+          setHash(next);
+        });
+      });
+    }
+  }
 
   // Mail links: the address is assembled here, so the HTML holds no address.
   document.querySelectorAll('.mailto-cta').forEach(function (a) {
