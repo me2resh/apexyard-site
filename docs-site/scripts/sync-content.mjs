@@ -437,7 +437,7 @@ function hookIndex(page) {
   return {
     ...page,
     sources: ['.claude/hooks/'],
-    body: [`The pinned release has ${rows.length} hook scripts. Shared libraries (names that start with \`_\`) are not listed.`, '', '| Hook | Header |', '| --- | --- |', ...rows, ''].join('\n'),
+    body: [`The pinned release has ${rows.length} hook scripts. The list excludes shared libraries (names that start with \`_\`).`, '', '| Hook | Header |', '| --- | --- |', ...rows, ''].join('\n'),
   };
 }
 

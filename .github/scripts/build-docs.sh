@@ -19,6 +19,9 @@ cd "$root/docs-site"
 npm ci --no-audit --no-fund
 npm run build
 npm run check
+# ASD-STE100 lint. Report only: it lists each finding and exits 0.
+# Run "npm run lint:strict" to fail on findings in site-owned text.
+npm run lint
 
 rm -rf "$out/docs" "$out/docs.html"
 mkdir -p "$out/docs"

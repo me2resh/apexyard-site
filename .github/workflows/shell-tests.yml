@@ -18,6 +18,9 @@ name: Shell Tests
 # The public page files are in the filter because #102 added
 # test-overlay-isolation.sh: it fails when a page holds a bare placeholder
 # token or price-shaped text, so a content change must trigger the run.
+#
+# The docs lint files are in the filter because #107 added test-docs-lint.sh,
+# which runs docs-site/scripts/lint-docs.mjs on fixtures.
 
 # The two path lists are duplicated rather than shared via a YAML anchor:
 # GitHub Actions' workflow parser does not support anchors/aliases, so `&`/`*`
@@ -43,6 +46,9 @@ on:
       - "skill.md"
       - "claims.js"
       - "apexdock/**"
+      - "docs-site/scripts/lint-docs.mjs"
+      - "docs-site/lint/**"
+      - "docs-site/package.json"
   push:
     branches: [main, staging]
     paths:
@@ -64,6 +70,9 @@ on:
       - "skill.md"
       - "claims.js"
       - "apexdock/**"
+      - "docs-site/scripts/lint-docs.mjs"
+      - "docs-site/lint/**"
+      - "docs-site/package.json"
   workflow_dispatch:
 
 permissions:

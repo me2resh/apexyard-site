@@ -6,6 +6,8 @@
     "sync": "node scripts/sync-content.mjs",
     "build": "node scripts/sync-content.mjs && astro build && node scripts/postbuild.mjs",
     "check": "node scripts/check-output.mjs && node --test tests/*.test.mjs",
+    "lint": "node scripts/lint-docs.mjs",
+    "lint:strict": "node scripts/lint-docs.mjs --strict --scope-only",
     "preview": "node scripts/serve.mjs"
   },
   "dependencies": {
