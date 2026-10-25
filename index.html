@@ -1695,6 +1695,126 @@ a:hover { color: var(--accent); }
   border-color: var(--accent);
 }
 /* end: consent-css */
+
+/* ============================================================
+   site v2 (#102): three paths, demo slot, get-started tabs, Team
+   ============================================================ */
+@media (min-width: 901px) {
+  .audience { grid-template-columns: repeat(4, 1fr); }
+}
+.path__price {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.02em;
+}
+.path__link { margin-top: 1rem; font-size: 13px; }
+.demo-slot {
+  max-width: var(--max-w);
+  margin: 1.5rem auto 0;
+  padding: 1.25rem var(--gutter);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  align-items: baseline;
+}
+.demo-slot__label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+.demo-slot__text { font-size: 13.5px; color: var(--ink-soft); }
+.get-started {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.get-started .install { margin-bottom: 0.6rem; max-width: 780px; }
+.get-started .step__code { max-width: 780px; margin-top: 0.75rem; }
+.get-started__same {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin-top: 1.25rem;
+  max-width: 780px;
+}
+.get-started__next { margin-top: 2rem; }
+.get-started__alt { margin-top: 2.5rem; }
+.get-started__alt-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+}
+.install-tabs { max-width: 780px; margin: 0 0 1.25rem; }
+.install-tabs__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+.install-tabs__tab {
+  background: transparent;
+  border: 1px solid var(--rule-faint);
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+}
+.install-tabs__tab[aria-selected="true"] {
+  border-color: var(--rule);
+  color: var(--ink);
+}
+.install-tabs__tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.install-tabs__panel[hidden] { display: none; }
+.install-tabs__hint {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0.75rem 0 0.6rem;
+}
+.install-tabs__status {
+  font-size: 12px;
+  color: var(--ink-faint);
+  min-height: 1.2em;
+  margin-top: 0.35rem;
+}
+@media (max-width: 520px) {
+  .get-started .install__cmd {
+    white-space: normal;
+    overflow-x: visible;
+    word-break: break-all;
+  }
+}
+.team-facts {
+  max-width: var(--max-w);
+  margin: 0 auto 1.5rem;
+  padding: 0 var(--gutter);
+  display: grid;
+  gap: 0;
+}
+.team-facts__row {
+  display: grid;
+  grid-template-columns: minmax(7rem, 12rem) 1fr;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule-faint);
+  font-size: 13.5px;
+}
+.team-facts__row dt { font-weight: 700; color: var(--ink); }
+.team-facts__row dd { color: var(--ink-soft); }
+@media (max-width: 520px) {
+  .team-facts__row { grid-template-columns: 1fr; gap: 0.25rem; }
+}
 </style>
 
 <!-- begin: gtag — keep in sync across all site/*.html pages (#399) -->
@@ -1739,7 +1859,8 @@ a:hover { color: var(--accent); }
     <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav"><span></span><span></span><span></span></button>
     <nav class="titlebar__right" id="primary-nav" aria-label="Primary">
       <a href="/how-it-works" class="always">how it works</a>
-      <a href="#quickstart" class="is-cta always">quickstart</a>
+      <a href="#quickstart" class="is-cta always">get started</a>
+      <a href="/pricing" class="always">pricing</a>
       <a href="/architecture" class="always">architecture</a>
       <a href="/skills" class="always">skills</a>
       <a href="/game" class="always">play the game</a>
@@ -1759,7 +1880,7 @@ a:hover { color: var(--accent); }
 
     <div class="hero__eyebrow rise rise-1">
       <span class="pill">apexyard v5.10.0 — just shipped</span>
-      <span>open source · built for founders shipping with AI</span>
+      <span>open source · built for solo founders and teams of 10 to 25</span>
       <button class="copy-for-ai" data-md-url="/index.md" type="button" style="margin-left:auto;font-size:0.75rem;padding:0.25rem 0.6rem;border:1px solid currentColor;border-radius:4px;background:transparent;color:inherit;cursor:pointer;font-family:inherit;">Copy as Markdown for AI</button>
     </div>
 
@@ -1780,9 +1901,9 @@ a:hover { color: var(--accent); }
     </p>
 
     <div class="hero__cta rise rise-4">
-      <a href="#quickstart" class="cta cta--primary">Quickstart — fork, then <code>/setup</code> →</a>
+      <a href="#quickstart" class="cta cta--primary">Get started — install, then <code>apexyard init</code> →</a>
       <span class="cta__sep" aria-hidden="true">·</span>
-      <a href="https://github.com/me2resh/apexyard" class="cta cta--ghost" target="_blank" rel="noopener">⑂ Fork on GitHub ↗</a>
+      <a href="#paths" class="cta cta--ghost">Compare the three paths</a>
     </div>
 
     <p class="hero__builtby rise rise-4">
@@ -1798,6 +1919,59 @@ a:hover { color: var(--accent); }
 </section>
 
 <!-- ============================================================
+     THREE PATHS — the framework, the free hosted tier, Team (#102).
+     Team values are placeholder tokens with a visible fallback. Only
+     the staging deploy replaces them, from a private overlay. Every
+     other build shows the fallback text.
+     ============================================================ -->
+<section class="section" id="paths" aria-label="Three ways to use ApexYard">
+  <div class="section__head">
+    <span class="section__num">· / THREE PATHS</span>
+    <h2 class="section__title">Three ways to use ApexYard</h2>
+    <p class="section__lede">
+      Start with the free framework. Add the hosted check and dashboard if you want them. Use Team when an organisation needs ApexYard.
+    </p>
+  </div>
+
+  <div class="outcome-tiles paths">
+    <article class="outcome-tile">
+      <div class="outcome-tile__num">01 · open source</div>
+      <h3 class="outcome-tile__title">The framework</h3>
+      <p class="path__price">Free · MIT</p>
+      <p class="outcome-tile__desc">
+        The rules, hooks, skills, and review agents, in your own repositories. It runs with your agent tool on your machine. It needs no dashboard and no account.
+      </p>
+      <p class="path__link"><a href="#quickstart" class="uline">Get started →</a></p>
+    </article>
+
+    <article class="outcome-tile">
+      <div class="outcome-tile__num">02 · hosted, free tier</div>
+      <h3 class="outcome-tile__title">Hosted check and dashboard</h3>
+      <p class="path__price">Free · 1 repository</p>
+      <p class="outcome-tile__desc">
+        Sign in with GitHub and connect one repository. You get the hosted check and the dashboard. The framework works without them, so the dashboard is optional.
+      </p>
+      <p class="path__link"><a href="/pricing" class="uline">Compare the paths →</a></p>
+    </article>
+
+    <article class="outcome-tile">
+      <div class="outcome-tile__num">03 · team</div>
+      <h3 class="outcome-tile__title">Team</h3>
+      <p class="path__price"><!--{{TEAM_PRICE}}-->Pricing to be announced<!--/{{TEAM_PRICE}}--></p>
+      <p class="outcome-tile__desc">
+        For an organisation. <!--{{TEAM_SUMMARY}}-->Details to be announced.<!--/{{TEAM_SUMMARY}}-->
+      </p>
+      <p class="path__link"><a href="#team" class="uline">About Team →</a></p>
+    </article>
+  </div>
+
+  <div class="demo-slot" id="demo" aria-label="Demo recording">
+    <span class="demo-slot__label">demo · 18 Nov</span>
+    <p class="demo-slot__text">The recording of the 18 Nov demo will be published here.</p>
+  </div>
+</section>
+
+<!-- ============================================================
      WHAT YOU GET — three outcome tiles in plain language.
      This is the first section a founder hits after the hero;
      it sets expectations in their words, not ours.
@@ -1807,7 +1981,7 @@ a:hover { color: var(--accent); }
     <span class="section__num">01 / WHAT YOU GET</span>
     <h2 class="section__title">What ApexYard does</h2>
     <p class="section__lede">
-      Run <code>/setup</code> once. No new dashboard is required. You get three controls from the first day.
+      Run <code>/setup</code> once. The framework needs no dashboard, and the hosted dashboard is optional. You get three controls from the first day.
     </p>
     <p class="section__lede" style="margin-top:0.75rem;">Releases v5.7 to v5.10 add opt-in ORBIT planning, the <code>/scaffold</code> and <code>/preflight</code> skills, and a ticket marker in each working tree. v5.10.0 adds a review-depth tier for Rex and closes more gaps in the push, commit, and merge gates.</p>
   </div>
@@ -1847,7 +2021,7 @@ a:hover { color: var(--accent); }
     <span class="section__num">02 / WHO THIS IS FOR</span>
     <h2 class="section__title">Who can use ApexYard</h2>
     <p class="section__lede">
-      ApexYard supports three common team types. Read the section that matches your work.
+      ApexYard supports four common team types. Read the section that matches your work.
     </p>
   </div>
 
@@ -1856,6 +2030,12 @@ a:hover { color: var(--accent); }
       <p class="audience__who">Solo founders shipping with AI</p>
       <p class="audience__detail">
         You are building the product alone, with Claude Code, Codex, OpenCode, Pi, or Cursor doing most of the typing. You need the controls that a larger engineering team would provide.
+      </p>
+    </div>
+    <div class="audience__card">
+      <p class="audience__who">Teams of 10 to 25</p>
+      <p class="audience__detail">
+        Your organisation has several engineers and several repositories, and each person works with AI agents. You need one review process and one set of gates that every repository follows.
       </p>
     </div>
     <div class="audience__card">
@@ -2110,19 +2290,18 @@ a:hover { color: var(--accent); }
     <div class="install-row rise rise-4">
       <div class="install" id="install-block">
         <span class="install__prompt">$</span>
-        <code class="install__cmd" id="install-cmd">gh repo fork me2resh/apexyard --clone</code>
+        <code class="install__cmd" id="install-cmd">curl -fsSL https://apexyard.ai/install | sh</code>
         <button type="button" class="install__copy" id="install-copy" data-event="quickstart-copy" aria-label="Copy install command">copy</button>
       </div>
-      <a href="#" class="install__cta mailto-cta" id="pro-setup-cta"
-         data-u="hello" data-d="apexyard.ai" data-event="mailto-click"
-         aria-label="Email for professional setup">
-        <span class="install__cta__label">professional setup</span>
+      <a href="/pricing" class="install__cta" id="pricing-cta"
+         aria-label="Compare the three paths on the pricing page">
+        <span class="install__cta__label">pricing</span>
         <span class="install__cta__arrow">→</span>
       </a>
     </div>
 
     <p class="install__caveat rise rise-4">
-      One command forks apexyard into your org and clones the fork locally. The fork <strong>is</strong> your ops repo — no nested installs, no symlinks. Want the plain-English version of what happens next? Read <a href="/how-it-works" class="uline">how it works</a>. Want the technical setup? Jump to the <a href="#quickstart" class="uline">quickstart</a>.
+      One command installs the ApexYard CLI. Then run <code>apexyard init</code> in your project folder. Prefer a desktop app? Use the Cockpit. Both ways are in <a href="#quickstart" class="uline">get started</a>. Want the plain-English version of what happens next? Read <a href="/how-it-works" class="uline">how it works</a>.
     </p>
 
     <p class="hero__proof rise rise-5" aria-label="What apexyard works with">
@@ -2148,51 +2327,86 @@ a:hover { color: var(--accent); }
 <!-- ============================================================
      SECTION 01 - quickstart
      ============================================================ -->
-<section class="section section--alt" id="quickstart">
+<section class="section section--alt" id="quickstart" aria-label="Get started">
 
   <div class="section__head">
-    <span class="section__num">07 / QUICKSTART</span>
+    <span class="section__num">07 / GET STARTED</span>
     <h2 class="section__title">How do I get started?</h2>
     <p class="section__lede">
-      Start with a fork and one project. Run <code>/setup</code>, answer its three questions, and create the first governed ticket. No separate service or account is required. Read <a href="/how-it-works" class="uline">how it works</a> first if you want to see the complete daily loop.
+      Use the terminal or the desktop app. The result is the same either way. Read <a href="/how-it-works" class="uline">how it works</a> first if you want to see the complete daily loop.
     </p>
   </div>
 
-  <div class="steps">
+  <div class="get-started">
+    <div class="install-tabs" id="get-started-tabs">
+      <div class="install-tabs__list" role="tablist" aria-label="Ways to get started">
+        <button type="button" class="install-tabs__tab" role="tab" id="gs-tab-terminal" aria-controls="gs-panel-terminal" aria-selected="true" tabindex="0">terminal</button>
+        <button type="button" class="install-tabs__tab" role="tab" id="gs-tab-desktop" aria-controls="gs-panel-desktop" aria-selected="false" tabindex="-1">desktop</button>
+      </div>
 
-    <article class="step">
-      <div class="step__num">01 - star, fork, clone</div>
-      <h3 class="step__title">Pull it to your machine</h3>
-      <p class="step__desc">One command via the GitHub CLI. Rename to <code>your-org/ops</code> if you prefer - GitHub handles the rename cleanly. Adding <code>upstream</code> lets you sync later via <code>/update</code>.</p>
-      <pre class="step__code">gh repo fork me2resh/apexyard --clone
-cd apexyard
-git remote add upstream \
-  https://github.com/me2resh/apexyard.git</pre>
-    </article>
+      <div class="install-tabs__panel" role="tabpanel" id="gs-panel-terminal" aria-labelledby="gs-tab-terminal" tabindex="0">
+        <p class="install-tabs__hint">1. Install the CLI. Pick one command.</p>
+        <div class="install">
+          <span class="install__prompt">$</span>
+          <code class="install__cmd" id="install-cmd-curl">curl -fsSL https://apexyard.ai/install | sh</code>
+          <button type="button" class="install__copy" data-copy-target="install-cmd-curl" aria-label="Copy curl install command">copy</button>
+        </div>
+        <div class="install">
+          <span class="install__prompt">$</span>
+          <code class="install__cmd" id="install-cmd-brew">brew install me2resh/tap/apexyard</code>
+          <button type="button" class="install__copy" data-copy-target="install-cmd-brew" aria-label="Copy Homebrew install command">copy</button>
+        </div>
+        <div class="install">
+          <span class="install__prompt">$</span>
+          <code class="install__cmd" id="install-cmd-npx">npx create-apexyard</code>
+          <button type="button" class="install__copy" data-copy-target="install-cmd-npx" aria-label="Copy npx install command">copy</button>
+        </div>
+        <p class="install-tabs__hint">2. Run <code>apexyard init</code> in your project folder. Open your agent tool and run <code>/setup</code>.</p>
+        <pre class="step__code">cd your-project
+apexyard init
+<span class="cm"># then open your agent tool</span>
+<span class="acc">/setup</span></pre>
+        <p class="install-tabs__hint"><code>apexyard init</code> sends one install ping. The ping has four fields: a random install id, the CLI version, the OS, and the agent tool. Nothing else. Turn it off with <code>APEXYARD_TELEMETRY=0</code>.</p>
+      </div>
 
-    <article class="step">
-      <div class="step__num">02 - claude, /setup</div>
-      <h3 class="step__title">Open Claude Code and run <code>/setup</code></h3>
-      <p class="step__desc">Everything loads automatically from <code>CLAUDE.md</code>. On first run, a session-start hook checks upstream drift. Then run <code>/setup</code> once - three exchanges to configure company, team, and tech stack.</p>
-      <pre class="step__code">cd apexyard
-claude
-<span class="acc">/setup</span>
-<span class="cm"># three questions → onboarding.yaml is configured</span></pre>
-    </article>
+      <div class="install-tabs__panel" role="tabpanel" id="gs-panel-desktop" aria-labelledby="gs-tab-desktop" tabindex="0" hidden>
+        <p class="install-tabs__hint">1. Open the Cockpit, the ApexYard desktop app.</p>
+        <p class="install-tabs__hint">2. Add your project folder. The Cockpit runs the same <code>apexyard init</code> and <code>/setup</code> steps for you.</p>
+        <p class="install-tabs__hint">The Cockpit download link will be published here.</p>
+      </div>
 
+      <div class="install-tabs__status" aria-live="polite" id="get-started-status"></div>
+    </div>
+
+    <p class="get-started__same"><strong>The result is the same either way.</strong> Your project gets the same rules, hooks, skills, and gates from the terminal and from the Cockpit.</p>
+  </div>
+
+  <div class="steps get-started__next">
     <article class="step step--wide" style="grid-column: 1 / -1;">
-      <div class="step__num">03 - bring a project in, or capture an idea</div>
+      <div class="step__num">next - bring a project in, or capture an idea</div>
       <h3 class="step__title">Adopt, or originate</h3>
       <p class="step__desc">Choose the entry point that matches your project. <code>/handover</code> records the shape of an existing repository and adds it to the registry. <code>/idea</code> records a new product concept and keeps it available for later planning.</p>
       <pre class="step__code"><span class="acc">/handover</span> &lt;repo-url&gt;   <span class="cm"># existing project → assessment + registry + architecture stub</span>
 <span class="acc">/idea</span>                  <span class="cm"># new concept → ideas-backlog.md, optional GitHub issue</span></pre>
     </article>
-
   </div>
 
-  <div style="max-width: var(--max-w); margin: 2.5rem auto 0; padding: 0 var(--gutter);">
-    <p class="install__caveat rise rise-4" style="margin:0;">
-      And when apexyard ships a new version, you do not fall behind for having forked it. A session-start check flags the moment you are behind <code>upstream/main</code> — so you never have to remember to look — and <code>/update</code> does the sync for you: it previews the incoming diff, merges it on a dedicated <strong>sync branch</strong> instead of hand-patching your <code>main</code>, then walks you through each release's migrations in order. <span class="dim">Staying current is one governed command, not a merge weekend.</span>
+  <div class="get-started get-started__alt" id="alternative">
+    <h3 class="get-started__alt-title">Alternative: fork the repository</h3>
+    <p class="install__caveat" style="margin:0 0 1rem;">
+      Fork the repository if you want the classic path. The fork is your ops repo. Adding <code>upstream</code> lets you sync later with <code>/update</code>.
+    </p>
+    <pre class="step__code">gh repo fork me2resh/apexyard --clone
+cd apexyard
+git remote add upstream \
+  https://github.com/me2resh/apexyard.git
+claude
+<span class="acc">/setup</span></pre>
+    <p class="install__caveat" style="margin:1rem 0 0;">
+      Already on a fork? <code>apexyard migrate</code> moves it to the new layout and keeps your own files. It reads <code>.claude/ownership-manifest.yaml</code> and leaves adopter-owned files alone.
+    </p>
+    <p class="install__caveat" style="margin:1rem 0 0;">
+      A session-start check flags when your fork is behind <code>upstream/main</code>. <code>/update</code> previews the incoming diff, merges it on a dedicated <strong>sync branch</strong>, then walks you through each release's migrations in order.
     </p>
   </div>
 
@@ -2366,38 +2580,45 @@ confirm it skips the missing column before you ship."</span></pre>
 </section>
 
 <!-- ============================================================
-     COMMERCIAL — open-core split + professional setup & support.
-     Pricing is intentionally NOT shown here yet — it is staged on the
-     `staging` branch for founder review before it goes live. This
-     section stays pricing-free on production until that review closes
-     out; the CTA below routes straight to a quoted email conversation.
-     See docs/briefs/apexyard-ai-relaunch-brief-v3.md (private, ops
-     portfolio) for the pricing decision in progress.
+     TEAM — for an organisation (#102). Every value is a placeholder
+     token with a visible fallback. Only the staging deploy replaces
+     the tokens, from a private overlay.
      ============================================================ -->
-<section class="section section--alt" id="commercial" aria-label="Professional setup and support">
+<section class="section section--alt" id="team" aria-label="Team">
 
   <div class="section__head">
-    <span class="section__num">10 / PROFESSIONAL SETUP &amp; SUPPORT</span>
-    <h2 class="section__title">Free forever. Or set up for you.</h2>
+    <span class="section__num">10 / TEAM</span>
+    <h2 class="section__title">Team, for an organisation</h2>
     <p class="section__lede">
-      The framework itself is MIT, forever: fork it, run it, change anything, never pay a cent. What is not free is the premium cockpit and the self-hosted Box, plus having me personally wire either one into your repos instead of doing it yourself. Get in touch and we'll scope it to what you are actually bringing.
+      The framework itself is MIT, forever. Team is for an organisation. Going independent from 19 November. Talk then.
     </p>
   </div>
 
-  <div class="deploy-story">
-    Runs on your laptop or a cheap VPS in your own cloud, one command. You bring your own Claude subscription: we never see your code, and we never see your bill.
-  </div>
+  <dl class="team-facts">
+    <div class="team-facts__row">
+      <dt>Price</dt>
+      <dd><!--{{TEAM_PRICE}}-->Pricing to be announced<!--/{{TEAM_PRICE}}--></dd>
+    </div>
+    <div class="team-facts__row">
+      <dt>Billing</dt>
+      <dd><!--{{TEAM_PRICE_NOTE}}-->To be announced<!--/{{TEAM_PRICE_NOTE}}--></dd>
+    </div>
+    <div class="team-facts__row">
+      <dt>Includes</dt>
+      <dd><!--{{TEAM_SUMMARY}}-->Details to be announced.<!--/{{TEAM_SUMMARY}}--></dd>
+    </div>
+  </dl>
 
   <div class="commercial-cta">
     <a href="#" class="install__cta mailto-cta" id="commercial-mailto-cta"
        data-u="hello" data-d="apexyard.ai" data-event="mailto-click"
-       aria-label="Email for professional setup and support">
-      <span class="install__cta__label">professional setup &amp; support</span>
+       aria-label="Email about ApexYard Team">
+      <span class="install__cta__label">talk to us about Team</span>
       <span class="install__cta__arrow">→</span>
     </a>
   </div>
   <p class="commercial-note">
-    No checkout link anywhere in this page. Every engagement starts as an email, scoped and quoted to what you are actually bringing, not a fixed shelf price.
+    Compare all three paths on the <a href="/pricing" class="uline">pricing page</a>.
   </p>
 
 </section>
@@ -2468,7 +2689,8 @@ confirm it skips the missing column before you ship."</span></pre>
     <div class="page-footer__brand">apexyard.ai — fork the framework, register your repos, ship.</div>
     <nav class="page-footer__nav" aria-label="Footer">
       <a href="/how-it-works">how it works</a>
-      <a href="#quickstart">quickstart</a>
+      <a href="#quickstart">get started</a>
+      <a href="/pricing">pricing</a>
       <a href="/architecture">architecture</a>
       <a href="/skills">skills</a>
       <a href="/game">play the game</a>
@@ -2536,6 +2758,79 @@ function apexyardTrack(eventName) {
   }
 })();
 
+/* site v2 (#102): get-started tabs + shared copy buttons */
+(function () {
+  function copyText(text, btn, statusEl) {
+    function confirm() {
+      if (btn) {
+        btn.classList.add('is-copied');
+        var prev = btn.textContent;
+        btn.textContent = 'copied';
+        setTimeout(function () {
+          btn.classList.remove('is-copied');
+          btn.textContent = prev;
+        }, 1600);
+      }
+      if (statusEl) statusEl.textContent = 'Copied.';
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(confirm, function () {});
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); confirm(); } catch (_) {}
+      document.body.removeChild(ta);
+    }
+  }
+
+  document.querySelectorAll('.install__copy[data-copy-target]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-copy-target');
+      var el = id ? document.getElementById(id) : null;
+      if (!el) return;
+      apexyardTrack('quickstart_copy');
+      copyText(el.textContent || '', btn, document.getElementById('get-started-status'));
+    });
+  });
+
+  var root = document.getElementById('get-started-tabs');
+  if (!root) return;
+  var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
+  var panels = Array.prototype.slice.call(root.querySelectorAll('[role="tabpanel"]'));
+
+  function selectTab(tab, focus) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+    });
+    panels.forEach(function (p) {
+      if (p.id === tab.getAttribute('aria-controls')) p.removeAttribute('hidden');
+      else p.setAttribute('hidden', '');
+    });
+    if (focus) tab.focus();
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () { selectTab(tab, false); });
+    tab.addEventListener('keydown', function (e) {
+      var i = tabs.indexOf(tab);
+      var next = -1;
+      if (e.key === 'ArrowRight') next = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = tabs.length - 1;
+      if (next < 0) return;
+      e.preventDefault();
+      selectTab(tabs[next], true);
+    });
+  });
+})();
+
 // ---- badge-snippet copy-to-clipboard (Governed by ApexYard block) ----
 (function () {
   var btn = document.getElementById('badge-snippet-copy');
@@ -2585,11 +2880,11 @@ function apexyardTrack(eventName) {
     var u = a.getAttribute('data-u') || '';
     var d = a.getAttribute('data-d') || '';
     if (!u || !d) return;
-    var subject = 'Professional setup';
+    var subject = 'ApexYard Team';
     var body = [
       'Hi Ahmed,',
       '',
-      "We would like to talk about professional setup and support for ApexYard.",
+      "We would like to talk about ApexYard Team.",
       '',
       '- Repo (or repos) we are bringing under management:',
       '- Team size:',

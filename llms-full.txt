@@ -36,11 +36,23 @@ monitoring, and documentation. Find missing work before users report it.
 One inbox lists each project you manage. Pull requests that need review,
 blocked issues, and other actions appear in one screen.
 
+## Three ways to use ApexYard
+
+- **The framework** — free, MIT. The rules, hooks, skills, and review
+  agents in your own repositories. It needs no dashboard and no account.
+- **The free hosted tier** — one repository, sign in with GitHub, the
+  hosted check and the dashboard. The dashboard is optional.
+- **Team** — for an organisation. Pricing to be announced. See
+  <https://apexyard.ai/pricing>.
+
 ## Who can use ApexYard
 
 - **Solo founders shipping with AI** — you are building the product alone,
   with Claude Code, Codex, OpenCode, Pi, or Cursor doing most of the typing. You need the
   guardrails a real team would give you — without a real team.
+- **Teams of 10 to 25** — several engineers and several repositories, each
+  person working with AI agents. You need one review process and one set
+  of gates that every repository follows.
 - **Non-technical founders managing contractors or a small dev team** —
   you need to know the work is solid before it goes live, without reading
   every commit yourself.
@@ -67,12 +79,18 @@ Open the [ApexYard Slack community](https://app.slack.com/client/T0BD7E3SYD8/C0B
 
 ## Get started in three steps
 
-### 1. Pull it to your machine
+### 1. Install, then init
 
-Fork `me2resh/apexyard` on GitHub. Clone the fork. Treat the fork itself
-as your ops repo — no nested installs, no symlinks, no proprietary
-upgrade tool. Future upgrades flow through `git fetch upstream` and the
-`/update` skill.
+Use the terminal or the desktop app. The result is the same either way.
+In the terminal, install the CLI with `curl -fsSL https://apexyard.ai/install | sh`,
+`brew install me2resh/tap/apexyard`, or `npx create-apexyard`. Then run
+`apexyard init` in your project folder and `/setup` in your agent tool.
+On the desktop, open the Cockpit and add your project folder; it runs the
+same steps for you.
+
+Alternative: fork `me2resh/apexyard` on GitHub, clone the fork, and treat
+the fork as your ops repo. Future upgrades flow through
+`git fetch upstream` and the `/update` skill.
 
 ### 2. Adopt, or originate
 
