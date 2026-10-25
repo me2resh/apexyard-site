@@ -65,6 +65,12 @@ jobs:
             exit 1
           fi
 
+      - name: Check tracked files for overlay values
+        env:
+          OVERLAY_JSON: ${{ secrets.STAGING_OVERLAY }}
+          REQUIRE_PRIVATE_TERMS: "true"
+        run: .github/scripts/check-private-terms.sh .
+
       - name: Apply the private overlay
         env:
           OVERLAY_JSON: ${{ secrets.STAGING_OVERLAY }}
