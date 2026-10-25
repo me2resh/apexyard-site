@@ -368,23 +368,16 @@ const learn = [
       {
         slug: 'readiness/overview',
         title: 'What Readiness checks',
-        description: 'The areas that a readiness audit checks before a release.',
+        description: 'The 10 dimensions that /launch-check checks before a release.',
         parts: [
           {
             text: [
-              'Readiness tells you if a project is ready for production. It checks these areas:',
+              'Readiness tells you if a project is ready for production.',
+              '[`/launch-check`](/docs/reference/skills/launch-check) checks 10 dimensions in one sweep and gives one verdict.',
+              'The table below lists the 10 dimensions. For each one, it names the skill for a deeper audit.',
+              'For example, the threat model is the deeper audit for Security, and mutation testing is the deeper audit for behaviour quality.',
               '',
-              '- Security: [`/security-review`](/docs/reference/skills/security-review)',
-              '- Threat model: [`/threat-model`](/docs/reference/skills/threat-model)',
-              '- Accessibility: [`/accessibility-audit`](/docs/reference/skills/accessibility-audit)',
-              '- Performance: [`/performance-audit`](/docs/reference/skills/performance-audit)',
-              '- Monitoring: [`/monitoring-audit`](/docs/reference/skills/monitoring-audit)',
-              '- Compliance: [`/compliance-check`](/docs/reference/skills/compliance-check)',
-              '- Documentation: [`/docs-audit`](/docs/reference/skills/docs-audit)',
-              '- Test quality: [`/mutation-test`](/docs/reference/skills/mutation-test)',
-              '',
-              '[`/launch-check`](/docs/reference/skills/launch-check) runs a quick check of each area and gives one verdict.',
-              'Each area also has a skill for a deeper audit.',
+              '`/security-review` is different. It reviews the security of one pull request, not a whole project.',
             ].join('\n'),
           },
           { source: '.claude/skills/launch-check/SKILL.md', sections: ['Deep-dive companions'] },
@@ -403,25 +396,28 @@ const learn = [
         parts: [
           {
             text: [
-              'Run `/launch-check` first. It checks every area quickly and gives one verdict.',
-              'Then run the skill for each area that shows a warning or a failure.',
+              'Run `/launch-check` first. It checks all 10 dimensions quickly and gives one verdict.',
+              'Then run the deeper skill for each dimension that shows a warning or a failure.',
             ].join('\n'),
           },
           {
-            skillList: ['launch-check', 'threat-model', 'accessibility-audit', 'performance-audit', 'monitoring-audit', 'compliance-check', 'docs-audit', 'mutation-test'],
+            skillList: ['launch-check', 'threat-model', 'accessibility-audit', 'compliance-check', 'analytics-audit', 'seo-audit', 'geo-audit', 'performance-audit', 'monitoring-audit', 'docs-audit', 'mutation-test'],
           },
         ],
       },
       {
         slug: 'readiness/score',
-        title: 'The Production-Ready Score',
-        description: 'One score and one verdict: go or no-go.',
+        title: 'The readiness score',
+        description: 'How /launch-check computes its score today, and the verdict: go or no-go.',
         parts: [
           {
             text: [
-              'The Production-Ready Score is the headline score of `/launch-check`.',
-              'It is the mean of the area scores, from 0 to 100.',
-              'The verdict tells you if you can release: go, go with warnings, conditional go, or no-go.',
+              '`/launch-check` gives each dimension a score from 0 to 100.',
+              'The headline score of a run is the unweighted mean of the dimension scores in that run, rounded to a whole number.',
+              'A run with no dimension scores has a headline score of 0.',
+              'The trend chart uses the same rule ([`render-trend.sh`](https://github.com/me2resh/apexyard/blob/{tag}/.claude/skills/launch-check/render-trend.sh)).',
+              '',
+              'The verdict does not come from the score. It comes from the PASS, WARN and FAIL results and any critical security finding, as the table below shows.',
             ].join('\n'),
           },
           { source: '.claude/skills/launch-check/SKILL.md', sections: ['Verdict logic', '6a. Resolve project name + score + verdict'] },
@@ -429,7 +425,7 @@ const learn = [
         callouts: [
           {
             type: 'coming',
-            text: 'A hosted score and a hosted trend over time are not built yet. Today `/launch-check` keeps each run in your ops repository and shows a local trend.',
+            text: 'The hosted Production-Ready Score and its hosted trend are not built yet. Their formula is not published. Until then, use the `/launch-check` score on this page.',
           },
         ],
       },
@@ -457,7 +453,7 @@ const learn = [
           {
             text: [
               'Today the audit skills run where your coding agent runs, with your own model access.',
-              'Each `/launch-check` run is saved in your ops repository under `projects/<name>/audits/`.',
+              'Each `/launch-check` run is saved in your projects folder. By default that is `projects/<name>/audits/` in your ops repository.',
             ].join('\n'),
           },
         ],
@@ -468,8 +464,8 @@ const learn = [
               'Continuous Readiness in CI is not built yet. When it ships:',
               '',
               '- It runs in your CI with your own model key.',
-              '- Only the results go to the cloud.',
-              '- No code leaves your CI.',
+              '- Only the results go to the hosted service.',
+              '- No code goes to ApexYard. Your model provider receives only what your own key sends.',
             ].join('\n'),
           },
         ],
