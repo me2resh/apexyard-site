@@ -1,53 +1,62 @@
 # ApexYard
 
-> ApexYard gives your coding agents a team's process. The Gate checks every pull request on GitHub. The framework is open source (MIT).
+> ApexYard gives your agents a team's process, then checks every pull request against it. The framework is open source (MIT).
 
-## Your agents write the code. Your team decides what merges.
+## Your agents write the code. Your process decides what merges.
 
-ApexYard gives your agents a team's process. On GitHub, it holds each pull request until the checks pass and a named person approves.
+ApexYard gives your agents a team's process, then checks every pull request against it.
 
-The Gate checks pull requests from any agent. Build runs in Claude Code, Codex, Cursor and OpenCode.
+Agent agnostic. Works with Claude Code, Codex, Cursor and OpenCode.
 
-- 420 pull requests in ApexYard's own repository went through the gate in the last 90 days.
-- 3 checks on every pull request from the first day: a linked ticket, a decision record and a review. Named approval when your team is ready.
-
-## What the GitHub App can see
-
-The App cannot open the files in your repository: it has no Contents permission. From each pull request it takes only the names of the changed files, never the code.
-
-- Pull requests: read. Titles, descriptions, reviews and the list of changed files.
-- Checks: write. To post the ApexYard check on each pull request.
-- Metadata: read. Repository names, and who can write to each repository.
-- Members: read. To confirm who can manage your organisation when you sign in.
-
-The check blocks a merge only when you make it required in GitHub. You can remove the App at any time.
+It never reads your code. See what the GitHub App can see: <https://apexyard.ai/gate#app-access>.
 
 ## One process, three places
 
-Build puts your agents through tickets, plans and reviews. The Gate checks that process on every pull request. Readiness checks the whole repository before you ship.
+You write a rule once. Build guides your agents with it. The Gate checks each pull request against it. Readiness measures the whole repository. A miss comes back as a new rule.
 
-1. **Build**: your agents work as an engineering team, from the first idea to reviewed code. <https://apexyard.ai/build>
-2. **Gate**: checks each pull request against your process before it merges. <https://apexyard.ai/gate>
-3. **Readiness**: know what is safe to ship, area by area. <https://apexyard.ai/readiness>
+1. **The rule**: Written once.
+2. **Build**: Guides the agent.
+3. **Gate**: Checks the pull request.
+4. **Readiness**: Measures the repository.
+5. **A miss**: Becomes a new rule.
 
-## Free and Team
+- About Build: <https://apexyard.ai/build>
+- About Gate: <https://apexyard.ai/gate>
+- About Readiness: <https://apexyard.ai/readiness>
 
-- **Free**: the hosted check on every pull request, in warning mode, on your own repository. No named approval.
-- **Team**: the same check on every repository, named approval set up with you, a record for each merge, and one view of the organisation. See <https://apexyard.ai/pricing>.
-- **The framework**: free and open source under the MIT licence. It needs no account and no dashboard.
+Underneath: one knowledge base, one evidence store and one dashboard.
 
-## Install free
+## Plans
+
+Start on GitHub at no cost. Add your team when you need a record of every approval.
+
+See plans: <https://apexyard.ai/pricing>.
+
+## Install the framework
+
+Every rule, hook and review agent is a plain file that you can read, change or remove.
+
+Fork <https://github.com/me2resh/apexyard> into your organisation on GitHub. Then run these commands.
 
 ```sh
-curl -fsSL https://apexyard.ai/install | sh
-# or: brew install me2resh/tap/apexyard
-# or: npx create-apexyard
-cd your-project
-apexyard init
-/setup
+# macOS
+brew install jq
+git clone https://github.com/your-org/apexyard.git
+cd apexyard
+bash bin/apexyard doctor
+
+# Linux
+sudo apt-get install jq
+git clone https://github.com/your-org/apexyard.git
+cd apexyard
+bash bin/apexyard doctor
 ```
 
-66 hooks guard each edit, commit and push on the developer's machine. Every rule, hook and review agent is a plain file you can read, change or remove.
+On Fedora, use `sudo dnf install jq`.
+
+On Windows, use Git Bash (from Git for Windows) or WSL. The hooks are Bash scripts. PowerShell and cmd.exe cannot run them. In Git Bash, install jq with `winget install jqlang.jq`. Then run the clone, cd and doctor commands above. In WSL, use the Linux commands.
+
+Then open Claude Code in the folder and run `/setup`. Read the install guide for Codex, Cursor and OpenCode: <https://apexyard.ai/docs/quickstart/install>.
 
 ## Book a demo
 

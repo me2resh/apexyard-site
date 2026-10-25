@@ -10,7 +10,7 @@
 - [Gate](https://apexyard.ai/gate) — each pull request checked on GitHub for a ticket, a decision record, a review and a named approval
 - [Readiness](https://apexyard.ai/readiness) — each repository audited area by area, with a go or no-go, the gaps and the top actions
 - [Docs](https://apexyard.ai/docs) — the framework guide: install, the daily loop, the gates, hooks and rules, and a real merge replayed from the log
-- [Pricing](https://apexyard.ai/pricing) — the open-source framework (MIT), a free way to start with the hosted gate, Startup, Team and Enterprise plans, and reviews of how your team ships
+- [Pricing](https://apexyard.ai/pricing) — the open-source framework (MIT), a free way to start with the hosted gate, Startup, Team and Enterprise plans, and assessments of how your team ships
 - [Architecture](https://apexyard.ai/architecture) — the technical 5-layer model + portfolio model
 - [Skills](https://apexyard.ai/skills) — full slash-command reference (69 skills) grouped by outcome
 

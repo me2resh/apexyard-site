@@ -1,7 +1,7 @@
-/* Team claims on the product pages (#102).
-   Each claim is live on the day the site switches on. To show a claim as
-   "Coming" instead, change its value to 'coming'. One line per claim; no
-   copy changes are needed. product.js reads this object. */
+/* Each claim is checked on switch-on day.
+   'live' means the claim is true today; 'coming' means it is not built yet.
+   No value renders a label on the page. product.js copies the value to a
+   data-claim-state attribute only. */
 window.APEXYARD_CLAIMS = {
   gate_all_repos: 'live',   // the gate on every repository of an organisation
   named_approval: 'live',   // a named approval on every merge

@@ -7,9 +7,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ApexYard: your agents write the code, your team decides what merges</title>
+<title>ApexYard: your agents write the code, your process decides what merges</title>
 <meta name="author" content="me2resh">
-<meta name="description" content="ApexYard gives your coding agents a team's process. On GitHub, it holds each pull request until the checks pass and a named person approves.">
+<meta name="description" content="ApexYard gives your agents a team's process, then checks every pull request against it.">
 <link rel="canonical" href="https://apexyard.ai/">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -20,15 +20,15 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ApexYard">
 <meta property="og:url" content="https://apexyard.ai/">
-<meta property="og:title" content="ApexYard: your agents write the code, your team decides what merges">
-<meta property="og:description" content="ApexYard gives your coding agents a team's process. On GitHub, it holds each pull request until the checks pass and a named person approves.">
+<meta property="og:title" content="ApexYard: your agents write the code, your process decides what merges">
+<meta property="og:description" content="ApexYard gives your agents a team's process, then checks every pull request against it.">
 <meta property="og:image" content="https://apexyard.ai/og/index.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://apexyard.ai/">
-<meta name="twitter:title" content="ApexYard: your agents write the code, your team decides what merges">
-<meta name="twitter:description" content="ApexYard gives your coding agents a team's process. On GitHub, it holds each pull request until the checks pass and a named person approves.">
+<meta name="twitter:title" content="ApexYard: your agents write the code, your process decides what merges">
+<meta name="twitter:description" content="ApexYard gives your agents a team's process, then checks every pull request against it.">
 <meta name="twitter:image" content="https://apexyard.ai/og/index.png">
 <script type="application/ld+json">
 {
@@ -38,7 +38,7 @@
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": "Web, macOS, Linux",
   "url": "https://apexyard.ai/",
-  "description": "ApexYard gives coding agents a team's process. Its hosted check runs a fixed set of steps on each pull request on GitHub, and holds the merge until the checks pass and a named person approves.",
+  "description": "ApexYard gives coding agents a team's process, then checks every pull request against it.",
   "license": "https://opensource.org/licenses/MIT",
   "publisher": { "@type": "Organization", "name": "ApexYard", "url": "https://apexyard.ai/", "logo": "https://apexyard.ai/favicon.svg" }
 }
@@ -88,9 +88,9 @@
       <div class="site-nav__group">
         <button class="site-nav__menu" type="button" aria-expanded="false" aria-controls="product-menu">Product</button>
         <ul class="site-nav__sub" id="product-menu">
+          <li><a href="/build">Build</a></li>
           <li><a href="/gate">Gate</a></li>
           <li><a href="/readiness">Readiness</a></li>
-          <li><a href="/build">Build</a></li>
         </ul>
       </div>
       <a href="/pricing">Pricing</a>
@@ -107,16 +107,18 @@
 
   <section class="hero" aria-labelledby="hero-title">
     <div class="wrap hero__grid">
-      <div class="hero__text">
+      <div class="hero__head">
         <p class="hero__risk">Can you prove a person approved each change your agents made?</p>
-        <h1 id="hero-title"><span>Your agents write the code.</span> <span>Your team decides what merges.</span></h1>
-        <p class="hero__sub">ApexYard gives your agents a team's process. On GitHub, it holds each pull request until the checks pass and a named person approves.</p>
+        <h1 id="hero-title"><span>Your agents write the code.</span> <span>Your process decides what merges.</span></h1>
+      </div>
+      <div class="hero__text">
+        <p class="hero__sub">ApexYard gives your agents a team's process, then checks every pull request against it.</p>
         <div class="hero__actions">
           <a class="btn btn--primary" href="https://cal.com/apexyard/demo?src=hero" rel="noopener">Book a demo</a>
           <a class="btn btn--quiet" href="https://app.apexyard.ai/signin?src=home-hero" rel="noopener">Start free with GitHub</a>
         </div>
-        <p class="hero__hint"><!--{{PLAN_HINT}}-->Free to start. Team from £0,000 a year. <span class="price-flag">Placeholder price</span><!--/{{PLAN_HINT}}--></p>
-        <p class="hero__works">The Gate checks pull requests from any agent. Build runs in Claude Code, Codex, Cursor and OpenCode.</p>
+        <p class="hero__hint"><!--{{PLAN_HINT}}-->Plan details to follow.<!--/{{PLAN_HINT}}--></p>
+        <p class="hero__works">Agent agnostic. Works with Claude Code, Codex, Cursor and OpenCode.</p>
       </div>
       <figure class="ledger">
         <div class="ledger__card" aria-hidden="true">
@@ -138,95 +140,155 @@
     </div>
   </section>
 
-  <section class="proof" aria-label="ApexYard in numbers">
+  <section class="proof" aria-label="Sample outcome metrics">
     <div class="wrap">
-      <!-- Provenance (not shown): 420 = pull requests merged in me2resh/apexyard in the
-           90 days to 25 October 2026, from the GitHub search API. 3 checks = the steps that a
-           new organisation gets at sign-up (linked ticket, decision record, review), all in
-           warning mode. Named approval is added with the team. -->
-      <ul class="proof__two">
-        <li><strong>420</strong> pull requests in ApexYard's own repository went through the gate in the last 90 days</li>
-        <li><strong>3 checks</strong> on every pull request from the first day. Named approval when your team is ready.</li>
+      <ul class="proof__metrics">
+        <!-- Switch-on blocker: replace each sample with a real customer metric from a design partner or the demo org. -->
+        <!-- Definition: median review findings per pull request in days 31 to 60 after install, compared with days 1 to 30, same repositories. -->
+        <li><strong class="proof__figure">00%</strong> <span class="proof__sample">Sample</span> fewer review findings per pull request after 30 days</li>
+        <!-- Definition: merged pull requests with a recorded named approval, divided by all merged pull requests, last 90 days. -->
+        <li><strong class="proof__figure">00%</strong> <span class="proof__sample">Sample</span> of pull requests merged with a named approval</li>
+        <!-- Definition: median time from the first failed ApexYard check on a pull request to the first passing check on the same pull request, last 90 days. -->
+        <li><strong class="proof__figure">0.0 h</strong> <span class="proof__sample">Sample</span> median time from a red check to green</li>
       </ul>
+      <p class="proof__access">It never reads your code. <a href="/gate#app-access">See what the GitHub App can see</a>.</p>
     </div>
   </section>
 
-  <section class="section section--tint app-access" aria-labelledby="app-access-title">
-    <!-- Security review before switch-on: confirm this permission list and its wording. -->
-    <div class="wrap app-access__inner">
-      <h2 class="section__title" id="app-access-title">What the GitHub App can see</h2>
-      <div>
-        <p class="section__lede">The App cannot open the files in your repository: it has no Contents permission. From each pull request it takes only the names of the changed files, never the code.</p>
-        <ul class="app-access__list">
-          <li><strong>Pull requests: read.</strong> Titles, descriptions, reviews and the list of changed files.</li>
-          <li><strong>Checks: write.</strong> To post the ApexYard check on each pull request.</li>
-          <li><strong>Metadata: read.</strong> Repository names, and who can write to each repository.</li>
-          <li><strong>Members: read.</strong> To confirm who can manage your organisation when you sign in.</li>
-        </ul>
-        <p class="app-access__control">The check blocks a merge only when you make it required in GitHub. You can remove the App at any time.</p>
-      </div>
-    </div>
-  </section>
 
   <section class="section one-rule" id="product" aria-labelledby="one-rule-title">
     <div class="wrap" id="how-it-works">
       <h2 class="section__title" id="one-rule-title">One process, three places</h2>
-      <p class="section__lede">Build puts your agents through tickets, plans and reviews. The Gate checks that process on every pull request. Readiness checks the whole repository before you ship.</p>
-      <ol class="lifecycle__steps">
-        <li><a href="/build"><strong>Build</strong><span>Your agents work as an engineering team, from the first idea to reviewed code.</span></a></li>
-        <li><a href="/gate"><strong>Gate</strong><span>Checks each pull request against your process before it merges.</span></a></li>
-        <li><a href="/readiness"><strong>Readiness</strong><span>Know what is safe to ship, area by area.</span></a></li>
-      </ol>
+      <p class="section__lede">You write a rule once. Build guides your agents with it. The Gate checks each pull request against it. Readiness measures the whole repository. A miss comes back as a new rule.</p>
+      <figure class="rule-map" data-rule-map>
+        <div class="rule-map__board">
+          <svg class="rule-map__svg" aria-hidden="true" focusable="false">
+            <path class="rule-map__track" d=""/>
+            <path class="rule-map__trail" d=""/>
+            <g class="rule-map__token"><rect x="-7" y="-7" width="14" height="14" rx="3"/></g>
+          </svg>
+          <ol class="rule-map__stages">
+            <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-rule"><span class="rule-map__name">The rule</span><span class="rule-map__what">Written once</span></button></li>
+            <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-build"><span class="rule-map__name">Build</span><span class="rule-map__what">Guides the agent</span></button></li>
+            <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-gate"><span class="rule-map__name">Gate</span><span class="rule-map__what">Checks the pull request</span></button></li>
+            <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-readiness"><span class="rule-map__name">Readiness</span><span class="rule-map__what">Measures the repository</span></button></li>
+            <li class="rule-map__stage rule-map__stage--miss"><button type="button" class="rule-map__btn" id="rule-tab-miss"><span class="rule-map__name">A miss</span><span class="rule-map__what">Becomes a new rule</span></button></li>
+          </ol>
+        </div>
+
+        <div class="rule-map__examples">
+          <div class="rule-map__example" id="rule-ex-rule">
+            <h3 class="rule-map__title">The rule: a ticket before any code change</h3>
+            <p>You write it once, as a plain file in your repository. This rule is gate 3 of the ApexYard workflow rules.</p>
+            <div class="rule-map__file">
+              <p class="rule-map__path">.claude/rules/workflow-gates.md</p>
+              <table class="rule-map__table">
+                <thead><tr><th scope="col">Gate</th><th scope="col">Before</th><th scope="col">Verify</th></tr></thead>
+                <tbody><tr><td>3</td><td>Starting code</td><td>Ticket exists, branch created, design review if UI work</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="rule-map__example" id="rule-ex-build">
+            <h3 class="rule-map__title">Build: the agent meets the rule while it works</h3>
+            <p>An agent tries to edit a file with no active ticket. A local hook stops the edit and tells the agent how to continue.</p>
+            <pre class="rule-map__term" tabindex="0"><code>BLOCKED: No active ticket set for this session.
+
+ApexYard requires a ticket BEFORE any code changes.
+
+To unblock:
+  1. Create or find the ticket.
+  2. Run the /start-ticket skill with the issue number.
+  3. Retry the edit.</code></pre>
+            <p class="rule-map__source">Shortened output of the <code>require-active-ticket.sh</code> hook.</p>
+          </div>
+
+          <div class="rule-map__example" id="rule-ex-gate">
+            <h3 class="rule-map__title">Gate: the same rule on the pull request</h3>
+            <p>The hosted check looks for a linked ticket on every pull request. When the check is required and the ticket is missing, the merge stays blocked.</p>
+            <div class="rule-map__check">
+              <p class="rule-map__repo">example-co/payments-api, pull request #214</p>
+              <p class="rule-map__row"><span>Ticket linked <span class="rule-map__level">must pass</span></span><span class="rule-map__state rule-map__state--block">Missing</span></p>
+              <p class="rule-map__row"><span>After a new commit that links the ticket</span><span class="rule-map__state rule-map__state--pass">Passed</span></p>
+            </div>
+            <p class="rule-map__source">Example result. The repository is fictional.</p>
+          </div>
+
+          <div class="rule-map__example" id="rule-ex-readiness">
+            <h3 class="rule-map__title">Readiness: the whole repository, area by area</h3>
+            <p>The readiness audit covers ten areas. One of them is monitoring: error tracking, health endpoints, alerting and runbooks.</p>
+            <div class="rule-map__check">
+              <p class="rule-map__repo">example-co/payments-api, monitoring</p>
+              <p class="rule-map__row"><span>Error tracking</span><span class="rule-map__state rule-map__state--pass">Found</span></p>
+              <p class="rule-map__row"><span>Health endpoint</span><span class="rule-map__state rule-map__state--pass">Found</span></p>
+              <p class="rule-map__row"><span>Alerting</span><span class="rule-map__state rule-map__state--warn">Partial</span></p>
+              <p class="rule-map__row"><span>Runbooks</span><span class="rule-map__state rule-map__state--block">Missing</span></p>
+            </div>
+            <p class="rule-map__source">Example result. The repository is fictional.</p>
+          </div>
+
+          <div class="rule-map__example" id="rule-ex-miss">
+            <h3 class="rule-map__title">A miss: it comes back as a new rule</h3>
+            <p>A reviewer finds a problem that no rule caught. The <code>/codify-rule</code> skill turns that review comment into a draft handbook entry. You approve it, and your agents and reviewers use it on the next ticket.</p>
+            <pre class="rule-map__term"><code>/codify-rule --pr 214</code></pre>
+          </div>
+        </div>
+
+        <figcaption class="visually-hidden">One rule in five stages. The rule is written once. Build guides the agent with it while the agent works. The Gate checks each pull request against it. Readiness measures the whole repository. A miss becomes a new rule, and the loop starts again. Each stage button shows one example.</figcaption>
+      </figure>
+      <p class="one-rule__links"><a href="/build">About Build</a> <a href="/gate">About Gate</a> <a href="/readiness">About Readiness</a></p>
       <p class="one-rule__base">Underneath: one knowledge base, one evidence store and one dashboard.</p>
     </div>
   </section>
 
-  <section class="section section--tint" id="compare" aria-labelledby="why-title">
-    <div class="wrap">
-      <h2 class="section__title" id="why-title">From one repository to every team</h2>
-      <p class="section__lede">Free keeps your own repository honest. Team is for the day someone outside engineering asks you to prove it.</p>
-      <div class="compare" role="region" aria-labelledby="why-title" tabindex="0">
-        <table>
-          <thead>
-            <tr><th scope="col"><span class="visually-hidden">Feature</span></th><th scope="col">Free</th><th scope="col" class="compare__team">Team</th></tr>
-          </thead>
-          <tbody>
-            <tr><th scope="row">Repositories</th><td><!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}--></td><td><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->All repositories, up to N developers<!--/{{TEAM_REPO_LIMIT}}--><span class="claim-coming" hidden> Coming</span></span></td></tr>
-            <tr><th scope="row">Rules</th><td>Local files that a developer can remove</td><td><span data-claim="gate_all_repos">The same check on every repository<span class="claim-coming" hidden> Coming</span></span></td></tr>
-            <tr><th scope="row">Approval</th><td>Not included</td><td><span data-claim="named_approval">Named approval, set up with you<span class="claim-coming" hidden> Coming</span></span></td></tr>
-            <tr><th scope="row">Review</th><td>Review reported by your agent</td><td><span class="is-coming" data-claim="ci_attestation">Review attested by your CI<span class="claim-coming" hidden> Coming</span></span></td></tr>
-            <tr><th scope="row">Readiness</th><td>Run the audit skills yourself</td><td><span class="is-coming" data-claim="readiness_weekly">Add <!--{{READINESS_SCHEDULE_NAME}}-->Readiness on a schedule<!--/{{READINESS_SCHEDULE_NAME}}--><span class="claim-coming" hidden> Coming</span></span></td></tr>
-            <tr><th scope="row">Evidence</th><td>None</td><td><span data-claim="evidence_export">A record for each merge, which you can export<span class="claim-coming" hidden> Coming</span></span></td></tr>
-            <tr><th scope="row">Visibility</th><td>Your connected repositories</td><td><span data-claim="org_dashboard">Every repository in your organisation on one screen.<span class="claim-coming" hidden> Coming</span></span> <span class="is-coming" data-claim="team_trends">Trends by team.<span class="claim-coming" hidden> Coming</span></span></td></tr>
-            <tr><th scope="row">Knowledge base</th><td>Local files</td><td><span data-claim="kb_mcp">Shared organisation rules over MCP, with owners and versions<span class="claim-coming" hidden> Coming</span></span></td></tr>
-            <tr><th scope="row">Support</th><td>Community</td><td><!--{{TEAM_SUPPORT}}-->Team support<!--/{{TEAM_SUPPORT}}--></td></tr>
-            <tr><th scope="row">Price</th><td>Free</td><td><!--{{TEAM_PRICE}}-->From £000 a month <span class="price-flag">Placeholder price</span><!--/{{TEAM_PRICE}}--></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="compare__more"><a href="/pricing" class="btn btn--quiet">See pricing</a></p>
+  <section class="section section--tint plans-line" id="compare" aria-labelledby="plans-line-title">
+    <div class="wrap plans-line__inner">
+      <h2 class="section__title" id="plans-line-title">Plans</h2>
+      <p class="section__lede">Start on GitHub at no cost. Add your team when you need a record of every approval.</p>
+      <p><a class="btn btn--quiet" href="/pricing">See plans</a></p>
     </div>
   </section>
 
   <section class="section" id="open-source" aria-labelledby="oss-title">
     <div class="wrap oss">
       <div class="oss__text">
-        <h2 class="section__title" id="oss-title">Install free. Read every rule.</h2>
-        <p class="section__lede">MIT licensed. Every rule, hook and review agent is a plain file you can read, change or remove.</p>
-        <p><strong>66 hooks</strong> guard each edit, commit and push on the developer's machine.<span data-stars-wrap hidden> <strong><span data-stars></span></strong> developers have starred the framework on GitHub.</span></p>
-        <p>Prefer to fork? Follow the <a href="/docs#alternative">fork steps in the docs</a>.</p>
+        <h2 class="section__title" id="oss-title">Install the framework</h2>
+        <p class="section__lede">Every rule, hook and review agent is a plain file that you can read, change or remove.</p>
       </div>
-
       <div id="quickstart" class="install">
-        <p>Install the CLI with one of these commands.</p>
-        <div class="cmd"><code id="cmd-curl">curl -fsSL https://apexyard.ai/install | sh</code><button type="button" data-copy-target="cmd-curl" aria-label="Copy the curl command">Copy</button></div>
-        <div class="cmd"><code id="cmd-brew">brew install me2resh/tap/apexyard</code><button type="button" data-copy-target="cmd-brew" aria-label="Copy the Homebrew command">Copy</button></div>
-        <div class="cmd"><code id="cmd-npx">npx create-apexyard</code><button type="button" data-copy-target="cmd-npx" aria-label="Copy the npx command">Copy</button></div>
-        <p>Then run <code>apexyard init</code> in your project folder, open your agent tool, and run <code>/setup</code>.</p>
-        <pre><code>cd your-project
-apexyard init
-/setup</code></pre>
-        <p class="install__status" id="tabs-status" aria-live="polite"></p>
+        <div class="tabs" data-tabs>
+          <div class="tabs__list" role="tablist" aria-label="Operating system">
+            <button type="button" class="tabs__tab" id="tab-macos" role="tab" aria-selected="true" aria-controls="panel-macos" tabindex="0">macOS</button>
+            <button type="button" class="tabs__tab" id="tab-linux" role="tab" aria-selected="false" aria-controls="panel-linux" tabindex="-1">Linux</button>
+            <button type="button" class="tabs__tab" id="tab-windows" role="tab" aria-selected="false" aria-controls="panel-windows" tabindex="-1">Windows</button>
+          </div>
+          <div class="tabs__panel" id="panel-macos" role="tabpanel" aria-labelledby="tab-macos" tabindex="0">
+            <p>Fork <a href="https://github.com/me2resh/apexyard">me2resh/apexyard</a> into your organisation on GitHub. Then run these commands.</p>
+            <div class="cmd"><pre tabindex="0"><code id="cmd-macos">brew install jq
+git clone https://github.com/your-org/apexyard.git
+cd apexyard
+bash bin/apexyard doctor</code></pre><button type="button" class="tabs__copy" data-copy-target="cmd-macos" aria-label="Copy commands for macOS">Copy commands</button></div>
+          </div>
+          <div class="tabs__panel" id="panel-linux" role="tabpanel" aria-labelledby="tab-linux" tabindex="0">
+            <p>Fork <a href="https://github.com/me2resh/apexyard">me2resh/apexyard</a> into your organisation on GitHub. Then run these commands.</p>
+            <div class="cmd"><pre tabindex="0"><code id="cmd-linux">sudo apt-get install jq
+git clone https://github.com/your-org/apexyard.git
+cd apexyard
+bash bin/apexyard doctor</code></pre><button type="button" class="tabs__copy" data-copy-target="cmd-linux" aria-label="Copy commands for Linux">Copy commands</button></div>
+            <p>On Fedora, use <code>sudo dnf install jq</code>.</p>
+          </div>
+          <div class="tabs__panel" id="panel-windows" role="tabpanel" aria-labelledby="tab-windows" tabindex="0">
+            <p>Fork <a href="https://github.com/me2resh/apexyard">me2resh/apexyard</a> into your organisation on GitHub. Then run these commands.</p>
+            <p>The hooks are Bash scripts. Use Git Bash (from Git for Windows) or WSL. PowerShell and cmd.exe cannot run them.</p>
+            <div class="cmd"><pre tabindex="0"><code id="cmd-windows">winget install jqlang.jq
+git clone https://github.com/your-org/apexyard.git
+cd apexyard
+bash bin/apexyard doctor</code></pre><button type="button" class="tabs__copy" data-copy-target="cmd-windows" aria-label="Copy commands for Windows">Copy commands</button></div>
+            <p>Run these commands in Git Bash. In WSL, use the Linux commands. <a href="/docs/quickstart/install">Read the install guide</a>.</p>
+          </div>
+          <p class="tabs__status" id="tabs-status" aria-live="polite"></p>
+        </div>
+        <p>Then open Claude Code in the folder and run <code>/setup</code>. <a href="/docs/quickstart/install">Read the install guide</a> for Codex, Cursor and OpenCode.</p>
       </div>
     </div>
   </section>
@@ -250,9 +312,9 @@ apexyard init
 <footer class="site-footer">
   <div class="wrap site-footer__inner">
     <nav aria-label="Footer">
+      <a href="/build">Build</a>
       <a href="/gate">Gate</a>
       <a href="/readiness">Readiness</a>
-      <a href="/build">Build</a>
       <a href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
       <a href="/architecture">Architecture</a>
@@ -280,5 +342,6 @@ apexyard init
 
 <script src="/claims.js" defer></script>
 <script src="/product.js" defer></script>
+<script src="/rule-map.js" defer></script>
 </body>
 </html>
