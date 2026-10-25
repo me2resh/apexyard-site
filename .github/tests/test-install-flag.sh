@@ -61,7 +61,7 @@ done
 
 # The site does not mention telemetry or the install ping (owner decision).
 # Check every page and every published text alternate, not only index.html.
-tel_hits=$(cd "$repo_root" && grep -Eil -- 'telemetry|install ping' ./*.html ./*.md.gen ./llms*.txt 2>/dev/null || true)
+tel_hits=$(grep -Eil -- 'telemetry|install ping' "$repo_root"/*.html "$repo_root"/*.md.gen "$repo_root"/llms*.txt 2>/dev/null) || tel_hits=""
 if [ -n "$tel_hits" ]; then
   bad "site pages have no telemetry text" "found in: $(echo "$tel_hits" | tr '\n' ' ')"
 else
