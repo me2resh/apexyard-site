@@ -250,8 +250,9 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 .hero__hint { margin-top: 1rem; font-size: 15px; color: var(--ink-2); }
 
 /* ---------- the merge ledger ---------- */
-.ledger { margin: 0; }
+.ledger { margin: 0; min-width: 0; max-width: 100%; }
 .ledger__card {
+  max-width: 100%;
   background: var(--surface);
   border: 1px solid var(--line);
   border-top: 4px solid var(--ink);
@@ -268,7 +269,7 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
   padding: 0.7rem 0; border-bottom: 1px solid var(--line);
 }
 .ledger__check:last-child { border-bottom: 0; }
-.ledger__name { color: var(--ink); }
+.ledger__name { color: var(--ink); min-width: 0; }
 .ledger__state { display: grid; justify-items: end; flex: none; }
 .ledger__s {
   grid-area: 1 / 1;
@@ -284,7 +285,7 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 .ledger__s--pass::before { background: var(--pass); border-radius: 50%; }
 .ledger__approval {
   padding: 0.95rem 1.25rem 1.1rem; border-top: 1px solid var(--line);
-  color: var(--ink); font-weight: 600;
+  color: var(--ink); font-weight: 600; overflow-wrap: anywhere;
 }
 .ledger__approval code { font-weight: 400; font-size: 0.92em; color: var(--ink-2); }
 .ledger__caption { margin-top: 0.75rem; font-size: 14px; color: var(--ink-2); }
@@ -292,7 +293,6 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 @keyframes ledger-on { from { visibility: visible; } to { visibility: visible; } }
 @keyframes ledger-off { from { visibility: hidden; } to { visibility: hidden; } }
 @keyframes ledger-pop { from { transform: scale(0.3); } to { transform: scale(1); } }
-@keyframes ledger-wipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 
 /* One orchestrated sequence on load: running, two blocks, then green and
    approved. States switch at once, as check results do; each text stays at
@@ -308,7 +308,7 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
   .ledger__s--block { animation: ledger-on var(--tb) linear var(--t1); }
   .ledger__s--pass { animation: ledger-off var(--tp) linear 0s; }
   .ledger__s--pass::before { animation: ledger-pop 0.3s ease-out var(--tp) backwards; }
-  .ledger__approval { animation: ledger-off 3.3s linear 0s, ledger-wipe 0.6s ease-out 3.3s backwards; }
+  .ledger__approval { animation: ledger-off 3.3s linear 0s; }
 }
 
 /* ---------- sections ---------- */
@@ -323,18 +323,14 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 }
 .section__lede { margin-top: 1rem; color: var(--ink-2); max-width: 62ch; font-size: 18px; }
 
-.thesis { padding: clamp(2.5rem, 6vw, 4rem) 0; border-top: 1px solid var(--line); }
-.thesis__line {
-  font: 700 clamp(1.4rem, 3vw, 2.1rem)/1.22 var(--display); font-stretch: 106%;
-  letter-spacing: -0.015em; max-width: 32ch;
-}
-
 /* proof: buyer numbers only */
-.proof { padding: 0 0 clamp(2.5rem, 5vw, 3.5rem); }
-.proof__two { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
-.proof__two li { color: var(--ink-2); font-size: 16px; max-width: 40ch; }
-.proof__two strong { color: var(--ink); font: 760 1.5em/1 var(--display); font-stretch: 110%; }
-.proof__note { margin-top: 1.25rem; font-size: 14px; color: var(--ink-2); }
+.proof { padding: clamp(2.5rem, 6vw, 4rem) 0; border-top: 1px solid var(--line); }
+.proof__two { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem; }
+.proof__two li { color: var(--ink-2); font-size: 18px; max-width: 30ch; }
+.proof__two strong {
+  display: block; margin-bottom: 0.35rem; color: var(--ink);
+  font: 820 clamp(2.6rem, 6vw, 4rem)/1 var(--display); font-stretch: 112%; letter-spacing: -0.02em;
+}
 @media (min-width: 820px) { .proof__two { grid-template-columns: repeat(2, 1fr); gap: 3rem; } }
 
 /* the loop: a real sequence, so it is numbered */

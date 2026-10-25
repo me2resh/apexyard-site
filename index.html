@@ -133,34 +133,31 @@
     </div>
   </section>
 
-  <section class="thesis" aria-label="What ApexYard does">
+  <section class="proof" aria-label="ApexYard in numbers">
     <div class="wrap">
-      <p class="thesis__line">ApexYard gives your agents an engineering team's process, then checks they followed it.</p>
-    </div>
-  </section>
-
-  <section class="proof" aria-label="ApexYard in use on its own repository">
-    <div class="wrap">
+      <!-- Provenance (not shown): 420 = pull requests merged in me2resh/apexyard in the
+           90 days to 25 October 2026, from the GitHub search API. The rules count is
+           derived from the framework release tag by .github/scripts/derive-counts.sh
+           and checked by verify-counts.sh. -->
       <ul class="proof__two">
-        <li><strong>420</strong> pull requests merged through the gate on ApexYard's own repository in the 90 days to 25 October 2026.</li>
-        <li><strong>22 rules</strong> behind that gate, in framework release v5.10.0.</li>
+        <li><strong>420</strong> pull requests merged through the gate in 90 days</li>
+        <li><strong>22 rules</strong> enforced on every merge</li>
       </ul>
-      <p class="proof__note">Sources: the GitHub search API for merged pull requests in me2resh/apexyard, and the v5.10.0 release tag.</p>
     </div>
   </section>
 
   <section class="section" id="how-it-works" aria-labelledby="how-title">
     <div class="wrap loop">
       <div class="loop__text">
-        <h2 class="section__title" id="how-title">One set of rules, used twice</h2>
-        <p class="section__lede">Before the code exists, the rules guide the agent. That is the process. After the code exists, the same rules check the pull request, and a named person approves it on GitHub. That is the gate. A miss becomes a new rule.</p>
+        <h2 class="section__title" id="how-title">The rules get stronger with every merge</h2>
+        <p class="section__lede">You keep one rule set, not a style guide in one place and a review checklist in another. The rule that steers the agent is the rule that blocks the merge.</p>
         <ol class="loop__steps">
-          <li><strong>Guide.</strong> Your agents read your tickets, plans and rules before they write code.</li>
-          <li><strong>Check.</strong> The ApexYard check runs on every pull request and lists what is missing.</li>
-          <li><strong>Approve.</strong> The merge waits until a named person approves it on GitHub.</li>
-          <li><strong>Learn.</strong> A miss becomes a new rule, so the next change starts from it.</li>
+          <li><strong>Guide.</strong> Agents start from your tickets, plans and handbooks, not from a blank prompt.</li>
+          <li><strong>Check.</strong> A missing test, plan or review shows up with the exact fix.</li>
+          <li><strong>Approve.</strong> An agent can never sign off its own work.</li>
+          <li><strong>Learn.</strong> A review finding becomes a rule in one step, so the same mistake cannot merge twice.</li>
         </ol>
-        <p class="loop__position">Others tell your agents the rules. ApexYard checks they followed them, and learns from every miss.</p>
+        <p class="loop__position">Others tell your agents the rules. ApexYard checks they followed them.</p>
         <p class="loop__more"><a href="/how-it-works">Read a day with ApexYard</a></p>
       </div>
       <div class="loop__figure">
@@ -185,7 +182,7 @@
   <section class="section section--tint" id="why-teams-pay" aria-labelledby="why-title">
     <div class="wrap">
       <h2 class="section__title" id="why-title">Why teams pay</h2>
-      <p class="section__lede">Start free on your own repositories. Team plans put the same gate on your whole organisation, with a record of every merge.</p>
+      <p class="section__lede">Free keeps your own repository honest. Team is for the day someone outside engineering asks you to prove it.</p>
       <div class="compare" role="region" aria-labelledby="why-title" tabindex="0">
         <table>
           <thead>
@@ -194,7 +191,8 @@
           <tbody>
             <tr><th scope="row">Repositories</th><td><!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}--></td><td><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->All repositories, up to N developers<!--/{{TEAM_REPO_LIMIT}}--><span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Rules</th><td>Local files that a developer can remove</td><td><span data-claim="gate_all_repos">Enforced on GitHub<span class="claim-coming" hidden> Coming</span></span></td></tr>
-            <tr><th scope="row">Approval</th><td>A named approval on every merge</td><td><span data-claim="named_approval">A named approval on every merge<span class="claim-coming" hidden> Coming</span></span></td></tr>
+            <tr><th scope="row">Approval</th><td>Included</td><td><span data-claim="named_approval">Included, with the approver's name on file<span class="claim-coming" hidden> Coming</span></span></td></tr>
+            <tr><th scope="row">Review</th><td>Review reported by your agent</td><td><span data-claim="ci_attestation">Review attested by your CI<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Evidence</th><td>None</td><td><span data-claim="evidence_export">A record for each merge, which you can export<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Visibility</th><td>Your connected repositories</td><td><span data-claim="org_dashboard">Every team and repository, with trends<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Knowledge base</th><td>Local files</td><td><span data-claim="kb_mcp">Shared organisation rules over MCP, with owners and versions<span class="claim-coming" hidden> Coming</span></span></td></tr>
@@ -214,20 +212,19 @@
 
         <article class="feature">
           <div class="feature__text">
-            <h3>The check on GitHub</h3>
-            <p>Each pull request gets an ApexYard check. It shows what passed, what failed, and the next step, in the place where your team already reviews code.</p>
+            <h3>Feedback where your team already reviews</h3>
+            <p>The result sits in the pull request's checks: what passed, what is missing, and the exact next step. Your developers learn no new tool.</p>
           </div>
           <figure class="feature__media">
             <img src="/img/check-pr9.webp" width="2800" height="1130" loading="lazy"
-                 alt="The ApexYard check on GitHub pull request 9 in me2resh/apexyard-demo-public. The check passed. It lists a linked ticket as passed, an AgDR file as failed with a warning, and a review as pending, each with the next step.">
-            <figcaption>A real check on <a href="https://github.com/me2resh/apexyard-demo-public/pull/9/checks" target="_blank" rel="noopener">me2resh/apexyard-demo-public #9</a>, captured on 25 October 2026 without signing in to GitHub.</figcaption>
+                 alt="The ApexYard check on a GitHub pull request. It lists a linked ticket as passed, a decision record as failed with a warning, and a review as pending, each with the next step.">
           </figure>
         </article>
 
         <article class="feature">
           <div class="feature__text">
             <h3>Prove: the dashboard</h3>
-            <p>The dashboard lists each pull request, its check result, each process step, and the person who approved the merge. <span data-claim="readiness_score">The Production-Ready Score shows how close each repository is to your standard.<span class="claim-coming" hidden> Coming</span></span></p>
+            <p>Every open pull request across your repositories, what it is missing, and who is holding it up. <span data-claim="readiness_score">The Production-Ready Score tells you which repository to fix first.<span class="claim-coming" hidden> Coming</span></span></p>
           </div>
           <figure class="feature__media">
             <img src="/img/placeholder-dashboard.svg" width="1600" height="1000" loading="lazy" alt="Placeholder illustration of the ApexYard dashboard for one pull request, with the check result, each process step and the next step">
@@ -237,7 +234,7 @@
         <article class="feature">
           <div class="feature__text">
             <h3><span data-claim="evidence_export">The evidence record for each merge<span class="claim-coming" hidden> Coming</span></span></h3>
-            <p>Each merge keeps a record: the check result, the reviewer, the named approver and the commit. You can export it for an audit.</p>
+            <p>When a customer questionnaire asks how AI-written code is reviewed, you send the export, not an essay.</p>
           </div>
           <figure class="feature__media">
             <img src="/img/placeholder-evidence.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of an evidence record for a merged pull request, with the check result, the reviewer and the named approver">
@@ -247,7 +244,7 @@
         <article class="feature">
           <div class="feature__text">
             <h3><span data-claim="kb_mcp">Learn: the knowledge base your agents read<span class="claim-coming" hidden> Coming</span></span></h3>
-            <p>Your organisation's rules, decisions and tickets in one place, with owners and versions. Agents read them over MCP. A miss becomes a new rule.</p>
+            <p>Decisions, handbooks and past tickets in one place your agents query before they start. What today's review caught guides tomorrow's agent.</p>
           </div>
           <figure class="feature__media">
             <img src="/img/placeholder-knowledge-base.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of the knowledge base, with team rules, their owners and versions">
@@ -257,7 +254,7 @@
         <article class="feature">
           <div class="feature__text">
             <h3><span data-claim="org_dashboard">The organisation view<span class="claim-coming" hidden> Coming</span></span></h3>
-            <p>Every team and repository on one screen, with trends over time.</p>
+            <p>Spot the team whose merges skip review before an incident finds it for you.</p>
           </div>
           <figure class="feature__media">
             <img src="/img/placeholder-org-dashboard.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of the organisation view, with teams, repositories and trends">
@@ -267,7 +264,7 @@
         <article class="feature">
           <div class="feature__text">
             <h3>Run: the Cockpit <span class="feature__tag">Coming</span></h3>
-            <p>A desktop app that runs the same setup and shows the same gates, for people who prefer not to use a terminal.</p>
+            <p>Product and design leads see the same gates without opening a terminal.</p>
           </div>
           <figure class="feature__media">
             <img src="/img/placeholder-cockpit.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of the Cockpit desktop app, with a list of gates and their status">
@@ -288,13 +285,13 @@
             <li>Pull requests: read</li>
             <li>Checks: write, to post the ApexYard check</li>
             <li>Metadata: read</li>
-            <li>Members: read, to check for an organisation admin at sign-in</li>
+            <li>Members: read, to confirm who can manage your organisation</li>
           </ul>
-          <p>The App does not ask for the Contents permission.</p>
+          <p>It never reads your source code.</p>
         </div>
         <div>
           <h3>Where the data lives</h3>
-          <p>The hosted service runs on AWS in the eu-west-1 region, in Ireland.</p>
+          <p>Hosted on AWS in Ireland, inside the EU.</p>
           <!-- ASSUMED 25 Oct, verify before switch-on -->
           <p>We keep each evidence record for 13 months, then delete it. We delete your data within 30 days when you ask.</p>
         </div>
@@ -317,7 +314,7 @@
       <div>
         <p class="section__lede"><!--{{REVIEW_OFFER}}-->We review how your team ships with AI agents today.<!--/{{REVIEW_OFFER}}--></p>
         <p class="review__price"><!--{{REVIEW_PRICE}}-->From £0,000 <span class="price-flag">Placeholder price</span><!--/{{REVIEW_PRICE}}--></p>
-        <a href="#book-a-demo" class="btn btn--quiet">Talk to us</a>
+        <a href="#book-a-demo" class="btn btn--quiet">Ask about a review</a>
       </div>
     </div>
   </section>
@@ -339,9 +336,9 @@
     <div class="wrap oss">
       <div class="oss__text">
         <h2 class="section__title" id="oss-title">Built in the open, so you can read every rule</h2>
-        <p class="section__lede">The framework is open source under the MIT licence. The rules, hooks, skills and review agents are plain files in your repositories.</p>
-        <p><strong>66 hooks</strong> and <strong>22 rules</strong> ship in release v5.10.0.<span data-stars-wrap hidden> The framework has <strong><span data-stars></span></strong> stars on GitHub.</span></p>
-        <p>Install with one command, or use the Cockpit when it ships. Prefer to fork? Follow the <a href="/docs#alternative">fork steps in the docs</a>.</p>
+        <p class="section__lede">MIT licensed. Every rule, hook and review agent is a plain file you can read, change or remove.</p>
+        <p><strong>66 hooks</strong> guard each edit, commit and push on the developer's machine.<span data-stars-wrap hidden> <strong><span data-stars></span></strong> developers have starred the framework on GitHub.</span></p>
+        <p>Install with one command. Prefer to fork? Follow the <a href="/docs#alternative">fork steps in the docs</a>.</p>
       </div>
 
       <div id="quickstart">
@@ -361,7 +358,7 @@ apexyard init
 /setup</code></pre>
           </div>
           <div class="tabs__panel" role="tabpanel" id="panel-desktop" aria-labelledby="tab-desktop" tabindex="0" hidden>
-            <p>The Cockpit, the ApexYard desktop app, is coming. It will run the same <code>apexyard init</code> and <code>/setup</code> steps for you.</p>
+            <p>The desktop app is on its way. It will run <code>apexyard init</code> and <code>/setup</code> for you. Use the terminal until then.</p>
           </div>
           <p class="tabs__status" id="tabs-status" aria-live="polite"></p>
         </div>
@@ -373,12 +370,12 @@ apexyard init
     <div class="wrap teaser" id="team">
       <div>
         <h2 class="section__title" id="book-title">Book a demo</h2>
-        <p class="section__lede">See the gate on a real pull request, and ask about Team plans.</p>
+        <p class="section__lede">Bring one of your repositories. We run the gate on it with you and show what it would have stopped.</p>
       </div>
       <div>
         <!-- PLACEHOLDER booking URL: replace before switch-on -->
         <p><a class="btn btn--primary" href="https://cal.com/apexyard/demo" rel="noopener">Book a 20-minute demo</a></p>
-        <p class="book__mail">Or <a href="#" class="mailto-cta" data-u="hello" data-d="apexyard.ai">talk to us by email</a>.</p>
+        <p class="book__mail">Prefer email? <a href="#" class="mailto-cta" data-u="hello" data-d="apexyard.ai">Write to us</a>.</p>
       </div>
     </div>
   </section>
@@ -389,7 +386,7 @@ apexyard init
       <p class="section__lede">Material for the developers who set ApexYard up and extend it.</p>
       <ul class="docs">
         <li><a href="/docs"><strong>Framework guide</strong><span>Install, the daily loop, the gates, and a real merge replayed from the log</span></a></li>
-        <li><a href="/docs#the-rules"><strong>Hooks and rules</strong><span>The checks that run on every edit, commit, push and merge</span></a></li>
+        <li><a href="/docs#the-rules"><strong>Hooks and rules</strong><span>What each check does, and how to change it</span></a></li>
         <li><a href="/architecture"><strong>Architecture</strong><span>The layer model and the portfolio model</span></a></li>
         <li><a href="/skills"><strong>Skills reference</strong><span>Every slash command, grouped by outcome</span></a></li>
         <li><a href="/how-it-works"><strong>A day with ApexYard</strong><span>One working day, in plain language</span></a></li>

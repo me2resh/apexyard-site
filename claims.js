@@ -8,5 +8,6 @@ window.APEXYARD_CLAIMS = {
   evidence_export: 'live',  // the evidence record for each merge, and its export
   org_dashboard: 'live',    // the organisation view with trends
   kb_mcp: 'live',           // the shared knowledge base over MCP
-  readiness_score: 'live'   // the Production-Ready Score
+  readiness_score: 'live',  // the Production-Ready Score
+  ci_attestation: 'coming'  // review attested by your CI (apexyard-cloud#126); 'live' when it ships
 };
