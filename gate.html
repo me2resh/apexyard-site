@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gate: every merge checked and approved by a person | ApexYard</title>
 <meta name="author" content="me2resh">
-<meta name="description" content="The ApexYard Gate checks every pull request against your rules and holds it until the checks pass and a named person approves it on GitHub.">
+<meta name="description" content="The ApexYard Gate checks each pull request on GitHub for a ticket, a decision record, a review and a named approval.">
 <link rel="canonical" href="https://apexyard.ai/gate">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -21,14 +21,14 @@
 <meta property="og:site_name" content="ApexYard">
 <meta property="og:url" content="https://apexyard.ai/gate">
 <meta property="og:title" content="Gate: every merge checked and approved by a person | ApexYard">
-<meta property="og:description" content="The ApexYard Gate checks every pull request against your rules and holds it until the checks pass and a named person approves it on GitHub.">
+<meta property="og:description" content="The ApexYard Gate checks each pull request on GitHub for a ticket, a decision record, a review and a named approval.">
 <meta property="og:image" content="https://apexyard.ai/og/index.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://apexyard.ai/gate">
 <meta name="twitter:title" content="Gate: every merge checked and approved by a person | ApexYard">
-<meta name="twitter:description" content="The ApexYard Gate checks every pull request against your rules and holds it until the checks pass and a named person approves it on GitHub.">
+<meta name="twitter:description" content="The ApexYard Gate checks each pull request on GitHub for a ticket, a decision record, a review and a named approval.">
 <meta name="twitter:image" content="https://apexyard.ai/og/index.png">
 <script>try{var t=localStorage.getItem('ay-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -117,7 +117,7 @@
         <article class="feature">
           <div class="feature__text">
             <h3>An agent never approves its own work</h3>
-            <p>The merge waits for a person your team named. <span data-claim="evidence_export">When an auditor asks, you export the record.<span class="claim-coming" hidden> Coming</span></span></p>
+            <p>With named approval set up, the merge waits for a person your team named. <span data-claim="evidence_export">When an auditor asks, you export the record.<span class="claim-coming" hidden> Coming</span></span></p>
           </div>
           <figure class="feature__media">
             <img src="/img/placeholder-evidence.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of an evidence record for a merged pull request, with the check result, the reviewer and the named approver">
@@ -150,13 +150,14 @@
     <div class="wrap app-access__inner">
       <h2 class="section__title" id="app-access-title">What the GitHub App can see</h2>
       <div>
-        <p class="section__lede">The App cannot read your code. It has no access to repository contents.</p>
+        <p class="section__lede">The App cannot open the files in your repository: it has no Contents permission. From each pull request it takes only the names of the changed files, never the code.</p>
         <ul class="app-access__list">
-          <li><strong>Pull requests: read.</strong> Titles, descriptions, reviews, and the names of the changed files.</li>
+          <li><strong>Pull requests: read.</strong> Titles, descriptions, reviews and the list of changed files.</li>
           <li><strong>Checks: write.</strong> To post the ApexYard check on each pull request.</li>
           <li><strong>Metadata: read.</strong> Repository names, and who can write to each repository.</li>
           <li><strong>Members: read.</strong> To confirm who can manage your organisation when you sign in.</li>
         </ul>
+        <p class="app-access__control">The check blocks a merge only when you make it required in GitHub. You can remove the App at any time.</p>
       </div>
     </div>
   </section>
@@ -164,7 +165,7 @@
   <section class="section section--tint" aria-labelledby="connects-title">
     <div class="wrap connects">
       <h2 class="section__title" id="connects-title">How it connects</h2>
-      <p class="section__lede">The Gate enforces the same rules your agents follow in <a href="/build">Build</a>. Every merge it records feeds <a href="/readiness">Readiness</a>.</p>
+      <p class="section__lede">The Gate checks the ticket, decision record and review that your agents produce in <a href="/build">Build</a>.</p>
     </div>
   </section>
 
@@ -178,6 +179,7 @@
           <p class="plan__price">Free</p>
           <ul>
             <li><!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}--></li>
+            <li>The hosted check on every pull request, in warning mode</li>
             <li>Sign in with GitHub</li>
           </ul>
           <p class="plan__action"><a class="btn btn--quiet" href="https://app.apexyard.ai/signin?src=gate-free" rel="noopener">Start free with GitHub</a></p>
@@ -188,7 +190,7 @@
           <ul>
             <li><!--{{STARTUP_LIMITS}}-->Up to N repositories<!--/{{STARTUP_LIMITS}}--></li>
           </ul>
-          <p class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/demo?src=gate-startup" rel="noopener">Book a call to start</a></p>
+          <p class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/start?src=gate-startup" rel="noopener">Book a call to start</a></p>
         </article>
         <article class="plan plan--team">
           <p class="plan__flag">Most teams start here</p>
@@ -199,11 +201,11 @@
             <li><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->All repositories, up to N developers<!--/{{TEAM_REPO_LIMIT}}--><span class="claim-coming" hidden> Coming</span></span></li>
             <li><!--{{TEAM_SUPPORT}}-->Team support<!--/{{TEAM_SUPPORT}}--></li>
           </ul>
-          <p class="plan__action"><a class="btn btn--primary" href="https://cal.com/apexyard/demo?src=gate-team" rel="noopener">Book a call to start</a></p>
+          <p class="plan__action"><a class="btn btn--primary" href="https://cal.com/apexyard/start?src=gate-team" rel="noopener">Book a call to start</a></p>
         </article>
         <article class="plan">
           <h3>Enterprise</h3>
-          <p class="plan__price"><a href="https://cal.com/apexyard/demo?src=gate-enterprise" rel="noopener">Talk to us</a></p>
+          <p class="plan__price"><a href="https://cal.com/apexyard/start?src=gate-enterprise" rel="noopener">Talk to us</a></p>
           <ul>
             <li><!--{{ENTERPRISE_LIMITS}}-->Over N developers<!--/{{ENTERPRISE_LIMITS}}--></li>
           </ul>

@@ -75,7 +75,7 @@ review and guardrails the tool installs in your fork.
 
 ## Community
 
-Open the [ApexYard Slack community](https://app.slack.com/client/T0BD7E3SYD8/C0BD5BF7XAA) for questions, ideas, and maintainer discussion. Report bugs, request features, and record decisions in GitHub.
+Report bugs, request features, and record decisions in GitHub.
 
 ## Get started in three steps
 

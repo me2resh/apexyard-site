@@ -133,7 +133,7 @@
           </ul>
           <p class="ledger__approval">Approved by Dana Reyes, 14:32 UTC, at commit <code>3f9c2a1</code></p>
         </div>
-        <figcaption class="ledger__caption"><span class="visually-hidden">Example pull request 214, &ldquo;Add refund limits to the payments API&rdquo;, in the fictional repository example-co/payments-api. The check has four steps. Ticket linked and named approval must pass; decision record and review give a warning. The first run blocked the merge because no ticket was linked, and it warned that the decision record and the review were missing. After a new commit, all four steps passed. Approved by Dana Reyes at 14:32 UTC, at commit 3f9c2a1. The pull request is ready to merge. </span>An example pull request in a fictional repository.</figcaption>
+        <figcaption class="ledger__caption"><span class="visually-hidden">Example pull request 214, &ldquo;Add refund limits to the payments API&rdquo;, in the fictional repository example-co/payments-api. This is a team setup with four steps. Ticket linked and named approval must pass; decision record and review give a warning. The first run blocked the merge because no ticket was linked, and it warned that the decision record and the review were missing. After a new commit, all four steps passed. Approved by Dana Reyes at 14:32 UTC, at commit 3f9c2a1. The pull request is ready to merge. </span>A team setup: ticket and named approval must pass.</figcaption>
       </figure>
     </div>
   </section>
@@ -141,12 +141,12 @@
   <section class="proof" aria-label="ApexYard in numbers">
     <div class="wrap">
       <!-- Provenance (not shown): 420 = pull requests merged in me2resh/apexyard in the
-           90 days to 25 October 2026, from the GitHub search API. 4 checks = the steps of
-           the hosted Gate's pull request process: linked ticket, decision record, review and
-           GitHub approval. -->
+           90 days to 25 October 2026, from the GitHub search API. 3 checks = the steps that a
+           new organisation gets at sign-up (linked ticket, decision record, review), all in
+           warning mode. Named approval is added with the team. -->
       <ul class="proof__two">
         <li><strong>420</strong> pull requests in ApexYard's own repository went through the gate in the last 90 days</li>
-        <li><strong>4 checks</strong> on every pull request: ticket, decision record, review and named approval</li>
+        <li><strong>3 checks</strong> on every pull request from the first day. Named approval when your team is ready.</li>
       </ul>
     </div>
   </section>
@@ -156,27 +156,28 @@
     <div class="wrap app-access__inner">
       <h2 class="section__title" id="app-access-title">What the GitHub App can see</h2>
       <div>
-        <p class="section__lede">The App cannot read your code. It has no access to repository contents.</p>
+        <p class="section__lede">The App cannot open the files in your repository: it has no Contents permission. From each pull request it takes only the names of the changed files, never the code.</p>
         <ul class="app-access__list">
-          <li><strong>Pull requests: read.</strong> Titles, descriptions, reviews, and the names of the changed files.</li>
+          <li><strong>Pull requests: read.</strong> Titles, descriptions, reviews and the list of changed files.</li>
           <li><strong>Checks: write.</strong> To post the ApexYard check on each pull request.</li>
           <li><strong>Metadata: read.</strong> Repository names, and who can write to each repository.</li>
           <li><strong>Members: read.</strong> To confirm who can manage your organisation when you sign in.</li>
         </ul>
+        <p class="app-access__control">The check blocks a merge only when you make it required in GitHub. You can remove the App at any time.</p>
       </div>
     </div>
   </section>
 
   <section class="section one-rule" id="product" aria-labelledby="one-rule-title">
     <div class="wrap" id="how-it-works">
-      <h2 class="section__title" id="one-rule-title">One rule, three places</h2>
-      <p class="section__lede">Write a rule once. Your agents follow it in Build, the Gate enforces it on GitHub, and Readiness checks it across the repository.</p>
+      <h2 class="section__title" id="one-rule-title">One process, three places</h2>
+      <p class="section__lede">Build puts your agents through tickets, plans and reviews. The Gate checks that process on every pull request. Readiness checks the whole repository before you ship.</p>
       <ol class="lifecycle__steps">
         <li><a href="/build"><strong>Build</strong><span>Your agents work as an engineering team, from the first idea to reviewed code.</span></a></li>
-        <li><a href="/gate"><strong>Gate</strong><span>The pull request check your reviewers see first.</span></a></li>
+        <li><a href="/gate"><strong>Gate</strong><span>The check your reviewers see in each pull request.</span></a></li>
         <li><a href="/readiness"><strong>Readiness</strong><span>Know what is safe to ship, area by area.</span></a></li>
       </ol>
-      <p class="one-rule__base">Underneath: one rule set and knowledge base, one evidence store and one dashboard.</p>
+      <p class="one-rule__base">Underneath: one knowledge base, one evidence store and one dashboard.</p>
     </div>
   </section>
 
@@ -191,10 +192,10 @@
           </thead>
           <tbody>
             <tr><th scope="row">Repositories</th><td><!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}--></td><td><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->All repositories, up to N developers<!--/{{TEAM_REPO_LIMIT}}--><span class="claim-coming" hidden> Coming</span></span></td></tr>
-            <tr><th scope="row">Rules</th><td>Local files that a developer can remove</td><td><span data-claim="gate_all_repos">Enforced on GitHub<span class="claim-coming" hidden> Coming</span></span></td></tr>
-            <tr><th scope="row">Approval</th><td>Included</td><td><span data-claim="named_approval">Included, with the approver's name on file<span class="claim-coming" hidden> Coming</span></span></td></tr>
+            <tr><th scope="row">Rules</th><td>Local files that a developer can remove</td><td><span data-claim="gate_all_repos">The same check on every repository<span class="claim-coming" hidden> Coming</span></span></td></tr>
+            <tr><th scope="row">Approval</th><td>Not included</td><td><span data-claim="named_approval">Named approval, set up with you<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Review</th><td>Review reported by your agent</td><td><span class="is-coming" data-claim="ci_attestation">Review attested by your CI<span class="claim-coming" hidden> Coming</span></span></td></tr>
-            <tr><th scope="row">Readiness</th><td>Run the audit skills yourself</td><td><span class="is-coming" data-claim="readiness_weekly">Weekly Readiness on every repository, with the score and trend<span class="claim-coming" hidden> Coming</span></span></td></tr>
+            <tr><th scope="row">Readiness</th><td>Run the audit skills yourself</td><td><span class="is-coming" data-claim="readiness_weekly">Add <!--{{READINESS_SCHEDULE_NAME}}-->Readiness on a schedule<!--/{{READINESS_SCHEDULE_NAME}}--><span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Evidence</th><td>None</td><td><span data-claim="evidence_export">A record for each merge, which you can export<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Visibility</th><td>Your connected repositories</td><td><span data-claim="org_dashboard">Every repository in your organisation on one screen.<span class="claim-coming" hidden> Coming</span></span> <span class="is-coming" data-claim="team_trends">Trends by team.<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Knowledge base</th><td>Local files</td><td><span data-claim="kb_mcp">Shared organisation rules over MCP, with owners and versions<span class="claim-coming" hidden> Coming</span></span></td></tr>

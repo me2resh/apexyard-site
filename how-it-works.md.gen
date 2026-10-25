@@ -8,11 +8,11 @@ ApexYard supports a daily workflow. You review work, respond to findings, check 
 
 ## What ApexYard does
 
-ApexYard adds review, guardrails, and process to each change made with Claude Code.
+ApexYard adds review, guardrails and process to each change your agents make.
 
 ## What you need to start
 
-Fork apexyard, run `/setup`, register your projects. The walkthrough below is a narrative; the install steps live on the [home page](https://apexyard.ai/index.md).
+Install the CLI. Run `/setup` in your project. The walkthrough below is a narrative; the install steps live on the [home page](https://apexyard.ai/index.md).
 
 ## The shape of a day with ApexYard
 
@@ -92,9 +92,9 @@ That is the point. You get the engineering rigor without becoming an engineer. Y
 
 ## Start your first day
 
-Fork apexyard. Run `/setup`. Start your first day.
+Install the CLI. Run `/setup` in your project. Start your first day.
 
-Free and open source. Plain markdown and shell. No SaaS, no monthly fee, no vendor lock-in. Fork it, edit anything to match how you work, and ship with a repeatable process.
+Start free with the open-source framework. Add the Gate when your team needs proof of each approval.
 
 ## Links
 

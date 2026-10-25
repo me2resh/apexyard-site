@@ -137,7 +137,6 @@ diff path, prompt). Plain markdown + shell; open source; no SaaS; no vendor lock
 
 ## Community
 
-- Slack community: <https://app.slack.com/client/T0BD7E3SYD8/C0BD5BF7XAA>
 
 ## Repository
 
