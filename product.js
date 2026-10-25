@@ -23,10 +23,12 @@
   // Team claims: claims.js can flip any claim to "Coming" with one line.
   var claims = window.APEXYARD_CLAIMS || {};
   document.querySelectorAll('[data-claim]').forEach(function (el) {
-    if (claims[el.getAttribute('data-claim')] !== 'coming') return;
-    el.classList.add('is-coming');
+    var state = claims[el.getAttribute('data-claim')];
+    if (state !== 'coming' && state !== 'live') return; // keep the markup default
+    var coming = state === 'coming';
+    el.classList.toggle('is-coming', coming);
     var tag = el.querySelector('.claim-coming');
-    if (tag) tag.hidden = false;
+    if (tag) tag.hidden = !coming;
   });
 
   // Theme toggle. The page follows the system setting until the visitor
