@@ -32,6 +32,8 @@ on:
       - ".github/workflows/preview-*.yml"
       - ".github/workflows/shell-tests.yml"
       - ".github/workflows/private-terms.yml"
+      - ".github/workflows/private-terms-pr-text.yml"
+      - ".githooks/**"
       - "og/render.sh"
       - "README.md"
       - "*.html"
@@ -51,6 +53,8 @@ on:
       - ".github/workflows/preview-*.yml"
       - ".github/workflows/shell-tests.yml"
       - ".github/workflows/private-terms.yml"
+      - ".github/workflows/private-terms-pr-text.yml"
+      - ".githooks/**"
       - "og/render.sh"
       - "README.md"
       - "*.html"
@@ -80,7 +84,7 @@ jobs:
       - name: Lint shell scripts
         run: |
           shellcheck -x --source-path=SCRIPTDIR \
-            .github/scripts/*.sh .github/tests/*.sh og/render.sh
+            .github/scripts/*.sh .github/tests/*.sh .githooks/*-private-terms .githooks/private-terms-lib.sh og/render.sh
 
       - name: Run test suites
         run: |

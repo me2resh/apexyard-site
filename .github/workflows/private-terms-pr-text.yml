@@ -1,0 +1,31 @@
+name: Private terms in PR text
+
+# #102. The tracked-file check does not see the PR title, the PR body or the
+# commit messages. This job tests them with the same PRIVATE_TERMS secret.
+# check-pr-text.sh prints the field and the term index on a hit, never the
+# term or the text. Without the secret (fork PR) it skips with a notice.
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  pr-text:
+    name: no private term in PR text
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check PR title, body and commit messages
+        env:
+          PRIVATE_TERMS: ${{ secrets.PRIVATE_TERMS }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: .github/scripts/check-pr-text.sh "$GITHUB_EVENT_PATH" "$BASE_SHA" "$HEAD_SHA"
