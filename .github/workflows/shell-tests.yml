@@ -28,6 +28,8 @@ on:
       - ".github/workflows/shell-tests.yml"
       - "og/render.sh"
       - "README.md"
+      - "site-flags.js"
+      - "index.html"
   push:
     branches: [main]
     paths:
@@ -38,6 +40,8 @@ on:
       - ".github/workflows/shell-tests.yml"
       - "og/render.sh"
       - "README.md"
+      - "site-flags.js"
+      - "index.html"
   workflow_dispatch:
 
 permissions:
