@@ -27,7 +27,7 @@ The check blocks a merge only when you make it required in GitHub. You can remov
 Build puts your agents through tickets, plans and reviews. The Gate checks that process on every pull request. Readiness checks the whole repository before you ship.
 
 1. **Build**: your agents work as an engineering team, from the first idea to reviewed code. <https://apexyard.ai/build>
-2. **Gate**: the check your reviewers see in each pull request. <https://apexyard.ai/gate>
+2. **Gate**: checks each pull request against your process before it merges. <https://apexyard.ai/gate>
 3. **Readiness**: know what is safe to ship, area by area. <https://apexyard.ai/readiness>
 
 ## Free and Team

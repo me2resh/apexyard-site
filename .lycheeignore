@@ -5,10 +5,7 @@
 # booking page replaces it. Switch-on checklist item in PR #106: "Replace the
 # placeholder booking URL https://cal.com/apexyard/demo with the real
 # booking page".
-^https://cal\.com/apexyard/(demo|start|readiness-call|review)(\?.*)?$
-# The "Get notified" form. It does not exist yet; switch-on blocker in
-# the PR checklist: "the notify form exists and adds each visitor to a list".
-^https://apexyard\.ai/notify(\?.*)?$
+^https://cal\.com/apexyard/(demo|review)(\?.*)?$
 
 # Clean URLs of the three product pages (#102). The CDN serves /build,
 # /gate and /readiness from build.html, gate.html and readiness.html, so
