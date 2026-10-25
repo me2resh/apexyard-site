@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title">
+<title id="title">Placeholder illustration: terminal project setup</title>
+<g font-family="IBM Plex Sans, system-ui, sans-serif">
+<rect x="0" y="0" width="1200" height="800" rx="0" fill="#F2F4F8" stroke="#F2F4F8" />
+
+<rect x="974" y="44" width="178" height="44" rx="22" fill="#EEF1F4" stroke="#6B7586" stroke-dasharray="5 4"/><text x="1063" y="74" font-size="22" fill="#14213D" font-weight="500" text-anchor="middle">Placeholder</text>
+<rect x="48" y="158" width="1104" height="520" rx="20" fill="#14213D" stroke="#47536A" /><path d="M 48 220 H 1152" stroke="#47536A"/><circle cx="80" cy="190" r="7" fill="#6B7586"/><circle cx="106" cy="190" r="7" fill="#8CA8FF"/><circle cx="132" cy="190" r="7" fill="#DCE1E9"/><text x="80" y="284" font-size="23" fill="#8CA8FF" font-weight="400" font-family="IBM Plex Mono, monospace">$ apexyard init</text><text x="80" y="340" font-size="23" fill="#EEF1F4" font-weight="400" font-family="IBM Plex Mono, monospace">Found an existing project: your-org/web</text><text x="80" y="396" font-size="23" fill="#EEF1F4" font-weight="400" font-family="IBM Plex Mono, monospace">Writing rules and handbooks... done</text><text x="80" y="492" font-size="23" fill="#8CA8FF" font-weight="400" font-family="IBM Plex Mono, monospace">$ /setup</text><text x="80" y="548" font-size="23" fill="#EEF1F4" font-weight="400" font-family="IBM Plex Mono, monospace">Ready. Your agents now follow your process.</text><rect x="80" y="579" width="13" height="25" rx="1" fill="#8CA8FF" stroke="#8CA8FF" />
+</g>
+</svg>

@@ -1,14 +1,14 @@
 # ApexYard
 
-> ApexYard helps teams use AI coding agents with a controlled engineering process.
-> It provides automatic code review, release checks, and one view of all managed projects.
-> It uses canonical hooks with adapters for Claude Code, Codex, OpenCode, Pi, and Cursor. 69 skills,
-> 66 hooks, 20 role definitions. Open source, plain markdown and shell,
-> no SaaS, no vendor lock-in.
+> ApexYard gives your coding agents a team's process. The Gate checks every pull request on GitHub.
+> The framework is open source (MIT).
 
 ## Pages
 
-- [Home](https://apexyard.ai/) — ApexYard checks every pull request that coding agents open against your team's rules, and merges it only after a named person approves it on GitHub
+- [Home](https://apexyard.ai/) — ApexYard gives your coding agents a team's process, and the Gate checks every pull request on GitHub
+- [Build](https://apexyard.ai/build) — your agents work as an engineering team: idea, spec, plan, tickets and code checked by reviewer roles, on your own machine
+- [Gate](https://apexyard.ai/gate) — each pull request checked on GitHub for a ticket, a decision record, a review and a named approval
+- [Readiness](https://apexyard.ai/readiness) — each repository audited area by area, with a go or no-go, the gaps and the top actions
 - [Docs](https://apexyard.ai/docs) — the framework guide: install, the daily loop, the gates, hooks and rules, and a real merge replayed from the log
 - [How it works](https://apexyard.ai/how-it-works) — a plain-English walkthrough of one realistic day with apexyard
 - [Pricing](https://apexyard.ai/pricing) — the open-source framework (MIT), a free way to start with the hosted gate, Startup, Team and Enterprise plans, and reviews of how your team ships
@@ -91,7 +91,6 @@
 
 ## Community
 
-- Open the [ApexYard Slack community](https://app.slack.com/client/T0BD7E3SYD8/C0BD5BF7XAA) for questions, ideas, and maintainer discussion.
 - Report bugs, request features, and record decisions in GitHub.
 
 ## License

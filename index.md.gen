@@ -1,134 +1,63 @@
 # ApexYard
 
-> Use AI coding agents with a controlled engineering process. ApexYard provides automatic code review, release checks, and one view of all managed projects. It is open source and uses plain Markdown and shell.
+> ApexYard gives your coding agents a team's process. The Gate checks every pull request on GitHub. The framework is open source (MIT).
 
-## What ApexYard is
+## Your agents write the code. Your team decides what merges.
 
-ApexYard adds the reviews, guardrails, and process behind work driven by your AI coding harness. Claude Code is the canonical hook runtime; adapters connect Codex, OpenCode, Pi, and Cursor. Find common mistakes before release. Review records show what the reviewer checked. 69 skills grouped by what you are trying to do, plus a persistent decision-log across the whole portfolio.
+ApexYard gives your agents a team's process. On GitHub, it holds each pull request until the checks pass and a named person approves.
 
-## What ApexYard does
+The Gate checks pull requests from any agent. Build runs in Claude Code, Codex, Cursor and OpenCode.
 
-- **Automatic code review.** A reviewer checks each change before it can ship. The review covers the changed code and its system impact.
-- **Launch-readiness checks.** Find out what is missing across security, performance, accessibility, monitoring, docs before customers tell you
-- **One inbox across all your products.** Every PR, issue, comment, blocker in one screen, no tab-juggling
-- **Evidence-grounded quality gates.** Review records cite the source they checked, and quality regression can run across Claude, Cursor, Codex, pi, and opencode.
-- **Flexible tracker setup.** Keep issue tracking and code review on different hosts when your workflow needs it.
-- **Clear technical writing.** New artifacts use short, consistent language while keeping the decision context.
-- **Specialised review roles.** A security-sensitive change gets a security review. A data change gets a review of migration and rollback risk. Each role has a defined scope and checklist.
-- **Guardrails that fire themselves.** 66 small scripts catch ticket-first edits, missing rollback plans, secrets in code, red CI before merge — so you do not have to remember
-- **A decision-log that follows you.** Every meaningful technical decision is recorded with reasoning — search it next year, the answer's there
+- 420 pull requests in ApexYard's own repository went through the gate in the last 90 days.
+- 3 checks on every pull request from the first day: a linked ticket, a decision record and a review. Named approval when your team is ready.
 
-## Three ways to use ApexYard
+## What the GitHub App can see
 
-- **The framework** — free, MIT. The rules, hooks, skills, and review agents in your own repositories. It needs no dashboard and no account.
-- **Free** — sign in with GitHub to get the hosted check and the dashboard. The dashboard is optional.
-- **Startup, Team and Enterprise** — plans for a team or an organisation. See <https://apexyard.ai/pricing>.
+The App cannot open the files in your repository: it has no Contents permission. From each pull request it takes only the names of the changed files, never the code.
 
-A recording of the 18 Nov demo will be published on the site.
+- Pull requests: read. Titles, descriptions, reviews and the list of changed files.
+- Checks: write. To post the ApexYard check on each pull request.
+- Metadata: read. Repository names, and who can write to each repository.
+- Members: read. To confirm who can manage your organisation when you sign in.
 
-## Who can use ApexYard
+The check blocks a merge only when you make it required in GitHub. You can remove the App at any time.
 
-- **Solo founders shipping with AI** — building alone, need the guardrails a team would give you
-- **Teams of 10 to 25** — several engineers and repositories, need one review process and one set of gates
-- **Non-technical founders managing contractors** — need to know the work is solid without reading every commit
-- **Small teams with no engineering process yet** — first version shipped, now you need real review + testing + release discipline
+## One process, three places
 
-## What you need to start
+Build puts your agents through tickets, plans and reviews. The Gate checks that process on every pull request. Readiness checks the whole repository before you ship.
 
-1. Install the CLI from the terminal, or open the Cockpit desktop app
-2. Run `apexyard init` in your project folder (the Cockpit runs it for you)
-3. Run `/setup` in your agent tool — three exchanges to configure company, team, and tech stack
-4. Register projects via `/handover <repo>` for adoption, or `/idea` to capture new concepts
+1. **Build**: your agents work as an engineering team, from the first idea to reviewed code. <https://apexyard.ai/build>
+2. **Gate**: the check your reviewers see in each pull request. <https://apexyard.ai/gate>
+3. **Readiness**: know what is safe to ship, area by area. <https://apexyard.ai/readiness>
 
-## Proof — from our own GitHub history
+## Free and Team
 
-ApexYard is built using ApexYard. Verifiable from `github.com/me2resh/apexyard`:
+- **Free**: the hosted check on every pull request, in warning mode, on your own repository. No named approval.
+- **Team**: the same check on every repository, named approval set up with you, a record for each merge, and one view of the organisation. See <https://apexyard.ai/pricing>.
+- **The framework**: free and open source under the MIT licence. It needs no account and no dashboard.
 
-- **304 PRs reviewed and merged in the last 90 days**, under the same guardrails the tool installs in your fork
-- **40 releases shipped** (v0.1.0 through v5.10.0)
-- **144 technical decisions recorded** (released to main) — every meaningful call in an audit trail
-- Releases v5.7 to v5.10 add opt-in ORBIT planning, the `/scaffold` and `/preflight` skills, and a ticket marker in each working tree. v5.10.0 adds a review-depth tier for Rex and closes more gaps in the push, commit, and merge gates.
+## Install free
 
-## See a day with it
-
-Read [how it works](https://apexyard.ai/how-it-works) for the short explanation. Use the site examples to inspect the commands, checks, and evidence behind one governed change.
-
-## Get started
-
-Use the terminal or the desktop app. The result is the same either way.
-
-### Terminal
-
-```bash
+```sh
 curl -fsSL https://apexyard.ai/install | sh
 # or: brew install me2resh/tap/apexyard
 # or: npx create-apexyard
 cd your-project
 apexyard init
-# then open your agent tool and run /setup
-```
-
-### Desktop
-
-Open the Cockpit, the ApexYard desktop app. Add your project folder. The Cockpit runs the same `apexyard init` and `/setup` steps for you.
-
-### Next: adopt, or originate
-
-- `/handover <repo-url>` — existing project → assessment + registry + architecture stub
-- `/idea` — new concept → ideas-backlog.md, optional GitHub issue
-
-### Alternative: fork the repository
-
-```bash
-gh repo fork me2resh/apexyard --clone
-cd apexyard
-git remote add upstream https://github.com/me2resh/apexyard.git
-claude
 /setup
 ```
 
-Already on a fork? `apexyard migrate` moves it to the new layout and keeps your own files.
+66 hooks guard each edit, commit and push on the developer's machine. Every rule, hook and review agent is a plain file you can read, change or remove.
 
-## What you actually get when you fork it
+## Book a demo
 
-### Reviews from specialised engineering roles
+Bring one of your repositories, and see what the Gate would have held. Book from <https://apexyard.ai/#book-a-demo>.
 
-The review role follows the change. A security-sensitive change gets a security review. A data change gets a review of migration and rollback risk. Each role has a defined scope and checklist.
+## More
 
-### Tools for every step of shipping software · 69 slash commands
-
-Want to adopt a project you have inherited? `/handover`. Want to capture an idea before it evaporates? `/idea`. Want to know what is waiting on you across every product? `/inbox`. Want a launch-readiness check before customers see it? `/launch-check`. 69 of these in total — each one is a focused workflow with safety rails.
-
-### Guardrails that stop bad code from shipping · 66 hooks
-
-Every edit must have a ticket. Every database change must have a rollback plan. Every merge must have a review. Secrets in code get caught before they are committed. Mechanically enforced — 66 small scripts that fire at the right moments.
-
-### Reviewers that do not rubber-stamp · 23 agents
-
-- **Rex** (code review) reads what changed and how the rest of the system reacts to it
-- **Hakim** (security) flags auth / crypto / secrets
-- **Munir** (deps) scans vulnerabilities + licences
-- **Tariq** (PR manager) and **Idris** (ticket manager) handle the orchestration
-
-### One inbox across everything
-
-`apexyard.projects.yaml` at your fork root lists every repo you manage. Skills like `/inbox`, `/status`, `/tasks`, `/stakeholder-update` aggregate across it. One prompt, every project. Add a project with `/handover`; sync with upstream via `/update`.
-
-### Drop-in GitHub Actions · 7 ready-made pipelines
-
-At `golden-paths/pipelines/`: `ci.yml`, `code-quality.yml`, `security.yml`, `dependency-audit.yml`, `pr-title-check.yml`, `review-check.yml`, `seo-check.yml`. Copy what you need into each project's `.github/workflows/`.
-
-## Manifesto
-
-Every pull request ties to a ticket. Every ticket has acceptance criteria. Code review validates against those criteria, and QA verifies the result in a separate pass before the ticket closes.
-
-## Links
-
-- GitHub: <https://github.com/me2resh/apexyard>
-- How it works: <https://apexyard.ai/how-it-works.md>
 - Pricing: <https://apexyard.ai/pricing>
+- Docs: <https://apexyard.ai/docs>
 - Architecture: <https://apexyard.ai/architecture.md>
 - Skills: <https://apexyard.ai/skills.md>
-- Releases: <https://github.com/me2resh/apexyard/releases>
-- Setup guide: <https://github.com/me2resh/apexyard/blob/main/docs/multi-project.md>
-- Community Slack: <https://app.slack.com/client/T0BD7E3SYD8/C0BD5BF7XAA>
+- Source: <https://github.com/me2resh/apexyard>
+- Changelog: <https://github.com/me2resh/apexyard/releases>

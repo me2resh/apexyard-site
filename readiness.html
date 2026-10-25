@@ -1,0 +1,201 @@
+<!doctype html>
+<!--
+  ApexYard, © 2026 me2resh
+  apexyard.ai, github.com/me2resh/apexyard, MIT licence
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Readiness: know what is safe to ship | ApexYard</title>
+<meta name="author" content="me2resh">
+<meta name="description" content="ApexYard Readiness audits a repository area by area and gives a go or no-go, the gaps and the top actions.">
+<link rel="canonical" href="https://apexyard.ai/readiness">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#EEF1F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1B2E" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ApexYard">
+<meta property="og:url" content="https://apexyard.ai/readiness">
+<meta property="og:title" content="Readiness: know what is safe to ship | ApexYard">
+<meta property="og:description" content="ApexYard Readiness audits a repository area by area and gives a go or no-go, the gaps and the top actions.">
+<meta property="og:image" content="https://apexyard.ai/og/index.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://apexyard.ai/readiness">
+<meta name="twitter:title" content="Readiness: know what is safe to ship | ApexYard">
+<meta name="twitter:description" content="ApexYard Readiness audits a repository area by area and gives a go or no-go, the gaps and the top actions.">
+<meta name="twitter:image" content="https://apexyard.ai/og/index.png">
+<script>try{var t=localStorage.getItem('ay-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/plex-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/product.css">
+
+<!-- begin: gtag — keep in sync across all site/*.html pages (#399) -->
+<!-- Google tag (gtag.js) with Consent Mode v2 - analytics_storage defaults to denied
+     until the consent banner below records an explicit choice. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G3EMR3CB02"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied'
+  });
+  try {
+    if (localStorage.getItem('ay-consent') === 'granted') {
+      gtag('consent', 'update', { 'analytics_storage': 'granted' });
+    }
+  } catch (e) {}
+  gtag('js', new Date());
+  gtag('config', 'G-G3EMR3CB02');
+</script>
+<!-- end: gtag -->
+</head>
+<body>
+
+<a href="#main" class="skip">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__bar">
+    <a href="/" class="brand"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" fill="#2D5BE3"/><text x="50" y="53" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="46" font-weight="700" letter-spacing="-4" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">AY</text></svg><span>ApexYard</span></a>
+    <button class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false" data-theme-toggle hidden>
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 2.75a7.25 7.25 0 0 1 0 14.5z" fill="currentColor"/></svg>
+    </button>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <div class="site-nav__group">
+        <button class="site-nav__menu" type="button" aria-expanded="false" aria-controls="product-menu">Product</button>
+        <ul class="site-nav__sub" id="product-menu">
+          <li><a href="/gate">Gate</a></li>
+          <li><a href="/readiness" aria-current="page">Readiness</a></li>
+          <li><a href="/build">Build</a></li>
+        </ul>
+      </div>
+      <a href="/pricing">Pricing</a>
+      <a href="/docs">Docs</a>
+      <div class="site-nav__right">
+        <a href="https://app.apexyard.ai" class="site-nav__login">Log in</a>
+        <a href="https://cal.com/apexyard/demo?src=nav" class="btn btn--primary btn--small" rel="noopener">Book a demo</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="product-head" aria-labelledby="product-title">
+    <div class="wrap">
+      <p class="product-head__name">Readiness</p>
+      <h1 id="product-title">Know whether each repository is ready for production, area by area.</h1>
+      <p class="product-head__who">For CTOs and engineering leads who answer for what ships.</p>
+      <p class="product-head__cta"><a class="btn btn--primary" href="https://cal.com/apexyard/readiness-call?src=readiness-head" rel="noopener">Book a readiness call</a></p>
+    </div>
+  </section>
+
+  <section class="section section--flush" aria-labelledby="ready-points">
+    <div class="wrap">
+      <h2 class="visually-hidden" id="ready-points">What Readiness does</h2>
+      <div class="features">
+        <article class="feature feature--text">
+          <div class="feature__text">
+            <h3>Ten areas in one audit</h3>
+            <p>We run the readiness audit on your repository. You get a go or no-go, the gaps in each area and the top actions. It covers security, accessibility, compliance, analytics, search, AI search, performance, monitoring, documentation and behaviour quality.</p>
+          </div>
+        </article>
+        <article class="feature feature--text">
+          <div class="feature__text">
+            <h3><span class="is-coming" data-claim="readiness_score">A readiness score for every repository<span class="claim-coming" hidden> Coming</span></span></h3>
+            <p>Each repository gets a score and a trend over time. <span class="is-coming" data-claim="readiness_weekly">The audit runs on a schedule, every week.<span class="claim-coming" hidden> Coming</span></span></p>
+          </div>
+        </article>
+        <article class="feature feature--text">
+          <div class="feature__text">
+            <h3><span class="is-coming" data-claim="readiness_ci">Runs in your own CI<span class="claim-coming" hidden> Coming</span></span></h3>
+            <p>The audit runs in your CI with your own model key. Only scores and findings reach the dashboard.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="connects-title">
+    <div class="wrap connects">
+      <h2 class="section__title" id="connects-title">How it connects</h2>
+      <p class="section__lede">Turn a finding into a rule, and your agents pick it up on their next ticket in <a href="/build">Build</a>.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="plans-title">
+    <div class="wrap">
+      <h2 class="section__title" id="plans-title">Plans</h2>
+      <p class="section__lede">Start with one report. Reviews by people are on the pricing page.</p>
+      <div class="plans plans--2">
+        <article class="plan">
+          <h3>Readiness report</h3>
+          <p class="plan__price"><!--{{READINESS_REPORT_PRICE}}-->From £00 a repository <span class="price-flag">Placeholder price</span><!--/{{READINESS_REPORT_PRICE}}--></p>
+          <ul>
+            <li>One repository, on demand</li>
+            <li>A written report with the next steps</li>
+          </ul>
+          <p class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/readiness-call?src=readiness-report" rel="noopener">Book a readiness call</a></p>
+        </article>
+        <article class="plan">
+          <h3><!--{{READINESS_SCHEDULE_NAME}}-->Readiness on a schedule<!--/{{READINESS_SCHEDULE_NAME}}--></h3>
+          <p class="plan__price"><!--{{READINESS_SCHEDULE_PRICE}}-->From £00 a month <span class="price-flag">Placeholder price</span><!--/{{READINESS_SCHEDULE_PRICE}}--></p>
+          <ul>
+            <li><span class="is-coming" data-claim="readiness_weekly">Every repository, every week<span class="claim-coming" hidden> Coming</span></span></li>
+            <li>The trend over time</li>
+          </ul>
+          <p class="plan__action"><a class="btn btn--quiet" href="https://apexyard.ai/notify?product=readiness-schedule&amp;src=readiness">Get notified</a></p>
+        </article>
+      </div>
+      <p class="plans__cta"><a class="plans__link" href="/pricing#readiness">Compare every plan</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <nav aria-label="Footer">
+      <a href="/gate">Gate</a>
+      <a href="/readiness">Readiness</a>
+      <a href="/build">Build</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/docs">Docs</a>
+      <a href="/architecture">Architecture</a>
+      <a href="/skills">Skills</a>
+      <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">Changelog</a>
+      <a href="/game">The game</a>
+      <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <p>© 2026 <a href="https://me2resh.com" target="_blank" rel="noopener">me2resh</a>. The ApexYard framework is open source under the MIT licence.</p>
+  </div>
+</footer>
+
+<div id="consent" class="consent" role="region" aria-label="Cookie consent" hidden>
+  <div class="consent__inner">
+    <p class="consent__msg">
+      This site uses Google Analytics to count visits. No ads, no cross-site tracking.
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy</a>.
+    </p>
+    <div class="consent__actions">
+      <button type="button" class="consent__btn" data-consent="denied">Decline</button>
+      <button type="button" class="consent__btn consent__btn--accept" data-consent="granted">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script src="/claims.js" defer></script>
+<script src="/product.js" defer></script>
+</body>
+</html>

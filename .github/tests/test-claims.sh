@@ -23,11 +23,17 @@ used = set()
 for path in sorted(glob.glob(os.path.join(root, "*.html"))):
     text = open(path, encoding="utf-8").read()
     rel = os.path.basename(path)
-    for m in re.finditer(r'<span data-claim="([a-z_]+)">', text):
-        key = m.group(1)
+    for m in re.finditer(r'<span (class="is-coming" )?data-claim="([a-z_]+)">', text):
+        key = m.group(2)
         used.add(key)
         if key not in switches:
             errors.append(f"{rel}: claim {key} has no switch in claims.js")
+            continue
+        # The markup default should match claims.js, so the page is right
+        # without JavaScript. A mismatch is a note, not a failure: a claim
+        # must stay one config line to flip on switch-on day.
+        if bool(m.group(1)) != (switches[key] == "coming"):
+            print(f"  note  {rel}: claim {key} markup default differs from claims.js ('{switches[key]}'); JS applies claims.js")
     if 'data-claim="' in text:
         if text.count('data-claim="') != text.count('class="claim-coming" hidden'):
             errors.append(f"{rel}: a claim has no hidden Coming tag")
