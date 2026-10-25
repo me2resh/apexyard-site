@@ -518,7 +518,8 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 .plan__points li { padding: 0.65rem 0; border-bottom: 1px solid var(--line); font-size: 15px; color: var(--ink-2); }
 .plan__action { margin-top: auto; align-self: end; width: 100%; }
 .plan__action .btn { width: 100%; padding: 0.55rem 0.75rem; text-align: center; font-size: 15px; }
-.plan__founding { color: var(--ink); font-size: 15px; font-weight: 600; margin-bottom: 0.75rem; }
+/* The Team card note sits above the button and reads stronger than the price note. */
+.plan__action .plan__note { margin: 0 0 0.75rem; color: var(--ink); font-weight: 600; }
 .plans__fine { margin-top: 1rem; font-size: 14px; color: var(--ink-2); }
 @media (min-width: 700px) {
   .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; }
