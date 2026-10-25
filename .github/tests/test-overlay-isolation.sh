@@ -112,7 +112,7 @@ public_checks() {
 import glob, os, re, sys
 
 root = sys.argv[1]
-DOCUMENTED = {"TEAM_PRICE", "TEAM_PRICE_NOTE", "TEAM_SUMMARY"}
+DOCUMENTED = {"TEAM_PRICE", "TEAM_PRICE_NOTE", "TEAM_SUMMARY", "PLAN_HINT"}
 WRAPPED = re.compile(r"<!--\{\{([A-Z][A-Z0-9_]*)\}\}-->(.*?)<!--/\{\{\1\}\}-->", re.S)
 ANY = re.compile(r"\{\{([A-Z][A-Z0-9_]*)\}\}")
 PRICE = re.compile(

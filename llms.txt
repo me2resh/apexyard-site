@@ -8,7 +8,8 @@
 
 ## Pages
 
-- [Home](https://apexyard.ai/) — what apexyard does for non-technical founders, who it is for, how to get started
+- [Home](https://apexyard.ai/) — ApexYard checks every pull request that coding agents open against your team's rules, and merges it only after a named person approves it on GitHub
+- [Docs](https://apexyard.ai/docs) — the framework guide: install, the daily loop, the gates, hooks and rules, and a real merge replayed from the log
 - [How it works](https://apexyard.ai/how-it-works) — a plain-English walkthrough of one realistic day with apexyard
 - [Pricing](https://apexyard.ai/pricing) — the three paths: the framework (free, MIT), the free hosted tier (one repository), and Team for an organisation (pricing to be announced)
 - [Architecture](https://apexyard.ai/architecture) — the technical 5-layer model + portfolio model

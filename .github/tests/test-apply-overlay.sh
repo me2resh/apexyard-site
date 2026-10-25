@@ -91,11 +91,12 @@ for s in "$apply" "$check"; do
 done
 
 # --- the real site accepts an overlay with the documented tokens ---
-real_json='{"TEAM_PRICE":"FakeValueP","TEAM_PRICE_NOTE":"FakeValueN","TEAM_SUMMARY":"FakeValueS"}'
+real_json='{"TEAM_PRICE":"FakeValueP","TEAM_PRICE_NOTE":"FakeValueN","TEAM_SUMMARY":"FakeValueS","PLAN_HINT":"FakeValueH"}'
 rlog=$(OVERLAY_JSON="$real_json" "$apply" "$root" "$tmp/real" 2>&1)
 rrc=$?
 assert "the real site applies the documented tokens"  test "$rrc" -eq 0
 assert "the real pricing page gets the values"        grep -q 'FakeValueP' "$tmp/real/pricing.html"
+assert "the real home page gets the plan hint"        grep -q 'FakeValueH' "$tmp/real/index.html"
 [ "$rrc" -eq 0 ] || grep -v '^::add-mask::' <<<"$rlog" | sed 's/^/    /'
 
 # --- the production check finds a value ---

@@ -2,695 +2,38 @@
 <!--
   ApexYard · © 2026 me2resh
   apexyard.ai · github.com/me2resh/apexyard · MIT
-  Multi-project SDLC framework for Claude Code.
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ApexYard — pricing: three ways to use it</title>
+<title>ApexYard pricing</title>
 <meta name="author" content="me2resh">
-<meta name="copyright" content="© 2026 ApexYard · MIT">
-<meta name="description" content="Three ways to use ApexYard: the open-source framework (free, MIT), the free hosted tier (one repository, sign in with GitHub), and Team for an organisation. Team pricing is to be announced.">
+<meta name="description" content="ApexYard pricing: the open-source framework is free under MIT, the hosted tier is free for one repository, and Team is for an organisation. Team pricing is to be announced.">
 <link rel="canonical" href="https://apexyard.ai/pricing">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+<meta name="theme-color" content="#2F6DF6">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ApexYard">
 <meta property="og:url" content="https://apexyard.ai/pricing">
-<meta property="og:title" content="ApexYard — pricing: three ways to use it">
-<meta property="og:description" content="Three ways to use ApexYard: the open-source framework (free, MIT), the free hosted tier (one repository, sign in with GitHub), and Team for an organisation. Team pricing is to be announced.">
+<meta property="og:title" content="ApexYard pricing">
+<meta property="og:description" content="ApexYard pricing: the open-source framework is free under MIT, the hosted tier is free for one repository, and Team is for an organisation. Team pricing is to be announced.">
 <meta property="og:image" content="https://apexyard.ai/og/index.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://apexyard.ai/pricing">
-<meta name="twitter:title" content="ApexYard — pricing: three ways to use it">
-<meta name="twitter:description" content="Three ways to use ApexYard: the open-source framework (free, MIT), the free hosted tier (one repository, sign in with GitHub), and Team for an organisation. Team pricing is to be announced.">
+<meta name="twitter:title" content="ApexYard pricing">
+<meta name="twitter:description" content="ApexYard pricing: the open-source framework is free under MIT, the hosted tier is free for one repository, and Team is for an organisation. Team pricing is to be announced.">
 <meta name="twitter:image" content="https://apexyard.ai/og/index.png">
-
-<!-- Structured data: BreadcrumbList -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "ApexYard",
-      "item": "https://apexyard.ai/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Pricing",
-      "item": "https://apexyard.ai/pricing"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "url": "https://apexyard.ai/pricing",
-  "name": "ApexYard — pricing: three ways to use it",
-  "description": "Three ways to use ApexYard: the open-source framework (free, MIT), the free hosted tier (one repository, sign in with GitHub), and Team for an organisation. Team pricing is to be announced.",
-  "datePublished": "2026-10-25",
-  "dateModified": "2026-10-25",
-  "copyrightYear": "2026",
-  "copyrightHolder": { "@type": "Person", "name": "me2resh", "url": "https://me2resh.com" },
-  "author": { "@type": "Person", "name": "me2resh", "url": "https://me2resh.com" },
-  "publisher": {
-    "@type": "Organization",
-    "name": "ApexYard",
-    "url": "https://apexyard.ai/",
-    "logo": "https://apexyard.ai/favicon.svg"
-  },
-  "license": "https://opensource.org/licenses/MIT"
-}
-</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-
-<style>
-/* ============================================================
-   ApexYard — pricing page
-   Mirrors site/index.html design tokens (Swiss Graphite
-   — IBM Plex Mono + Archivo, cool light canvas, single blue
-   accent). Heavier on prose; lighter on visual chrome. The
-   page tells one narrative — a day with ApexYard — in plain
-   English, for a non-technical founder.
-   ============================================================ */
-
-:root {
-  --paper:    #F7F9FC;
-  --paper-2:  #EEF2F8;
-  --paper-3:  #E3E8EF;
-  --ink:       #14181F;
-  --ink-soft:  #3D4554;
-  --ink-faint: #5B6472;
-  --ink-ghost: #9AA4B2;
-  --accent:      #2F6DF6;
-  --accent-soft: #5B8CFF;
-  --rule:        #14181F;
-  --rule-faint:  #E3E8EF;
-  --display: 'Archivo', system-ui, -apple-system, sans-serif;
-  --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-  --max-w:  1280px;
-  --gutter: clamp(1.25rem, 4vw, 3rem);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper:    #0B1226;
-    --paper-2:  #121A30;
-    --paper-3:  #1B2540;
-    --ink:       #F7F9FC;
-    --ink-soft:  #C3CCDB;
-    --ink-faint: #8B95A7;
-    --ink-ghost: #4A5468;
-    --accent:      #5B8CFF;
-    --accent-soft: #84A8FF;
-    --rule:        #F7F9FC;
-    --rule-faint:  #283349;
-  }
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-html {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  background: var(--paper);
-  scroll-behavior: smooth;
-  font-feature-settings: 'calt', 'ss01', 'ss03';
-}
-
-body {
-  font-family: var(--mono);
-  background: var(--paper);
-  color: var(--ink);
-  font-size: 14px;
-  line-height: 1.6;
-  font-weight: 400;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-::selection { background: var(--accent); color: var(--paper); }
-
-a { color: inherit; text-decoration: none; }
-a:hover { color: var(--accent); }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-
-.skip {
-  position: absolute; left: -10000px; top: auto;
-  width: 1px; height: 1px; overflow: hidden;
-}
-.skip:focus {
-  position: fixed; top: 0.5rem; left: 0.5rem; width: auto; height: auto;
-  background: var(--ink); color: var(--paper); padding: 0.5rem 0.75rem;
-  z-index: 200;
-}
-
-.dim { color: var(--ink-faint); }
-.kw { color: var(--accent); font-weight: 600; }
-.uline { border-bottom: 1px solid currentColor; padding-bottom: 1px; }
-
-/* ============================================================
-   shared titlebar — identical shape + nav set on every page
-   ============================================================ */
-.titlebar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--paper);
-  border-bottom: 1px solid var(--rule);
-  padding: 0.75rem 0;
-  font-size: 12px;
-}
-.titlebar__inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.titlebar__left { display: flex; align-items: center; gap: 0.65rem; }
-.titlebar__dots { display: inline-flex; gap: 0.35rem; }
-.titlebar__dot {
-  width: 11px; height: 11px;
-  border: 1px solid var(--rule);
-  display: inline-block;
-}
-.titlebar__dot.is-warn { background: var(--accent); border-color: var(--accent); }
-.titlebar__path { color: var(--ink-soft); font-family: var(--mono); }
-.titlebar__path a { color: inherit; }
-.titlebar__path a:hover { color: var(--accent); }
-.titlebar__path b { color: var(--ink); font-weight: 700; }
-.titlebar__right {
-  /* #9: shrink-and-scroll on narrow screens so the nav never forces the page
-     wider than the viewport (the .always links defeated the old mobile hide).
-     No-op on desktop — nothing overflows, so nothing scrolls. */
-  min-width: 0;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none; display: flex; gap: 1.25rem; align-items: center; font-size: 12px; }
-.titlebar__right::-webkit-scrollbar { display: none; }
-/* #9 follow-up: hamburger on mobile (progressive enhancement — nav-toggle.js
-   adds .nav-enhanced; with JS off the nav stays the scroll strip above). */
-.nav-toggle { display: none; }
-.nav-toggle > span { display: block; width: 18px; height: 2px; background: var(--ink); transition: transform 0.2s, opacity 0.2s; }
-@media (max-width: 700px) {
-  .nav-enhanced .nav-toggle {
-    display: inline-flex; flex-direction: column; justify-content: center; gap: 4px;
-    background: none; border: 1px solid var(--rule); padding: 8px 9px; cursor: pointer;
-  }
-  .nav-enhanced .titlebar__right {
-    position: absolute; top: 100%; left: 0; right: 0; z-index: 100;
-    flex-direction: column; align-items: stretch; gap: 0;
-    padding: 0.25rem var(--gutter) 0.85rem;
-    background: var(--paper); border-bottom: 1px solid var(--rule);
-    overflow-x: visible; min-width: 0; font-size: 14px;
-    display: none;
-  }
-  .nav-enhanced.is-open .titlebar__right { display: flex; }
-  .nav-enhanced .titlebar__right a { padding: 0.75rem 0.15rem; border-bottom: 1px solid var(--rule-faint); white-space: nowrap; }
-  .nav-enhanced .titlebar__right a.is-cta { border: 1px solid var(--rule); margin-top: 0.6rem; padding: 0.65rem; text-align: center; }
-  .nav-enhanced.is-open .nav-toggle > span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-  .nav-enhanced.is-open .nav-toggle > span:nth-child(2) { opacity: 0; }
-  .nav-enhanced.is-open .nav-toggle > span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-}
-.titlebar__right a { color: var(--ink-faint); transition: color 0.15s ease; }
-.titlebar__right a:hover { color: var(--accent); }
-.titlebar__right a.is-current { color: var(--ink); border-bottom: 1px solid var(--accent); padding-bottom: 2px; pointer-events: none; }
-.titlebar__right a.is-cta {
-  border: 1px solid var(--rule);
-  padding: 0.35rem 0.75rem;
-  color: var(--ink);
-}
-.titlebar__right a.is-cta:hover { color: var(--accent); border-color: var(--accent); }
-@media (max-width: 720px) {
-  .titlebar__right { gap: 0.7rem; font-size: 11px; }
-  .titlebar__right a:not(.is-cta):not(.always) { display: none; }
-  .titlebar__right a.always { display: inline; }
-}
-
-/* ============================================================
-   page header — shared shape with architecture.html / skills.html
-   ============================================================ */
-.page-header {
-  border-bottom: 1px solid var(--rule);
-  padding: clamp(2rem, 5vw, 3.5rem) 0 clamp(1.5rem, 3vw, 2.5rem);
-}
-.page-header__inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-}
-.page-header__eyebrow {
-  font-size: 12px;
-  color: var(--ink-faint);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 0.65rem;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 0.65rem;
-}
-.page-header__eyebrow .pill {
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  padding: 0.2rem 0.6rem;
-  font-size: 11px;
-  letter-spacing: 0.06em;
-}
-@media (max-width: 700px) {
-  /* On mobile, drop the copy-for-ai button to a new line below the pill + subtitle so it
-     does not compete with the page-header rhythm. Inline margin-left:auto already pushes it
-     right on desktop. */
-  .page-header__eyebrow .copy-for-ai { margin-left: 0; flex-basis: 100%; }
-}
-
-/* GEO-content block visually hidden from sighted users but kept in the DOM for AI
-   crawlers + screen readers. The block exists to satisfy /geo-audit G12 (first-500-tokens
-   structured lead — what-is / what-can / needed-to-start). On this page (how-it-works) the
-   block visibly duplicates the tagline ("a walkthrough of one realistic day"), so we drop
-   it from the human render but preserve the markup for citation grounding. Per #393 finding #4. */
-.ai-lead-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-.page-header h1 {
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: clamp(2.5rem, 7vw, 5rem);
-  line-height: 0.95;
-  letter-spacing: -0.035em;
-  color: var(--ink);
-  margin-bottom: 0.65rem;
-}
-.page-header h1::after {
-  content: '_';
-  color: var(--accent);
-  animation: blink 1.1s steps(1, end) infinite;
-}
-@keyframes blink { 50% { opacity: 0; } }
-.page-header .tagline {
-  font-size: clamp(1rem, 1.6vw, 1.25rem);
-  color: var(--ink-soft);
-  max-width: 72ch;
-  line-height: 1.55;
-  margin-bottom: 0.5rem;
-}
-.page-header .meta {
-  font-size: 12px;
-  color: var(--ink-faint);
-  margin-top: 1.25rem;
-}
-.page-header .meta a {
-  color: var(--ink-soft);
-  border-bottom: 1px solid var(--rule-faint);
-  padding-bottom: 1px;
-}
-.page-header .meta a:hover { color: var(--accent); border-bottom-color: var(--accent); }
-
-@media (prefers-reduced-motion: reduce) {
-  .page-header h1::after { animation: none; }
-}
-
-/* ============================================================
-   day section — the heart of the page
-   one large narrative block per time-of-day chapter
-   ============================================================ */
-
-main { background: var(--paper); }
-
-.day {
-  border-bottom: 1px solid var(--rule-faint);
-}
-.day:last-of-type { border-bottom: 1px solid var(--rule); }
-.day__inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: clamp(2.5rem, 5vw, 4rem) var(--gutter);
-  display: grid;
-  grid-template-columns: 14rem 1fr;
-  gap: 2rem 3rem;
-  align-items: start;
-}
-@media (max-width: 720px) {
-  .day__inner { grid-template-columns: 1fr; gap: 1rem; }
-}
-.day__time {
-  font-size: 11px;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-weight: 700;
-  border-top: 2px solid var(--accent);
-  padding-top: 0.75rem;
-}
-.day__time h2 {
-  font-family: var(--display);
-  display: block;
-  color: var(--ink);
-  font-size: 1.5rem;
-  letter-spacing: -0.015em;
-  font-weight: 800;
-  margin-top: 0.5rem;
-  text-transform: none;
-  line-height: 1.1;
-  font-family: var(--mono);
-}
-.day__body {
-  max-width: 60ch;
-}
-.day__body p {
-  font-size: 15px;
-  color: var(--ink);
-  line-height: 1.7;
-  margin-bottom: 1.1rem;
-}
-.day__body p:last-child { margin-bottom: 0; }
-.day__body p.lede {
-  font-size: 17px;
-  font-weight: 500;
-  color: var(--ink);
-  line-height: 1.55;
-  margin-bottom: 1.25rem;
-}
-.day__body .aside {
-  border-left: 3px solid var(--accent);
-  background: var(--paper-2);
-  padding: 0.85rem 1.1rem;
-  font-size: 13px;
-  color: var(--ink-soft);
-  margin: 1.25rem 0;
-  line-height: 1.6;
-}
-.day__body .aside strong { color: var(--ink); }
-
-.day--alt { background: var(--paper-2); }
-
-/* ============================================================
-   intro and outro panels
-   ============================================================ */
-
-.intro-panel,
-.outro-panel {
-  padding: clamp(2.5rem, 5vw, 4rem) 0;
-}
-.intro-panel { background: var(--paper-2); border-bottom: 1px solid var(--rule); }
-.outro-panel { background: var(--paper-3); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
-
-.intro-panel__inner,
-.outro-panel__inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-}
-.intro-panel h2,
-.outro-panel h2 {
-  font-family: var(--display);
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  margin-bottom: 1rem;
-  line-height: 1.2;
-  max-width: 30ch;
-}
-.intro-panel p,
-.outro-panel p {
-  font-size: 15px;
-  color: var(--ink-soft);
-  line-height: 1.7;
-  max-width: 65ch;
-  margin-bottom: 1rem;
-}
-.intro-panel p:last-child,
-.outro-panel p:last-child { margin-bottom: 0; }
-
-/* ============================================================
-   final CTA — matches the index final block
-   ============================================================ */
-.final {
-  padding: clamp(4rem, 8vw, 7rem) 0;
-  background: var(--paper);
-  border-bottom: 1px solid var(--rule);
-}
-.final__inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 3rem;
-  align-items: end;
-}
-@media (max-width: 900px) {
-  .final__inner { grid-template-columns: 1fr; gap: 2rem; }
-}
-.final h2 {
-  font-family: var(--display);
-  font-size: clamp(2rem, 5vw, 3.75rem);
-  font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 0.95;
-  color: var(--ink);
-}
-.final h2 .acc { color: var(--accent); }
-.final p {
-  font-size: 14px;
-  color: var(--ink-soft);
-  max-width: 50ch;
-  line-height: 1.65;
-  margin-top: 1.25rem;
-}
-.final__actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  align-self: end;
-}
-.final__btn {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid var(--rule);
-  padding: 1rem 1.25rem;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--ink);
-  background: var(--paper);
-}
-.final__btn:hover {
-  background: var(--ink);
-  color: var(--paper);
-  border-color: var(--ink);
-}
-.final__btn .arrow { font-weight: 800; }
-
-/* ============================================================
-   footer
-   ============================================================ */
-.page-footer {
-  padding: 1.5rem 0 2rem;
-  font-size: 12px;
-  color: var(--ink-faint);
-  border-top: 1px solid var(--rule-faint);
-  margin-top: 4rem;
-}
-.page-footer__inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.page-footer__nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 0.8rem;
-}
-.page-footer__meta {
-  font-size: 11px;
-  color: var(--ink-faint);
-}
-.page-footer a { color: var(--ink-soft); border-bottom: 1px dotted currentColor; padding-bottom: 1px; }
-.page-footer a:hover { color: var(--accent); border-bottom-color: var(--accent); }
-/* begin: consent-css — keep in sync across all site/*.html pages (#399) */
-.consent {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--paper);
-  border-top: 1px solid var(--ink);
-  z-index: 100;
-  font-size: 12px;
-  padding: 1rem var(--gutter);
-}
-.consent[hidden] { display: none; }
-.consent__inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-.consent__msg {
-  flex: 1;
-  min-width: 260px;
-  color: var(--ink-soft);
-  line-height: 1.5;
-}
-.consent__msg a { color: var(--accent); }
-.consent__actions { display: flex; gap: 0.5rem; }
-.consent__btn {
-  font: inherit;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  color: var(--ink);
-  padding: 0.5rem 0.9rem;
-  cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
-}
-.consent__btn:hover { border-color: var(--ink); }
-.consent__btn--accept {
-  background: var(--ink);
-  color: var(--paper);
-  border-color: var(--ink);
-}
-.consent__btn--accept:hover {
-  background: var(--accent);
-  border-color: var(--accent);
-}
-/* end: consent-css */
-
-/* ============================================================
-   pricing page (#102) — same tokens and border grammar as the
-   home page tiles. Values are placeholder tokens with a visible
-   fallback; only the staging deploy replaces them.
-   ============================================================ */
-.plans { padding: 0 0 3rem; }
-.plans__inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  border: 1px solid var(--rule);
-}
-.plan {
-  padding: 2rem 1.75rem;
-  border-right: 1px solid var(--rule-faint);
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-}
-.plan:last-child { border-right: none; }
-@media (max-width: 900px) {
-  .plans__inner { grid-template-columns: minmax(0, 1fr); }
-  .plan { border-right: none; border-bottom: 1px solid var(--rule-faint); }
-  .plan:last-child { border-bottom: none; }
-}
-.plan__num {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-.plan__title {
-  font-family: var(--display);
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--ink);
-  letter-spacing: -0.018em;
-  line-height: 1.2;
-}
-.plan__price {
-  font-family: var(--mono);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-.plan__facts { display: grid; gap: 0; }
-.plan__facts div {
-  display: grid;
-  grid-template-columns: 7.5rem 1fr;
-  gap: 0.75rem;
-  padding: 0.55rem 0;
-  border-bottom: 1px solid var(--rule-faint);
-  font-family: var(--mono);
-  font-size: 12.5px;
-}
-.plan__facts dt { color: var(--ink-faint); }
-.plan__facts dd { color: var(--ink); }
-.plan__desc {
-  font-family: var(--mono);
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--ink-soft);
-}
-.plan__cta {
-  margin-top: auto;
-  font-family: var(--mono);
-  font-size: 13px;
-  color: var(--ink);
-  text-decoration: none;
-  border-bottom: 1px solid var(--rule-faint);
-  align-self: flex-start;
-}
-.plan__cta:hover { color: var(--accent); border-bottom-color: var(--accent); }
-.plan__cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-.demo-strip { padding: 0 0 4rem; }
-.demo-strip__inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 1.25rem var(--gutter);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.25rem;
-  align-items: baseline;
-  font-family: var(--mono);
-  font-size: 13.5px;
-  color: var(--ink-soft);
-}
-.demo-strip__label {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--accent);
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/product.css">
 
 <!-- begin: gtag — keep in sync across all site/*.html pages (#399) -->
 <!-- Google tag (gtag.js) with Consent Mode v2 - analytics_storage defaults to denied
@@ -719,127 +62,99 @@ main { background: var(--paper); }
 
 <a href="#main" class="skip">Skip to content</a>
 
-<header class="titlebar">
-  <div class="titlebar__inner">
-    <div class="titlebar__left">
-      <span class="titlebar__dots" aria-hidden="true">
-        <span class="titlebar__dot"></span>
-        <span class="titlebar__dot"></span>
-        <span class="titlebar__dot is-warn"></span>
-      </span>
-      <span class="titlebar__path">~/<a href="/"><b>apexyard</b></a> <span class="dim">· pricing</span></span>
-    </div>
-    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav"><span></span><span></span><span></span></button>
-    <nav class="titlebar__right" id="primary-nav" aria-label="Primary">
-      <a href="/how-it-works" class="always">how it works</a>
-      <a href="/#quickstart" class="is-cta always">get started</a>
-      <a href="/pricing" class="is-current always">pricing</a>
-      <a href="/architecture" class="always">architecture</a>
-      <a href="/skills" class="always">skills</a>
-      <a href="/game" class="always">play the game</a>
-      <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">changelog →</a>
-      <a href="https://github.com/me2resh/apexyard" class="is-cta" target="_blank" rel="noopener">github →</a>
+<header class="site-header">
+  <div class="wrap site-header__bar">
+    <a href="/" class="brand" aria-label="ApexYard home"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" fill="#2F6DF6"/><text x="50" y="53" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="46" font-weight="700" letter-spacing="-4" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">AY</text></svg><span>ApexYard</span></a>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="/#product">Product</a>
+      <a href="/#how-it-works">How it works</a>
+      <a href="/pricing" aria-current="page">Pricing</a>
+      <a href="/docs">Docs</a>
+      <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener">GitHub<span class="stars" data-stars-wrap hidden><span class="visually-hidden">, stars: </span> ★ <span data-stars></span></span></a>
+      <div class="site-nav__right">
+        <a href="https://app.apexyard.ai" class="site-nav__login">Log in</a>
+        <a href="https://app.apexyard.ai" class="btn btn--primary btn--small">Start free</a>
+      </div>
     </nav>
   </div>
 </header>
 
 <main id="main">
-
-  <section class="page-header">
-    <div class="page-header__inner">
-      <div class="page-header__eyebrow">
-        <span class="pill">apexyard / pricing</span>
-        <span>three ways to use apexyard</span>
-      </div>
+  <section class="page-head">
+    <div class="wrap">
       <h1>Pricing</h1>
-      <p class="tagline">
-        The framework is free and MIT. The hosted free tier covers one repository. Team is for an organisation.
-      </p>
-      <p class="meta">
-        See also: <a href="/">overview</a> · <a href="/#quickstart">get started</a> · <a href="/how-it-works">how it works</a>
-      </p>
+      <p>Start with the free framework or the free hosted tier. Team is for an organisation.</p>
     </div>
   </section>
 
-  <section class="plans" aria-label="The three paths">
-    <div class="plans__inner">
-
+  <section aria-label="Plans">
+    <div class="wrap plans">
       <article class="plan">
-        <div class="plan__num">01 · open source</div>
-        <h2 class="plan__title">The framework</h2>
-        <p class="plan__price">Free</p>
-        <dl class="plan__facts">
-          <div><dt>Licence</dt><dd>MIT</dd></div>
-          <div><dt>Repositories</dt><dd>Any number, in your own organisation</dd></div>
-          <div><dt>Account</dt><dd>None</dd></div>
-          <div><dt>Dashboard</dt><dd>Not needed</dd></div>
-        </dl>
-        <p class="plan__desc">The rules, hooks, skills, and review agents run with your agent tool, in your own repositories.</p>
-        <a class="plan__cta" href="/#quickstart">Get started →</a>
+        <h2>Free</h2>
+        <p class="plan__price">Open source, MIT</p>
+        <p class="plan__for">The open-source framework, in your own repositories.</p>
+        <ul>
+          <li>Any number of repositories</li>
+          <li>No account and no dashboard needed</li>
+          <li>Rules, hooks, skills and review agents as plain files</li>
+        </ul>
+        <a class="btn btn--quiet" href="/#quickstart">Install the framework</a>
       </article>
 
       <article class="plan">
-        <div class="plan__num">02 · hosted, free tier</div>
-        <h2 class="plan__title">Hosted check and dashboard</h2>
-        <p class="plan__price">Free</p>
-        <dl class="plan__facts">
-          <div><dt>Repositories</dt><dd>1</dd></div>
-          <div><dt>Account</dt><dd>Sign in with GitHub</dd></div>
-          <div><dt>Includes</dt><dd>The hosted check and the dashboard</dd></div>
-          <div><dt>Dashboard</dt><dd>Optional</dd></div>
-        </dl>
-        <p class="plan__desc">The framework works without the hosted tier. Add it when you want the hosted check and dashboard for one repository.</p>
-        <a class="plan__cta" href="/#paths">Compare the paths →</a>
+        <h2>Hosted free</h2>
+        <p class="plan__price">Free for 1 repository</p>
+        <p class="plan__for">The hosted check and dashboard for one repository.</p>
+        <ul>
+          <li>1 repository</li>
+          <li>Sign in with GitHub</li>
+          <li>The ApexYard check on each pull request</li>
+          <li>The dashboard is optional</li>
+        </ul>
+        <a class="btn btn--primary" href="https://app.apexyard.ai">Start free with GitHub</a>
       </article>
 
       <article class="plan plan--team" id="team">
-        <div class="plan__num">03 · team</div>
-        <h2 class="plan__title">Team</h2>
+        <h2>Team</h2>
         <p class="plan__price"><!--{{TEAM_PRICE}}-->Pricing to be announced<!--/{{TEAM_PRICE}}--></p>
-        <dl class="plan__facts">
-          <div><dt>For</dt><dd>An organisation</dd></div>
-          <div><dt>Billing</dt><dd><!--{{TEAM_PRICE_NOTE}}-->To be announced<!--/{{TEAM_PRICE_NOTE}}--></dd></div>
-          <div><dt>Includes</dt><dd><!--{{TEAM_SUMMARY}}-->Details to be announced.<!--/{{TEAM_SUMMARY}}--></dd></div>
-        </dl>
-        <p class="plan__desc">Going independent from 19 November. Talk then.</p>
-        <a class="plan__cta" href="/#team">About Team →</a>
+        <p class="plan__for">For an organisation.</p>
+        <ul>
+          <li><!--{{TEAM_PRICE_NOTE}}-->Billing to be announced<!--/{{TEAM_PRICE_NOTE}}--></li>
+          <li><!--{{TEAM_SUMMARY}}-->Details to be announced.<!--/{{TEAM_SUMMARY}}--></li>
+        </ul>
+        <a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai">Talk to us from 19 November</a>
       </article>
+    </div>
 
+    <div class="wrap plans-note">
+      <p>The framework stays open source under MIT on every plan.</p>
+      <p>The recording of the 18 November demo will be published on this page.</p>
     </div>
   </section>
-
-  <section class="demo-strip" id="demo" aria-label="Demo recording">
-    <div class="demo-strip__inner">
-      <span class="demo-strip__label">demo · 18 Nov</span>
-      <p>The recording of the 18 Nov demo will be published here.</p>
-    </div>
-  </section>
-
 </main>
 
-<footer class="page-footer" role="contentinfo">
-  <div class="page-footer__inner">
-    <div class="page-footer__brand">apexyard.ai — fork the framework, register your repos, ship.</div>
-    <nav class="page-footer__nav" aria-label="Footer">
-      <a href="/how-it-works">how it works</a>
-      <a href="/#quickstart">get started</a>
-      <a href="/pricing">pricing</a>
-      <a href="/architecture">architecture</a>
-      <a href="/skills">skills</a>
-      <a href="/game">play the game</a>
-      <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">changelog ↗</a>
-      <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener">github ↗</a>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <nav aria-label="Footer">
+      <a href="/#product">Product</a>
+      <a href="/#how-it-works">How it works</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/docs">Docs</a>
+      <a href="/how-it-works">A day with ApexYard</a>
+      <a href="/architecture">Architecture</a>
+      <a href="/skills">Skills</a>
+      <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">Changelog</a>
+      <a href="/game">The game</a>
+      <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://app.slack.com/client/T0BD7E3SYD8/C0BD5BF7XAA" target="_blank" rel="noopener">Community</a>
     </nav>
-    <div class="page-footer__meta">© 2026 <a href="https://me2resh.com" target="_blank" rel="noopener">me2resh</a> · ApexYard · open source · plain markdown · zero dependencies</div>
+    <p>© 2026 <a href="https://me2resh.com" target="_blank" rel="noopener">me2resh</a>. The ApexYard framework is open source under the MIT licence.</p>
   </div>
 </footer>
 
-<!-- begin: consent — keep in sync across all site/*.html pages (#399) -->
-<!-- ============================================================
-     COOKIE CONSENT BANNER
-     Hidden if a prior choice is stored. On Accept, updates gtag
-     Consent Mode to grant analytics_storage.
-     ============================================================ -->
 <div id="consent" class="consent" role="region" aria-label="Cookie consent" hidden>
   <div class="consent__inner">
     <p class="consent__msg">
@@ -852,41 +167,7 @@ main { background: var(--paper); }
     </div>
   </div>
 </div>
-<script>
-(function () {
-  var KEY = 'ay-consent';
-  var el = document.getElementById('consent');
-  if (!el) return;
-  var stored = null;
-  try { stored = localStorage.getItem(KEY); } catch (e) {}
-  if (stored !== 'granted' && stored !== 'denied') {
-    el.hidden = false;
-  }
-  function record(choice) {
-    if (el.hidden) return;
-    try { localStorage.setItem(KEY, choice); } catch (e) {}
-    if (choice === 'granted' && typeof gtag === 'function') {
-      gtag('consent', 'update', { 'analytics_storage': 'granted' });
-    }
-    el.hidden = true;
-  }
-  el.addEventListener('click', function (e) {
-    var btn = e.target.closest('[data-consent]');
-    if (!btn) return;
-    record(btn.getAttribute('data-consent'));
-  });
-  // Escape dismisses the banner as "denied" - keyboard users without
-  // a mouse shouldn't be stuck with a fixed-bottom banner they cannot
-  // dismiss. "Denied" is the non-consenting default per Consent Mode v2.
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !el.hidden) {
-      record('denied');
-    }
-  });
-})();
-</script>
-<!-- end: consent -->
 
-<script src="/nav-toggle.js" defer></script>
+<script src="/product.js" defer></script>
 </body>
 </html>
