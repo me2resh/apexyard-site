@@ -21,6 +21,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
+<!-- Theme: apply a stored light/dark choice before first paint so the page
+     never flashes the wrong palette. theme-toggle.js owns the button; this
+     snippet is repeated verbatim in every themed page (index, architecture,
+     skills, how-it-works, 404). -->
+<script>
+(function () {
+  var t = null;
+  try { t = localStorage.getItem('ay-theme'); } catch (e) {}
+  if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+
 <style>
 :root {
   --paper:    #F7F9FC;
@@ -36,8 +48,11 @@
   --max-w: 720px;
   --gutter: clamp(1.25rem, 4vw, 3rem);
 }
+/* Dark tokens, two ways in: the OS setting (this media block — skipped when
+   the toggle pinned light) and the toggle pinning dark (data-theme on <html>,
+   set by theme-toggle.js). Same values in both blocks — keep them in sync. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --paper:    #0B1226;
     --paper-2:  #121A30;
     --ink:       #F7F9FC;
@@ -47,6 +62,16 @@
     --rule:      #F7F9FC;
     --rule-faint:#283349;
   }
+}
+:root[data-theme="dark"] {
+  --paper:    #0B1226;
+  --paper-2:  #121A30;
+  --ink:       #F7F9FC;
+  --ink-soft:  #C3CCDB;
+  --ink-faint: #8B95A7;
+  --accent:    #5B8CFF;
+  --rule:      #F7F9FC;
+  --rule-faint:#283349;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
