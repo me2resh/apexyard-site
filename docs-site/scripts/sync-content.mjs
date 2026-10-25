@@ -294,6 +294,23 @@ function heredoc(text, fn) {
 }
 
 function buildPart(part) {
+  // Site-authored text: a short lead or a link list. It has no source file.
+  if (part.text !== undefined) {
+    return { source: null, lines: fillTag(part.text).split('\n') };
+  }
+  // A table of skills, built from each SKILL.md front matter at the tag.
+  if (part.skillList) {
+    const rows = part.skillList.map((name) => {
+      const rel = `.claude/skills/${name}/SKILL.md`;
+      const fm = matter(readSource(rel)).data;
+      const desc = String(fm.description || '').replace(/\|/g, '\\|').replace(/\s+/g, ' ').trim();
+      return { rel, row: `| [\`/${fm.name || name}\`](${BASE}/reference/skills/${name}) | ${desc} |` };
+    });
+    const lines = [];
+    if (part.heading) lines.push(`## ${part.heading}`, '');
+    lines.push('| Skill | What it does |', '| --- | --- |', ...rows.map((r) => r.row));
+    return { source: rows[0].rel, sources: rows.map((r) => r.rel), lines };
+  }
   const text = readSource(part.source);
   let lines;
   if (part.code) {
@@ -326,7 +343,7 @@ function mapPage(page) {
   const lines = [];
   for (const c of page.callouts || []) lines.push(callout(c.type, fillTag(c.text)), '');
   for (const p of parts) lines.push(...p.lines, '');
-  out.sources = parts.map((p) => p.source);
+  out.sources = [...new Set(parts.flatMap((p) => p.sources || (p.source ? [p.source] : [])))];
   out.body = convertAlerts(lines).join('\n');
   return out;
 }
@@ -457,7 +474,7 @@ function buildLinkIndex(pages) {
   for (const p of pages) {
     const slugger = new GithubSlugger();
     p.anchors = new Set(headings(p.body.split('\n')).map((h) => slugger.slug(h.text.replace(/`/g, ''))));
-    const whole = !p.parts || p.parts.every((x) => !x.sections && !x.code && !x.heredoc);
+    const whole = !p.parts || p.parts.every((x) => x.source && !x.sections && !x.code && !x.heredoc);
     for (const s of p.sources) {
       if (!bySource.has(s)) bySource.set(s, []);
       bySource.get(s).push({ page: p, whole: whole && p.sources.length === 1 });
@@ -474,6 +491,8 @@ function githubUrl(rel, hash) {
 
 function resolveLink(target, fromSource, page, bySource) {
   if (/^(https?:|mailto:|tel:|data:)/i.test(target) || target.startsWith('//')) return target;
+  // Links that site-authored text writes to docs pages are already final.
+  if (target === BASE || target.startsWith(`${BASE}/`) || target.startsWith(`${BASE}#`)) return target;
   if (target.startsWith('#')) {
     const hash = target.slice(1);
     if (page.anchors.has(hash)) return target;

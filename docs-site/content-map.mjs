@@ -359,6 +359,123 @@ const learn = [
       },
     ],
   },
+  {
+    id: 'readiness',
+    title: 'Readiness',
+    icon: 'information',
+    summary: 'Check that a project is ready for production, and fix the gaps first.',
+    pages: [
+      {
+        slug: 'readiness/overview',
+        title: 'What Readiness checks',
+        description: 'The areas that a readiness audit checks before a release.',
+        parts: [
+          {
+            text: [
+              'Readiness tells you if a project is ready for production. It checks these areas:',
+              '',
+              '- Security: [`/security-review`](/docs/reference/skills/security-review)',
+              '- Threat model: [`/threat-model`](/docs/reference/skills/threat-model)',
+              '- Accessibility: [`/accessibility-audit`](/docs/reference/skills/accessibility-audit)',
+              '- Performance: [`/performance-audit`](/docs/reference/skills/performance-audit)',
+              '- Monitoring: [`/monitoring-audit`](/docs/reference/skills/monitoring-audit)',
+              '- Compliance: [`/compliance-check`](/docs/reference/skills/compliance-check)',
+              '- Documentation: [`/docs-audit`](/docs/reference/skills/docs-audit)',
+              '- Test quality: [`/mutation-test`](/docs/reference/skills/mutation-test)',
+              '',
+              '[`/launch-check`](/docs/reference/skills/launch-check) runs a quick check of each area and gives one verdict.',
+              'Each area also has a skill for a deeper audit.',
+            ].join('\n'),
+          },
+          { source: '.claude/skills/launch-check/SKILL.md', sections: ['Deep-dive companions'] },
+        ],
+        callouts: [
+          {
+            type: 'coming',
+            text: 'Continuous Readiness in CI, the hosted score and the hosted trend are not built yet. Today you run the audits with the skills on this page.',
+          },
+        ],
+      },
+      {
+        slug: 'readiness/run-the-audits',
+        title: 'Run the audits today',
+        description: 'Run each readiness audit with a skill that ships in the framework.',
+        parts: [
+          {
+            text: [
+              'Run `/launch-check` first. It checks every area quickly and gives one verdict.',
+              'Then run the skill for each area that shows a warning or a failure.',
+            ].join('\n'),
+          },
+          {
+            skillList: ['launch-check', 'threat-model', 'accessibility-audit', 'performance-audit', 'monitoring-audit', 'compliance-check', 'docs-audit', 'mutation-test'],
+          },
+        ],
+      },
+      {
+        slug: 'readiness/score',
+        title: 'The Production-Ready Score',
+        description: 'One score and one verdict: go or no-go.',
+        parts: [
+          {
+            text: [
+              'The Production-Ready Score is the headline score of `/launch-check`.',
+              'It is the mean of the area scores, from 0 to 100.',
+              'The verdict tells you if you can release: go, go with warnings, conditional go, or no-go.',
+            ].join('\n'),
+          },
+          { source: '.claude/skills/launch-check/SKILL.md', sections: ['Verdict logic', '6a. Resolve project name + score + verdict'] },
+        ],
+        callouts: [
+          {
+            type: 'coming',
+            text: 'A hosted score and a hosted trend over time are not built yet. Today `/launch-check` keeps each run in your ops repository and shows a local trend.',
+          },
+        ],
+      },
+      {
+        slug: 'readiness/top-actions',
+        title: 'Top actions',
+        description: 'Fix the blocking items first, then the warnings.',
+        parts: [
+          {
+            text: [
+              'The audit output lists the top actions in two groups:',
+              '',
+              '1. Blocking items. Fix these before you release.',
+              '2. Warnings. Fix these before the next milestone.',
+            ].join('\n'),
+          },
+          { source: '.claude/skills/launch-check/SKILL.md', sections: ['Output format', 'Step 4: Compile the verdict', 'Step 5: Output'] },
+        ],
+      },
+      {
+        slug: 'readiness/privacy',
+        title: 'Privacy',
+        description: 'Where the audits run and where the results go.',
+        parts: [
+          {
+            text: [
+              'Today the audit skills run where your coding agent runs, with your own model access.',
+              'Each `/launch-check` run is saved in your ops repository under `projects/<name>/audits/`.',
+            ].join('\n'),
+          },
+        ],
+        callouts: [
+          {
+            type: 'coming',
+            text: [
+              'Continuous Readiness in CI is not built yet. When it ships:',
+              '',
+              '- It runs in your CI with your own model key.',
+              '- Only the results go to the cloud.',
+              '- No code leaves your CI.',
+            ].join('\n'),
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 // Reference groups. A group with `generate` gets its pages from the source tree.
@@ -482,6 +599,7 @@ export const DENY_TERMS = [
 export const DENY_ALLOW = {
   'reference/skills/analytics-audit': 'Names a pricing page as an example funnel step in the audited product.',
   'reference/skills/launch-check': 'Names a pricing page of the audited product as an example finding.',
+  'readiness/top-actions': 'Shows the /launch-check example output, which names a pricing page of the audited product.',
   'reference/skills/seo-audit': 'Names a pricing page of the audited product as an example page to check.',
   'reference/roles/product-product-analyst': 'Lists competitor pricing as a market-research topic.',
   'reference/skills/setup': 'Names the GitHub paid plan that allows private forks.',
