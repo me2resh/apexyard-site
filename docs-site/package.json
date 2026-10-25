@@ -5,7 +5,7 @@
   "scripts": {
     "sync": "node scripts/sync-content.mjs",
     "build": "node scripts/sync-content.mjs && astro build && node scripts/postbuild.mjs",
-    "check": "node scripts/check-output.mjs && node --test tests/",
+    "check": "node scripts/check-output.mjs && node --test tests/*.test.mjs",
     "preview": "node scripts/serve.mjs"
   },
   "dependencies": {
