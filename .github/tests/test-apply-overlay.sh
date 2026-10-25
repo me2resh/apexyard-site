@@ -91,12 +91,13 @@ for s in "$apply" "$check"; do
 done
 
 # --- the real site accepts an overlay with the documented tokens ---
-real_json='{"TEAM_PRICE":"FakeValueP","TEAM_PRICE_NOTE":"FakeValueN","TEAM_SUMMARY":"FakeValueS","PLAN_HINT":"FakeValueH","FREE_REPO_LIMIT":"FakeValueF","TEAM_REPO_LIMIT":"FakeValueR","TEAM_SUPPORT":"FakeValueU","REVIEW_OFFER":"FakeValueO","REVIEW_PRICE":"FakeValueQ"}'
+real_json='{"PLAN_HINT":"FakeValueH","FREE_REPO_LIMIT":"FakeValueFreeRepoLimit","STARTUP_PRICE":"FakeValueStartupPrice","STARTUP_LIMITS":"FakeValueStartupLimits","STARTUP_SUMMARY":"FakeValueStartupSummary","TEAM_REPO_LIMIT":"FakeValueTeamRepoLimit","TEAM_PRICE":"FakeValueP","TEAM_PRICE_NOTE":"FakeValueTeamPriceNote","TEAM_SUMMARY":"FakeValueTeamSummary","TEAM_SUPPORT":"FakeValueTeamSupport","ENTERPRISE_LIMITS":"FakeValueEnterpriseLimits","ENTERPRISE_SUMMARY":"FakeValueEnterpriseSummary","REVIEW_LITE_NAME":"FakeValueReviewLiteName","REVIEW_LITE_OFFER":"FakeValueReviewLiteOffer","REVIEW_LITE_PRICE":"FakeValueReviewLitePrice","REVIEW_NAME":"FakeValueReviewName","REVIEW_OFFER":"FakeValueReviewOffer","REVIEW_DETAILS":"FakeValueReviewDetails","REVIEW_PRICE":"FakeValueReviewPrice","REVIEW_TIERS":"FakeValueReviewTiers","REVIEW_GUARANTEE":"FakeValueReviewGuarantee"}'
 rlog=$(OVERLAY_JSON="$real_json" "$apply" "$root" "$tmp/real" 2>&1)
 rrc=$?
 assert "the real site applies the documented tokens"  test "$rrc" -eq 0
 assert "the real pricing page gets the values"        grep -q 'FakeValueP' "$tmp/real/pricing.html"
 assert "the real home page gets the plan hint"        grep -q 'FakeValueH' "$tmp/real/index.html"
+assert "no Placeholder price label is left"           bash -c "! grep -q 'Placeholder price' \"\$1\"/index.html \"\$1\"/pricing.html" _ "$tmp/real"
 [ "$rrc" -eq 0 ] || grep -v '^::add-mask::' <<<"$rlog" | sed 's/^/    /'
 
 # --- the production check finds a value ---

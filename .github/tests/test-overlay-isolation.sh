@@ -113,18 +113,46 @@ import glob, os, re, sys
 
 root = sys.argv[1]
 DOCUMENTED = {
-    "PLAN_HINT", "FREE_REPO_LIMIT", "TEAM_REPO_LIMIT", "TEAM_PRICE", "TEAM_PRICE_NOTE",
-    "TEAM_SUMMARY", "TEAM_SUPPORT", "REVIEW_OFFER", "REVIEW_PRICE",
+    "PLAN_HINT", "FREE_REPO_LIMIT",
+    "STARTUP_PRICE", "STARTUP_LIMITS", "STARTUP_SUMMARY",
+    "TEAM_REPO_LIMIT", "TEAM_PRICE", "TEAM_PRICE_NOTE", "TEAM_SUMMARY", "TEAM_SUPPORT",
+    "ENTERPRISE_LIMITS", "ENTERPRISE_SUMMARY",
+    "REVIEW_LITE_NAME", "REVIEW_LITE_OFFER", "REVIEW_LITE_PRICE",
+    "REVIEW_NAME", "REVIEW_OFFER", "REVIEW_DETAILS", "REVIEW_PRICE", "REVIEW_TIERS",
+    "REVIEW_GUARANTEE",
 }
+LABELLED = {"PLAN_HINT", "STARTUP_PRICE", "TEAM_PRICE", "REVIEW_LITE_PRICE", "REVIEW_PRICE"}
 WRAPPED = re.compile(r"<!--\{\{([A-Z][A-Z0-9_]*)\}\}-->(.*?)<!--/\{\{\1\}\}-->", re.S)
-ANY = re.compile(r"\{\{([A-Z][A-Z0-9_]*)\}\}")
+ANY =re.compile(r"\{\{([A-Z][A-Z0-9_]*)\}\}")
+# A currency amount is price-shaped when its number holds a digit from 1 to 9.
+# The all-zero dummy forms in the fallbacks ("£0,000 a year", "From £0,000")
+# show the layout of a price and are allowed.
+AMOUNT = re.compile(r"[$£€]\s?(\d[\d,.]*)|\b(\d[\d,.]*)\s?(?:usd|gbp|eur)\b", re.I)
 PRICE = re.compile(
-    r"[$£€]\s?\d"
-    r"|\b\d[\d,.]*\s?(usd|gbp|eur)\b"
-    r"|\bper\s(seat|user|month|year)\b"
+    r"\bper\s(seat|user|month|year)\b"
     r"|/(mo|month|seat|user)\b",
     re.I,
 )
+
+
+def price_spans(text):
+    spans = [m.span() for m in PRICE.finditer(text)]
+    for m in AMOUNT.finditer(text):
+        number = m.group(1) or m.group(2)
+        if re.search(r"[1-9]", number):
+            spans.append(m.span())
+    return sorted(spans)
+
+
+# Self-test of the price rule. Fixture amounts only.
+for sample, want in (
+    ("£0,000 a year", False), ("From £0,000", False), ("£00 a month", False),
+    ("£1", True), ("£9,999 a year", True), ("From £0,500", True),
+    ("$10", True), ("12 EUR", True), ("00 EUR", False), ("N repositories", False),
+):
+    if bool(price_spans(sample)) != want:
+        print(f"    price rule self-test failed on {sample!r}")
+        sys.exit(1)
 
 # Third-party fees that the site quotes as facts, not ApexYard prices.
 THIRD_PARTY = [
@@ -153,12 +181,21 @@ for path in sorted(set(files)):
     for m in ANY.finditer(stripped):
         errors.append(f"{rel}: token {m.group(1)} is not in the wrapped form")
     if rel != "game.html":
-        for m in PRICE.finditer(stripped):
-            line_text = stripped[stripped.rfind("\n", 0, m.start()) + 1:].split("\n", 1)[0]
+        for start, _end in price_spans(stripped):
+            line_text = stripped[stripped.rfind("\n", 0, start) + 1:].split("\n", 1)[0]
             if any(rel == f and a in line_text for f, a in THIRD_PARTY):
                 continue
-            line = stripped.count("\n", 0, m.start()) + 1
+            line = stripped.count("\n", 0, start) + 1
             errors.append(f"{rel}:{line}: price-shaped text")
+    # Fallbacks may hold the all-zero dummy forms only, and each headline
+    # price fallback carries the visible "Placeholder price" label.
+    for m in WRAPPED.finditer(text):
+        if m.group(1) in LABELLED and "Placeholder price" not in m.group(2):
+            line = text.count("\n", 0, m.start()) + 1
+            errors.append(f"{rel}:{line}: token {m.group(1)} fallback has no Placeholder price label")
+        if price_spans(m.group(2)):
+            line = text.count("\n", 0, m.start()) + 1
+            errors.append(f"{rel}:{line}: token {m.group(1)} fallback holds a real price")
 unknown = seen - DOCUMENTED
 if unknown:
     errors.append(f"undocumented tokens: {sorted(unknown)} (update DOCUMENTED and the PR token list)")

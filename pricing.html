@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ApexYard pricing</title>
 <meta name="author" content="me2resh">
-<meta name="description" content="ApexYard pricing: the open-source framework, a free way to start, and Team plans for organisations. Team pricing is to be announced.">
+<meta name="description" content="ApexYard pricing: the open-source framework, a free way to start, and Startup, Team and Enterprise plans for organisations.">
 <link rel="canonical" href="https://apexyard.ai/pricing">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -20,14 +20,14 @@
 <meta property="og:site_name" content="ApexYard">
 <meta property="og:url" content="https://apexyard.ai/pricing">
 <meta property="og:title" content="ApexYard pricing">
-<meta property="og:description" content="ApexYard pricing: the open-source framework, a free way to start, and Team plans for organisations. Team pricing is to be announced.">
+<meta property="og:description" content="ApexYard pricing: the open-source framework, a free way to start, and Startup, Team and Enterprise plans for organisations.">
 <meta property="og:image" content="https://apexyard.ai/og/index.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://apexyard.ai/pricing">
 <meta name="twitter:title" content="ApexYard pricing">
-<meta name="twitter:description" content="ApexYard pricing: the open-source framework, a free way to start, and Team plans for organisations. Team pricing is to be announced.">
+<meta name="twitter:description" content="ApexYard pricing: the open-source framework, a free way to start, and Startup, Team and Enterprise plans for organisations.">
 <meta name="twitter:image" content="https://apexyard.ai/og/index.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,7 +86,7 @@
   <section class="page-head">
     <div class="wrap">
       <h1>Pricing</h1>
-      <p>Free to start. Team plans put the gate on your whole organisation.</p>
+      <p>Start free on your repository. Team plans put the gate on your whole organisation.</p>
     </div>
   </section>
 
@@ -95,62 +95,105 @@
       <h2 class="section__title" id="ladder-title">Go as deep as you need</h2>
       <ol class="ladder">
         <li><strong>Guide</strong><span>The open-source framework guides your agents with your rules.</span><em>Open source</em></li>
-        <li><strong>Check</strong><span>The hosted gate checks every pull request on GitHub.</span><em>Free to start</em></li>
-        <li><strong><span data-claim="evidence_export">Prove<span class="claim-coming" hidden> Coming</span></span></strong><span>The dashboard, the evidence record, and the <span data-claim="readiness_score">Production-Ready Score<span class="claim-coming" hidden> Coming</span></span>.</span><em>Team plans</em></li>
-        <li><strong><span data-claim="kb_mcp">Learn<span class="claim-coming" hidden> Coming</span></span></strong><span>The knowledge base over MCP. A miss becomes a new rule.</span><em>Team plans</em></li>
+        <li><strong>Check</strong><span>The hosted gate checks every pull request on GitHub.</span><em>Free</em></li>
+        <li><strong><span data-claim="evidence_export">Prove<span class="claim-coming" hidden> Coming</span></span></strong><span>The dashboard, the evidence record, and the <span data-claim="readiness_score">Production-Ready Score<span class="claim-coming" hidden> Coming</span></span>.</span><em>Team</em></li>
+        <li><strong><span data-claim="kb_mcp">Learn<span class="claim-coming" hidden> Coming</span></span></strong><span>The knowledge base over MCP. A miss becomes a new rule.</span><em>Team</em></li>
         <li><strong>Run</strong><span>The Cockpit desktop app.</span><em>Coming</em></li>
       </ol>
     </div>
   </section>
 
-  <section aria-label="Plans">
-    <div class="wrap plans">
-      <article class="plan">
-        <h2>Open source</h2>
-        <p class="plan__price">MIT licence</p>
-        <p class="plan__for">The framework, in your own repositories.</p>
-        <ul>
-          <li>No account and no dashboard needed</li>
-          <li>Rules, hooks, skills and review agents as plain files</li>
-        </ul>
-        <a class="btn btn--quiet" href="/#quickstart">Install the framework</a>
-      </article>
+  <section class="section" aria-labelledby="plans-title">
+    <div class="wrap">
+      <h2 class="section__title" id="plans-title">Plans</h2>
+      <div class="plans">
+        <article class="plan">
+          <h3>Open source</h3>
+          <p class="plan__price">MIT licence</p>
+          <p class="plan__for">The framework, on your machine.</p>
+          <ul>
+            <li>Tickets, plans, reviewer roles, handbooks and local hooks</li>
+            <li>No account and no dashboard needed</li>
+          </ul>
+          <a class="btn btn--quiet" href="/#quickstart">Install the framework</a>
+        </article>
 
-      <article class="plan">
-        <h2>Free to start</h2>
-        <p class="plan__price">Free to start</p>
-        <p class="plan__for">The hosted gate and dashboard.</p>
-        <ul>
-          <li><!--{{FREE_REPO_LIMIT}}-->A starter limit<!--/{{FREE_REPO_LIMIT}}--></li>
-          <li>Sign in with GitHub</li>
-          <li>The ApexYard check on each pull request</li>
-        </ul>
-        <a class="btn btn--quiet" href="https://app.apexyard.ai">Start free with GitHub</a>
-      </article>
+        <article class="plan">
+          <h3>Free</h3>
+          <p class="plan__price">Free</p>
+          <p class="plan__for">The hosted check on GitHub.</p>
+          <ul>
+            <li><!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}--></li>
+            <li>The ApexYard check on each pull request</li>
+            <li>A named approval on every merge</li>
+            <li>A dashboard for your repository</li>
+          </ul>
+          <a class="btn btn--quiet" href="https://app.apexyard.ai">Start free with GitHub</a>
+        </article>
 
-      <article class="plan plan--team" id="team">
-        <h2>Team plans</h2>
-        <p class="plan__price"><!--{{TEAM_PRICE}}-->Pricing to be announced<!--/{{TEAM_PRICE}}--></p>
-        <p class="plan__for">For an organisation.</p>
-        <ul>
-          <li><!--{{TEAM_PRICE_NOTE}}-->Billing to be announced<!--/{{TEAM_PRICE_NOTE}}--></li>
-          <li><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->Your organisation<!--/{{TEAM_REPO_LIMIT}}--><span class="claim-coming" hidden> Coming</span></span></li>
-          <li><span data-claim="named_approval">A named approval on every merge<span class="claim-coming" hidden> Coming</span></span></li>
-          <li><span data-claim="evidence_export">An exportable record for each merge<span class="claim-coming" hidden> Coming</span></span></li>
-          <li><span data-claim="kb_mcp">Shared organisation rules over MCP<span class="claim-coming" hidden> Coming</span></span></li>
-          <li><!--{{TEAM_SUPPORT}}-->Team support<!--/{{TEAM_SUPPORT}}--></li>
-          <li><!--{{TEAM_SUMMARY}}-->Details to be announced.<!--/{{TEAM_SUMMARY}}--></li>
-        </ul>
-        <a class="btn btn--primary" href="/#book-a-demo">Book a demo</a>
-      </article>
+        <article class="plan">
+          <h3>Startup</h3>
+          <p class="plan__price"><!--{{STARTUP_PRICE}}-->£00 a month <span class="price-flag">Placeholder price</span><!--/{{STARTUP_PRICE}}--></p>
+          <p class="plan__for">For a small team.</p>
+          <ul>
+            <li><!--{{STARTUP_LIMITS}}-->Up to N repositories, N to N developers<!--/{{STARTUP_LIMITS}}--></li>
+            <li><!--{{STARTUP_SUMMARY}}-->The hosted check and the dashboard<!--/{{STARTUP_SUMMARY}}--></li>
+          </ul>
+          <a class="btn btn--quiet" href="https://app.apexyard.ai">Start free with GitHub</a>
+        </article>
+
+        <article class="plan plan--team" id="team">
+          <h3>Team</h3>
+          <p class="plan__price"><!--{{TEAM_PRICE}}-->£0,000 a year <span class="price-flag">Placeholder price</span><!--/{{TEAM_PRICE}}--></p>
+          <p class="plan__note"><!--{{TEAM_PRICE_NOTE}}-->Or £000 a month.<!--/{{TEAM_PRICE_NOTE}}--></p>
+          <p class="plan__for">For an organisation.</p>
+          <ul>
+            <li>Everything in Startup</li>
+            <li><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->All repositories, up to N developers<!--/{{TEAM_REPO_LIMIT}}--><span class="claim-coming" hidden> Coming</span></span></li>
+            <li><span data-claim="evidence_export">The evidence record for each merge, which you can export<span class="claim-coming" hidden> Coming</span></span></li>
+            <li><span data-claim="org_dashboard">The organisation dashboard<span class="claim-coming" hidden> Coming</span></span></li>
+            <li><span data-claim="kb_mcp">A shared knowledge base over MCP, with owners and versions<span class="claim-coming" hidden> Coming</span></span></li>
+            <li><!--{{TEAM_SUPPORT}}-->Team support<!--/{{TEAM_SUPPORT}}--></li>
+            <li><!--{{TEAM_SUMMARY}}-->The gate on every repository in your organisation.<!--/{{TEAM_SUMMARY}}--></li>
+          </ul>
+          <a class="btn btn--primary" href="/#book-a-demo">Book a demo</a>
+        </article>
+
+        <article class="plan">
+          <h3>Enterprise</h3>
+          <p class="plan__price">Talk to us</p>
+          <p class="plan__for">For a large organisation.</p>
+          <ul>
+            <li><!--{{ENTERPRISE_LIMITS}}-->Over N developers<!--/{{ENTERPRISE_LIMITS}}--></li>
+            <li><!--{{ENTERPRISE_SUMMARY}}-->Terms for a large organisation<!--/{{ENTERPRISE_SUMMARY}}--></li>
+          </ul>
+          <a class="btn btn--quiet" href="/#book-a-demo">Book a demo</a>
+        </article>
+      </div>
     </div>
+  </section>
 
-    <div class="wrap plans-note" id="readiness-review">
-      <h2 class="section__title">Not sure where you stand?</h2>
-      <p><!--{{REVIEW_OFFER}}-->We can review how your team ships with AI agents today. Details to be announced.<!--/{{REVIEW_OFFER}}--></p>
-      <p><!--{{REVIEW_PRICE}}-->Pricing to be announced<!--/{{REVIEW_PRICE}}--></p>
-      <p><a href="/#book-a-demo">Talk to us</a></p>
-      <p>The framework stays open source under MIT on every plan. The recording of the 18 November demo will be published on this page.</p>
+  <section class="section section--tint" id="readiness-review" aria-labelledby="services-title">
+    <div class="wrap">
+      <h2 class="section__title" id="services-title">Not sure where you stand?</h2>
+      <p class="section__lede">We can review how your team ships with AI agents today.</p>
+      <div class="services">
+        <article class="service" id="review-lite">
+          <h3><!--{{REVIEW_LITE_NAME}}-->A short review<!--/{{REVIEW_LITE_NAME}}--></h3>
+          <p><!--{{REVIEW_LITE_OFFER}}-->One repository, reviewed in a few days.<!--/{{REVIEW_LITE_OFFER}}--></p>
+          <p class="service__price"><!--{{REVIEW_LITE_PRICE}}-->£0,000 fixed <span class="price-flag">Placeholder price</span><!--/{{REVIEW_LITE_PRICE}}--></p>
+        </article>
+        <article class="service" id="production-readiness-review">
+          <h3><!--{{REVIEW_NAME}}-->A full review<!--/{{REVIEW_NAME}}--></h3>
+          <p><!--{{REVIEW_OFFER}}-->We review how your team ships with AI agents today.<!--/{{REVIEW_OFFER}}--></p>
+          <p><!--{{REVIEW_DETAILS}}-->A report and a readout.<!--/{{REVIEW_DETAILS}}--></p>
+          <p class="service__price"><!--{{REVIEW_PRICE}}-->From £0,000 <span class="price-flag">Placeholder price</span><!--/{{REVIEW_PRICE}}--></p>
+          <p class="service__note"><!--{{REVIEW_TIERS}}-->£0,000 for N engineers and N repositories.<!--/{{REVIEW_TIERS}}--></p>
+          <p class="service__note"><!--{{REVIEW_GUARANTEE}}-->Talk to us about the scope.<!--/{{REVIEW_GUARANTEE}}--></p>
+        </article>
+      </div>
+      <p class="services__cta"><a class="btn btn--quiet" href="/#book-a-demo">Book a demo</a></p>
+      <p class="services__foot">The framework stays open source under MIT on every plan. The recording of the 18 November demo will be published on this page.</p>
     </div>
   </section>
 </main>

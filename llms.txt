@@ -11,7 +11,7 @@
 - [Home](https://apexyard.ai/) — ApexYard checks every pull request that coding agents open against your team's rules, and merges it only after a named person approves it on GitHub
 - [Docs](https://apexyard.ai/docs) — the framework guide: install, the daily loop, the gates, hooks and rules, and a real merge replayed from the log
 - [How it works](https://apexyard.ai/how-it-works) — a plain-English walkthrough of one realistic day with apexyard
-- [Pricing](https://apexyard.ai/pricing) — the open-source framework (MIT), a free way to start with the hosted gate, and Team plans for organisations (pricing to be announced)
+- [Pricing](https://apexyard.ai/pricing) — the open-source framework (MIT), a free way to start with the hosted gate, Startup, Team and Enterprise plans, and reviews of how your team ships
 - [Architecture](https://apexyard.ai/architecture) — the technical 5-layer model + portfolio model
 - [Skills](https://apexyard.ai/skills) — full slash-command reference (69 skills) grouped by outcome
 

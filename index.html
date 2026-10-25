@@ -105,15 +105,11 @@
         <a href="#book-a-demo" class="btn btn--primary">Book a demo</a>
         <a href="https://app.apexyard.ai" class="btn btn--quiet">Start free with GitHub</a>
       </div>
-      <p class="hero__hint"><!--{{PLAN_HINT}}-->Free to start. Team plans for organisations.<!--/{{PLAN_HINT}}--></p>
+      <p class="hero__hint"><!--{{PLAN_HINT}}-->Free to start. Team from £0,000 a year. <span class="price-flag">Placeholder price</span><!--/{{PLAN_HINT}}--></p>
 
       <figure class="shot">
         <div class="shot__frame">
-          <div class="slot slot--hero" data-slot="hero-dashboard" role="img" aria-label="The ApexYard dashboard for pull request 9 in me2resh/apexyard-demo-public, with the check result, each process step and what to do next">
-            <strong>Image slot: hosted dashboard</strong>
-            <span>The dashboard view of demo pull request #9 on app.apexyard.ai. It needs a signed-in session, so the owner adds it.</span>
-            <span>Add the real screenshot as <code>img/dashboard-pr9.webp</code>. A square or a 16:10 image fits.</span>
-          </div>
+          <img src="/img/placeholder-dashboard.svg" width="1600" height="1000" alt="Placeholder illustration of the ApexYard dashboard for one pull request: the check result, each process step and the next step">
         </div>
         <figcaption>The hosted dashboard for a public demo pull request, <a href="https://github.com/me2resh/apexyard-demo-public/pull/9" target="_blank" rel="noopener">me2resh/apexyard-demo-public #9</a>.</figcaption>
       </figure>
@@ -176,17 +172,17 @@
       <div class="compare" role="region" aria-labelledby="why-title" tabindex="0">
         <table>
           <thead>
-            <tr><th scope="col"><span class="visually-hidden">Feature</span></th><th scope="col">Free to start</th><th scope="col">Team plans</th></tr>
+            <tr><th scope="col"><span class="visually-hidden">Feature</span></th><th scope="col">Free</th><th scope="col">Team</th></tr>
           </thead>
           <tbody>
-            <tr><th scope="row">Repositories</th><td><!--{{FREE_REPO_LIMIT}}-->A starter limit<!--/{{FREE_REPO_LIMIT}}--></td><td><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->Your organisation<!--/{{TEAM_REPO_LIMIT}}--><span class="claim-coming" hidden> Coming</span></span></td></tr>
+            <tr><th scope="row">Repositories</th><td><!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}--></td><td><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->All repositories, up to N developers<!--/{{TEAM_REPO_LIMIT}}--><span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Rules</th><td>Local files that a developer can remove</td><td><span data-claim="gate_all_repos">Enforced on GitHub<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Approval</th><td>A named approval on every merge</td><td><span data-claim="named_approval">A named approval on every merge<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Evidence</th><td>None</td><td><span data-claim="evidence_export">A record for each merge, which you can export<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Visibility</th><td>Your connected repositories</td><td><span data-claim="org_dashboard">Every team and repository, with trends<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Knowledge base</th><td>Local files</td><td><span data-claim="kb_mcp">Shared organisation rules over MCP, with owners and versions<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Support</th><td>Community</td><td><!--{{TEAM_SUPPORT}}-->Team support<!--/{{TEAM_SUPPORT}}--></td></tr>
-            <tr><th scope="row">Price</th><td>Free to start</td><td><!--{{TEAM_PRICE}}-->Pricing to be announced<!--/{{TEAM_PRICE}}--></td></tr>
+            <tr><th scope="row">Price</th><td>Free</td><td><!--{{TEAM_PRICE}}-->£0,000 a year <span class="price-flag">Placeholder price</span><!--/{{TEAM_PRICE}}--></td></tr>
           </tbody>
         </table>
       </div>
@@ -216,11 +212,9 @@
             <h3><span data-claim="evidence_export">Prove: the dashboard and the evidence record<span class="claim-coming" hidden> Coming</span></span></h3>
             <p>The dashboard lists each pull request, its check result, and the person who approved the merge. Each merge keeps a record that you can export. <span data-claim="readiness_score">The Production-Ready Score shows how close each repository is to your standard.<span class="claim-coming" hidden> Coming</span></span></p>
           </div>
-          <div class="slot" role="img" aria-label="The ApexYard evidence record for a merged pull request, with the check result and the named approver">
-          <strong>Image slot: evidence record</strong>
-          <span>The evidence view for a merged pull request: the check result and the named approver. It needs a signed-in session, so the owner adds it.</span>
-          <span>Add the real screenshot as <code>img/evidence.webp</code> with this alt text: “The ApexYard evidence record for a merged pull request, with the check result and the named approver”.</span>
-        </div>
+          <figure class="feature__media">
+            <img src="/img/placeholder-evidence.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of an evidence record for a merged pull request, with the check result, the reviewer and the named approver">
+          </figure>
         </article>
 
         <article class="feature">
@@ -228,11 +222,9 @@
             <h3><span data-claim="kb_mcp">Learn: the knowledge base your agents read<span class="claim-coming" hidden> Coming</span></span></h3>
             <p>Your organisation's rules, decisions and tickets in one place, with owners and versions. Agents read them over MCP. A miss becomes a new rule.</p>
           </div>
-          <div class="slot" role="img" aria-label="The ApexYard knowledge base with team rules and recorded decisions">
-          <strong>Image slot: knowledge base</strong>
-          <span>The rules and decisions view that agents read over MCP.</span>
-          <span>Add the real screenshot as <code>img/knowledge-base.webp</code> with this alt text: “The ApexYard knowledge base with team rules and recorded decisions”.</span>
-        </div>
+          <figure class="feature__media">
+            <img src="/img/placeholder-knowledge-base.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of the knowledge base, with team rules, their owners and versions">
+          </figure>
         </article>
 
         <article class="feature">
@@ -240,11 +232,9 @@
             <h3><span data-claim="org_dashboard">The organisation view<span class="claim-coming" hidden> Coming</span></span></h3>
             <p>Every team and repository on one screen, with trends over time.</p>
           </div>
-          <div class="slot" role="img" aria-label="The ApexYard organisation view with teams, repositories and trends">
-          <strong>Image slot: organisation dashboard</strong>
-          <span>The organisation view with every team and repository and the trends.</span>
-          <span>Add the real screenshot as <code>img/org-dashboard.webp</code> with this alt text: “The ApexYard organisation view with teams, repositories and trends”.</span>
-        </div>
+          <figure class="feature__media">
+            <img src="/img/placeholder-org-dashboard.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of the organisation view, with teams, repositories and trends">
+          </figure>
         </article>
 
         <article class="feature">
@@ -252,11 +242,9 @@
             <h3>Run: the Cockpit <span class="feature__tag">Coming</span></h3>
             <p>A desktop app that runs the same setup and shows the same gates, for people who prefer not to use a terminal.</p>
           </div>
-          <div class="slot" role="img" aria-label="The ApexYard Cockpit desktop app">
-          <strong>Image slot: Cockpit</strong>
-          <span>The Cockpit desktop app, when it ships.</span>
-          <span>Add the real screenshot as <code>img/cockpit.webp</code> with this alt text: “The ApexYard Cockpit desktop app”.</span>
-        </div>
+          <figure class="feature__media">
+            <img src="/img/placeholder-cockpit.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of the Cockpit desktop app, with a list of gates and their status">
+          </figure>
         </article>
 
       </div>
@@ -280,11 +268,15 @@
         <div>
           <h3>Where the data lives</h3>
           <p>The hosted service runs on AWS in the eu-west-1 region, in Ireland.</p>
-          <p class="pending"><strong>To confirm:</strong> the data retention period.</p>
+          <!-- ASSUMED 25 Oct, verify before switch-on -->
+          <p>We keep each evidence record for 13 months, then delete it. We delete your data within 30 days when you ask.</p>
         </div>
         <div>
           <h3>Data processing agreement</h3>
-          <p class="pending"><strong>To confirm:</strong> whether a DPA is available on request, and the list of sub-processors.</p>
+          <!-- ASSUMED 25 Oct, verify before switch-on -->
+          <p>A data processing agreement is available on request, on standard terms.</p>
+          <!-- ASSUMED 25 Oct, verify before switch-on -->
+          <p>Sub-processors: Amazon Web Services, for hosting, and GitHub, for sign-in and the App.</p>
         </div>
       </div>
     </div>
@@ -296,8 +288,8 @@
         <h2 class="section__title" id="review-title">Not sure where you stand?</h2>
       </div>
       <div>
-        <p class="section__lede"><!--{{REVIEW_OFFER}}-->We can review how your team ships with AI agents today. Details to be announced.<!--/{{REVIEW_OFFER}}--></p>
-        <p class="review__price"><!--{{REVIEW_PRICE}}-->Pricing to be announced<!--/{{REVIEW_PRICE}}--></p>
+        <p class="section__lede"><!--{{REVIEW_OFFER}}-->We review how your team ships with AI agents today.<!--/{{REVIEW_OFFER}}--></p>
+        <p class="review__price"><!--{{REVIEW_PRICE}}-->From £0,000 <span class="price-flag">Placeholder price</span><!--/{{REVIEW_PRICE}}--></p>
         <a href="#book-a-demo" class="btn btn--quiet">Talk to us</a>
       </div>
     </div>
@@ -357,10 +349,8 @@ apexyard init
         <p class="section__lede">See the gate on a real pull request, and ask about Team plans.</p>
       </div>
       <div>
-        <div class="slot slot--booking" data-slot="booking" role="note">
-          <strong>Booking placeholder</strong>
-          <span>The owner adds the booking link here.</span>
-        </div>
+        <!-- PLACEHOLDER booking URL: replace before switch-on -->
+        <p><a class="btn btn--primary" href="https://cal.com/apexyard/demo" rel="noopener">Book a 20-minute demo</a></p>
         <p class="book__mail">Or <a href="#" class="mailto-cta" data-u="hello" data-d="apexyard.ai">talk to us by email</a>.</p>
       </div>
     </div>
