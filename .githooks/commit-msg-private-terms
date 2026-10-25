@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Block a commit message that holds a private term (#102).
+# Install: git config core.hooksPath .githooks   (see .githooks/README.md)
+here=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+. "$here/private-terms-lib.sh"
+[ -r "$pt_file" ] || exit 0
+dir=$(mktemp -d); trap 'rm -rf "$dir"' EXIT
+cp "$1" "$dir/commit-message"
+pt_scan "$dir"

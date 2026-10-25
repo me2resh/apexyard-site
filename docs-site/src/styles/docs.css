@@ -495,3 +495,9 @@ site-search button[data-open-modal]:hover {
 .pagination-links a svg {
   display: none;
 }
+
+/* Keep a command name in the first table column on one line. */
+.sl-markdown-content td:first-child code {
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
