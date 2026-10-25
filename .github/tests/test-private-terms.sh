@@ -78,6 +78,16 @@ run "$tmp/ov" OVERLAY_JSON='{"FAKE_TOKEN":"Sapphire ledger plan","OTHER":"Unused
 assert "an overlay value in a tracked file fails"         test "$rc" -eq 1
 assert "the overlay hit names the token, not the value"   grep -q '^HIT    README.md (overlay FAKE_TOKEN)$' <<<"$out"
 assert "no overlay value reaches the visible log"         bash -c "! grep -qi 'sapphire' <<<\"\$1\"" _ "$(visible)"
+# --- a multi-line value: every line is masked, no line leaks ---
+mkrepo "$tmp/ml"
+printf 'Crimson otter\nVelvet harbour\n' > "$tmp/ml/page.md"
+git -C "$tmp/ml" add page.md
+run "$tmp/ml" OVERLAY_JSON='{"FAKE_MULTI":"Crimson otter\nVelvet harbour"}' PRIVATE_TERMS=$'Amber walrus'
+assert "a multi-line overlay value is found"              test "$rc" -eq 1
+assert "each line of the value is masked on its own"      bash -c "grep -qx '::add-mask::Crimson otter' <<<\"\$1\" && grep -qx '::add-mask::Velvet harbour' <<<\"\$1\"" _ "$out"
+assert "no line of the value appears unmasked"            bash -c "! grep -v '^::add-mask::' <<<\"\$1\" | grep -qiE 'crimson|velvet|amber'" _ "$out"
+assert "every output line with the value is a mask"       bash -c "! grep -iE 'crimson|velvet' <<<\"\$1\" | grep -qv '^::add-mask::'" _ "$out"
+
 run "$tmp/ov" OVERLAY_JSON='not json'
 assert "a malformed overlay exits 2"                      test "$rc" -eq 2
 

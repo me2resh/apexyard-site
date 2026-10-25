@@ -64,12 +64,34 @@ def fail(msg):
     sys.exit(1)
 
 
+def mask(value):
+    """Mask a value for the Actions log. ::add-mask:: masks one line per
+    call, so each line of a multi-line value is masked on its own, in the
+    raw and the HTML-escaped form. A one-line value is masked whole."""
+    parts = {value} if "\n" not in value and "\r" not in value else set()
+    for line in value.splitlines():
+        parts.update({line, line.strip()})
+    outs = set()
+    for part in parts:
+        if part.strip():
+            outs.update({part, html.escape(part, quote=True)})
+    for out in sorted(outs):
+        sys.stdout.write(f"::add-mask::{out}\n")
+
 try:
     overlay = json.loads(os.environ["OVERLAY_JSON"])
 except (ValueError, KeyError):
     fail("OVERLAY_JSON is not valid JSON.")
 if not isinstance(overlay, dict) or not overlay:
     fail("OVERLAY_JSON must be a non-empty JSON object.")
+
+# Mask every value before anything else can print, including the checks
+# below. GitHub masks the whole secret string, but not each value inside
+# the JSON, and not the lines of a multi-line value.
+for value in overlay.values():
+    if isinstance(value, str):
+        mask(value)
+sys.stdout.flush()
 
 for key, value in overlay.items():
     if not isinstance(key, str) or not NAME.match(key):
@@ -79,12 +101,6 @@ for key, value in overlay.items():
     if "\n" in value or "\r" in value:
         fail(f"the value of {key} must be one line.")
 
-# Mask every value before anything else can print. GitHub masks the whole
-# secret string, but not each value inside the JSON.
-for value in overlay.values():
-    for form in {value, html.escape(value, quote=True)}:
-        sys.stdout.write(f"::add-mask::{form}\n")
-sys.stdout.flush()
 
 counts = {key: 0 for key in overlay}
 unresolved = set()

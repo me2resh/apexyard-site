@@ -53,6 +53,20 @@ import subprocess
 import sys
 
 repo = sys.argv[1]
+def mask(value):
+    """Mask a value for the Actions log. ::add-mask:: masks one line per
+    call, so each line of a multi-line value is masked on its own, in the
+    raw and the HTML-escaped form. A one-line value is masked whole."""
+    parts = {value} if "\n" not in value and "\r" not in value else set()
+    for line in value.splitlines():
+        parts.update({line, line.strip()})
+    outs = set()
+    for part in parts:
+        if part.strip():
+            outs.update({part, html.escape(part, quote=True)})
+    for out in sorted(outs):
+        sys.stdout.write(f"::add-mask::{out}\n")
+
 terms = []  # (label, term)
 
 for line in (os.environ.get("PRIVATE_TERMS") or "").splitlines():
@@ -73,19 +87,18 @@ if raw:
     for key in sorted(overlay):
         value = overlay[key]
         if isinstance(value, str) and value.strip():
+            mask(value)
             terms.append((f"overlay {key}" if key.replace("_", "").isalnum() else f"term {len(terms) + 1}", value.strip()))
 
 if not terms:
     print("check-private-terms: the secret holds no terms.", file=sys.stderr)
     sys.exit(2)
 
-# Mask every form before anything else can print.
+# Mask every term, line by line, before anything else can print.
 forms = []
 for label, term in terms:
-    variants = {term.lower(), html.escape(term, quote=True).lower()}
-    for v in {term, html.escape(term, quote=True)}:
-        sys.stdout.write(f"::add-mask::{v}\n")
-    forms.append((label, variants))
+    mask(term)
+    forms.append((label, {term.lower(), html.escape(term, quote=True).lower()}))
 sys.stdout.flush()
 
 files = subprocess.run(["git", "-C", repo, "ls-files", "-z"], check=True,

@@ -77,7 +77,9 @@ assert "the unused key is named, not its value"       bash -c "grep -q 'TOKEN_C 
 
 run_apply '{"TOKEN_A":"line1\nFakeValueLine2","TOKEN_B":"b"}' "$tmp/out6"
 assert "a multi-line value fails"                     test "$rc" -ne 0
-assert "a multi-line value is not echoed"             bash -c "! grep -q 'FakeValueLine2' <<<\"\$1\"" _ "$log"
+assert "a multi-line value is not echoed"             bash -c "! grep -v '^::add-mask::' <<<\"\$1\" | grep -q 'FakeValueLine2'" _ "$log"
+assert "each line of a multi-line value is masked"    bash -c "grep -qx '::add-mask::FakeValueLine2' <<<\"\$1\" && grep -qx '::add-mask::line1' <<<\"\$1\"" _ "$log"
+assert "the masks come before the one-line error"     bash -c "[ \"\$(grep -n 'must be one line' <<<\"\$1\" | cut -d: -f1)\" -gt \"\$(grep -n '^::add-mask::FakeValueLine2$' <<<\"\$1\" | head -n 1 | cut -d: -f1)\" ]" _ "$log"
 
 run_apply '{"bad-key":"x"}' "$tmp/out7"
 assert "an invalid key name fails"                    test "$rc" -ne 0
