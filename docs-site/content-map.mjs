@@ -385,7 +385,7 @@ const learn = [
         callouts: [
           {
             type: 'coming',
-            text: 'Continuous Readiness in CI, the hosted score and the hosted trend are not built yet. Today you run the audits with the skills on this page.',
+            text: 'Readiness in CI, the hosted score and the hosted trend are not built yet. Today you run the audits with the skills on this page.',
           },
         ],
       },
@@ -461,7 +461,7 @@ const learn = [
           {
             type: 'coming',
             text: [
-              'Continuous Readiness in CI is not built yet. When it ships:',
+              'Readiness in CI is not built yet. When it ships:',
               '',
               '- It runs in your CI with your own model key.',
               '- Only the results go to the hosted service.',
