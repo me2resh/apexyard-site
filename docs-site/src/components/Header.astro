@@ -1,0 +1,42 @@
+---
+// Docs header: the AY mark, the product nav, search and the theme control.
+// The nav items match the product site so a reader can move between them.
+import Search from 'virtual:starlight/components/Search';
+import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
+import SiteNav from './SiteNav.astro';
+import Mark from './Mark.astro';
+---
+
+<div class="ay-header">
+  <a href="/docs" class="ay-brand">
+    <Mark />
+    <span class="ay-brand__name">ApexYard</span>
+    <span class="ay-brand__section">Docs</span>
+  </a>
+  <div class="ay-header__search print:hidden">
+    <Search />
+  </div>
+  <div class="ay-header__right sl-hidden md:sl-flex print:hidden">
+    <SiteNav />
+    <ThemeSelect />
+  </div>
+</div>
+
+<p class="sr-only" role="status" aria-live="polite" data-search-status></p>
+
+<script>
+  // Announce the search result count to screen readers. The search UI
+  // updates its message text but does not mark it as a live region.
+  const status = document.querySelector<HTMLElement>('[data-search-status]');
+  const root = document.getElementById('starlight__search');
+  if (status && root) {
+    let last = '';
+    new MutationObserver(() => {
+      const text = root.querySelector('.pagefind-ui__message')?.textContent?.trim() || '';
+      if (text && text !== last) {
+        last = text;
+        status.textContent = text;
+      }
+    }).observe(root, { childList: true, subtree: true, characterData: true });
+  }
+</script>

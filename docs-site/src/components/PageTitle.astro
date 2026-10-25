@@ -1,0 +1,79 @@
+---
+// Article head: breadcrumb, title, summary and page actions.
+const PAGE_TITLE_ID = '_top';
+import nav from '../generated/nav.json';
+
+const route = Astro.locals.starlightRoute;
+const { title, description } = route.entry.data;
+const slug = route.entry.id;
+
+let crumbs: { label: string; href: string }[] = [];
+for (const section of nav.sections) {
+  for (const group of section.groups) {
+    if (group.pages.some((p) => p.slug === slug)) {
+      crumbs = [
+        { label: 'Docs', href: '/docs' },
+        { label: section.title, href: `/docs#${section.id}` },
+        { label: group.title, href: `/docs#${group.id}` },
+      ];
+    }
+  }
+}
+const isArticle = crumbs.length > 0;
+const edit = route.editUrl?.href;
+---
+
+{
+  isArticle && (
+    <nav class="ay-crumbs" aria-label="Breadcrumb">
+      <ol>
+        {crumbs.map((c) => (
+          <li>
+            <a href={c.href}>{c.label}</a>
+          </li>
+        ))}
+        <li>
+          <span aria-current="page">{title}</span>
+        </li>
+      </ol>
+    </nav>
+  )
+}
+<h1 id={PAGE_TITLE_ID} class="ay-title">{title}</h1>
+{isArticle && description && <p class="ay-lead">{description}</p>}
+{
+  isArticle && (
+    <div class="ay-actions print:hidden">
+      <button type="button" class="ay-action" data-copy-link>
+        Copy link
+      </button>
+      <button type="button" class="ay-action copy-for-ai" data-md-url={`/docs/${slug}.md`}>
+        Copy for AI
+      </button>
+      {edit && (
+        <a class="ay-action" href={edit} rel="noopener">
+          Edit on GitHub
+        </a>
+      )}
+      <span class="ay-status sr-only" role="status" aria-live="polite" data-copy-status />
+    </div>
+  )
+}
+
+<script>
+  const status = document.querySelector<HTMLElement>('[data-copy-status]');
+  for (const btn of document.querySelectorAll<HTMLButtonElement>('[data-copy-link]')) {
+    btn.addEventListener('click', async () => {
+      const url = location.href.split('#')[0];
+      try {
+        await navigator.clipboard.writeText(url);
+        btn.textContent = 'Link copied';
+        if (status) status.textContent = 'Page link copied to the clipboard.';
+      } catch {
+        btn.textContent = 'Copy failed';
+        if (status) status.textContent = 'The browser blocked the clipboard. Copy the address bar instead.';
+      }
+      setTimeout(() => (btn.textContent = 'Copy link'), 1800);
+    });
+  }
+</script>

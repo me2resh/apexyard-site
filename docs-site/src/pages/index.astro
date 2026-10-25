@@ -1,0 +1,78 @@
+---
+// Docs home: a grouped index. Learn and Reference are lists, not card grids.
+// Each group row links to its first page. The counts come from nav.json.
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { Icon } from '@astrojs/starlight/components';
+import nav from '../generated/nav.json';
+
+const pages = (n: number) => `${n} ${n === 1 ? 'page' : 'pages'}`;
+---
+
+<StarlightPage
+  frontmatter={{
+    title: 'ApexYard documentation',
+    description: 'Learn the ApexYard workflow, then look up each skill, hook, rule and setting.',
+    tableOfContents: false,
+    pagefind: false,
+  }}
+>
+  <p class="ay-home__intro">
+    Learn how ApexYard guides your agents and gates each merge, then look up each skill, hook, rule and setting.
+  </p>
+
+  {
+    nav.sections.map((section) => (
+      <section class={`ay-index ay-index--${section.id}`} aria-labelledby={section.id}>
+        <div class="ay-index__head">
+          <h2 id={section.id}>{section.title}</h2>
+          <p class="ay-index__count">{pages(section.count)}</p>
+        </div>
+        <p class="ay-index__summary">{section.summary}</p>
+        <ul class="ay-index__list not-content">
+          {section.groups.map((group) => (
+            <li class="ay-row" id={group.id}>
+              <Icon name={group.icon as any} class="ay-row__icon" size="1.25rem" />
+              <div class="ay-row__body">
+                <h3 class="ay-row__title">
+                  <a href={`/docs/${group.pages[0].slug}`}>{group.title}</a>
+                </h3>
+                <p class="ay-row__summary">{group.summary}</p>
+                {section.id === 'learn' && (
+                  <ul class="ay-row__pages">
+                    {group.pages.map((p) => (
+                      <li>
+                        <a href={`/docs/${p.slug}`}>{p.title}</a>
+                        {p.coming && <span class="ay-coming-tag">Coming</span>}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              <p class="ay-row__count">{pages(group.pages.length)}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+
+  <p class="ay-home__more">
+    More on this site: <a href="/how-it-works">a day with ApexYard</a>, <a href="/architecture">the architecture</a> and
+    <a href="/skills">skills grouped by outcome</a>.
+  </p>
+
+  <script is:inline>
+    // Old links to the developer guide used anchors on /docs. Send each to its new page.
+    (function () {
+      var map = {
+        '#alternative': '/docs/quickstart/install',
+        '#install': '/docs/quickstart/install',
+        '#the-rules': '/docs/reference/hooks/overview',
+        '#the-loop': '/docs/quickstart/key-concepts',
+        '#the-gates': '/docs/day-to-day/approvals-and-merge',
+      };
+      var to = map[location.hash];
+      if (to) location.replace(to);
+    })();
+  </script>
+</StarlightPage>
