@@ -85,14 +85,19 @@
       <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
     </button>
     <nav class="site-nav" id="site-nav" aria-label="Primary">
-      <a href="/#product" aria-current="page">Product</a>
-      <a href="/#how-it-works">How it works</a>
+      <div class="site-nav__group">
+        <button class="site-nav__menu" type="button" aria-expanded="false" aria-controls="product-menu">Product</button>
+        <ul class="site-nav__sub" id="product-menu">
+          <li><a href="/build">Build</a></li>
+          <li><a href="/gate">Gate</a></li>
+          <li><a href="/readiness">Readiness</a></li>
+        </ul>
+      </div>
       <a href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
-      <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener">GitHub<span class="stars" data-stars-wrap hidden><span class="visually-hidden">, stars: </span> ★ <span data-stars></span></span></a>
       <div class="site-nav__right">
         <a href="https://app.apexyard.ai" class="site-nav__login">Log in</a>
-        <a href="https://app.apexyard.ai" class="btn btn--primary btn--small">Start free</a>
+        <a href="/#book-a-demo" class="btn btn--primary btn--small">Book a demo</a>
       </div>
     </nav>
   </div>
@@ -133,6 +138,17 @@
     </div>
   </section>
 
+  <section class="lifecycle" id="product" aria-labelledby="lifecycle-title">
+    <div class="wrap">
+      <h2 class="lifecycle__title" id="lifecycle-title">From idea to production</h2>
+      <ol class="lifecycle__steps">
+        <li><a href="/build"><strong>Build</strong><span>Your agents work as an engineering team, from the first idea to reviewed code.</span></a></li>
+        <li><a href="/gate"><strong>Gate</strong><span>Your rules, enforced on GitHub at the moment of merge.</span></a></li>
+        <li><a href="/readiness"><strong>Readiness</strong><span>Every repository audited and scored, so you know what is safe to ship.</span></a></li>
+      </ol>
+    </div>
+  </section>
+
   <section class="proof" aria-label="ApexYard in numbers">
     <div class="wrap">
       <!-- Provenance (not shown): 420 = pull requests merged in me2resh/apexyard in the
@@ -146,42 +162,24 @@
     </div>
   </section>
 
-  <section class="section" id="how-it-works" aria-labelledby="how-title">
-    <div class="wrap loop">
-      <div class="loop__text">
-        <h2 class="section__title" id="how-title">The rules get stronger with every merge</h2>
-        <p class="section__lede">You keep one rule set, not a style guide in one place and a review checklist in another. The rule that steers the agent is the rule that blocks the merge.</p>
-        <ol class="loop__steps">
-          <li><strong>Guide.</strong> Agents start from your tickets, plans and handbooks, not from a blank prompt.</li>
-          <li><strong>Check.</strong> A missing test, plan or review shows up with the exact fix.</li>
-          <li><strong>Approve.</strong> An agent can never sign off its own work.</li>
-          <li><strong>Learn.</strong> A review finding becomes a rule in one step, so the same mistake cannot merge twice.</li>
-        </ol>
-        <p class="loop__position">Others tell your agents the rules. ApexYard checks they followed them.</p>
-        <p class="loop__more"><a href="/how-it-works">Read a day with ApexYard</a></p>
-      </div>
-      <div class="loop__figure">
-        <svg class="loop__svg" viewBox="0 0 360 360" role="img" aria-labelledby="loop-svg-title">
-          <title id="loop-svg-title">A loop of four steps: Guide, Check, Approve, Learn, then back to Guide</title>
-          <circle cx="180" cy="180" r="118" class="loop__ring"/>
-          <path d="M262 98 a118 118 0 0 1 0 164" class="loop__arc"/>
-          <path d="M98 262 a118 118 0 0 1 0 -164" class="loop__arc"/>
-          <polygon points="262,262 250,246 270,248" class="loop__head"/>
-          <polygon points="98,98 110,114 90,112" class="loop__head"/>
-          <g class="loop__node"><rect x="130" y="40" width="100" height="40" rx="6"/><text x="180" y="66">Guide</text></g>
-          <g class="loop__node"><rect x="250" y="160" width="100" height="40" rx="6"/><text x="300" y="186">Check</text></g>
-          <g class="loop__node"><rect x="130" y="280" width="100" height="40" rx="6"/><text x="180" y="306">Approve</text></g>
-          <g class="loop__node"><rect x="10" y="160" width="100" height="40" rx="6"/><text x="60" y="186">Learn</text></g>
-          <text x="180" y="176" class="loop__core">one set</text>
-          <text x="180" y="196" class="loop__core">of rules</text>
-        </svg>
+  <section class="section platform" id="how-it-works" aria-labelledby="platform-title">
+    <div class="wrap platform__inner">
+      <h2 class="section__title" id="platform-title">One platform underneath</h2>
+      <div class="platform__text">
+        <ul class="platform__parts">
+          <li>One rule set and knowledge base</li>
+          <li>One evidence store</li>
+          <li>One dashboard</li>
+        </ul>
+        <p class="section__lede">Write a rule once. It guides the agent while it builds, the Gate enforces it, and Readiness measures it. A miss caught anywhere becomes a rule everywhere.</p>
+        <p class="platform__more"><a href="/how-it-works">Read a day with ApexYard</a></p>
       </div>
     </div>
   </section>
 
   <section class="section section--tint" id="why-teams-pay" aria-labelledby="why-title">
     <div class="wrap">
-      <h2 class="section__title" id="why-title">Why teams pay</h2>
+      <h2 class="section__title" id="why-title">From one repository to every team</h2>
       <p class="section__lede">Free keeps your own repository honest. Team is for the day someone outside engineering asks you to prove it.</p>
       <div class="compare" role="region" aria-labelledby="why-title" tabindex="0">
         <table>
@@ -193,116 +191,16 @@
             <tr><th scope="row">Rules</th><td>Local files that a developer can remove</td><td><span data-claim="gate_all_repos">Enforced on GitHub<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Approval</th><td>Included</td><td><span data-claim="named_approval">Included, with the approver's name on file<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Review</th><td>Review reported by your agent</td><td><span data-claim="ci_attestation">Review attested by your CI<span class="claim-coming" hidden> Coming</span></span></td></tr>
+            <tr><th scope="row">Readiness</th><td>Run the audit skills yourself</td><td><span data-claim="readiness_weekly">Weekly Readiness on every repository, with the score and trend<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Evidence</th><td>None</td><td><span data-claim="evidence_export">A record for each merge, which you can export<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Visibility</th><td>Your connected repositories</td><td><span data-claim="org_dashboard">Every team and repository, with trends<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Knowledge base</th><td>Local files</td><td><span data-claim="kb_mcp">Shared organisation rules over MCP, with owners and versions<span class="claim-coming" hidden> Coming</span></span></td></tr>
             <tr><th scope="row">Support</th><td>Community</td><td><!--{{TEAM_SUPPORT}}-->Team support<!--/{{TEAM_SUPPORT}}--></td></tr>
-            <tr><th scope="row">Price</th><td>Free</td><td><!--{{TEAM_PRICE}}-->£0,000 a year <span class="price-flag">Placeholder price</span><!--/{{TEAM_PRICE}}--></td></tr>
+            <tr><th scope="row">Price</th><td>Free</td><td><!--{{TEAM_PRICE}}-->From £000 a month <span class="price-flag">Placeholder price</span><!--/{{TEAM_PRICE}}--></td></tr>
           </tbody>
         </table>
       </div>
       <p class="compare__more"><a href="/pricing" class="btn btn--quiet">See pricing</a></p>
-    </div>
-  </section>
-
-  <section class="section" id="product" aria-labelledby="product-title">
-    <div class="wrap">
-      <h2 class="section__title" id="product-title">What your team gets</h2>
-      <div class="features">
-
-        <article class="feature">
-          <div class="feature__text">
-            <h3>Feedback where your team already reviews</h3>
-            <p>The result sits in the pull request's checks: what passed, what is missing, and the exact next step. Your developers learn no new tool.</p>
-          </div>
-          <figure class="feature__media">
-            <img src="/img/check-pr9.webp" width="2800" height="1130" loading="lazy"
-                 alt="The ApexYard check on a GitHub pull request. It lists a linked ticket as passed, a decision record as failed with a warning, and a review as pending, each with the next step.">
-          </figure>
-        </article>
-
-        <article class="feature">
-          <div class="feature__text">
-            <h3>Prove: the dashboard</h3>
-            <p>Every open pull request across your repositories, what it is missing, and who is holding it up. <span data-claim="readiness_score">The Production-Ready Score tells you which repository to fix first.<span class="claim-coming" hidden> Coming</span></span></p>
-          </div>
-          <figure class="feature__media">
-            <img src="/img/placeholder-dashboard.svg" width="1600" height="1000" loading="lazy" alt="Placeholder illustration of the ApexYard dashboard for one pull request, with the check result, each process step and the next step">
-          </figure>
-        </article>
-
-        <article class="feature">
-          <div class="feature__text">
-            <h3><span data-claim="evidence_export">The evidence record for each merge<span class="claim-coming" hidden> Coming</span></span></h3>
-            <p>When a customer questionnaire asks how AI-written code is reviewed, you send the export, not an essay.</p>
-          </div>
-          <figure class="feature__media">
-            <img src="/img/placeholder-evidence.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of an evidence record for a merged pull request, with the check result, the reviewer and the named approver">
-          </figure>
-        </article>
-
-        <article class="feature">
-          <div class="feature__text">
-            <h3><span data-claim="kb_mcp">Learn: the knowledge base your agents read<span class="claim-coming" hidden> Coming</span></span></h3>
-            <p>Decisions, handbooks and past tickets in one place your agents query before they start. What today's review caught guides tomorrow's agent.</p>
-          </div>
-          <figure class="feature__media">
-            <img src="/img/placeholder-knowledge-base.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of the knowledge base, with team rules, their owners and versions">
-          </figure>
-        </article>
-
-        <article class="feature">
-          <div class="feature__text">
-            <h3><span data-claim="org_dashboard">The organisation view<span class="claim-coming" hidden> Coming</span></span></h3>
-            <p>Spot the team whose merges skip review before an incident finds it for you.</p>
-          </div>
-          <figure class="feature__media">
-            <img src="/img/placeholder-org-dashboard.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of the organisation view, with teams, repositories and trends">
-          </figure>
-        </article>
-
-        <article class="feature">
-          <div class="feature__text">
-            <h3>Run: the Cockpit <span class="feature__tag">Coming</span></h3>
-            <p>Product and design leads see the same gates without opening a terminal.</p>
-          </div>
-          <figure class="feature__media">
-            <img src="/img/placeholder-cockpit.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of the Cockpit desktop app, with a list of gates and their status">
-          </figure>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--tint" id="trust" aria-labelledby="trust-title">
-    <div class="wrap">
-      <h2 class="section__title" id="trust-title">What ApexYard can see</h2>
-      <div class="trust">
-        <div>
-          <h3>The GitHub App permissions</h3>
-          <ul>
-            <li>Pull requests: read</li>
-            <li>Checks: write, to post the ApexYard check</li>
-            <li>Metadata: read</li>
-            <li>Members: read, to confirm who can manage your organisation</li>
-          </ul>
-          <p>It never reads your source code.</p>
-        </div>
-        <div>
-          <h3>Where the data lives</h3>
-          <p>Hosted on AWS in Ireland, inside the EU.</p>
-          <!-- ASSUMED 25 Oct, verify before switch-on -->
-          <p>We keep each evidence record for 13 months, then delete it. We delete your data within 30 days when you ask.</p>
-        </div>
-        <div>
-          <h3>Data processing agreement</h3>
-          <!-- ASSUMED 25 Oct, verify before switch-on -->
-          <p>A data processing agreement is available on request, on standard terms.</p>
-          <!-- ASSUMED 25 Oct, verify before switch-on -->
-          <p>Sub-processors: Amazon Web Services, for hosting, and GitHub, for sign-in and the App.</p>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -314,7 +212,7 @@
       <div>
         <p class="section__lede"><!--{{REVIEW_OFFER}}-->We review how your team ships with AI agents today.<!--/{{REVIEW_OFFER}}--></p>
         <p class="review__price"><!--{{REVIEW_PRICE}}-->From £0,000 <span class="price-flag">Placeholder price</span><!--/{{REVIEW_PRICE}}--></p>
-        <a href="#book-a-demo" class="btn btn--quiet">Ask about a review</a>
+        <a href="/readiness" class="btn btn--quiet">See Readiness</a>
       </div>
     </div>
   </section>
@@ -335,7 +233,7 @@
   <section class="section" id="open-source" aria-labelledby="oss-title">
     <div class="wrap oss">
       <div class="oss__text">
-        <h2 class="section__title" id="oss-title">Built in the open, so you can read every rule</h2>
+        <h2 class="section__title" id="oss-title">Install free. Read every rule.</h2>
         <p class="section__lede">MIT licensed. Every rule, hook and review agent is a plain file you can read, change or remove.</p>
         <p><strong>66 hooks</strong> guard each edit, commit and push on the developer's machine.<span data-stars-wrap hidden> <strong><span data-stars></span></strong> developers have starred the framework on GitHub.</span></p>
         <p>Install with one command. Prefer to fork? Follow the <a href="/docs#alternative">fork steps in the docs</a>.</p>
@@ -402,8 +300,9 @@ apexyard init
 <footer class="site-footer">
   <div class="wrap site-footer__inner">
     <nav aria-label="Footer">
-      <a href="/#product">Product</a>
-      <a href="/#how-it-works">How it works</a>
+      <a href="/build">Build</a>
+      <a href="/gate">Gate</a>
+      <a href="/readiness">Readiness</a>
       <a href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
       <a href="/how-it-works">A day with ApexYard</a>

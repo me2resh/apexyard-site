@@ -51,6 +51,33 @@
     themeBtn.hidden = false;
   }
 
+  // Product menu (disclosure pattern). Without JS the list stays open.
+  var menuBtn = document.querySelector('.site-nav__menu');
+  var menu = document.getElementById('product-menu');
+  if (menuBtn && menu) {
+    var setMenu = function (open) {
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      menu.hidden = !open;
+    };
+    setMenu(false);
+    menuBtn.addEventListener('click', function () {
+      setMenu(menuBtn.getAttribute('aria-expanded') !== 'true');
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menuBtn.getAttribute('aria-expanded') === 'true') {
+        setMenu(false);
+        menuBtn.focus();
+      }
+    });
+    document.addEventListener('click', function (e) {
+      if (!menu.hidden && !menuBtn.contains(e.target) && !menu.contains(e.target)) setMenu(false);
+    });
+    menu.addEventListener('focusout', function (e) {
+      if (window.matchMedia('(min-width: 980px)').matches && e.relatedTarget &&
+          !menu.contains(e.relatedTarget) && e.relatedTarget !== menuBtn) setMenu(false);
+    });
+  }
+
   // Mobile nav toggle.
   var toggle = document.querySelector('.nav-toggle');
   var nav = document.getElementById('site-nav');

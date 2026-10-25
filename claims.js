@@ -9,5 +9,7 @@ window.APEXYARD_CLAIMS = {
   org_dashboard: 'live',    // the organisation view with trends
   kb_mcp: 'live',           // the shared knowledge base over MCP
   readiness_score: 'live',  // the Production-Ready Score
-  ci_attestation: 'coming'  // review attested by your CI (apexyard-cloud#126); 'live' when it ships
+  ci_attestation: 'coming', // review attested by your CI (apexyard-cloud#126); 'live' when it ships
+  readiness_weekly: 'coming', // Readiness on a schedule for every repository; 'live' when it ships
+  cockpit_app: 'coming'     // the Cockpit desktop app; 'live' when it ships
 };

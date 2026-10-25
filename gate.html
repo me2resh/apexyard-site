@@ -1,0 +1,234 @@
+<!doctype html>
+<!--
+  ApexYard, © 2026 me2resh
+  apexyard.ai, github.com/me2resh/apexyard, MIT licence
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gate: every change checked, then approved by a person | ApexYard</title>
+<meta name="author" content="me2resh">
+<meta name="description" content="The ApexYard Gate checks every pull request against your rules and merges it only after a named person approves it on GitHub.">
+<link rel="canonical" href="https://apexyard.ai/gate">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#EEF1F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1B2E" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ApexYard">
+<meta property="og:url" content="https://apexyard.ai/gate">
+<meta property="og:title" content="Gate: every change checked, then approved by a person | ApexYard">
+<meta property="og:description" content="The ApexYard Gate checks every pull request against your rules and merges it only after a named person approves it on GitHub.">
+<meta property="og:image" content="https://apexyard.ai/og/index.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://apexyard.ai/gate">
+<meta name="twitter:title" content="Gate: every change checked, then approved by a person | ApexYard">
+<meta name="twitter:description" content="The ApexYard Gate checks every pull request against your rules and merges it only after a named person approves it on GitHub.">
+<meta name="twitter:image" content="https://apexyard.ai/og/index.png">
+<script>try{var t=localStorage.getItem('ay-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/plex-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/product.css">
+
+<!-- begin: gtag — keep in sync across all site/*.html pages (#399) -->
+<!-- Google tag (gtag.js) with Consent Mode v2 - analytics_storage defaults to denied
+     until the consent banner below records an explicit choice. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G3EMR3CB02"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied'
+  });
+  try {
+    if (localStorage.getItem('ay-consent') === 'granted') {
+      gtag('consent', 'update', { 'analytics_storage': 'granted' });
+    }
+  } catch (e) {}
+  gtag('js', new Date());
+  gtag('config', 'G-G3EMR3CB02');
+</script>
+<!-- end: gtag -->
+</head>
+<body>
+
+<a href="#main" class="skip">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__bar">
+    <a href="/" class="brand"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" fill="#2D5BE3"/><text x="50" y="53" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="46" font-weight="700" letter-spacing="-4" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">AY</text></svg><span>ApexYard</span></a>
+    <button class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false" data-theme-toggle hidden>
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 2.75a7.25 7.25 0 0 1 0 14.5z" fill="currentColor"/></svg>
+    </button>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <div class="site-nav__group">
+        <button class="site-nav__menu" type="button" aria-expanded="false" aria-controls="product-menu">Product</button>
+        <ul class="site-nav__sub" id="product-menu">
+          <li><a href="/build">Build</a></li>
+          <li><a href="/gate" aria-current="page">Gate</a></li>
+          <li><a href="/readiness">Readiness</a></li>
+        </ul>
+      </div>
+      <a href="/pricing">Pricing</a>
+      <a href="/docs">Docs</a>
+      <div class="site-nav__right">
+        <a href="https://app.apexyard.ai" class="site-nav__login">Log in</a>
+        <a href="/#book-a-demo" class="btn btn--primary btn--small">Book a demo</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="product-head" aria-labelledby="product-title">
+    <div class="wrap">
+      <p class="product-head__name">Gate</p>
+      <h1 id="product-title">Every change checked against your rules, and merged only after a named person approves it on GitHub.</h1>
+      <p class="product-head__who">For engineering leads whose teams merge code that agents wrote.</p>
+      <p class="product-head__cta"><a class="btn btn--primary" href="https://app.apexyard.ai">Start free with GitHub</a></p>
+    </div>
+  </section>
+
+  <section class="section section--flush" aria-labelledby="gate-points">
+    <div class="wrap">
+      <h2 class="visually-hidden" id="gate-points">What the Gate does</h2>
+      <div class="features">
+        <article class="feature">
+          <div class="feature__text">
+            <h3>Feedback where your team already reviews</h3>
+            <p>The result sits in the pull request's checks: what passed, what is missing, and the exact next step. Your developers learn no new tool.</p>
+          </div>
+          <figure class="feature__media">
+            <img src="/img/check-pr9.webp" width="2800" height="1130" alt="The ApexYard check on a GitHub pull request. It lists a linked ticket as passed, a decision record as failed with a warning, and a review as pending, each with the next step.">
+          </figure>
+        </article>
+        <article class="feature">
+          <div class="feature__text">
+            <h3>An agent never approves its own work</h3>
+            <p>The merge waits for a person your team named. <span data-claim="evidence_export">Their approval, the checks and the commit go into one record you can export.<span class="claim-coming" hidden> Coming</span></span></p>
+          </div>
+          <figure class="feature__media">
+            <img src="/img/placeholder-evidence.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of an evidence record for a merged pull request, with the check result, the reviewer and the named approver">
+          </figure>
+        </article>
+        <article class="feature">
+          <div class="feature__text">
+            <h3>Every open change on one screen</h3>
+            <p>See what each pull request is missing and who is holding it up. <span data-claim="readiness_score">The Production-Ready Score tells you which repository to fix first.<span class="claim-coming" hidden> Coming</span></span></p>
+          </div>
+          <figure class="feature__media">
+            <img src="/img/placeholder-dashboard.svg" width="1600" height="1000" loading="lazy" alt="Placeholder illustration of the ApexYard dashboard for one pull request, with the check result, each process step and the next step">
+          </figure>
+        </article>
+        <article class="feature">
+          <div class="feature__text">
+            <h3><span data-claim="org_dashboard">The organisation view<span class="claim-coming" hidden> Coming</span></span></h3>
+            <p>Spot the team whose merges skip review before an incident finds it for you.</p>
+          </div>
+          <figure class="feature__media">
+            <img src="/img/placeholder-org-dashboard.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of the organisation view, with teams, repositories and trends">
+          </figure>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="connects-title">
+    <div class="wrap connects">
+      <h2 class="section__title" id="connects-title">How it connects</h2>
+      <p class="section__lede">The Gate enforces the same rules your agents follow in <a href="/build">Build</a>. Every merge it records feeds the score in <a href="/readiness">Readiness</a>.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="plans-title">
+    <div class="wrap">
+      <h2 class="section__title" id="plans-title">Plans</h2>
+      <p class="section__lede">Start on one repository at no cost. Grow into every repository you own.</p>
+      <div class="plans plans--4">
+        <article class="plan">
+          <h3>Free</h3>
+          <p class="plan__price">Free</p>
+          <ul>
+            <li><!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}--></li>
+            <li>Sign in with GitHub</li>
+          </ul>
+        </article>
+        <article class="plan">
+          <h3>Startup</h3>
+          <p class="plan__price"><!--{{STARTUP_PRICE}}-->From £00 a month <span class="price-flag">Placeholder price</span><!--/{{STARTUP_PRICE}}--></p>
+          <ul>
+            <li><!--{{STARTUP_LIMITS}}-->Up to N repositories<!--/{{STARTUP_LIMITS}}--></li>
+          </ul>
+        </article>
+        <article class="plan plan--team">
+          <h3>Team</h3>
+          <p class="plan__price"><!--{{TEAM_PRICE}}-->From £000 a month <span class="price-flag">Placeholder price</span><!--/{{TEAM_PRICE}}--></p>
+          <p class="plan__note"><!--{{TEAM_PRICE_NOTE}}-->Or £0,000 a year.<!--/{{TEAM_PRICE_NOTE}}--></p>
+          <ul>
+            <li><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->All repositories, up to N developers<!--/{{TEAM_REPO_LIMIT}}--><span class="claim-coming" hidden> Coming</span></span></li>
+            <li><!--{{TEAM_SUPPORT}}-->Team support<!--/{{TEAM_SUPPORT}}--></li>
+          </ul>
+        </article>
+        <article class="plan">
+          <h3>Enterprise</h3>
+          <p class="plan__price">Talk to us</p>
+          <ul>
+            <li><!--{{ENTERPRISE_LIMITS}}-->Over N developers<!--/{{ENTERPRISE_LIMITS}}--></li>
+          </ul>
+        </article>
+      </div>
+      <p class="plans__cta"><a class="btn btn--primary" href="https://app.apexyard.ai">Start free with GitHub</a> <a class="plans__link" href="/pricing#gate">Compare every plan</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <nav aria-label="Footer">
+      <a href="/build">Build</a>
+      <a href="/gate">Gate</a>
+      <a href="/readiness">Readiness</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/docs">Docs</a>
+      <a href="/how-it-works">A day with ApexYard</a>
+      <a href="/architecture">Architecture</a>
+      <a href="/skills">Skills</a>
+      <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">Changelog</a>
+      <a href="/game">The game</a>
+      <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://app.slack.com/client/T0BD7E3SYD8/C0BD5BF7XAA" target="_blank" rel="noopener">Community</a>
+    </nav>
+    <p>© 2026 <a href="https://me2resh.com" target="_blank" rel="noopener">me2resh</a>. The ApexYard framework is open source under the MIT licence.</p>
+  </div>
+</footer>
+
+<div id="consent" class="consent" role="region" aria-label="Cookie consent" hidden>
+  <div class="consent__inner">
+    <p class="consent__msg">
+      This site uses Google Analytics to count visits. No ads, no cross-site tracking.
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy</a>.
+    </p>
+    <div class="consent__actions">
+      <button type="button" class="consent__btn" data-consent="denied">Decline</button>
+      <button type="button" class="consent__btn consent__btn--accept" data-consent="granted">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script src="/claims.js" defer></script>
+<script src="/product.js" defer></script>
+</body>
+</html>
