@@ -12,7 +12,11 @@ while read -r _ lsha _ rsha; do
   else
     range=("$rsha..$lsha")
   fi
-  for sha in $(git rev-list "${range[@]}" 2>/dev/null); do
+  if ! shas=$(git rev-list "${range[@]}" 2>/dev/null); then
+    echo "private-terms: warning: cannot list outgoing commits for a ref; CI checks them." >&2
+    continue
+  fi
+  for sha in $shas; do
     git log -1 --format=%B "$sha" > "$dir/commit-${sha:0:7}"
   done
 done

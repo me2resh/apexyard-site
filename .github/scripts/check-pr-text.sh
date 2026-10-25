@@ -29,7 +29,17 @@ trap 'rm -rf "$dir"' EXIT
 
 jq -r '.pull_request.title // ""' "$event" > "$dir/title"
 jq -r '.pull_request.body // ""' "$event" > "$dir/body"
-for sha in $(git log --format=%H "$base..$head"); do
+# Fail closed: a range that cannot resolve, or an empty range for a PR that
+# differs from its base, must not pass as "no hits".
+if ! shas=$(git log --format=%H "$base..$head" 2>/dev/null); then
+  echo "::error::check-pr-text: the commit range cannot be resolved. The check failed closed."
+  exit 1
+fi
+if [ -z "$shas" ] && [ "$base" != "$head" ]; then
+  echo "::error::check-pr-text: the commit range is empty for a non-empty PR. The check failed closed."
+  exit 1
+fi
+for sha in $shas; do
   git log -1 --format=%B "$sha" > "$dir/commit-${sha:0:7}"
 done
 

@@ -11,6 +11,7 @@ pt_scan() {
   [ -r "$pt_file" ] || return 0
   local root out rc
   root=$(git rev-parse --show-toplevel) || return 0
+  grep -qvE '^[[:space:]]*(#|$)' "$pt_file" || return 0
   [ -x "$root/.github/scripts/check-private-terms.sh" ] || return 0
   rc=0
   out=$(PRIVATE_TERMS=$(cat "$pt_file") "$root/.github/scripts/check-private-terms.sh" --text-dir "$1" 2>&1) || rc=$?
