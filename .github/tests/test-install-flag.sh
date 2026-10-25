@@ -5,8 +5,8 @@
 #
 # Asserts:
 #   1. site-flags.js defaults oneCommandInstall to false
-#   2. index.html contains the three install commands, migrate,
-#      telemetry opt-out, and apexyard init
+#   2. index.html contains the three install commands, migrate, and
+#      apexyard init, and no telemetry text (owner decision)
 #   3. Those strings appear only inside data-flag blocks (flag off
 #      leaves the live markup on the fork path)
 #   4. Hero install tabs follow the WAI-ARIA tabs pattern
@@ -50,7 +50,6 @@ for needle in \
   "$brew_cmd" \
   "$npx_cmd" \
   'apexyard migrate' \
-  'APEXYARD_TELEMETRY=0' \
   'apexyard init'
 do
   if grep -Fq -- "$needle" "$index"; then
@@ -59,6 +58,13 @@ do
     bad "index.html contains: $needle" "missing"
   fi
 done
+
+# The site does not mention telemetry or the install ping (owner decision).
+if grep -Eiq -- 'telemetry|install ping' "$index"; then
+  bad "index.html has no telemetry text" "found"
+else
+  ok "index.html has no telemetry text"
+fi
 
 # --- strings only inside data-flag blocks -----------------------------------
 
@@ -80,7 +86,6 @@ NEEDLES = [
     "brew install me2resh/tap/apexyard",
     "npx create-apexyard",
     "apexyard migrate",
-    "APEXYARD_TELEMETRY=0",
     "apexyard init",
 ]
 
