@@ -170,6 +170,8 @@ html {
   text-rendering: optimizeLegibility;
   background: var(--paper);
   scroll-behavior: smooth;
+  /* Keep focus and anchor targets below the sticky title bar (WCAG 2.2 SC 2.4.11). */
+  scroll-padding-top: 4.5rem;
   font-feature-settings: 'calt', 'ss01', 'ss03';
 }
 
