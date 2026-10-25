@@ -6,7 +6,9 @@ here=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 zero=0000000000000000000000000000000000000000
 dir=$(mktemp -d); trap 'rm -rf "$dir"' EXIT
 while read -r _ lsha _ rsha; do
-  [ -n "${lsha:-}" ] && [ "$lsha" != "$zero" ] || continue
+  if [ -z "${lsha:-}" ] || [ "$lsha" = "$zero" ]; then
+    continue
+  fi
   if [ "$rsha" = "$zero" ]; then
     range=("$lsha" --not --remotes)
   else
