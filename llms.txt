@@ -84,7 +84,7 @@
 - Alternative: fork [`me2resh/apexyard`](https://github.com/me2resh/apexyard)
   on GitHub, clone the fork, and treat it as your ops repo
 - Edit `onboarding.yaml` + `apexyard.projects.yaml` to register projects
-- Run `/projects`, `/inbox`, `/status` to confirm the portfolio is wired
+- Run `/projects`, `/inbox`, `/status` to check that the portfolio is wired
 - Adopt external repos via `/handover <repo>`
 - Two setup modes: single-fork (everything in the fork) or split-portfolio
   (public fork + private sibling repo for adopter-specific data)

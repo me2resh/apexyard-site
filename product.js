@@ -29,6 +29,28 @@
     if (tag) tag.hidden = false;
   });
 
+  // Theme toggle. The page follows the system setting until the visitor
+  // picks a theme; the choice is kept in localStorage when it is available.
+  var themeBtn = document.querySelector('[data-theme-toggle]');
+  if (themeBtn && window.matchMedia) {
+    var docEl = document.documentElement;
+    var dark = window.matchMedia('(prefers-color-scheme: dark)');
+    var current = function () {
+      var t = docEl.getAttribute('data-theme');
+      return t === 'dark' || t === 'light' ? t : (dark.matches ? 'dark' : 'light');
+    };
+    var sync = function () { themeBtn.setAttribute('aria-pressed', current() === 'dark' ? 'true' : 'false'); };
+    themeBtn.addEventListener('click', function () {
+      var next = current() === 'dark' ? 'light' : 'dark';
+      docEl.setAttribute('data-theme', next);
+      try { localStorage.setItem('ay-theme', next); } catch (e) {}
+      sync();
+    });
+    if (dark.addEventListener) dark.addEventListener('change', sync);
+    sync();
+    themeBtn.hidden = false;
+  }
+
   // Mobile nav toggle.
   var toggle = document.querySelector('.nav-toggle');
   var nav = document.getElementById('site-nav');

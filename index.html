@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
-  ApexYard · © 2026 me2resh
-  apexyard.ai · github.com/me2resh/apexyard · MIT
+  ApexYard, © 2026 me2resh
+  apexyard.ai, github.com/me2resh/apexyard, MIT licence
 -->
 <html lang="en">
 <head>
@@ -14,7 +14,8 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="theme-color" content="#2F6DF6">
+<meta name="theme-color" content="#EEF1F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1B2E" media="(prefers-color-scheme: dark)">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ApexYard">
@@ -42,9 +43,9 @@
   "publisher": { "@type": "Organization", "name": "ApexYard", "url": "https://apexyard.ai/", "logo": "https://apexyard.ai/favicon.svg" }
 }
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem('ay-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/plex-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/product.css">
 
 <!-- begin: gtag — keep in sync across all site/*.html pages (#399) -->
@@ -76,7 +77,10 @@
 
 <header class="site-header">
   <div class="wrap site-header__bar">
-    <a href="/" class="brand" aria-label="ApexYard home"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" fill="#2F6DF6"/><text x="50" y="53" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="46" font-weight="700" letter-spacing="-4" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">AY</text></svg><span>ApexYard</span></a>
+    <a href="/" class="brand"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" fill="#2D5BE3"/><text x="50" y="53" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="46" font-weight="700" letter-spacing="-4" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">AY</text></svg><span>ApexYard</span></a>
+    <button class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false" data-theme-toggle hidden>
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 2.75a7.25 7.25 0 0 1 0 14.5z" fill="currentColor"/></svg>
+    </button>
     <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
       <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
     </button>
@@ -97,21 +101,34 @@
 <main id="main">
 
   <section class="hero" aria-labelledby="hero-title">
-    <div class="wrap">
-      <p class="hero__risk">AI writes a growing share of your code. Can you prove every change was checked and approved?</p>
-      <h1 id="hero-title"><span>Your agents write the code.</span> <span>ApexYard decides what merges.</span></h1>
-      <p class="hero__sub">ApexYard gives your agents a team's process: tickets, plans, reviews and your rules. Then it checks every pull request on GitHub, and merges only after a named person approves.</p>
-      <div class="hero__actions">
-        <a href="#book-a-demo" class="btn btn--primary">Book a demo</a>
-        <a href="https://app.apexyard.ai" class="btn btn--quiet">Start free with GitHub</a>
-      </div>
-      <p class="hero__hint"><!--{{PLAN_HINT}}-->Free to start. Team from £0,000 a year. <span class="price-flag">Placeholder price</span><!--/{{PLAN_HINT}}--></p>
-
-      <figure class="shot">
-        <div class="shot__frame">
-          <img src="/img/placeholder-dashboard.svg" width="1600" height="1000" alt="Placeholder illustration of the ApexYard dashboard for one pull request: the check result, each process step and the next step">
+    <div class="wrap hero__grid">
+      <div class="hero__text">
+        <p class="hero__risk">AI writes a growing share of your code. Can you prove every change was checked and approved?</p>
+        <h1 id="hero-title"><span>Your agents write the code.</span> <span>ApexYard decides what merges.</span></h1>
+        <p class="hero__sub">ApexYard gives your agents a team's process: tickets, plans, reviews and your rules. Then it checks every pull request on GitHub, and merges only after a named person approves.</p>
+        <div class="hero__actions">
+          <a href="#book-a-demo" class="btn btn--primary">Book a demo</a>
+          <a href="https://app.apexyard.ai" class="btn btn--quiet">Start free with GitHub</a>
         </div>
-        <figcaption>The hosted dashboard for a public demo pull request, <a href="https://github.com/me2resh/apexyard-demo-public/pull/9" target="_blank" rel="noopener">me2resh/apexyard-demo-public #9</a>.</figcaption>
+        <p class="hero__hint"><!--{{PLAN_HINT}}-->Free to start. Team from £0,000 a year. <span class="price-flag">Placeholder price</span><!--/{{PLAN_HINT}}--></p>
+      </div>
+      <figure class="ledger">
+        <div class="ledger__card" aria-hidden="true">
+          <div class="ledger__head">
+            <p class="ledger__repo">example-co/billing-api, pull request #214</p>
+            <p class="ledger__title">Add refund limits to the billing API</p>
+            <p class="ledger__status"><span class="ledger__s ledger__s--wait">Checking</span><span class="ledger__s ledger__s--block">Merge blocked</span><span class="ledger__s ledger__s--pass">Ready to merge</span></p>
+          </div>
+          <ul class="ledger__checks">
+            <li class="ledger__check"><span class="ledger__name">Ticket linked</span><span class="ledger__state"><span class="ledger__s ledger__s--wait">Running</span><span class="ledger__s ledger__s--pass">Passed</span></span></li>
+            <li class="ledger__check"><span class="ledger__name">Plan recorded</span><span class="ledger__state"><span class="ledger__s ledger__s--wait">Running</span><span class="ledger__s ledger__s--block">Missing</span><span class="ledger__s ledger__s--pass">Passed</span></span></li>
+            <li class="ledger__check"><span class="ledger__name">Tests and coverage</span><span class="ledger__state"><span class="ledger__s ledger__s--wait">Running</span><span class="ledger__s ledger__s--pass">Passed</span></span></li>
+            <li class="ledger__check"><span class="ledger__name">Code review</span><span class="ledger__state"><span class="ledger__s ledger__s--wait">Running</span><span class="ledger__s ledger__s--block">Changes requested</span><span class="ledger__s ledger__s--pass">Passed</span></span></li>
+            <li class="ledger__check"><span class="ledger__name">Named approval</span><span class="ledger__state"><span class="ledger__s ledger__s--wait">Waiting</span><span class="ledger__s ledger__s--pass">Approved</span></span></li>
+          </ul>
+          <p class="ledger__approval">Approved by Dana Reyes, 14:32 UTC, at commit <code>3f9c2a1</code></p>
+        </div>
+        <figcaption class="ledger__caption"><span class="visually-hidden">Example pull request 214, &ldquo;Add refund limits to the billing API&rdquo;, in the fictional repository example-co/billing-api. The first check run blocked the merge: the plan was missing, and the code review requested changes. After a new commit, all five checks passed: ticket linked, plan recorded, tests and coverage, code review, and named approval. Approved by Dana Reyes at 14:32 UTC, at commit 3f9c2a1. The pull request is ready to merge. </span>An example pull request in a fictional repository.</figcaption>
       </figure>
     </div>
   </section>
@@ -144,7 +161,7 @@
           <li><strong>Learn.</strong> A miss becomes a new rule, so the next change starts from it.</li>
         </ol>
         <p class="loop__position">Others tell your agents the rules. ApexYard checks they followed them, and learns from every miss.</p>
-        <p class="steps__more"><a href="/how-it-works">Read a day with ApexYard</a></p>
+        <p class="loop__more"><a href="/how-it-works">Read a day with ApexYard</a></p>
       </div>
       <div class="loop__figure">
         <svg class="loop__svg" viewBox="0 0 360 360" role="img" aria-labelledby="loop-svg-title">
@@ -172,7 +189,7 @@
       <div class="compare" role="region" aria-labelledby="why-title" tabindex="0">
         <table>
           <thead>
-            <tr><th scope="col"><span class="visually-hidden">Feature</span></th><th scope="col">Free</th><th scope="col">Team</th></tr>
+            <tr><th scope="col"><span class="visually-hidden">Feature</span></th><th scope="col">Free</th><th scope="col" class="compare__team">Team</th></tr>
           </thead>
           <tbody>
             <tr><th scope="row">Repositories</th><td><!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}--></td><td><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->All repositories, up to N developers<!--/{{TEAM_REPO_LIMIT}}--><span class="claim-coming" hidden> Coming</span></span></td></tr>
@@ -209,8 +226,18 @@
 
         <article class="feature">
           <div class="feature__text">
-            <h3><span data-claim="evidence_export">Prove: the dashboard and the evidence record<span class="claim-coming" hidden> Coming</span></span></h3>
-            <p>The dashboard lists each pull request, its check result, and the person who approved the merge. Each merge keeps a record that you can export. <span data-claim="readiness_score">The Production-Ready Score shows how close each repository is to your standard.<span class="claim-coming" hidden> Coming</span></span></p>
+            <h3>Prove: the dashboard</h3>
+            <p>The dashboard lists each pull request, its check result, each process step, and the person who approved the merge. <span data-claim="readiness_score">The Production-Ready Score shows how close each repository is to your standard.<span class="claim-coming" hidden> Coming</span></span></p>
+          </div>
+          <figure class="feature__media">
+            <img src="/img/placeholder-dashboard.svg" width="1600" height="1000" loading="lazy" alt="Placeholder illustration of the ApexYard dashboard for one pull request, with the check result, each process step and the next step">
+          </figure>
+        </article>
+
+        <article class="feature">
+          <div class="feature__text">
+            <h3><span data-claim="evidence_export">The evidence record for each merge<span class="claim-coming" hidden> Coming</span></span></h3>
+            <p>Each merge keeps a record: the check result, the reviewer, the named approver and the commit. You can export it for an audit.</p>
           </div>
           <figure class="feature__media">
             <img src="/img/placeholder-evidence.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of an evidence record for a merged pull request, with the check result, the reviewer and the named approver">
@@ -261,7 +288,7 @@
             <li>Pull requests: read</li>
             <li>Checks: write, to post the ApexYard check</li>
             <li>Metadata: read</li>
-            <li>Members: read, to confirm an organisation admin at sign-in</li>
+            <li>Members: read, to check for an organisation admin at sign-in</li>
           </ul>
           <p>The App does not ask for the Contents permission.</p>
         </div>
