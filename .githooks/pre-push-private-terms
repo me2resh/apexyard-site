@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Block a push whose outgoing commit messages hold a private term (#102).
+here=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+. "$here/private-terms-lib.sh"
+[ -r "$pt_file" ] || exit 0
+zero=0000000000000000000000000000000000000000
+dir=$(mktemp -d); trap 'rm -rf "$dir"' EXIT
+while read -r _ lsha _ rsha; do
+  [ -n "${lsha:-}" ] && [ "$lsha" != "$zero" ] || continue
+  if [ "$rsha" = "$zero" ]; then
+    range=("$lsha" --not --remotes)
+  else
+    range=("$rsha..$lsha")
+  fi
+  for sha in $(git rev-list "${range[@]}" 2>/dev/null); do
+    git log -1 --format=%B "$sha" > "$dir/commit-${sha:0:7}"
+  done
+done
+pt_scan "$dir"
