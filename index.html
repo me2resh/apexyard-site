@@ -8,6 +8,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/site-flags.js"></script>
+<script>
+(function () {
+  var flags = window.APEXYARD_FLAGS || {};
+  if (flags.oneCommandInstall) {
+    document.documentElement.dataset.oneCommandInstall = 'on';
+  }
+})();
+</script>
 <title>ApexYard — ship AI-built software like a real engineering team</title>
 <meta name="author" content="me2resh">
 <meta name="copyright" content="© 2026 ApexYard · MIT">
@@ -1695,6 +1704,67 @@ a:hover { color: var(--accent); }
   border-color: var(--accent);
 }
 /* end: consent-css */
+
+/* ============================================================
+   feature flag: oneCommandInstall — hide new markup by default;
+   hide old fork path when the flag is on. Place last so equal-
+   specificity display rules win over earlier class display.
+   ============================================================ */
+[data-flag="one-command-install"]{display:none}
+html[data-one-command-install="on"] [data-flag="one-command-install"]{display:revert}
+html[data-one-command-install="on"] [data-flag-off="one-command-install"]{display:none}
+
+/* install method tabs (one-command path) — tokens only, no restyle */
+.install-tabs {
+  max-width: 780px;
+  margin: 0 0 1.25rem;
+}
+.install-tabs__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+.install-tabs__tab {
+  background: transparent;
+  border: 1px solid var(--rule-faint);
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+}
+.install-tabs__tab[aria-selected="true"] {
+  border-color: var(--rule);
+  color: var(--ink);
+}
+.install-tabs__tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.install-tabs__panel[hidden] { display: none; }
+.install-tabs__hint {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 0.75rem;
+}
+.install-tabs__status {
+  font-size: 12px;
+  color: var(--ink-faint);
+  min-height: 1.2em;
+  margin-top: 0.35rem;
+}
+@media (max-width: 520px) {
+  .install-tabs .install__cmd {
+    white-space: normal;
+    overflow-x: visible;
+    word-break: break-all;
+  }
+}
 </style>
 
 <!-- begin: gtag — keep in sync across all site/*.html pages (#399) -->
@@ -1779,10 +1849,42 @@ a:hover { color: var(--accent); }
       ApexYard is an SDLC framework for AI-assisted software development. It adds gates, reviews, and records to each change. It governs its own development; <a href="#gate-replay" class="uline">check the log</a>. <a href="/how-it-works" class="uline" style="white-space:nowrap;">See a day with it →</a>
     </p>
 
+    <!-- flag: oneCommandInstall -->
+    <div class="install-tabs rise rise-4" data-flag="one-command-install" id="install-tabs">
+      <div class="install-tabs__list" role="tablist" aria-label="Install methods">
+        <button type="button" class="install-tabs__tab" role="tab" id="install-tab-curl" aria-controls="install-panel-curl" aria-selected="true" tabindex="0">curl</button>
+        <button type="button" class="install-tabs__tab" role="tab" id="install-tab-brew" aria-controls="install-panel-brew" aria-selected="false" tabindex="-1">Homebrew</button>
+        <button type="button" class="install-tabs__tab" role="tab" id="install-tab-npx" aria-controls="install-panel-npx" aria-selected="false" tabindex="-1">npx</button>
+      </div>
+      <div class="install-tabs__panel" role="tabpanel" id="install-panel-curl" aria-labelledby="install-tab-curl" tabindex="0">
+        <div class="install">
+          <span class="install__prompt">$</span>
+          <code class="install__cmd" id="install-cmd-curl">curl -fsSL https://apexyard.ai/install | sh</code>
+          <button type="button" class="install__copy" data-copy-target="install-cmd-curl" aria-label="Copy curl install command">copy</button>
+        </div>
+      </div>
+      <div class="install-tabs__panel" role="tabpanel" id="install-panel-brew" aria-labelledby="install-tab-brew" tabindex="0" hidden>
+        <div class="install">
+          <span class="install__prompt">$</span>
+          <code class="install__cmd" id="install-cmd-brew">brew install me2resh/tap/apexyard</code>
+          <button type="button" class="install__copy" data-copy-target="install-cmd-brew" aria-label="Copy Homebrew install command">copy</button>
+        </div>
+      </div>
+      <div class="install-tabs__panel" role="tabpanel" id="install-panel-npx" aria-labelledby="install-tab-npx" tabindex="0" hidden>
+        <div class="install">
+          <span class="install__prompt">$</span>
+          <code class="install__cmd" id="install-cmd-npx">npx create-apexyard</code>
+          <button type="button" class="install__copy" data-copy-target="install-cmd-npx" aria-label="Copy npx install command">copy</button>
+        </div>
+      </div>
+      <p class="install-tabs__hint">Then run <code>apexyard init</code>.</p>
+      <div class="install-tabs__status" aria-live="polite" id="install-tabs-status"></div>
+    </div>
+
     <div class="hero__cta rise rise-4">
       <a href="#quickstart" class="cta cta--primary">Quickstart — fork, then <code>/setup</code> →</a>
-      <span class="cta__sep" aria-hidden="true">·</span>
-      <a href="https://github.com/me2resh/apexyard" class="cta cta--ghost" target="_blank" rel="noopener">⑂ Fork on GitHub ↗</a>
+      <span class="cta__sep" aria-hidden="true" data-flag-off="one-command-install">·</span>
+      <a href="https://github.com/me2resh/apexyard" class="cta cta--ghost" data-flag-off="one-command-install" target="_blank" rel="noopener">⑂ Fork on GitHub ↗</a>
     </div>
 
     <p class="hero__builtby rise rise-4">
@@ -2107,7 +2209,8 @@ a:hover { color: var(--accent); }
       </div>
     </div>
 
-    <div class="install-row rise rise-4">
+    <!-- flag: oneCommandInstall (off path) -->
+    <div class="install-row rise rise-4" data-flag-off="one-command-install">
       <div class="install" id="install-block">
         <span class="install__prompt">$</span>
         <code class="install__cmd" id="install-cmd">gh repo fork me2resh/apexyard --clone</code>
@@ -2121,7 +2224,7 @@ a:hover { color: var(--accent); }
       </a>
     </div>
 
-    <p class="install__caveat rise rise-4">
+    <p class="install__caveat rise rise-4" data-flag-off="one-command-install">
       One command forks apexyard into your org and clones the fork locally. The fork <strong>is</strong> your ops repo — no nested installs, no symlinks. Want the plain-English version of what happens next? Read <a href="/how-it-works" class="uline">how it works</a>. Want the technical setup? Jump to the <a href="#quickstart" class="uline">quickstart</a>.
     </p>
 
@@ -2145,6 +2248,56 @@ a:hover { color: var(--accent); }
   </div>
 </section>
 
+<!-- flag: oneCommandInstall -->
+<section class="section" id="alternatives" data-flag="one-command-install" aria-label="Prefer to fork">
+  <div class="section__head">
+    <span class="section__num">· / ALTERNATIVES</span>
+    <h2 class="section__title">Prefer to fork?</h2>
+    <p class="section__lede">
+      Fork the repo if you want the classic path. Clone it with the GitHub CLI, or open
+      <a href="https://github.com/me2resh/apexyard" class="uline" target="_blank" rel="noopener">https://github.com/me2resh/apexyard</a>.
+    </p>
+  </div>
+  <div style="max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter);">
+    <div class="install">
+      <span class="install__prompt">$</span>
+      <code class="install__cmd" id="install-cmd-fork-alt">gh repo fork me2resh/apexyard --clone</code>
+      <button type="button" class="install__copy" data-copy-target="install-cmd-fork-alt" aria-label="Copy fork command">copy</button>
+    </div>
+  </div>
+</section>
+
+<!-- flag: oneCommandInstall -->
+<section class="section section--alt" id="migrate" data-flag="one-command-install" aria-label="Migrate an existing install">
+  <div class="section__head">
+    <span class="section__num">· / MIGRATE</span>
+    <h2 class="section__title">Already installed? Migrate in one command.</h2>
+    <p class="section__lede">
+      It moves an existing fork to the new layout and keeps your own files.
+      It reads <code>.claude/ownership-manifest.yaml</code> and leaves adopter-owned files alone.
+    </p>
+  </div>
+  <div style="max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter);">
+    <div class="install">
+      <span class="install__prompt">$</span>
+      <code class="install__cmd" id="install-cmd-migrate">apexyard migrate</code>
+      <button type="button" class="install__copy" data-copy-target="install-cmd-migrate" aria-label="Copy migrate command">copy</button>
+    </div>
+    <div class="install-tabs__status" aria-live="polite" id="migrate-copy-status"></div>
+  </div>
+</section>
+
+<!-- flag: oneCommandInstall -->
+<section class="section" id="telemetry" data-flag="one-command-install" aria-label="Install telemetry">
+  <div class="section__head">
+    <span class="section__num">· / TELEMETRY</span>
+    <h2 class="section__title">Install telemetry</h2>
+    <p class="section__lede">
+      <code>apexyard init</code> sends one install ping. The ping has four fields: a random install id, the CLI version, the OS, and the agent tool. Nothing else. Turn it off with <code>APEXYARD_TELEMETRY=0</code>.
+    </p>
+  </div>
+</section>
+
 <!-- ============================================================
      SECTION 01 - quickstart
      ============================================================ -->
@@ -2153,11 +2306,18 @@ a:hover { color: var(--accent); }
   <div class="section__head">
     <span class="section__num">07 / QUICKSTART</span>
     <h2 class="section__title">How do I get started?</h2>
-    <p class="section__lede">
+    <!-- flag: oneCommandInstall (off path) -->
+    <p class="section__lede" data-flag-off="one-command-install">
       Start with a fork and one project. Run <code>/setup</code>, answer its three questions, and create the first governed ticket. No separate service or account is required. Read <a href="/how-it-works" class="uline">how it works</a> first if you want to see the complete daily loop.
+    </p>
+    <!-- flag: oneCommandInstall -->
+    <p class="section__lede" data-flag="one-command-install">
+      Install ApexYard, then run <code>apexyard init</code> in your project folder. Open your agent tool and run <code>/setup</code>. Read <a href="/how-it-works" class="uline">how it works</a> first if you want to see the complete daily loop.
     </p>
   </div>
 
+  <!-- flag: oneCommandInstall (off path) -->
+  <div data-flag-off="one-command-install">
   <div class="steps">
 
     <article class="step">
@@ -2188,6 +2348,41 @@ claude
 <span class="acc">/idea</span>                  <span class="cm"># new concept → ideas-backlog.md, optional GitHub issue</span></pre>
     </article>
 
+  </div>
+  </div>
+
+  <!-- flag: oneCommandInstall -->
+  <div data-flag="one-command-install">
+  <div class="steps">
+
+    <article class="step">
+      <div class="step__num">01 - install</div>
+      <h3 class="step__title">Install ApexYard</h3>
+      <p class="step__desc">Pick one install command. Use curl, Homebrew, or npx.</p>
+      <pre class="step__code">curl -fsSL https://apexyard.ai/install | sh
+brew install me2resh/tap/apexyard
+npx create-apexyard</pre>
+    </article>
+
+    <article class="step">
+      <div class="step__num">02 - init and /setup</div>
+      <h3 class="step__title">Init, then run <code>/setup</code></h3>
+      <p class="step__desc">Run <code>apexyard init</code> in your project folder. Open your agent tool. Run <code>/setup</code>.</p>
+      <pre class="step__code">cd your-project
+apexyard init
+<span class="cm"># then open your agent tool</span>
+<span class="acc">/setup</span></pre>
+    </article>
+
+    <article class="step step--wide" style="grid-column: 1 / -1;">
+      <div class="step__num">03 - bring a project in, or capture an idea</div>
+      <h3 class="step__title">Adopt, or originate</h3>
+      <p class="step__desc">Choose the entry point that matches your project. <code>/handover</code> records the shape of an existing repository and adds it to the registry. <code>/idea</code> records a new product concept and keeps it available for later planning.</p>
+      <pre class="step__code"><span class="acc">/handover</span> &lt;repo-url&gt;   <span class="cm"># existing project → assessment + registry + architecture stub</span>
+<span class="acc">/idea</span>                  <span class="cm"># new concept → ideas-backlog.md, optional GitHub issue</span></pre>
+    </article>
+
+  </div>
   </div>
 
   <div style="max-width: var(--max-w); margin: 2.5rem auto 0; padding: 0 var(--gutter);">
@@ -2534,6 +2729,84 @@ function apexyardTrack(eventName) {
       btn.textContent = prev;
     }, 1600);
   }
+})();
+
+/* flag: oneCommandInstall — tabs + shared copy buttons */
+(function () {
+  function copyText(text, btn, statusEl) {
+    function confirm() {
+      if (btn) {
+        btn.classList.add('is-copied');
+        var prev = btn.textContent;
+        btn.textContent = 'copied';
+        setTimeout(function () {
+          btn.classList.remove('is-copied');
+          btn.textContent = prev;
+        }, 1600);
+      }
+      if (statusEl) statusEl.textContent = 'Copied.';
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(confirm, function () {});
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); confirm(); } catch (_) {}
+      document.body.removeChild(ta);
+    }
+  }
+
+  document.querySelectorAll('.install__copy[data-copy-target]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-copy-target');
+      var el = id ? document.getElementById(id) : null;
+      if (!el) return;
+      var status = document.getElementById('install-tabs-status')
+        || document.getElementById('migrate-copy-status');
+      if (btn.closest('#migrate')) status = document.getElementById('migrate-copy-status');
+      if (btn.closest('#install-tabs')) status = document.getElementById('install-tabs-status');
+      apexyardTrack('quickstart_copy');
+      copyText(el.textContent || '', btn, status);
+    });
+  });
+
+  var root = document.getElementById('install-tabs');
+  if (!root) return;
+  var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
+  var panels = Array.prototype.slice.call(root.querySelectorAll('[role="tabpanel"]'));
+
+  function selectTab(tab, focus) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+    });
+    panels.forEach(function (p) {
+      var show = p.id === tab.getAttribute('aria-controls');
+      if (show) p.removeAttribute('hidden');
+      else p.setAttribute('hidden', '');
+    });
+    if (focus) tab.focus();
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () { selectTab(tab, false); });
+    tab.addEventListener('keydown', function (e) {
+      var i = tabs.indexOf(tab);
+      var next = -1;
+      if (e.key === 'ArrowRight') next = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = tabs.length - 1;
+      if (next < 0) return;
+      e.preventDefault();
+      selectTab(tabs[next], true);
+    });
+  });
 })();
 
 // ---- badge-snippet copy-to-clipboard (Governed by ApexYard block) ----
