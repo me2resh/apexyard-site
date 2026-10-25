@@ -594,8 +594,6 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 }
 
 /* home: the lifecycle strip, a real sequence, so it is numbered */
-.lifecycle { padding: clamp(2.5rem, 6vw, 4rem) 0; border-top: 1px solid var(--line); }
-.lifecycle__title { font-size: clamp(1.4rem, 2.6vw, 1.9rem); font-stretch: 108%; letter-spacing: -0.015em; }
 .lifecycle__steps { list-style: none; margin: 1.75rem 0 0; padding: 0; display: grid; gap: 0; counter-reset: life; border-top: 1px solid var(--line); }
 .lifecycle__steps li { counter-increment: life; border-bottom: 1px solid var(--line); }
 .lifecycle__steps a {
@@ -617,13 +615,6 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
   .lifecycle__steps a::before { position: static; display: block; margin-bottom: 0.6rem; }
 }
 
-/* home: one platform underneath */
-.platform__inner { display: grid; gap: 1.5rem; }
-@media (min-width: 900px) { .platform__inner { grid-template-columns: 5fr 7fr; gap: 4rem; align-items: start; } }
-.platform__parts { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
-.platform__parts li { padding: 0.75rem 0; border-bottom: 1px solid var(--line); font: 700 1.15rem/1.3 var(--display); font-stretch: 106%; }
-.platform__text .section__lede { margin-top: 1.5rem; }
-.platform__more { margin-top: 1.25rem; }
 
 /* product pages */
 .product-head { padding: clamp(3rem, 8vw, 5.5rem) 0 clamp(2.5rem, 5vw, 3.5rem); }
