@@ -1,0 +1,22 @@
+{
+  "name": "apexyard-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync": "node scripts/sync-content.mjs",
+    "build": "node scripts/sync-content.mjs && astro build && node scripts/postbuild.mjs",
+    "check": "node scripts/check-output.mjs && node --test tests/*.test.mjs",
+    "preview": "node scripts/serve.mjs"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "0.36.3",
+    "@fontsource-variable/archivo": "5.3.0",
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "@fontsource/ibm-plex-sans": "5.3.0",
+    "astro": "5.18.2",
+    "github-slugger": "2.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

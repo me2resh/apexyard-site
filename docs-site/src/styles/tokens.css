@@ -1,0 +1,145 @@
+/*
+ * ApexYard docs tokens.
+ *
+ * Brand tokens are custom properties on :root (light). The dark theme
+ * overrides them. Starlight sets data-theme from the system setting, or from
+ * the theme control when the reader picks one.
+ *
+ * State colours (pass, wait, block) carry meaning only. They are used as rules
+ * and icons (non-text, 3:1 minimum). Text in a state hue uses the *-text
+ * token (4.5:1 minimum). tests/contrast.test.mjs checks every pair.
+ */
+
+@import '@fontsource/ibm-plex-sans/latin-400.css';
+@import '@fontsource/ibm-plex-sans/latin-400-italic.css';
+@import '@fontsource/ibm-plex-sans/latin-600.css';
+@import '@fontsource/ibm-plex-mono/latin-400.css';
+@import '@fontsource/ibm-plex-mono/latin-600.css';
+@import '@fontsource-variable/archivo/wdth.css';
+
+:root {
+  /* brand */
+  --ay-ink: #14213D;
+  --ay-paper: #EEF1F4;
+  --ay-white: #FFFFFF;
+  --ay-blue: #2D5BE3;
+  --ay-pass: #1F8A5B;
+  --ay-wait: #B7791F;
+  --ay-block: #B4232C;
+
+  /* roles in the light theme */
+  --ay-bg: var(--ay-paper);
+  --ay-surface: var(--ay-white);
+  --ay-text: var(--ay-ink);
+  --ay-text-muted: #4A5670;
+  --ay-link: var(--ay-blue);
+  --ay-rule: #CDD3DC;
+  --ay-rule-strong: #6F7B8F;
+  --ay-focus: var(--ay-blue);
+  --ay-wait-text: #956214;
+  --ay-note: var(--ay-ink);
+  --ay-required: var(--ay-block);
+  --ay-advisory: var(--ay-wait);
+  --ay-coming: var(--ay-blue);
+  --ay-tint-note: #E4E8EE;
+  --ay-tint-required: #F7E6E7;
+  --ay-tint-advisory: #F6EDDF;
+  --ay-tint-coming: #E3EAFB;
+
+  /* type */
+  --ay-font-display: 'Archivo Variable', 'Archivo', 'Arial Narrow', system-ui, sans-serif;
+  --ay-font-text: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ay-font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --ay-measure: 70ch;
+}
+
+:root[data-theme='dark'] {
+  --ay-bg: #0F1B2E;
+  --ay-surface: #16243B;
+  --ay-text: var(--ay-paper);
+  --ay-text-muted: #A3AFC2;
+  --ay-link: #8EA8F5;
+  --ay-rule: #2A3A55;
+  --ay-rule-strong: #5E6E87;
+  --ay-focus: #8EA8F5;
+  --ay-pass: #4CC38A;
+  --ay-wait: #E3A542;
+  --ay-block: #F0767D;
+  --ay-wait-text: #E3A542;
+  --ay-note: var(--ay-paper);
+  --ay-required: var(--ay-block);
+  --ay-advisory: var(--ay-wait);
+  --ay-coming: #8EA8F5;
+  --ay-tint-note: #1A2942;
+  --ay-tint-required: #2B1D2A;
+  --ay-tint-advisory: #2A2620;
+  --ay-tint-coming: #18284A;
+}
+
+/* Map the tokens onto Starlight's properties. */
+:root,
+::backdrop {
+  --sl-font: var(--ay-font-text);
+  --sl-font-mono: var(--ay-font-mono);
+  --sl-color-accent-low: var(--ay-tint-coming);
+  --sl-color-accent: var(--ay-blue);
+  --sl-color-accent-high: var(--ay-link);
+  --sl-color-white: var(--ay-text);
+  --sl-color-black: var(--ay-bg);
+  --sl-color-text: var(--ay-text);
+  --sl-color-text-accent: var(--ay-link);
+  --sl-color-bg: var(--ay-bg);
+  --sl-color-bg-nav: var(--ay-surface);
+  --sl-color-bg-sidebar: var(--ay-bg);
+  --sl-color-bg-inline-code: var(--ay-tint-note);
+  --sl-color-hairline-light: var(--ay-rule);
+  --sl-color-hairline: var(--ay-rule);
+  --sl-color-hairline-shade: var(--ay-rule);
+  --sl-color-gray-1: var(--ay-text);
+  --sl-color-gray-2: var(--ay-text);
+  --sl-color-gray-3: var(--ay-text-muted);
+  --sl-color-gray-4: var(--ay-rule-strong);
+  --sl-color-gray-5: var(--ay-rule);
+  --sl-color-gray-6: var(--ay-surface);
+  --sl-color-gray-7: var(--ay-bg);
+  --sl-color-backdrop-overlay: rgba(15, 27, 46, 0.6);
+  --sl-text-h1: clamp(2rem, 1.4rem + 2.4vw, 2.75rem);
+  --sl-text-h2: 1.625rem;
+  --sl-text-h3: 1.25rem;
+  --sl-text-h4: 1.0625rem;
+  --sl-line-height: 1.65;
+  --sl-content-width: 46rem;
+  --sl-shadow-sm: none;
+  --sl-shadow-md: 0 8px 24px rgba(15, 27, 46, 0.18);
+  --sl-shadow-lg: 0 16px 40px rgba(15, 27, 46, 0.28);
+}
+
+:root[data-theme='light'],
+[data-theme='light'] ::backdrop {
+  --sl-color-white: var(--ay-text);
+  --sl-color-black: var(--ay-bg);
+  --sl-color-gray-1: var(--ay-text);
+  --sl-color-gray-2: var(--ay-text);
+  --sl-color-gray-3: var(--ay-text-muted);
+  --sl-color-gray-4: var(--ay-rule-strong);
+  --sl-color-gray-5: var(--ay-rule);
+  --sl-color-gray-6: var(--ay-surface);
+  --sl-color-gray-7: var(--ay-bg);
+  --sl-color-accent-low: var(--ay-tint-coming);
+  --sl-color-accent: var(--ay-blue);
+  --sl-color-accent-high: var(--ay-link);
+  --sl-color-text-accent: var(--ay-link);
+  --sl-color-bg-nav: var(--ay-surface);
+  --sl-color-bg-sidebar: var(--ay-bg);
+}
+
+/* Text on an accent fill (skip link, active filters). Dark text on the
+   light dark-theme link blue, white on the brand blue in the light theme. */
+:root {
+  --ay-on-accent: var(--ay-white);
+  --sl-color-text-invert: var(--ay-on-accent);
+}
+
+:root[data-theme='dark'] {
+  --ay-on-accent: var(--ay-bg);
+}
