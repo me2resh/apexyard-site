@@ -32,7 +32,7 @@ env:
 jobs:
   deploy:
     name: s3 sync + invalidate
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && vars.SITE_V2_ON_STAGING != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
