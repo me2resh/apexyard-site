@@ -1882,7 +1882,10 @@ html[data-one-command-install="on"] [data-flag-off="one-command-install"]{displa
     </div>
 
     <div class="hero__cta rise rise-4">
-      <a href="#quickstart" class="cta cta--primary">Quickstart — fork, then <code>/setup</code> →</a>
+      <!-- flag: oneCommandInstall (off path) -->
+      <a href="#quickstart" class="cta cta--primary" data-flag-off="one-command-install">Quickstart — fork, then <code>/setup</code> →</a>
+      <!-- flag: oneCommandInstall -->
+      <a href="#quickstart" class="cta cta--primary" data-flag="one-command-install">Quickstart — install, then <code>apexyard init</code> →</a>
       <span class="cta__sep" aria-hidden="true" data-flag-off="one-command-install">·</span>
       <a href="https://github.com/me2resh/apexyard" class="cta cta--ghost" data-flag-off="one-command-install" target="_blank" rel="noopener">⑂ Fork on GitHub ↗</a>
     </div>
@@ -2615,7 +2618,12 @@ confirm it skips the missing column before you ship."</span></pre>
   <div class="final__inner">
     <div>
       <h2>Ship like you finally<br>have <span class="acc">the team</span>.</h2>
-      <p>
+      <!-- flag: oneCommandInstall -->
+      <p data-flag="one-command-install">
+        Install it, run <code>apexyard init</code> and <code>/setup</code>, and start your first day. Free and open source — change anything to match how you work.
+      </p>
+      <!-- flag: oneCommandInstall (off path) -->
+      <p data-flag-off="one-command-install">
         Fork it, run <code>/setup</code>, start your first day. Free and open source — fork freely, change anything to match how you work. No SaaS, no monthly fee, no vendor lock-in.
       </p>
       <p>
@@ -2650,7 +2658,7 @@ confirm it skips the missing column before you ship."</span></pre>
      ============================================================ -->
 <footer class="page-footer" role="contentinfo">
   <div class="page-footer__inner">
-    <div class="page-footer__brand">apexyard.ai — fork the framework, register your repos, ship.</div>
+    <div class="page-footer__brand"><span data-flag-off="one-command-install">apexyard.ai — fork the framework, register your repos, ship.</span><span data-flag="one-command-install">apexyard.ai — install the framework, register your repos, ship.</span></div>
     <nav class="page-footer__nav" aria-label="Footer">
       <a href="/how-it-works">how it works</a>
       <a href="#quickstart">quickstart</a>

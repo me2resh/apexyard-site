@@ -60,10 +60,12 @@ do
 done
 
 # The site does not mention telemetry or the install ping (owner decision).
-if grep -Eiq -- 'telemetry|install ping' "$index"; then
-  bad "index.html has no telemetry text" "found"
+# Check every page and every published text alternate, not only index.html.
+tel_hits=$(cd "$repo_root" && grep -Eil -- 'telemetry|install ping' ./*.html ./*.md.gen ./llms*.txt 2>/dev/null || true)
+if [ -n "$tel_hits" ]; then
+  bad "site pages have no telemetry text" "found in: $(echo "$tel_hits" | tr '\n' ' ')"
 else
-  ok "index.html has no telemetry text"
+  ok "site pages have no telemetry text"
 fi
 
 # --- strings only inside data-flag blocks -----------------------------------
@@ -158,6 +160,69 @@ then
 else
   bad "gated commands absent outside data-flag blocks" "one or more strings leaked"
 fi
+
+# --- CTAs follow the flag ----------------------------------------------------
+# Render the visible text for each flag state: flag off hides data-flag
+# blocks; flag on hides data-flag-off blocks. With the flag on, no CTA may
+# send the visitor to fork; with the flag off, the page keeps the fork CTAs.
+
+cta_view() { # <off|on>
+  python3 - "$index" "$1" <<'PY'
+import sys
+from html.parser import HTMLParser
+
+path, state = sys.argv[1], sys.argv[2]
+hide_attr = "data-flag" if state == "off" else "data-flag-off"
+VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input",
+        "link", "meta", "param", "source", "track", "wbr"}
+
+class View(HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.hide = 0
+        self.skip = 0
+        self.out = []
+    def handle_starttag(self, tag, attrs):
+        if tag in VOID:
+            return
+        if self.hide:
+            self.hide += 1
+            return
+        if dict(attrs).get(hide_attr) == "one-command-install":
+            self.hide = 1
+            return
+        if tag in ("script", "style"):
+            self.skip += 1
+    def handle_endtag(self, tag):
+        if tag in VOID:
+            return
+        if self.hide:
+            self.hide -= 1
+            return
+        if tag in ("script", "style") and self.skip:
+            self.skip -= 1
+    def handle_data(self, data):
+        if not self.hide and not self.skip:
+            self.out.append(data)
+
+v = View()
+v.feed(open(path, encoding="utf-8").read())
+print(" ".join("".join(v.out).split()))
+PY
+}
+
+view_off=$(cta_view off)
+view_on=$(cta_view on)
+has()  { case "$1" in *"$2"*) return 0;; esac; return 1; }
+
+for needle in 'Quickstart — fork, then /setup' 'Fork it, run /setup, start your first day' 'fork the framework, register your repos'; do
+  if has "$view_on" "$needle"; then bad "flag on: no fork CTA: $needle" "still visible"; else ok "flag on: no fork CTA: $needle"; fi
+  if has "$view_off" "$needle"; then ok "flag off: fork CTA kept: $needle"; else bad "flag off: fork CTA kept: $needle" "missing"; fi
+done
+for needle in 'Quickstart — install, then apexyard init' 'Install it, run apexyard init and /setup' 'install the framework, register your repos'; do
+  if has "$view_on" "$needle"; then ok "flag on: install CTA shown: $needle"; else bad "flag on: install CTA shown: $needle" "missing"; fi
+  if has "$view_off" "$needle"; then bad "flag off: install CTA hidden: $needle" "visible"; else ok "flag off: install CTA hidden: $needle"; fi
+done
 
 # --- WAI-ARIA tabs pattern --------------------------------------------------
 
