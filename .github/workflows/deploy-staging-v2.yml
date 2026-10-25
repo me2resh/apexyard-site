@@ -43,8 +43,39 @@ env:
   SITE_DOMAIN: staging.apexyard.ai
 
 jobs:
+  # #107. Build the /docs sub-build in its own job. This job runs npm, so it
+  # gets no AWS access and reads no secret. It passes only the built docs
+  # files to the deploy job, as the `docs-site` artifact. The artifact holds
+  # no overlay value: the overlay runs later, in the deploy job only.
+  # docs-check.yml runs the private term check on each pull request.
+  docs:
+    name: build /docs
+    if: github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: docs-site/package-lock.json
+      - name: Build and check the docs
+        run: .github/scripts/build-docs.sh "$RUNNER_TEMP/docs-out"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: docs-site
+          path: ${{ runner.temp }}/docs-out
+          retention-days: 1
+          if-no-files-found: error
+
   deploy:
     name: overlay + s3 sync + invalidate
+    needs: docs
     if: github.ref == 'refs/heads/staging'
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -97,9 +128,35 @@ jobs:
             --exclude "og/.gitignore" \
             --exclude "og/README.md" \
             --exclude "docs/*" \
+            --exclude "docs.html" \
+            --exclude "docs-site/*" \
             --exclude "README.md" \
             --exclude ".gitignore" \
             --exclude ".lycheeignore"
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: docs-site
+          path: ${{ runner.temp }}/docs-out
+
+      - name: Publish the docs sub-build to staging
+        # build-docs.sh writes docs.html (the /docs home) and docs/ (every
+        # other docs file). The site sync above excludes both paths, so its
+        # --delete does not remove them. The first rm removes the docs-site
+        # source files that an earlier sync uploaded.
+        run: |
+          out="$RUNNER_TEMP/docs-out"
+          test -f "$out/docs.html"
+          test -f "$out/docs/pagefind/pagefind.js"
+          aws s3 rm "s3://${BUCKET}/docs-site/" --recursive --only-show-errors
+          aws s3 sync "$out/docs" "s3://${BUCKET}/docs" \
+            --delete \
+            --only-show-errors \
+            --no-follow-symlinks
+          aws s3 cp "$out/docs.html" "s3://${BUCKET}/docs.html" \
+            --only-show-errors \
+            --content-type "text/html; charset=utf-8"
+          echo "published $(find "$out/docs" -name '*.html' | wc -l | tr -d ' ') docs pages and docs.html"
 
       - name: Publish markdown alternates to staging
         run: |

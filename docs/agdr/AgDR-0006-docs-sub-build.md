@@ -31,5 +31,6 @@ Option A.
 ## Consequences
 
 - A framework release needs a one-line change to `SOURCE.tag` and `SOURCE.commit`, then a build.
-- The staging deploy needs one step that runs `.github/scripts/build-docs.sh` and uploads its output. That step goes into the staging workflow after GH-102 merges.
-- The `/docs` URL moves from the developer guide page of GH-102 to the docs home. Old `/docs#anchor` links go to the matching new page.
+- The staging deploy builds the docs in a separate `docs` job. That job has `contents: read` only, reads no secret and has no AWS access. It passes the built files to the `deploy` job as an artifact. The `deploy` job uploads `docs/` and `docs.html` after the site sync, which excludes both paths.
+- `docs-site/scripts/check-layout.mjs` checks the staged upload against the CloudFront URL rule, so `/docs` resolves to the new docs home.
+- The `/docs` URL moves from the developer guide page of GH-102 to the docs home. The old `docs.html` is removed. Old `/docs#anchor` links go to the matching new page.

@@ -63,14 +63,24 @@ const pages = (n: number) => `${n} ${n === 1 ? 'page' : 'pages'}`;
   </p>
 
   <script is:inline>
-    // Old links to the developer guide used anchors on /docs. Send each to its new page.
+    // Old links to the previous developer page used anchors on /docs. Send each to its new page.
     (function () {
       var map = {
         '#alternative': '/docs/quickstart/install',
         '#install': '/docs/quickstart/install',
-        '#the-rules': '/docs/reference/hooks/overview',
+        '#install-block': '/docs/quickstart/install',
+        '#quickstart': '/docs/quickstart/install',
+        '#get-started-tabs': '/docs/quickstart/install',
+        '#what-you-get': '/docs/quickstart/what-is-apexyard',
+        '#in-the-box': '/docs/quickstart/what-is-apexyard',
+        '#who-this-is-for': '/docs/quickstart/what-is-apexyard',
         '#the-loop': '/docs/quickstart/key-concepts',
+        '#the-rules': '/docs/reference/hooks/overview',
         '#the-gates': '/docs/day-to-day/approvals-and-merge',
+        '#gate-replay': '/docs/day-to-day/approvals-and-merge',
+        '#shell-lifecycle': '/docs/quickstart/first-governed-pr',
+        '#terminal-demo': '/docs/quickstart/first-governed-pr',
+        '#examples': '/docs/quickstart/first-governed-pr',
       };
       var to = map[location.hash];
       if (to) location.replace(to);
