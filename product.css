@@ -846,10 +846,10 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 .mock-score__areas b { font-weight: 600; text-align: right; }
 .mock-meter { height: 8px; background: var(--paper); border-radius: 4px; overflow: hidden; }
 .mock-meter::before { content: ""; display: block; height: 100%; background: var(--ink-2); border-radius: 4px; }
-.mock-meter--86::before { width: 86%; }
+.mock-meter--90::before { width: 90%; }
 .mock-meter--80::before { width: 80%; }
-.mock-meter--64::before { width: 64%; }
-.mock-meter--58::before { width: 58%; }
+.mock-meter--60::before { width: 60%; }
+.mock-meter--50::before { width: 50%; }
 
 /* a CI run */
 .mock-ci { list-style: none; margin: 0; padding: 0; }
