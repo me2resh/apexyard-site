@@ -31,5 +31,15 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: docs-site/package-lock.json
+      - name: Write the private term list (optional)
+        env:
+          TERMS: ${{ secrets.DOCS_PRIVATE_TERMS }}
+        run: |
+          if [ -n "$TERMS" ]; then
+            printf '%s\n' "$TERMS" > "$RUNNER_TEMP/private-terms.txt"
+            echo "DOCS_PRIVATE_TERMS=$RUNNER_TEMP/private-terms.txt" >> "$GITHUB_ENV"
+          else
+            echo "No DOCS_PRIVATE_TERMS secret. The check uses the generic terms only."
+          fi
       - name: Build and check the docs
         run: .github/scripts/build-docs.sh "$RUNNER_TEMP/site"

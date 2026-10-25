@@ -468,12 +468,12 @@ export const SECTIONS = [
   { id: 'reference', title: 'Reference', summary: 'Facts to look up: every skill, hook, rule, role and setting.', groups: reference },
 ];
 
-// Words that mark text about paid components or prices. A page whose text
-// matches is excluded. Private repository names come from the file in
+// Generic words that mark text about paid components or prices. A page whose
+// text matches is excluded. Keep only generic terms here: this repo is public.
+// Private repository names and offer names come from the file in
 // DOCS_PRIVATE_TERMS (one term per line). That file stays outside this repo.
 export const DENY_TERMS = [
   '\\bpremium\\b',
-  'founding access',
   '\\bpaid (?:tier|plan|component|feature)s?\\b',
   '\\bpric(?:e|es|ing)\\b',
 ];
