@@ -43,17 +43,28 @@ assert "deploy never touches the prod bucket"       bash -c "! grep -q 'apexyard
 assert "deploy validates PR number as digits"       has "$deploy" '\^\[0-9\]\+\$'
 assert "deploy does not use pull request head"      bash -c "! grep -q 'pull_request.head' '$deploy'"
 
-# No job that assumes the role may declare environment:.
+# No job that assumes the shared role may declare environment:. The one
+# exception is the #102 staging overlay job: it declares the `staging`
+# environment and assumes its own scoped role, never the shared one.
 envcheck() {
   python3 - "$@" <<'PY'
-import sys, yaml
+import os, sys, yaml
 bad = []
 for path in sys.argv[1:]:
     doc = yaml.safe_load(open(path))
     for name, job in (doc.get("jobs") or {}).items():
         text = yaml.safe_dump(job)
         if "role-to-assume" in text and "environment" in job:
-            bad.append(f"{path}:{name}")
+            env = job["environment"]
+            env_name = env.get("name") if isinstance(env, dict) else env
+            scoped = (
+                os.path.basename(path) == "deploy-staging-v2.yml"
+                and env_name == "staging"
+                and "vars.STAGING_OVERLAY_ROLE_ARN" in text
+                and "env.ROLE_ARN" not in text
+            )
+            if not scoped:
+                bad.append(f"{path}:{name}")
 if bad:
     print("jobs with AWS role and environment:", bad)
     sys.exit(1)

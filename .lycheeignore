@@ -1,0 +1,8 @@
+# Links that lychee must skip. One regular expression per line.
+#
+# Placeholder booking URL in the home page "Book a demo" block (#102). The
+# page does not exist yet, so it returns 404. Remove this line when the real
+# booking page replaces it. Switch-on checklist item in PR #106: "Replace the
+# placeholder booking URL https://cal.com/apexyard/demo with the real
+# booking page".
+^https://cal\.com/apexyard/demo$

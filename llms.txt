@@ -8,8 +8,10 @@
 
 ## Pages
 
-- [Home](https://apexyard.ai/) — what apexyard does for non-technical founders, who it is for, how to get started
+- [Home](https://apexyard.ai/) — ApexYard checks every pull request that coding agents open against your team's rules, and merges it only after a named person approves it on GitHub
+- [Docs](https://apexyard.ai/docs) — the framework guide: install, the daily loop, the gates, hooks and rules, and a real merge replayed from the log
 - [How it works](https://apexyard.ai/how-it-works) — a plain-English walkthrough of one realistic day with apexyard
+- [Pricing](https://apexyard.ai/pricing) — the open-source framework (MIT), a free way to start with the hosted gate, Startup, Team and Enterprise plans, and reviews of how your team ships
 - [Architecture](https://apexyard.ai/architecture) — the technical 5-layer model + portfolio model
 - [Skills](https://apexyard.ai/skills) — full slash-command reference (69 skills) grouped by outcome
 
@@ -21,6 +23,8 @@
 
 - **Solo founders shipping with AI** (Claude Code, Codex, OpenCode, Pi, Cursor) — needing the
   guardrails a real team would give them, without a real team
+- **Teams of 10 to 25** — several engineers and repositories, each person
+  working with AI agents, needing one review process and one set of gates
 - **Non-technical founders running contractors or a small dev team** — needing
   to know the work is solid without reading every commit themselves
 - **Small teams with no engineering process yet** — needing real review, real
@@ -73,10 +77,14 @@
 
 ## Adoption pattern
 
-- Fork [`me2resh/apexyard`](https://github.com/me2resh/apexyard) on GitHub
-- Clone the fork, treat it as your ops repo
+- Install the CLI (`curl -fsSL https://apexyard.ai/install | sh`,
+  `brew install me2resh/tap/apexyard`, or `npx create-apexyard`), then run
+  `apexyard init` in your project folder. The Cockpit desktop app runs the
+  same steps. The result is the same either way.
+- Alternative: fork [`me2resh/apexyard`](https://github.com/me2resh/apexyard)
+  on GitHub, clone the fork, and treat it as your ops repo
 - Edit `onboarding.yaml` + `apexyard.projects.yaml` to register projects
-- Run `/projects`, `/inbox`, `/status` to confirm the portfolio is wired
+- Run `/projects`, `/inbox`, `/status` to check that the portfolio is wired
 - Adopt external repos via `/handover <repo>`
 - Two setup modes: single-fork (everything in the fork) or split-portfolio
   (public fork + private sibling repo for adopter-specific data)
