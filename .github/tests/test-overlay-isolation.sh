@@ -39,7 +39,16 @@ assert "only v2 reads STAGING_OVERLAY"                   only_v2_mentions 'STAGI
 assert "only v2 runs apply-overlay.sh"                   only_v2_mentions 'apply-overlay\.sh'
 assert "only v2 runs check-prod-overlay-free.sh"         only_v2_mentions 'check-prod-overlay-free\.sh'
 assert "v2 reads the secret only into OVERLAY_JSON"      bash -c "code_lines=\$(grep -vE '^\s*#' '$v2' | grep 'secrets\.'); [ -n \"\$code_lines\" ] && ! grep -vqE '^\s*OVERLAY_JSON: \\$\\{\\{ secrets\.STAGING_OVERLAY \\}\\}\s*$' <<<\"\$code_lines\""
-assert "v2 has no upload-artifact"                       bash -c "! grep -vE '^\s*#' '$v2' | grep -q 'upload-artifact'"
+# The deploy job holds the overlay output, so it uploads no artifact. The docs
+# job (#107) runs before the overlay, reads no secret, and uploads only the
+# built docs.
+v2_job() { awk -v name="  $1:" '$0 == name { on = 1; next } on && /^  [a-z][a-z0-9_-]*:$/ { exit } on' "$v2"; }
+export -f v2_job
+export v2
+assert "v2 deploy job has no upload-artifact"            bash -c "! grep -vE '^\s*#' <<<\"\$(v2_job deploy)\" | grep -q 'upload-artifact'"
+assert "v2 uploads only from the docs job"               bash -c "[ \"\$(grep -vE '^\s*#' '$v2' | grep -c 'upload-artifact')\" -eq \"\$(grep -vE '^\s*#' <<<\"\$(v2_job docs)\" | grep -c 'upload-artifact')\" ]"
+assert "v2 docs job reads no secret"                     bash -c "! grep -vE '^\s*#' <<<\"\$(v2_job docs)\" | grep -q 'secrets\.'"
+assert "v2 docs job uploads only the built docs"         bash -c "grep -vE '^\s*#' <<<\"\$(v2_job docs)\" | grep -q 'path: \$[{][{] runner.temp [}][}]/docs-out'"
 assert "v2 writes nothing to the step summary"           bash -c "! grep -vE '^\s*#' '$v2' | grep -q 'GITHUB_STEP_SUMMARY'"
 assert "v2 never names the production bucket"            bash -c "! grep -q 'apexyard-site-prod' '$v2'"
 assert "v2 syncs the overlaid copy, not the checkout"    bash -c "grep -vE '^\s*#' '$v2' | grep -q 'aws s3 sync \"\$RUNNER_TEMP/site\"'"
@@ -71,13 +80,27 @@ if set(on) != {"push"}:
 elif on["push"].get("branches") != ["staging"] or set(on["push"]) != {"branches"}:
     errors.append("v2 must trigger on push to the staging branch only")
 jobs = v2.get("jobs") or {}
-if len(jobs) != 1:
-    errors.append("v2 must have exactly one job")
+# One job (deploy) holds the overlay and the AWS role. A helper job, such as
+# the #107 docs build, gets no environment, no secret and no id-token.
+overlay_jobs = [n for n, j in jobs.items() if "apply-overlay.sh" in yaml.safe_dump(j)]
+if overlay_jobs != ["deploy"]:
+    errors.append(f"v2 must run the overlay in the deploy job only, found {overlay_jobs}")
 for name, job in jobs.items():
-    if env_name(job) != "staging":
-        errors.append(f"v2:{name} must declare the staging environment")
     if "refs/heads/staging" not in str(job.get("if", "")):
         errors.append(f"v2:{name} must guard on refs/heads/staging")
+    if name == "deploy":
+        if env_name(job) != "staging":
+            errors.append(f"v2:{name} must declare the staging environment")
+        continue
+    text = yaml.safe_dump(job)
+    if env_name(job) is not None:
+        errors.append(f"v2:{name} is a helper job and must not declare an environment")
+    if "secrets." in text:
+        errors.append(f"v2:{name} is a helper job and must not read a secret")
+    if job.get("permissions") != {"contents": "read"}:
+        errors.append(f"v2:{name} is a helper job and must have contents: read only")
+    if "aws" in text.lower():
+        errors.append(f"v2:{name} is a helper job and must not use AWS")
 
 prod = yaml.safe_load(open(os.path.join(wf, "deploy-aws.yml")))
 for name in ("approve-production", "deploy-production"):
