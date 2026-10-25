@@ -107,15 +107,16 @@ claude            # start Claude Code in the repo</code></pre></div>
 
   <p class="note"><strong>Step 1 — install the CLI.</strong> Run from <b>anywhere</b>. Paste the token at the hidden prompt; we export it as <code>APEXYARD_DEPLOY_TOKEN</code> so the wizard reuses it in Step 2 (no second prompt):</p>
   <div class="cmd"><button class="copy">Copy</button><pre><code>read -rs APEXYARD_DEPLOY_TOKEN; export APEXYARD_DEPLOY_TOKEN; echo
-pipx install "git+https://${APEXYARD_DEPLOY_TOKEN}@github.com/me2resh/apexyard-premium.git"</code></pre></div>
+pipx install "&lt;package URL from your invitation&gt;"</code></pre></div>
+  <p class="note">Access is by invitation. <a href="https://cal.com/apexyard/demo?src=apexdock">Book a demo</a> to get set up.</p>
 
   <p class="note"><strong>Step 2 — run the wizard.</strong> Run from <b>your apexyard fork</b> (it detects your roots from there). The <code>--confirm</code> flag lets you pick the gated (🔒) skills like <code>/roundtable</code> and enables them for you:</p>
   <div class="cmd"><button class="copy">Copy</button><pre><code>cd ~/path/to/your-apexyard-fork
-apexyard-premium setup --confirm</code></pre></div>
+&lt;toolkit-cli&gt; setup --confirm</code></pre></div>
   <p>When it lists components, type the numbers for the set you want — recommended: <b>apexyard-search, aws-diagram, apexyard-admin, apexyard-deploy, apexyard-pdf, apexyard-playbooks, apexyard-loops, roundtable</b>. Then <b>restart Claude Code</b> so the new skills load.</p>
 
   <p class="note"><strong>Missed one?</strong> Install any single skill later from your fork — <code>--confirm</code> enables it if it's gated:</p>
-  <div class="cmd"><button class="copy">Copy</button><pre><code>apexyard-premium install roundtable --confirm</code></pre></div>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>&lt;toolkit-cli&gt; install roundtable --confirm</code></pre></div>
 
   <p class="note"><strong>Where the token comes from:</strong> whoever sent you this guide generated it (GitHub fine-grained PAT, read-only). Ask them to refresh it if it expires — you never need write access to any private repo.</p>
 
@@ -143,8 +144,8 @@ apexyard-premium setup --confirm</code></pre></div>
 
   <h3>1.4 — Open your dashboard (optional, recommended)</h3>
   <p>A browser view of your portfolio — including a read-only <b>spend</b> view so you can watch token cost as you go (nothing caps you; you just <em>see</em> it). The dashboard is password-protected; a <b>unique password is generated for your install</b> at <code>~/.config/apexyard/admin.env</code> the first time it starts.</p>
-  <p class="note"><strong>Start it.</strong> The dashboard reads your portfolio (projects <em>and</em> skills) from the <code>APEXYARD_OPS_ROOT</code> / <code>APEXYARD_PORTFOLIO_ROOT</code> roots — the setup wizard already saved the correct values to <code>apexyard-premium.env</code>. <b>Source that file</b> so the dashboard finds them (don't hand-type paths — they differ in split-portfolio setups):</p>
-  <div class="cmd"><button class="copy">Copy</button><pre><code>source ~/path/to/your-apexyard-portfolio/apexyard-premium.env
+  <p class="note"><strong>Start it.</strong> The dashboard reads your portfolio (projects <em>and</em> skills) from the <code>APEXYARD_OPS_ROOT</code> / <code>APEXYARD_PORTFOLIO_ROOT</code> roots — the setup wizard already saved the correct values to <code>&lt;toolkit&gt;.env</code>. <b>Source that file</b> so the dashboard finds them (don't hand-type paths — they differ in split-portfolio setups):</p>
+  <div class="cmd"><button class="copy">Copy</button><pre><code>source ~/path/to/your-apexyard-portfolio/&lt;toolkit&gt;.env
 cd "$APEXYARD_PORTFOLIO_ROOT/apps/apexyard-admin"
 npm run dev</code></pre></div>
   <p class="note">Watch the startup line — it should read <code>wrote .env.local (APEXYARD_OPS_ROOT, APEXYARD_PORTFOLIO_ROOT, APEXYARD_ADMIN_PASSWORD)</code>. If it lists <b>only</b> the password, the roots weren't set and the dashboard will show <b>no projects and no skills</b> — re-source the env file and relaunch.</p>
