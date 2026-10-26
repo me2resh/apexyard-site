@@ -19,3 +19,10 @@
 # Their canonical production URLs return 404 until the pages reach
 # production. Remove this line after the switch-on deploy.
 ^https://apexyard\.ai/(build|gate|readiness)$
+
+# Clean URL of the creators page (#123). The CDN serves /creators from
+# creators.html, so the offline file check cannot resolve it. The canonical
+# production URL returns 404 until the page reaches production. Remove the
+# second line after the switch-on deploy.
+^file://.*/creators$
+^https://apexyard\.ai/creators$

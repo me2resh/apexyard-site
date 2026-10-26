@@ -943,6 +943,49 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
   .mock-score__areas li { grid-template-columns: 7rem 1fr 2rem; }
 }
 
+/* ---------- creators page (#123) ----------
+   The creator kit is a sheet of rows divided by rules: a name on the left,
+   the material on the right. The rule diagram is the only moving part, and
+   it is the shared rule map. */
+.creators-for__list { list-style: none; margin: 2rem 0 0; padding: 0; display: grid; gap: 1.25rem; max-width: 62ch; }
+.creators-for__list li { padding-top: 1rem; border-top: 1px solid var(--line); color: var(--ink-2); }
+.creators-for__list strong { color: var(--ink); font-weight: 600; }
+
+.kit { margin-top: clamp(2rem, 4vw, 3rem); border-bottom: 1px solid var(--line); }
+.kit__row { display: grid; gap: 1.25rem; padding: 2rem 0; border-top: 1px solid var(--line); }
+.kit__row > * { min-width: 0; }
+.kit__name { font-size: 1.2rem; line-height: 1.2; font-stretch: 106%; }
+.kit__note { margin-top: 1rem; color: var(--ink-2); max-width: 62ch; }
+.kit__diagram > .kit__note { margin-top: 0; }
+.kit__facts { margin: 0; display: grid; gap: 1.1rem; max-width: 62ch; }
+.kit__facts dt { font-weight: 600; }
+.kit__facts dd { margin: 0.15rem 0 0; color: var(--ink-2); }
+.kit__facts dd a { font-weight: 600; }
+.kit__links { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
+.kit__links li { display: grid; gap: 0.1rem; }
+.kit__links a { font-weight: 600; overflow-wrap: anywhere; }
+.kit__links span { color: var(--ink-2); font-size: 15px; }
+.kit__logos { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 1.5rem 2rem; align-items: flex-end; }
+.kit__logos img { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
+.kit__logos li:first-child img { width: 128px; height: 128px; }
+.kit__logos li:last-child img { width: 192px; height: 192px; }
+.kit__logos p { margin-top: 0.6rem; font-size: 15px; color: var(--ink-2); }
+.kit__shot { margin: 0; }
+.kit__shot img { border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+.kit__shot figcaption { margin-top: 0.75rem; font-size: 14px; color: var(--ink-2); }
+.kit__brief { color: var(--ink-2); max-width: 56ch; }
+.kit__brief-link { margin-top: 1.25rem; }
+.kit__row--diagram .rule-map { margin-top: 1.5rem; }
+@media (min-width: 900px) {
+  .kit__row { grid-template-columns: 13rem minmax(0, 1fr); gap: 3rem; padding: 2.5rem 0; }
+  /* The diagram needs the full measure for its row of stages. */
+  .kit__row--diagram { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+}
+
+.creators-empty { margin-top: 2rem; max-width: 46rem; padding: 1.75rem 1.5rem; border: 1px dashed var(--ink-2); border-radius: 8px; display: grid; gap: 0.6rem; color: var(--ink-2); }
+.creators-empty__title { font: 700 1.2rem/1.3 var(--display); font-stretch: 106%; color: var(--ink); }
+.creators-empty a { font-weight: 600; }
+
 /* ---------- readiness: a real report in the hero (#102) ----------
    A real audit of a public sample app, in the score-card look of the mocks.
    The verdict of each area is text. Colour and the marker shape only

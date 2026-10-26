@@ -41,6 +41,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://apexyard.ai/creators</loc>
+    <lastmod>2026-10-26</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://apexyard.ai/game</loc>
     <lastmod>2026-06-08</lastmod>
     <priority>0.7</priority>
