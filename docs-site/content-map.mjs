@@ -88,6 +88,12 @@ const learn = [
         slug: 'quickstart/glossary',
         title: 'Glossary',
         description: 'Plain-language meanings for the terms the framework uses.',
+        callouts: [
+          {
+            type: 'note',
+            text: '**Keel**: your team\'s rules and context, read by every agent. Keel is the rules, handbooks and decisions your agents read. In the framework, these are files in your repository.',
+          },
+        ],
         parts: [{ source: 'docs/onboarding/glossary.md' }],
       },
     ],
@@ -425,7 +431,7 @@ const learn = [
         callouts: [
           {
             type: 'coming',
-            text: 'We have not built the hosted Production-Ready Score and its hosted trend yet. We have not published their formula. Until then, use the `/launch-check` score on this page.',
+            text: 'We have not built the hosted readiness score and its hosted trend yet. We have not published their formula. Until then, use the `/launch-check` score on this page.',
           },
         ],
       },
