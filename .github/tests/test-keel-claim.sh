@@ -75,12 +75,14 @@ function run(state) {
 
   const claimEls = [outer, inner];
   const empty = [];
+  const appended = [];
   global.window = {
     APEXYARD_CLAIMS: null,
     gtag: undefined,
     matchMedia: undefined,
     fetch: undefined,
-    history: undefined
+    history: undefined,
+    addEventListener: function () {}
   };
   global.location = { hash: '', replace: function () {} };
   global.navigator = {};
@@ -91,6 +93,10 @@ function run(state) {
       getAttribute: function () { return null; },
       setAttribute: function () {}
     },
+    head: {
+      appendChild: function (child) { appended.push(child); }
+    },
+    createElement: function () { return makeEl({}, ''); },
     getElementById: function () { return null; },
     querySelector: function () { return null; },
     querySelectorAll: function (sel) {
@@ -106,7 +112,13 @@ function run(state) {
   }
   const value = global.window.APEXYARD_CLAIMS.keel_versions;
   eval(productSrc);
-  return { inner: inner.textContent, line: lineText(), stateAttr: inner.getAttribute('data-claim-state'), value: value };
+  return {
+    inner: inner.textContent,
+    line: lineText(),
+    stateAttr: inner.getAttribute('data-claim-state'),
+    value: value,
+    appended: appended
+  };
 }
 
 let errors = [];
@@ -141,6 +153,11 @@ if (coming.stateAttr !== 'coming') {
   errors.push("coming: data-claim-state is " + JSON.stringify(coming.stateAttr));
 }
 
+const scripts = file.appended.map(function (el) { return el.src; });
+if (scripts.length !== 2 || scripts[0] !== '/site-config.js' || scripts[1] !== '/waitlist.js') {
+  errors.push('appended scripts are ' + JSON.stringify(scripts));
+}
+
 if (errors.length) {
   errors.forEach(function (e) { console.log('FAIL  product.js: ' + e); });
   process.exit(1);
@@ -148,6 +165,7 @@ if (errors.length) {
 console.log('PASS  product.js file value yields expected Keel line');
 console.log('PASS  product.js live keeps " and versions"');
 console.log('PASS  product.js coming drops " and versions"');
+console.log('PASS  product.js appends /site-config.js then /waitlist.js');
 NODE
 )
 node_rc=$?
