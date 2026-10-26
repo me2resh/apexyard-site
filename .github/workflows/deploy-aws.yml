@@ -64,6 +64,7 @@ jobs:
             --exclude ".gitignore" \
             --exclude ".lycheeignore" \
             --exclude "install" \
+            --exclude "install.html" \
             --exclude "install.source"
 
       - name: Publish markdown alternates to staging
@@ -137,6 +138,7 @@ jobs:
             --exclude ".gitignore" \
             --exclude ".lycheeignore" \
             --exclude "install" \
+            --exclude "install.html" \
             --exclude "install.source"
 
       - name: Publish markdown alternates to production

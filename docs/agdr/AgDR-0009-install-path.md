@@ -20,6 +20,7 @@
 | --- | --- | --- |
 | Redirect /install to the raw file on GitHub | No file in this repository. | The redirect adds a hop. The user trusts a branch URL that can change. The site cannot set the content type or the cache. The redirect target is a GitHub path that the site does not control. |
 | Serve the file from this repository at /install | One host. The site sets the content type and the cache. A checksum pins the content. | The file is a copy. A person must update it for each release. |
+| Change the edge function to pass /install through | Key `install`, no rename. | Change in another repository; production needs the same change. |
 | Do nothing until the release | No work now. | The serving setup is not tested. The production change is large. |
 
 ## Decision
@@ -27,17 +28,19 @@
 Chosen: **serve the file from this repository**, because the site controls the bytes, the content type and the cache.
 
 1. `install` is the framework `install.sh`, unchanged. `install.source` records the repository, the commit and the SHA-256.
-2. The staging workflow excludes `install` and `install.source` from the bulk sync. A separate `aws s3 cp` publishes `install` with `Content-Type: text/plain; charset=utf-8` and `Cache-Control: max-age=300`. S3 cannot guess a type for a path with no extension, so the copy sets it.
-3. The production workflow excludes both files from each sync. It does not publish /install.
+2. The S3 key is `install.html`. The CloudFront viewer-request function rewrites each path without a file extension to `<path>.html`, so /install reads the key `install.html`. The function lives in the infrastructure repository. The staging workflow excludes `install`, `install.html` and `install.source` from the bulk sync. A separate `aws s3 cp` publishes the repo file `install` to that key with `Content-Type: text/plain; charset=utf-8` and `Cache-Control: max-age=300`. The AWS CLI guesses a type from the file name. The copy sets the type.
+3. The production workflow excludes `install`, `install.html` and `install.source` from each sync. It does not publish /install.
 4. `.github/tests/test-install-path.sh` checks the SHA-256, the staging type and cache, and the production exclusion.
-5. For production, a later change replaces `install` with the stamped script from the tagged release and updates `install.source`. The test then pins the new checksum. The production workflow gets the same `aws s3 cp` step and drops the exclusion.
+5. For production, a later change replaces `install` with the stamped script from the tagged release and updates `install.source`. The test then pins the new checksum. The production workflow gets the same `aws s3 cp` to the key `install.html`, or the edge function changes so the key can stay `install`. Every sync that writes the bucket in `deploy-staging-v2.yml`, `deploy-aws.yml`, `deploy-aws-staging.yml` and `preview-deploy.yml` excludes `install`, `install.html` and `install.source`.
 
 ## Consequences
 
 - Production serves no /install until the release change merges.
 - The staging copy is the unstamped `dev` script. Do not use it as a release installer.
 - A person updates `install.source` and `install` together. The test fails if they differ.
-- The staging CloudFront distribution must pass the extensionless path to S3 with no rewrite to HTML. The staging deploy shows if it does not.
+- /install.html also serves the script.
+- Staging returns 401 without credentials. A smoke test needs credentials.
+- The production change uses the key `install.html`, or a function change.
 
 ## Artifacts
 
@@ -46,3 +49,5 @@ Chosen: **serve the file from this repository**, because the site controls the b
 - `.github/tests/test-install-path.sh`
 - `.github/workflows/deploy-staging-v2.yml`
 - `.github/workflows/deploy-aws.yml`
+- `.github/workflows/deploy-aws-staging.yml`
+- `.github/workflows/preview-deploy.yml`

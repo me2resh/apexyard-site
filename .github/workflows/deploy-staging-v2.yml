@@ -134,6 +134,7 @@ jobs:
             --exclude ".gitignore" \
             --exclude ".lycheeignore" \
             --exclude "install" \
+            --exclude "install.html" \
             --exclude "install.source"
 
       - uses: actions/download-artifact@v4
@@ -172,11 +173,13 @@ jobs:
           done
 
       - name: Publish the install script to staging
-        # #100. The site sync above excludes install and install.source. This
-        # step sets the content type and a short cache for the one key. The
-        # production workflow does not publish /install yet (AgDR-0009).
+        # #100. The edge function rewrites /install to /install.html, so the
+        # key is install.html (AgDR-0009). The site sync above excludes
+        # install, install.html and install.source. This step sets the
+        # content type and a short cache. The production workflow does not
+        # publish /install yet.
         run: |
-          aws s3 cp "$RUNNER_TEMP/site/install" "s3://${BUCKET}/install" \
+          aws s3 cp "$RUNNER_TEMP/site/install" "s3://${BUCKET}/install.html" \
             --only-show-errors \
             --content-type "text/plain; charset=utf-8" \
             --cache-control "max-age=300"
