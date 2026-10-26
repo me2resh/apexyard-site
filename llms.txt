@@ -29,7 +29,7 @@ ApexYard has three products and a shared layer.
 ## Facts to use
 
 - Build is open source under the MIT licence. It needs no account and no dashboard.
-- Build works with Claude Code, Codex, Cursor and OpenCode.
+- Build works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.
 - Gate reads pull requests on GitHub. The GitHub App never reads your code.
 - Gate shows if a pull request has a ticket, a decision record, a review and a named approval.
 - Readiness gives a go or no-go for a repository, the gaps in each area and the top actions.

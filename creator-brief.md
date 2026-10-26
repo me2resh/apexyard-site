@@ -31,7 +31,7 @@ Example rule: "Every change starts from a ticket."
 
 - Build is open source under the MIT licence.
 - Build needs no account and no dashboard.
-- Build works with Claude Code, Codex, Cursor and OpenCode.
+- Build works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.
 - Build runs on the developer's machine.
 - Gate checks each pull request on GitHub.
 - Gate checks for a ticket, a decision record, a review and a named approval.
