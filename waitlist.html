@@ -1,0 +1,200 @@
+<!doctype html>
+<!--
+  ApexYard, © 2026 me2resh
+  apexyard.ai, github.com/me2resh/apexyard, MIT licence
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join the waitlist | ApexYard</title>
+<meta name="author" content="me2resh">
+<meta name="description" content="Join the waitlist for the hosted ApexYard Gate. We open it to teams in small groups.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://apexyard.ai/waitlist">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#EEF1F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1B2E" media="(prefers-color-scheme: dark)">
+<script>try{var t=localStorage.getItem('ay-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/plex-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/product.css">
+
+<!-- begin: gtag — keep in sync across all site/*.html pages (#399) -->
+<!-- Google tag (gtag.js) with Consent Mode v2 - analytics_storage defaults to denied
+     until the consent banner below records an explicit choice. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G3EMR3CB02"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied'
+  });
+  try {
+    if (localStorage.getItem('ay-consent') === 'granted') {
+      gtag('consent', 'update', { 'analytics_storage': 'granted' });
+    }
+  } catch (e) {}
+  gtag('js', new Date());
+  gtag('config', 'G-G3EMR3CB02');
+</script>
+<!-- end: gtag -->
+</head>
+<body>
+
+<a href="#main" class="skip">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__bar">
+    <a href="/" class="brand"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" fill="#2D5BE3"/><text x="50" y="53" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="46" font-weight="700" letter-spacing="-4" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">AY</text></svg><span>ApexYard</span></a>
+    <button class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false" data-theme-toggle hidden>
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 2.75a7.25 7.25 0 0 1 0 14.5z" fill="currentColor"/></svg>
+    </button>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <div class="site-nav__group">
+        <button class="site-nav__menu" type="button" aria-expanded="false" aria-controls="product-menu">Product</button>
+        <ul class="site-nav__sub" id="product-menu">
+          <li><a href="/build">Build</a></li>
+          <li><a href="/gate">Gate</a></li>
+          <li><a href="/readiness">Readiness</a></li>
+        </ul>
+      </div>
+      <a href="/pricing">Pricing</a>
+      <a href="/docs">Docs</a>
+      <div class="site-nav__right">
+        <a href="https://app.apexyard.ai" class="site-nav__login">Log in</a>
+        <a href="https://cal.com/apexyard/demo?src=nav" class="btn btn--primary btn--small" rel="noopener">Book a demo</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="waitlist" aria-labelledby="waitlist-title">
+    <div class="wrap waitlist__wrap">
+      <p class="product-head__name">Gate</p>
+      <h1 id="waitlist-title">Join the waitlist for the hosted Gate.</h1>
+      <p class="product-head__who">We open ApexYard to teams in small groups. Tell us who you are and what you want to govern. We use your answers to choose who comes next.</p>
+
+      <div class="waitlist__done" id="waitlist-done" role="status" tabindex="-1" hidden>
+        <p class="waitlist__done-title">Thanks. We are opening ApexYard to teams in small groups. We will email you.</p>
+      </div>
+
+      <form class="waitlist__form" id="waitlist-form" method="post" action="/waitlist" novalidate hidden>
+        <div class="waitlist__errors" id="waitlist-errors" role="alert" tabindex="-1" hidden></div>
+
+        <div class="field" data-field="email">
+          <label for="wl-email">Work email</label>
+          <input type="email" id="wl-email" name="email" autocomplete="email" inputmode="email" required aria-describedby="wl-email-err">
+          <p class="field__err" id="wl-email-err" hidden></p>
+        </div>
+
+        <fieldset class="field" data-field="audience" aria-describedby="wl-audience-err">
+          <legend>Who is it for?</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="audience" value="solo-developer" required><span>Solo developer</span></label>
+            <label class="choice"><input type="radio" name="audience" value="startup-team"><span>Startup team</span></label>
+            <label class="choice"><input type="radio" name="audience" value="engineering-lead"><span>Engineering lead</span></label>
+            <label class="choice"><input type="radio" name="audience" value="cto-or-vp"><span>CTO or VP</span></label>
+            <label class="choice"><input type="radio" name="audience" value="consultancy"><span>Consultancy</span></label>
+          </div>
+          <p class="field__err" id="wl-audience-err" hidden></p>
+        </fieldset>
+
+        <fieldset class="field" data-field="govern" aria-describedby="wl-govern-hint wl-govern-err">
+          <legend>What do you want to govern?</legend>
+          <p class="field__hint" id="wl-govern-hint">Choose all that apply.</p>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="govern" value="ai-written-pull-requests"><span>AI-written pull requests</span></label>
+            <label class="choice"><input type="checkbox" name="govern" value="review-and-approval"><span>Review and approval</span></label>
+            <label class="choice"><input type="checkbox" name="govern" value="audit-evidence"><span>Audit evidence</span></label>
+            <label class="choice"><input type="checkbox" name="govern" value="readiness-before-launch"><span>Readiness before launch</span></label>
+            <label class="choice"><input type="checkbox" name="govern" value="something-else"><span>Something else</span></label>
+          </div>
+          <p class="field__err" id="wl-govern-err" hidden></p>
+        </fieldset>
+
+        <div class="field" data-field="team_size">
+          <label for="wl-size">Team size</label>
+          <select id="wl-size" name="team_size" required aria-describedby="wl-size-err">
+            <option value="">Choose a size</option>
+            <option value="1">Only me</option>
+            <option value="2-10">2 to 10 people</option>
+            <option value="11-50">11 to 50 people</option>
+            <option value="51-200">51 to 200 people</option>
+            <option value="200+">More than 200 people</option>
+          </select>
+          <p class="field__err" id="wl-size-err" hidden></p>
+        </div>
+
+        <fieldset class="field" data-field="tools" aria-describedby="wl-tools-hint wl-tools-err">
+          <legend>Which agent tools do you use?</legend>
+          <p class="field__hint" id="wl-tools-hint">Choose all that apply.</p>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="tools" value="claude-code"><span>Claude Code</span></label>
+            <label class="choice"><input type="checkbox" name="tools" value="codex"><span>Codex</span></label>
+            <label class="choice"><input type="checkbox" name="tools" value="cursor"><span>Cursor</span></label>
+            <label class="choice"><input type="checkbox" name="tools" value="copilot"><span>Copilot</span></label>
+            <label class="choice"><input type="checkbox" name="tools" value="opencode"><span>OpenCode</span></label>
+            <label class="choice"><input type="checkbox" name="tools" value="other"><span>Other</span></label>
+            <label class="choice"><input type="checkbox" name="tools" value="none-yet"><span>None yet</span></label>
+          </div>
+          <p class="field__err" id="wl-tools-err" hidden></p>
+        </fieldset>
+
+        <div class="waitlist__submit">
+          <button class="btn btn--primary" type="submit" id="waitlist-submit">Join the waitlist</button>
+        </div>
+
+        <p class="waitlist__privacy">We store your email and these answers to choose who joins next. We do not share them. To delete them, <a href="#" class="mailto-cta" data-u="hello" data-d="apexyard.ai" data-s="Delete my waitlist data">email us</a>.</p>
+      </form>
+
+      <noscript><p class="waitlist__noscript">This form needs JavaScript. You can <a href="https://cal.com/apexyard/demo?src=waitlist" rel="noopener">book a demo</a> instead.</p></noscript>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <nav aria-label="Footer">
+      <a href="/build">Build</a>
+      <a href="/gate">Gate</a>
+      <a href="/readiness">Readiness</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/docs">Docs</a>
+      <a href="/architecture">Architecture</a>
+      <a href="/skills">Skills</a>
+      <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">Changelog</a>
+      <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <p>© 2026 <a href="https://me2resh.com" target="_blank" rel="noopener">me2resh</a>. The ApexYard framework is open source under the MIT licence.</p>
+  </div>
+</footer>
+
+<div id="consent" class="consent" role="region" aria-label="Cookie consent" hidden>
+  <div class="consent__inner">
+    <p class="consent__msg">
+      This site uses Google Analytics to count visits. No ads, no cross-site tracking.
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy</a>.
+    </p>
+    <div class="consent__actions">
+      <button type="button" class="consent__btn" data-consent="denied">Decline</button>
+      <button type="button" class="consent__btn consent__btn--accept" data-consent="granted">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script src="/claims.js" defer></script>
+<script src="/product.js" defer></script>
+</body>
+</html>
