@@ -188,10 +188,27 @@ This page is published later.
 </div>
 EOF
 
-out="$(cd "$site" && node "$lint" --root . 2>&1 || true)"
+# Run the lint in the page-mode fixture. Print the output. Never fail.
+site_out() {
+  (
+    cd "$site" || exit 0
+    node "$lint" --root . "$@" 2>&1
+  ) || true
+}
+# Print the exit code of the lint in the page-mode fixture.
+site_code() {
+  local rc=0
+  (
+    cd "$site" || exit 2
+    node "$lint" --root . "$@" >/dev/null 2>&1
+  ) || rc=$?
+  echo "$rc"
+}
+
+out="$(site_out)"
 assert "rules: the cache copy is used when it exists"  out_has "$out" "rules from .cache/apexyard-v9.9.9/docs/docs-lint-rules.json"
 rm "$site/.cache/apexyard-v9.9.9/docs/docs-lint-rules.json"
-out="$(cd "$site" && node "$lint" --root . 2>&1 || true)"
+out="$(site_out)"
 assert "rules: the site copy is the fallback"          out_has "$out" "rules from lint/docs-lint-rules.json"
 
 # ---------------------------------------------------------------- page mode
@@ -202,15 +219,13 @@ assert "page mode: a page with no source is all site text"    out_has "$out" 'le
 assert "page mode: findings are grouped per page"             out_has "$out" "== learn/mixed: 2 findings, 1 in scope"
 assert "page mode: summary counts by owner"                   out_has "$out" "by owner: framework 1, site 2"
 assert "page mode: scope is site-owned text"                  out_has "$out" "in scope (site-owned text): 2"
-code="$(cd "$site" && { node "$lint" --root . --strict >/dev/null 2>&1; echo $?; })"
-assert "page mode: strict fails on site-owned findings"       test "$code" = 1
+assert "page mode: strict fails on site-owned findings"       test "$(site_code --strict)" = 1
 
 # Fix the site text. Framework findings alone do not fail strict mode.
 sed -i.bak 's/The audits are run by the agent\./The agent runs the audits./' "$site/content-map.mjs" "$site/src/content/docs/learn/mixed.md"
 sed -i.bak 's/This page is published later\./We publish this page later./' "$site/content-map.mjs" "$site/src/content/docs/learn/coming.md"
-code="$(cd "$site" && { node "$lint" --root . --strict >/dev/null 2>&1; echo $?; })"
-assert "page mode: strict passes with framework findings only" test "$code" = 0
-out="$(cd "$site" && node "$lint" --root . --scope-only 2>&1)"
+assert "page mode: strict passes with framework findings only" test "$(site_code --strict)" = 0
+out="$(site_out --scope-only)"
 assert "page mode: scope-only hides framework findings"       out_lacks "$out" "[framework]"
 
 # ---------------------------------------------------------------- wiring
