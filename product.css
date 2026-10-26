@@ -704,10 +704,10 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 .tabs .cmd button { justify-self: start; }
 .tabs__panel a { font-weight: 600; }
 
-/* ---------- the rule map: one rule, five stages ----------
-   Static first: without JavaScript, or with reduced motion, the five
+/* ---------- the rule map: Keel at the hub, six stages ----------
+   Static first: without JavaScript, or with reduced motion, the six
    stages are a plain list on a rail. rule-map.js adds .is-live to show the
-   loop, and .is-row when the stages sit in a row. */
+   hub, and .is-row when the stages sit in two rows. */
 .rule-map { position: relative; margin: clamp(2rem, 4vw, 3rem) 0 0; }
 
 /* the static list */
@@ -724,6 +724,8 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 .rule-map__item:last-child { padding-bottom: 0; }
 .rule-map__item:last-child::before { background: none; border: 2px solid var(--brand); }
 .rule-map__item:last-child::after { display: none; }
+.rule-map__item--keel::before { left: -3px; top: 0.15rem; width: 22px; height: 22px; background: var(--ink); }
+.rule-map__item--keel .rule-map__label-name { font-size: 1.4rem; }
 .rule-map__label { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.15rem 0.75rem; }
 .rule-map__label-name { font: 760 1.15rem/1.25 var(--display); font-stretch: 106%; color: var(--ink); }
 .rule-map__label-what { font-size: 14px; color: var(--ink-2); }
@@ -773,6 +775,22 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 .rule-map__stage.is-lit .rule-map__name::before { background: var(--brand); border-color: var(--brand); }
 .rule-map__what { font-size: 15px; color: var(--ink-2); }
 
+/* Keel: the hub. A solid slab in the ink colour, so it reads first in both
+   themes. The example rule sits on it in the token colour. */
+.rule-map__btn--keel {
+  min-height: 112px; gap: 0.3rem;
+  color: var(--paper); background: var(--ink); border-color: var(--ink);
+}
+.rule-map__btn--keel:hover { border-color: var(--brand); }
+.rule-map__btn--keel[aria-selected="true"] { border-color: var(--ink); box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--brand); }
+.rule-map__btn--keel .rule-map__name { font-size: clamp(1.6rem, 3vw, 2.25rem); }
+.rule-map__btn--keel .rule-map__name::before { border-color: var(--paper); }
+.rule-map__btn--keel .rule-map__what { font-size: 16px; color: var(--paper); color: color-mix(in srgb, var(--paper) 80%, var(--ink)); }
+.rule-map__rule {
+  justify-self: start; margin-top: 0.45rem; padding: 0.3rem 0.6rem; border-radius: 4px;
+  font: 600 14px/1.35 var(--text); color: var(--on-brand); background: var(--brand);
+}
+
 /* the sentence for the selected stage */
 /* All sentences share one grid cell, so the area keeps the height of the
    longest one and the page below never moves when the stage changes. */
@@ -787,8 +805,8 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
   background: var(--surface); border: 1px solid var(--line);
 }
 .rule-map.is-live .rule-map__line {
-  margin: 0; max-width: 24ch;
-  font-size: clamp(1.5rem, 3.4vw, 2.5rem); line-height: 1.15; font-weight: 760;
+  margin: 0; max-width: 30ch;
+  font-size: clamp(1.4rem, 3vw, 2.1rem); line-height: 1.18; font-weight: 760;
 }
 .rule-map.is-live .rule-map__tools { display: block; margin-top: 1rem; }
 .rule-map__control {
@@ -800,26 +818,30 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 .rule-map__control[aria-pressed="true"] { color: var(--ink); background: var(--surface); border-color: var(--ink); }
 
 @media (min-width: 760px) {
+  /* Two rows. Top: developers, Keel, a miss. Bottom: the three products,
+     on one bus under Keel. The side padding keeps room for the return line
+     and keeps Keel in the middle. */
   .rule-map__stages {
-    padding: 0; grid-template-columns: repeat(4, minmax(0, 1fr));
-    column-gap: clamp(2rem, 4.5vw, 4rem); row-gap: clamp(12rem, 20vw, 15rem);
+    padding: 0 2.5rem; grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: clamp(2rem, 4vw, 3.5rem); row-gap: clamp(4.5rem, 7vw, 6rem);
+    align-items: center;
   }
-  /* Stages in a row have the same height, also when a label wraps. */
-  .rule-map__stage { display: grid; }
+  .rule-map__stage--dev { grid-area: 1 / 1; }
+  .rule-map__stage--keel { grid-area: 1 / 2; }
+  .rule-map__stage--miss { grid-area: 1 / 3; }
+  .rule-map__stage--build { grid-area: 2 / 1; }
+  .rule-map__stage--gate { grid-area: 2 / 2; }
+  .rule-map__stage--readiness { grid-area: 2 / 3; }
+  /* The products have the same height, also when a label wraps. */
+  .rule-map__stage--build, .rule-map__stage--gate, .rule-map__stage--readiness { display: grid; align-self: stretch; }
   .rule-map__btn { height: 100%; min-height: 96px; padding: 1rem 1.25rem; }
-  .rule-map__stage--miss { grid-column: 2 / 4; justify-self: center; width: min(100%, 18rem); }
-
-  /* In the row layout the sentence sits inside the loop. */
-  .rule-map.is-live.is-row .rule-map__says {
-    position: absolute; margin: 0;
-    top: var(--says-top); left: var(--says-left); width: var(--says-w); height: var(--says-h);
-    display: grid; align-content: center; justify-items: center; text-align: center;
-  }
-  .rule-map.is-live.is-row .rule-map__say { padding: 0.5rem 1rem; background: none; border: 0; }
-  .rule-map.is-live.is-row .rule-map__line { margin-inline: auto; }
+  .rule-map__btn--keel { min-height: 150px; padding: 1.25rem 1.4rem; }
   .rule-map.is-live .rule-map__tools { margin-top: 1.5rem; }
 }
 .one-rule__links { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: 0.5rem 1.75rem; font-weight: 600; }
+
+/* ---------- Keel: the plain line next to its first mention ---------- */
+.keel-gloss { display: block; margin-top: 0.2rem; font-size: 14px; color: var(--ink-2); }
 
 /* ---------- pricing: the product switcher (WAI-ARIA tabs) ---------- */
 .switcher { margin-top: 2rem; }
