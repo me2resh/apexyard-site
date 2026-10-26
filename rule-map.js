@@ -113,7 +113,9 @@
 
     var c = tabs.map(function (tab) { return rect(tab, box); });
     var last = c.length - 1; // the "miss" stage closes the loop
-    var row = Math.abs(c[0].y - c[1].y) < 4; // the row layout
+    // The row layout: the top stages start on the same line. Compare the
+    // tops, not the centres, so a wrapped label cannot hide a row.
+    var row = Math.abs(c[0].top - c[1].top) < 4 && Math.abs(c[0].top - c[last - 1].top) < 4;
     var pts = [c[0]];
     var stageAt = [0];
     var i;
@@ -185,11 +187,13 @@
   function isPaused() { return paused.user || paused.hover; }
 
   function setControl() {
+    // While the tour runs, the button is a toggle with a fixed label and
+    // aria-pressed. When the tour has stopped, it is a plain action button.
     if (state === 'stopped' || state === 'done') {
       control.textContent = ran ? 'Play the loop again' : 'Play the loop';
-      control.setAttribute('aria-pressed', 'false');
+      control.removeAttribute('aria-pressed');
     } else {
-      control.textContent = paused.user ? 'Play the loop' : 'Pause the loop';
+      control.textContent = 'Pause the loop';
       control.setAttribute('aria-pressed', paused.user ? 'true' : 'false');
     }
   }

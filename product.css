@@ -602,6 +602,9 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
    when the script runs. Without scripting, the list stays open as before. */
 @media (scripting: enabled) {
   html:not(.has-menu) .site-nav__sub { display: none; }
+  /* If product.js does not run, hover or focus on Product still shows the list. */
+  html:not(.has-menu) .site-nav__group:hover .site-nav__sub,
+  html:not(.has-menu) .site-nav__group:focus-within .site-nav__sub { display: flex; }
   .theme-toggle[hidden] { display: inline-flex; visibility: hidden; }
 }
 
@@ -794,13 +797,16 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
   background: none; border: 1px solid var(--line); border-radius: var(--radius);
 }
 .rule-map__control:hover { color: var(--ink); border-color: var(--ink-2); }
+.rule-map__control[aria-pressed="true"] { color: var(--ink); background: var(--surface); border-color: var(--ink); }
 
 @media (min-width: 760px) {
   .rule-map__stages {
     padding: 0; grid-template-columns: repeat(4, minmax(0, 1fr));
     column-gap: clamp(2rem, 4.5vw, 4rem); row-gap: clamp(12rem, 20vw, 15rem);
   }
-  .rule-map__btn { min-height: 96px; padding: 1rem 1.25rem; }
+  /* Stages in a row have the same height, also when a label wraps. */
+  .rule-map__stage { display: grid; }
+  .rule-map__btn { height: 100%; min-height: 96px; padding: 1rem 1.25rem; }
   .rule-map__stage--miss { grid-column: 2 / 4; justify-self: center; width: min(100%, 18rem); }
 
   /* In the row layout the sentence sits inside the loop. */
