@@ -32,8 +32,15 @@
 
   async function submitAnswers(options) {
     var ui = options.ui;
+    function notify(name, status) {
+      try {
+        ui[name](status);
+      } catch (err) {
+        try { ui.showFallback(); } catch (fallbackError) {}
+      }
+    }
     if (!options.endpoint) {
-      ui.showFallback();
+      notify('showFallback');
       return;
     }
     var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
@@ -54,18 +61,18 @@
           timer = setTimeout(function () {
             reject(new Error('Request timeout'));
             if (ctrl) ctrl.abort();
-          }, 15000);
+          }, options.timeoutMs === undefined ? 10000 : options.timeoutMs);
         })
       ]);
+      if (res.ok) notify('showConfirmation');
+      else if (res.status === 400 || res.status === 422 || res.status === 429) notify('showError', res.status);
+      else notify('showFallback');
     } catch (err) {
-      ui.showFallback();
+      notify('showFallback');
       return;
     } finally {
       if (timer) clearTimeout(timer);
     }
-    if (res.ok) ui.showConfirmation();
-    else if (res.status === 400 || res.status === 422 || res.status === 429) ui.showError(res.status);
-    else ui.showFallback();
   }
 
   var api = { LABELS: LABELS, applyLinks: applyLinks, submitAnswers: submitAnswers, mailtoHref: mailtoHref };
@@ -248,57 +255,64 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (busy) return;
-    fallback.hidden = true;
-    clearErrors();
-    var r = validate();
-    if (r.bad.length) {
-      r.bad.forEach(function (k) { setError(k, MESSAGES[k]); });
-      showSummary(
-        'Fix ' + (r.bad.length === 1 ? 'this field' : 'these ' + r.bad.length + ' fields') + ' and send the form again:',
-        r.bad
-      );
-      errBox.focus();
-      return;
-    }
-
-    var src = (new URLSearchParams(location.search).get('src') || '').replace(/[^a-z0-9-]/gi, '').slice(0, 40);
-    var body = {
-      email: r.data.email,
-      audience: r.data.audience,
-      govern: r.data.govern,
-      team_size: r.data.team_size,
-      tools: r.data.tools,
-      source: src
-    };
-
-    busy = true;
-    submit.disabled = true;
-    submit.textContent = 'Sending';
-    submitAnswers({
-      endpoint: cfg.waitlistEndpoint,
-      body: body,
-      fetchFn: typeof fetch === 'function' ? fetch.bind(window) : null,
-      ui: {
-        showConfirmation: function () {
-          form.hidden = true;
-          done.hidden = false;
-          done.focus();
-          if (typeof window.gtag === 'function') window.gtag('event', 'waitlist_signup');
-        },
-        showFallback: showFallback,
-        showError: function (status) {
-          if (status === 429) {
-            fail('There were too many requests. Wait a minute, then send the form again. Your answers are still in the form.');
-          } else {
-            fail('We could not accept these answers. Check the form and send it again. Your answers are still in the form.');
-          }
-        }
-      }
-    }).then(function () {
+    function reset() {
       busy = false;
       submit.disabled = false;
       submit.textContent = 'Join the waitlist';
-    });
+    }
+    try {
+      fallback.hidden = true;
+      clearErrors();
+      var r = validate();
+      if (r.bad.length) {
+        r.bad.forEach(function (k) { setError(k, MESSAGES[k]); });
+        showSummary(
+          'Fix ' + (r.bad.length === 1 ? 'this field' : 'these ' + r.bad.length + ' fields') + ' and send the form again:',
+          r.bad
+        );
+        errBox.focus();
+        reset();
+        return;
+      }
+
+      var src = (new URLSearchParams(location.search).get('src') || '').replace(/[^a-z0-9-]/gi, '').slice(0, 40);
+      var body = {
+        email: r.data.email,
+        audience: r.data.audience,
+        govern: r.data.govern,
+        team_size: r.data.team_size,
+        tools: r.data.tools,
+        source: src
+      };
+
+      busy = true;
+      submit.disabled = true;
+      submit.textContent = 'Sending';
+      submitAnswers({
+        endpoint: cfg.waitlistEndpoint,
+        body: body,
+        fetchFn: typeof fetch === 'function' ? fetch.bind(window) : null,
+        ui: {
+          showConfirmation: function () {
+            form.hidden = true;
+            done.hidden = false;
+            done.focus();
+            if (typeof window.gtag === 'function') window.gtag('event', 'waitlist_signup');
+          },
+          showFallback: showFallback,
+          showError: function (status) {
+            if (status === 429) {
+              fail('There were too many requests. Wait a minute, then send the form again. Your answers are still in the form.');
+            } else {
+              fail('We could not accept these answers. Check the form and send it again. Your answers are still in the form.');
+            }
+          }
+        }
+      }).then(reset, reset);
+    } catch (err) {
+      try { showFallback(); } catch (fallbackError) {}
+      reset();
+    }
   });
 
   // Clear a field's error when the visitor changes it.
