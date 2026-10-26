@@ -49,12 +49,12 @@ const learn = [
     id: 'quickstart',
     title: 'Quickstart',
     icon: 'rocket',
-    summary: 'Learn what ApexYard is, install it, and open your first governed pull request.',
+    summary: 'Learn what ApexYard is. Install it. Open your first governed pull request.',
     pages: [
       {
         slug: 'quickstart/what-is-apexyard',
         title: 'What ApexYard is',
-        description: 'One set of rules, used twice: by your agents while they work, and by the gate before a merge.',
+        description: 'Your agents use one set of rules while they work. The gate uses the same rules before a merge.',
         parts: [{ source: 'README.md', sections: ['AI can build quickly. Shipping safely needs a system.', 'What makes it different', "What's inside"] }],
       },
       {
@@ -66,7 +66,7 @@ const learn = [
       {
         slug: 'quickstart/install',
         title: 'Install',
-        description: 'Fork the framework, configure it, and register your projects.',
+        description: 'Fork the framework. Configure it. Register your projects.',
         callouts: [
           {
             type: 'coming',
@@ -78,7 +78,7 @@ const learn = [
       {
         slug: 'quickstart/first-governed-pr',
         title: 'Your first governed PR',
-        description: 'Start work on a ticket and let the roles and gates guide it to a merge.',
+        description: 'Start work on a ticket. Let the roles and gates guide it to a merge.',
         parts: [
           { source: 'README.md', sections: ['6. Start working'] },
           { source: 'docs/getting-started.md', sections: ['Step 4: Start Using It'] },
@@ -101,13 +101,13 @@ const learn = [
       {
         slug: 'day-to-day/tickets',
         title: 'Tickets',
-        description: 'Work on one ticket at a time, and declare it before you edit code.',
+        description: 'Work on one ticket at a time. Declare it before you edit code.',
         parts: [{ source: '.claude/rules/workflow-gates.md', sections: ['One Ticket at a Time', 'Pre-Build Gate'] }],
       },
       {
         slug: 'day-to-day/branches-and-worktrees',
         title: 'Branches and worktrees',
-        description: 'Name branches, PR titles and commits, and choose how builds are isolated.',
+        description: 'Name branches, PR titles and commits. Choose how to isolate builds.',
         parts: [
           { source: '.claude/rules/git-conventions.md', sections: ['Branch Naming', 'PR Title Format', 'Commit Message Format'] },
           { source: 'docs/project-config.md', sections: ['Build isolation (`build.isolation`)'] },
@@ -128,7 +128,7 @@ const learn = [
       {
         slug: 'day-to-day/status',
         title: 'Status',
-        description: 'See what waits for you and where each project stands.',
+        description: 'See what waits for you and the status of each project.',
         parts: [{ source: 'docs/multi-project.md', sections: ['Daily workflow'] }],
       },
       {
@@ -143,7 +143,7 @@ const learn = [
     id: 'your-rules',
     title: 'Your rules',
     icon: 'pencil',
-    summary: 'Write your own coding standards and turn review findings into rules.',
+    summary: 'Write your own coding standards. Turn review findings into rules.',
     pages: [
       {
         slug: 'your-rules/handbooks',
@@ -154,7 +154,7 @@ const learn = [
       {
         slug: 'your-rules/rules',
         title: 'Rules',
-        description: 'Every framework rule, where it is written, and what enforces it.',
+        description: 'Every framework rule, its location, and what enforces it.',
         parts: [{ source: 'docs/rule-audit.md' }],
       },
       {
@@ -166,7 +166,7 @@ const learn = [
       {
         slug: 'your-rules/knowledge-base',
         title: 'The knowledge base',
-        description: 'Searchable rule indexes generated from your handbooks.',
+        description: 'Rule indexes that the framework makes from your handbooks. You can search them.',
         coming: {
           text: 'The knowledge base is not in release {tag}. This page gets its content when a release includes it.',
         },
@@ -211,39 +211,39 @@ const learn = [
     id: 'hosted-gate',
     title: 'The hosted gate',
     icon: 'github',
-    summary: 'Install the GitHub App, read the check, and find the approval record for each merge.',
+    summary: 'Install the GitHub App. Read the check. Find the approval record for each merge.',
     pages: [
       {
         slug: 'hosted-gate/github-app',
         title: 'The GitHub App',
         description: 'Install the app on the repositories that the gate protects.',
-        coming: { text: 'User guides for the hosted gate are coming. This page gets its content when the guide is published.' },
+        coming: { text: 'User guides for the hosted gate are coming. This page gets its content when we publish the guide.' },
       },
       {
         slug: 'hosted-gate/the-check',
         title: 'The check',
         description: 'Read the status check that the gate adds to each pull request.',
-        coming: { text: 'User guides for the hosted gate are coming. This page gets its content when the guide is published.' },
+        coming: { text: 'User guides for the hosted gate are coming. This page gets its content when we publish the guide.' },
         figure: { src: 'img/placeholder-check.svg', alt: 'Placeholder for a screenshot of the gate check on a pull request', width: 1200, height: 675 },
       },
       {
         slug: 'hosted-gate/dashboard',
         title: 'The dashboard',
         description: 'See open pull requests and the approvals they wait for.',
-        coming: { text: 'User guides for the hosted gate are coming. This page gets its content when the guide is published.' },
+        coming: { text: 'User guides for the hosted gate are coming. This page gets its content when we publish the guide.' },
         figure: { src: 'img/placeholder-dashboard.svg', alt: 'Placeholder for a screenshot of the hosted dashboard', width: 1200, height: 675 },
       },
       {
         slug: 'hosted-gate/evidence-record',
         title: 'The evidence record',
         description: 'Find who approved a merge, when, and at which commit.',
-        coming: { text: 'User guides for the hosted gate are coming. This page gets its content when the guide is published.' },
+        coming: { text: 'User guides for the hosted gate are coming. This page gets its content when we publish the guide.' },
       },
       {
         slug: 'hosted-gate/agent-sign-in',
         title: 'Agent sign-in over MCP',
         description: 'Connect a coding agent to the gate with your own sign-in.',
-        coming: { text: 'User guides for the hosted gate are coming. This page gets its content when the guide is published.' },
+        coming: { text: 'User guides for the hosted gate are coming. This page gets its content when we publish the guide.' },
       },
     ],
   },
@@ -256,7 +256,7 @@ const learn = [
       {
         slug: 'portfolio/multi-project',
         title: 'Multi-project setup',
-        description: 'Fork once and manage every project from that fork.',
+        description: 'Fork once. Manage every project from that fork.',
         parts: [{ source: 'docs/multi-project.md', sections: ['Two setup modes — pick the one that matches your privacy needs', 'TL;DR — single-fork mode (default)', 'Why fork instead of clone?', 'Setup — six steps, about five minutes'] }],
       },
       {
@@ -297,7 +297,7 @@ const learn = [
       {
         slug: 'updating/drift-safe-updates',
         title: 'Drift-safe updates',
-        description: 'An ownership manifest that tells framework files from your own files.',
+        description: 'An ownership manifest that shows which files are framework files and which are your files.',
         coming: {
           text: 'The ownership manifest and the path-ownership check are not in release {tag}. This page gets its content when a release includes them.',
         },
@@ -339,7 +339,7 @@ const learn = [
       {
         slug: 'security/bypass',
         title: 'What you can and cannot bypass',
-        description: 'The operator escape hatch, and the limits of the hooks.',
+        description: 'The operator bypass, and the limits of the hooks.',
         parts: [
           { source: 'docs/hooks-fail-closed.md', sections: ['Operator escape hatch'] },
           { source: 'SECURITY.md', sections: ['Threat model'] },
@@ -363,7 +363,7 @@ const learn = [
     id: 'readiness',
     title: 'Readiness',
     icon: 'information',
-    summary: 'Check that a project is ready for production, and fix the gaps first.',
+    summary: 'Check that a project is ready for production. Fix the gaps first.',
     pages: [
       {
         slug: 'readiness/overview',
@@ -373,7 +373,7 @@ const learn = [
           {
             text: [
               'Readiness tells you if a project is ready for production.',
-              '[`/launch-check`](/docs/reference/skills/launch-check) checks 10 dimensions in one sweep and gives one verdict.',
+              '[`/launch-check`](/docs/reference/skills/launch-check) checks 10 dimensions in one run and gives one verdict.',
               'The table below lists the 10 dimensions. For each one, it names the skill for a deeper audit.',
               'For example, the threat model is the deeper audit for Security, and mutation testing is the deeper audit for behaviour quality.',
               '',
@@ -385,7 +385,7 @@ const learn = [
         callouts: [
           {
             type: 'coming',
-            text: 'Readiness in CI, the hosted score and the hosted trend are not built yet. Today you run the audits with the skills on this page.',
+            text: 'We have not built Readiness in CI, the hosted score and the hosted trend yet. Today you run the audits with the skills on this page.',
           },
         ],
       },
@@ -413,11 +413,11 @@ const learn = [
           {
             text: [
               '`/launch-check` gives each dimension a score from 0 to 100.',
-              'The headline score of a run is the unweighted mean of the dimension scores in that run, rounded to a whole number.',
+              'The headline score of a run is the unweighted mean of its dimension scores. The calculation rounds this to a whole number.',
               'A run with no dimension scores has a headline score of 0.',
               'The trend chart uses the same rule ([`render-trend.sh`](https://github.com/me2resh/apexyard/blob/{tag}/.claude/skills/launch-check/render-trend.sh)).',
               '',
-              'The verdict does not come from the score. It comes from the PASS, WARN and FAIL results and any critical security finding, as the table below shows.',
+              'The verdict does not come from the score. It comes from the PASS, WARN and FAIL results and any critical security finding. The table below shows this.',
             ].join('\n'),
           },
           { source: '.claude/skills/launch-check/SKILL.md', sections: ['Verdict logic', '6a. Resolve project name + score + verdict'] },
@@ -425,14 +425,14 @@ const learn = [
         callouts: [
           {
             type: 'coming',
-            text: 'The hosted Production-Ready Score and its hosted trend are not built yet. Their formula is not published. Until then, use the `/launch-check` score on this page.',
+            text: 'We have not built the hosted Production-Ready Score and its hosted trend yet. We have not published their formula. Until then, use the `/launch-check` score on this page.',
           },
         ],
       },
       {
         slug: 'readiness/top-actions',
         title: 'Top actions',
-        description: 'Fix the blocking items first, then the warnings.',
+        description: 'Fix the blocking items first. Then fix the warnings.',
         parts: [
           {
             text: [
@@ -453,7 +453,7 @@ const learn = [
           {
             text: [
               'Today the audit skills run where your coding agent runs, with your own model access.',
-              'Each `/launch-check` run is saved in your projects folder. By default that is `projects/<name>/audits/` in your ops repository.',
+              'The skill saves each `/launch-check` run in your projects folder. By default that is `projects/<name>/audits/` in your ops repository.',
             ].join('\n'),
           },
         ],
@@ -461,7 +461,7 @@ const learn = [
           {
             type: 'coming',
             text: [
-              'Readiness in CI is not built yet. When it ships:',
+              'We have not built Readiness in CI yet. When we release it:',
               '',
               '- It runs in your CI with your own model key.',
               '- Only the results go to the hosted service.',
@@ -496,7 +496,7 @@ const reference = [
       { slug: 'reference/hooks/vocabulary-backstops', title: 'Ticket-vocabulary backstops', description: 'Checks that each issue reference names a real issue.', parts: [{ source: '.claude/hooks/README.md', sections: ['The Ticket-Vocabulary Backstops'] }] },
       { slug: 'reference/hooks/rule-hooks', title: 'Rule hooks', description: 'Hooks that turn written rules into checks.', parts: [{ source: '.claude/hooks/README.md', sections: ['The Rule-Mechanization Hooks (GH-13)', 'PWD-vs-command-context distinction'] }] },
       { slug: 'reference/hooks/other-hooks', title: 'Other hooks', description: 'Hooks that came before the enforcement layer.', parts: [{ source: '.claude/hooks/README.md', sections: ['Pre-existing Hooks'] }] },
-      { slug: 'reference/hooks/testing', title: 'Test and add a hook', description: 'Run a hook by hand, and add a new one.', parts: [{ source: '.claude/hooks/README.md', sections: ['Testing a Hook', 'Adding a New Hook'] }] },
+      { slug: 'reference/hooks/testing', title: 'Test and add a hook', description: 'Run a hook manually. Add a new one.', parts: [{ source: '.claude/hooks/README.md', sections: ['Testing a Hook', 'Adding a New Hook'] }] },
       { slug: 'reference/hooks/hook-index', title: 'Hook index', description: 'Every hook script, with the first line of its header.', generate: 'hook-index' },
     ],
   },
@@ -525,7 +525,7 @@ const reference = [
       {
         slug: 'reference/cli',
         title: 'The apexyard command',
-        description: 'Run environment checks and a status briefing from the terminal.',
+        description: 'Run environment checks from the terminal. Run a status briefing from the terminal.',
         parts: [
           { source: 'bin/apexyard', heredoc: 'usage', heading: 'Usage' },
           { source: 'docs/multi-project.md', sections: ['`apexyard status` — the CLI briefing'] },
