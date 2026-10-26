@@ -140,6 +140,44 @@
     </div>
   </section>
 
+
+  <section class="section one-rule" id="product" aria-labelledby="one-rule-title">
+    <div class="wrap" id="how-it-works">
+      <h2 class="section__title" id="one-rule-title">One process, three places</h2>
+      <p class="section__lede">You write a rule once. Build guides your agents with it. The Gate checks each pull request against it. Readiness measures the whole repository. A miss comes back as a new rule.</p>
+      <figure class="rule-map" data-rule-map>
+        <div class="rule-map__board">
+          <svg class="rule-map__svg" aria-hidden="true" focusable="false">
+            <path class="rule-map__track" d=""/>
+            <g class="rule-map__legs"></g>
+          </svg>
+          <span class="rule-map__token" aria-hidden="true"></span>
+          <ol class="rule-map__stages">
+            <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-rule"><span class="rule-map__name">The rule</span><span class="rule-map__what">Written once</span></button></li>
+            <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-build"><span class="rule-map__name">Build</span><span class="rule-map__what">Guides the agent</span></button></li>
+            <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-gate"><span class="rule-map__name">Gate</span><span class="rule-map__what">Checks the pull request</span></button></li>
+            <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-readiness"><span class="rule-map__name">Readiness</span><span class="rule-map__what">Measures the repository</span></button></li>
+            <li class="rule-map__stage rule-map__stage--miss"><button type="button" class="rule-map__btn" id="rule-tab-miss"><span class="rule-map__name">A miss</span><span class="rule-map__what">Becomes a new rule</span></button></li>
+          </ol>
+        </div>
+
+        <ol class="rule-map__says">
+          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-rule"><p class="rule-map__label"><span class="rule-map__label-name">The rule</span> <span class="rule-map__label-what">Written once</span></p><p class="rule-map__line">Every change starts from a ticket.</p></div></li>
+          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-build"><p class="rule-map__label"><span class="rule-map__label-name">Build</span> <span class="rule-map__label-what">Guides the agent</span></p><p class="rule-map__line">The agent opens a ticket before it writes code.</p></div></li>
+          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-gate"><p class="rule-map__label"><span class="rule-map__label-name">Gate</span> <span class="rule-map__label-what">Checks the pull request</span></p><p class="rule-map__line">A pull request with no ticket cannot merge.</p></div></li>
+          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-readiness"><p class="rule-map__label"><span class="rule-map__label-name">Readiness</span> <span class="rule-map__label-what">Measures the repository</span></p><p class="rule-map__line">It flags repositories where changes skip tickets.</p></div></li>
+          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-miss"><p class="rule-map__label"><span class="rule-map__label-name">A miss</span> <span class="rule-map__label-what">Becomes a new rule</span></p><p class="rule-map__line">A review catches one. It becomes a new rule for every agent.</p></div></li>
+        </ol>
+
+        <p class="rule-map__tools"><button type="button" class="rule-map__control" aria-pressed="false" hidden>Pause the loop</button></p>
+
+        <figcaption class="visually-hidden">One rule travels through five stages: the rule, Build, Gate, Readiness and a miss. A miss becomes a new rule, and the loop starts again.</figcaption>
+      </figure>
+      <p class="one-rule__links"><a href="/build">About Build</a> <a href="/gate">About Gate</a> <a href="/readiness">About Readiness</a></p>
+      <p class="one-rule__base">Underneath: one knowledge base, one evidence store and one dashboard.</p>
+    </div>
+  </section>
+
   <section class="proof" aria-label="Sample outcome metrics">
     <div class="wrap">
       <ul class="proof__metrics">
@@ -155,105 +193,11 @@
     </div>
   </section>
 
-
-  <section class="section one-rule" id="product" aria-labelledby="one-rule-title">
-    <div class="wrap" id="how-it-works">
-      <h2 class="section__title" id="one-rule-title">One process, three places</h2>
-      <p class="section__lede">You write a rule once. Build guides your agents with it. The Gate checks each pull request against it. Readiness measures the whole repository. A miss comes back as a new rule.</p>
-      <figure class="rule-map" data-rule-map>
-        <div class="rule-map__board">
-          <svg class="rule-map__svg" aria-hidden="true" focusable="false">
-            <path class="rule-map__track" d=""/>
-            <path class="rule-map__trail" d=""/>
-            <g class="rule-map__token"><rect x="-7" y="-7" width="14" height="14" rx="3"/></g>
-          </svg>
-          <ol class="rule-map__stages">
-            <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-rule"><span class="rule-map__name">The rule</span><span class="rule-map__what">Written once</span></button></li>
-            <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-build"><span class="rule-map__name">Build</span><span class="rule-map__what">Guides the agent</span></button></li>
-            <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-gate"><span class="rule-map__name">Gate</span><span class="rule-map__what">Checks the pull request</span></button></li>
-            <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-readiness"><span class="rule-map__name">Readiness</span><span class="rule-map__what">Measures the repository</span></button></li>
-            <li class="rule-map__stage rule-map__stage--miss"><button type="button" class="rule-map__btn" id="rule-tab-miss"><span class="rule-map__name">A miss</span><span class="rule-map__what">Becomes a new rule</span></button></li>
-          </ol>
-        </div>
-
-        <div class="rule-map__examples">
-          <div class="rule-map__example" id="rule-ex-rule">
-            <h3 class="rule-map__title">The rule: a ticket before any code change</h3>
-            <p>You write it once, as a plain file in your repository. This rule is gate 3 of the ApexYard workflow rules.</p>
-            <div class="rule-map__file">
-              <p class="rule-map__path">.claude/rules/workflow-gates.md</p>
-              <table class="rule-map__table">
-                <thead><tr><th scope="col">Gate</th><th scope="col">Before</th><th scope="col">Verify</th></tr></thead>
-                <tbody><tr><td>3</td><td>Starting code</td><td>Ticket exists, branch created, design review if UI work</td></tr></tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="rule-map__example" id="rule-ex-build">
-            <h3 class="rule-map__title">Build: the agent meets the rule while it works</h3>
-            <p>An agent tries to edit a file with no active ticket. A local hook stops the edit and tells the agent how to continue.</p>
-            <pre class="rule-map__term" tabindex="0"><code>BLOCKED: No active ticket set for this session.
-
-ApexYard requires a ticket BEFORE any code changes.
-
-To unblock:
-  1. Create or find the ticket.
-  2. Run the /start-ticket skill with the issue number.
-  3. Retry the edit.</code></pre>
-            <p class="rule-map__source">Shortened output of the <code>require-active-ticket.sh</code> hook.</p>
-          </div>
-
-          <div class="rule-map__example" id="rule-ex-gate">
-            <h3 class="rule-map__title">Gate: the same rule on the pull request</h3>
-            <p>The hosted check looks for a linked ticket on every pull request. When the check is required and the ticket is missing, the merge stays blocked.</p>
-            <div class="rule-map__check">
-              <p class="rule-map__repo">example-co/payments-api, pull request #214</p>
-              <p class="rule-map__row"><span>Ticket linked <span class="rule-map__level">must pass</span></span><span class="rule-map__state rule-map__state--block">Missing</span></p>
-              <p class="rule-map__row"><span>After a new commit that links the ticket</span><span class="rule-map__state rule-map__state--pass">Passed</span></p>
-            </div>
-            <p class="rule-map__source">Example result. The repository is fictional.</p>
-          </div>
-
-          <div class="rule-map__example" id="rule-ex-readiness">
-            <h3 class="rule-map__title">Readiness: the whole repository, area by area</h3>
-            <p>The readiness audit covers ten areas. One of them is monitoring: error tracking, health endpoints, alerting and runbooks.</p>
-            <div class="rule-map__check">
-              <p class="rule-map__repo">example-co/payments-api, monitoring</p>
-              <p class="rule-map__row"><span>Error tracking</span><span class="rule-map__state rule-map__state--pass">Found</span></p>
-              <p class="rule-map__row"><span>Health endpoint</span><span class="rule-map__state rule-map__state--pass">Found</span></p>
-              <p class="rule-map__row"><span>Alerting</span><span class="rule-map__state rule-map__state--warn">Partial</span></p>
-              <p class="rule-map__row"><span>Runbooks</span><span class="rule-map__state rule-map__state--block">Missing</span></p>
-            </div>
-            <p class="rule-map__source">Example result. The repository is fictional.</p>
-          </div>
-
-          <div class="rule-map__example" id="rule-ex-miss">
-            <h3 class="rule-map__title">A miss: it comes back as a new rule</h3>
-            <p>A reviewer finds a problem that no rule caught. The <code>/codify-rule</code> skill turns that review comment into a draft handbook entry. You approve it, and your agents and reviewers use it on the next ticket.</p>
-            <pre class="rule-map__term"><code>/codify-rule --pr 214</code></pre>
-          </div>
-        </div>
-
-        <figcaption class="visually-hidden">One rule in five stages. The rule is written once. Build guides the agent with it while the agent works. The Gate checks each pull request against it. Readiness measures the whole repository. A miss becomes a new rule, and the loop starts again. Each stage button shows one example.</figcaption>
-      </figure>
-      <p class="one-rule__links"><a href="/build">About Build</a> <a href="/gate">About Gate</a> <a href="/readiness">About Readiness</a></p>
-      <p class="one-rule__base">Underneath: one knowledge base, one evidence store and one dashboard.</p>
-    </div>
-  </section>
-
-  <section class="section section--tint plans-line" id="compare" aria-labelledby="plans-line-title">
-    <div class="wrap plans-line__inner">
-      <h2 class="section__title" id="plans-line-title">Plans</h2>
-      <p class="section__lede">Start on GitHub at no cost. Add your team when you need a record of every approval.</p>
-      <p><a class="btn btn--quiet" href="/pricing">See plans</a></p>
-    </div>
-  </section>
-
   <section class="section" id="open-source" aria-labelledby="oss-title">
     <div class="wrap oss">
       <div class="oss__text">
-        <h2 class="section__title" id="oss-title">Install the framework</h2>
-        <p class="section__lede">Every rule, hook and review agent is a plain file that you can read, change or remove.</p>
+        <h2 class="section__title" id="oss-title">Install Build for free</h2>
+        <p class="section__lede">Give your agents tickets, plans and reviewers today. Every rule, hook and review agent is a plain file you can read, change or remove.</p>
       </div>
       <div id="quickstart" class="install">
         <div class="tabs" data-tabs>
@@ -303,6 +247,7 @@ bash bin/apexyard doctor</code></pre><button type="button" class="tabs__copy" da
         <!-- Booking URL: switch-on blocker until the live booking page exists. -->
         <p><a class="btn btn--primary" href="https://cal.com/apexyard/demo?src=close" rel="noopener">Book a 20-minute demo</a></p>
         <p class="book__mail">Prefer email? <a href="#" class="mailto-cta" data-u="hello" data-d="apexyard.ai">Write to us</a>.</p>
+        <p class="book__plans" id="compare">Start on GitHub at no cost. Add your team when you need a record of every approval. <a href="/pricing">See plans</a></p>
       </div>
     </div>
   </section>
@@ -320,7 +265,6 @@ bash bin/apexyard doctor</code></pre><button type="button" class="tabs__copy" da
       <a href="/architecture">Architecture</a>
       <a href="/skills">Skills</a>
       <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">Changelog</a>
-      <a href="/game">The game</a>
       <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener">GitHub</a>
     </nav>
     <p>© 2026 <a href="https://me2resh.com" target="_blank" rel="noopener">me2resh</a>. The ApexYard framework is open source under the MIT licence.</p>

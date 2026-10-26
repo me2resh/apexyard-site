@@ -182,6 +182,7 @@
       switcher.setAttribute('role', 'none');
       sList.setAttribute('role', 'tablist');
       sList.setAttribute('aria-label', 'Products');
+      sList.setAttribute('aria-orientation', 'horizontal');
       sTabs.forEach(function (t, i) {
         t.setAttribute('role', 'tab');
         t.setAttribute('aria-controls', sPanels[i].id);
@@ -228,8 +229,9 @@
         });
         t.addEventListener('keydown', function (e) {
           var next = -1;
-          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (i + 1) % sTabs.length;
-          else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (i - 1 + sTabs.length) % sTabs.length;
+          // A horizontal tab list: Up and Down stay with the page scroll.
+          if (e.key === 'ArrowRight') next = (i + 1) % sTabs.length;
+          else if (e.key === 'ArrowLeft') next = (i - 1 + sTabs.length) % sTabs.length;
           else if (e.key === 'Home') next = 0;
           else if (e.key === 'End') next = sTabs.length - 1;
           else if (e.key === ' ') { e.preventDefault(); sSelect(i, false); setHash(i); return; }

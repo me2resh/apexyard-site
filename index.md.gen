@@ -8,17 +8,15 @@ ApexYard gives your agents a team's process, then checks every pull request agai
 
 Agent agnostic. Works with Claude Code, Codex, Cursor and OpenCode.
 
-It never reads your code. See what the GitHub App can see: <https://apexyard.ai/gate#app-access>.
-
 ## One process, three places
 
 You write a rule once. Build guides your agents with it. The Gate checks each pull request against it. Readiness measures the whole repository. A miss comes back as a new rule.
 
-1. **The rule**: Written once.
-2. **Build**: Guides the agent.
-3. **Gate**: Checks the pull request.
-4. **Readiness**: Measures the repository.
-5. **A miss**: Becomes a new rule.
+1. **The rule** (written once): Every change starts from a ticket.
+2. **Build** (guides the agent): The agent opens a ticket before it writes code.
+3. **Gate** (checks the pull request): A pull request with no ticket cannot merge.
+4. **Readiness** (measures the repository): It flags repositories where changes skip tickets.
+5. **A miss** (becomes a new rule): A review catches one. It becomes a new rule for every agent.
 
 - About Build: <https://apexyard.ai/build>
 - About Gate: <https://apexyard.ai/gate>
@@ -26,15 +24,11 @@ You write a rule once. Build guides your agents with it. The Gate checks each pu
 
 Underneath: one knowledge base, one evidence store and one dashboard.
 
-## Plans
+It never reads your code. See what the GitHub App can see: <https://apexyard.ai/gate#app-access>.
 
-Start on GitHub at no cost. Add your team when you need a record of every approval.
+## Install Build for free
 
-See plans: <https://apexyard.ai/pricing>.
-
-## Install the framework
-
-Every rule, hook and review agent is a plain file that you can read, change or remove.
+Give your agents tickets, plans and reviewers today. Every rule, hook and review agent is a plain file you can read, change or remove.
 
 Fork <https://github.com/me2resh/apexyard> into your organisation on GitHub. Then run these commands.
 
@@ -61,6 +55,8 @@ Then open Claude Code in the folder and run `/setup`. Read the install guide for
 ## Book a demo
 
 Bring one of your repositories, and see what the Gate would have held. Book from <https://apexyard.ai/#book-a-demo>.
+
+Start on GitHub at no cost. Add your team when you need a record of every approval. See plans: <https://apexyard.ai/pricing>.
 
 ## More
 
