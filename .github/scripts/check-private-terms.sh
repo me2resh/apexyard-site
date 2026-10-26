@@ -31,8 +31,9 @@
 #
 # Log rules (the repo is public, so the Actions log is public):
 #   - Never print a term, the term list, or a matching line.
-#   - The only output that carries a term is the `::add-mask::` command,
-#     which the runner consumes and does not show.
+#   - Emit `::add-mask::` only when GITHUB_ACTIONS=true (CI). The runner
+#     consumes those lines and does not show the value. Locally, print
+#     counts and file names only; never a term or value.
 #   - On a hit, print the file path and the term's index number only
 #     (for an overlay value, its token name, which is public).
 #   - Never add `set -x` to this script.
@@ -67,9 +68,12 @@ import sys
 repo = sys.argv[1]
 mode = sys.argv[2]
 def mask(value):
-    """Mask a value for the Actions log. ::add-mask:: masks one line per
-    call, so each line of a multi-line value is masked on its own, in the
-    raw and the HTML-escaped form. A one-line value is masked whole."""
+    """Mask a value for the Actions log when GITHUB_ACTIONS=true.
+    ::add-mask:: masks one line per call, so each line of a multi-line
+    value is masked on its own, in the raw and the HTML-escaped form.
+    A one-line value is masked whole. Locally, write nothing."""
+    if os.environ.get("GITHUB_ACTIONS") != "true":
+        return
     parts = {value} if "\n" not in value and "\r" not in value else set()
     for line in value.splitlines():
         parts.update({line, line.strip()})

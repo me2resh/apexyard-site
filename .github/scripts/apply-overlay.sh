@@ -18,8 +18,9 @@
 #
 # Log rules (the repo is public, so the Actions log is public):
 #   - Never print a value, the JSON, or a changed file.
-#   - The only output that carries a value is the `::add-mask::` command,
-#     which the runner consumes and does not show.
+#   - Emit `::add-mask::` only when GITHUB_ACTIONS=true (CI). The runner
+#     consumes those lines and does not show the value. Locally, print
+#     token names and counts only; never a value.
 #   - Print token names and counts only.
 #   - Never add `set -x` to this script.
 #
@@ -65,9 +66,12 @@ def fail(msg):
 
 
 def mask(value):
-    """Mask a value for the Actions log. ::add-mask:: masks one line per
-    call, so each line of a multi-line value is masked on its own, in the
-    raw and the HTML-escaped form. A one-line value is masked whole."""
+    """Mask a value for the Actions log when GITHUB_ACTIONS=true.
+    ::add-mask:: masks one line per call, so each line of a multi-line
+    value is masked on its own, in the raw and the HTML-escaped form.
+    A one-line value is masked whole. Locally, write nothing."""
+    if os.environ.get("GITHUB_ACTIONS") != "true":
+        return
     parts = {value} if "\n" not in value and "\r" not in value else set()
     for line in value.splitlines():
         parts.update({line, line.strip()})

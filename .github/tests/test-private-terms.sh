@@ -27,7 +27,7 @@ mkrepo() { # <dir> : a git repo with one clean tracked page
 
 run() { # <repo> [env assignments...] : sets $out and $rc
   local repo=$1; shift
-  out=$(env -u PRIVATE_TERMS -u OVERLAY_JSON -u REQUIRE_PRIVATE_TERMS "$@" "$check" "$repo" 2>&1)
+  out=$(env -u PRIVATE_TERMS -u OVERLAY_JSON -u REQUIRE_PRIVATE_TERMS GITHUB_ACTIONS=true "$@" "$check" "$repo" 2>&1)
   rc=$?
 }
 visible() { grep -v '^::add-mask::' <<<"$out"; }
