@@ -26,6 +26,8 @@
   var submit = document.getElementById('waitlist-submit');
   var busy = false;
   form.hidden = false;
+  var noscript = document.getElementById('waitlist-noscript');
+  if (noscript) noscript.hidden = true;
 
   var MESSAGES = {
     email: 'Enter your email address, for example name@company.com.',
@@ -42,6 +44,35 @@
 
   function fieldEl(key) { return form.querySelector('[data-field="' + key + '"]'); }
 
+  function groupInputs(wrap) {
+    return wrap.querySelectorAll('input[type="radio"], input[type="checkbox"]');
+  }
+
+  function setGroupDescribedBy(wrap, errId) {
+    Array.prototype.forEach.call(groupInputs(wrap), function (inp) {
+      if (!inp.hasAttribute('data-describedby-orig')) {
+        inp.setAttribute('data-describedby-orig', inp.getAttribute('aria-describedby') || '');
+      }
+      var orig = inp.getAttribute('data-describedby-orig') || '';
+      var parts = orig ? orig.split(/\s+/).filter(Boolean) : [];
+      if (parts.indexOf(errId) === -1) parts.push(errId);
+      inp.setAttribute('aria-describedby', parts.join(' '));
+    });
+  }
+
+  function clearGroupDescribedBy(wrap) {
+    Array.prototype.forEach.call(groupInputs(wrap), function (inp) {
+      if (!inp.hasAttribute('data-describedby-orig')) {
+        inp.removeAttribute('aria-describedby');
+        return;
+      }
+      var orig = inp.getAttribute('data-describedby-orig');
+      if (orig) inp.setAttribute('aria-describedby', orig);
+      else inp.removeAttribute('aria-describedby');
+      inp.removeAttribute('data-describedby-orig');
+    });
+  }
+
   function setError(key, msg) {
     var wrap = fieldEl(key);
     var p = wrap.querySelector('.field__err');
@@ -49,28 +80,51 @@
     p.textContent = msg;
     p.hidden = false;
     wrap.classList.add('field--invalid');
-    // A group has no invalid state in ARIA. Its error text is linked with
-    // aria-describedby on the fieldset, so only single controls get the flag.
-    if (control.type !== 'radio' && control.type !== 'checkbox') {
+    // A group has no invalid state in ARIA. Link the error on every input.
+    if (control.type === 'radio' || control.type === 'checkbox') {
+      setGroupDescribedBy(wrap, p.id);
+    } else {
       control.setAttribute('aria-invalid', 'true');
     }
   }
 
   function clearErrors() {
-    form.querySelectorAll('.field--invalid').forEach(function (w) { w.classList.remove('field--invalid'); });
+    form.querySelectorAll('.field--invalid').forEach(function (w) {
+      w.classList.remove('field--invalid');
+      clearGroupDescribedBy(w);
+    });
     form.querySelectorAll('.field__err').forEach(function (p) { p.hidden = true; p.textContent = ''; });
     form.querySelectorAll('[aria-invalid]').forEach(function (c) { c.removeAttribute('aria-invalid'); });
     errBox.hidden = true;
     errBox.textContent = '';
   }
 
-  function showSummary(msgs) {
+  function ensureControlId(control, key) {
+    if (!control.id) control.id = 'wl-' + key.replace(/_/g, '-');
+    return control.id;
+  }
+
+  function showSummary(heading, keys) {
     errBox.textContent = '';
-    msgs.forEach(function (m) {
-      var p = document.createElement('p');
-      p.textContent = m;
-      errBox.appendChild(p);
-    });
+    var head = document.createElement('p');
+    head.textContent = heading;
+    errBox.appendChild(head);
+    if (keys && keys.length) {
+      keys.forEach(function (key) {
+        var control = fieldEl(key).querySelector('input, select');
+        var id = ensureControlId(control, key);
+        var p = document.createElement('p');
+        var a = document.createElement('a');
+        a.setAttribute('href', '#' + id);
+        a.textContent = MESSAGES[key];
+        a.addEventListener('click', function (ev) {
+          ev.preventDefault();
+          focusFirst(key);
+        });
+        p.appendChild(a);
+        errBox.appendChild(p);
+      });
+    }
     errBox.hidden = false;
   }
 
@@ -97,7 +151,7 @@
 
   function fail(msg) {
     // The form keeps everything the visitor typed. Only the message changes.
-    showSummary([msg]);
+    showSummary(msg);
     errBox.focus();
   }
 
@@ -108,8 +162,10 @@
     var r = validate();
     if (r.bad.length) {
       r.bad.forEach(function (k) { setError(k, MESSAGES[k]); });
-      showSummary(['Fix ' + (r.bad.length === 1 ? 'this field' : 'these ' + r.bad.length + ' fields') + ' and send the form again:']
-        .concat(r.bad.map(function (k) { return MESSAGES[k]; })));
+      showSummary(
+        'Fix ' + (r.bad.length === 1 ? 'this field' : 'these ' + r.bad.length + ' fields') + ' and send the form again:',
+        r.bad
+      );
       errBox.focus();
       return;
     }
@@ -151,7 +207,7 @@
         return;
       }
       if (res.status === 400 || res.status === 422) {
-        fail('We could not accept these answers. Check the form and send it again.');
+        fail('We could not accept these answers. Check the form and send it again. Your answers are still in the form.');
       } else if (res.status === 429) {
         fail('There were too many requests. Wait a minute, then send the form again. Your answers are still in the form.');
       } else {
@@ -175,5 +231,6 @@
     wrap.querySelector('.field__err').hidden = true;
     var c = wrap.querySelector('select, input[type="email"]');
     if (c) c.removeAttribute('aria-invalid');
+    clearGroupDescribedBy(wrap);
   });
 })();
