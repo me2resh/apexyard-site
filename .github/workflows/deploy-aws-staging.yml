@@ -58,7 +58,10 @@ jobs:
             --exclude "og/README.md" \
             --exclude "README.md" \
             --exclude ".gitignore" \
-            --exclude ".lycheeignore"
+            --exclude ".lycheeignore" \
+            --exclude "install" \
+            --exclude "install.html" \
+            --exclude "install.source"
 
       - name: Publish markdown alternates at clean .md keys
         run: |
