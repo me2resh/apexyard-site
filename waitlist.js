@@ -6,12 +6,72 @@
   var cfg = window.APEXYARD_SITE || {};
   var signinOpen = cfg.signinOpen === true;
 
-  // Flag: with the flag on, each button goes to the sign-in. With the flag off,
-  // the markup already points to /waitlist, so nothing changes.
-  var buttons = document.querySelectorAll('[data-signin]');
-  if (signinOpen) {
-    buttons.forEach(function (a) { a.setAttribute('href', a.getAttribute('data-signin')); });
+  var LABELS = { waitlist: 'Join the waitlist', signin: 'Start free with GitHub' };
+
+  function applyLinks(anchors, open) {
+    Array.prototype.forEach.call(anchors, function (a) {
+      if (!a.getAttribute('data-waitlist')) {
+        a.setAttribute('data-waitlist', a.getAttribute('href'));
+      }
+      a.textContent = open ? LABELS.signin : LABELS.waitlist;
+      a.setAttribute('href', a.getAttribute(open ? 'data-signin' : 'data-waitlist'));
+    });
   }
+
+  function mailtoHref(contact, answers) {
+    var lines = [
+      'Who it is for: ' + answers.audience,
+      'What to govern: ' + answers.govern.join(', '),
+      'Team size: ' + answers.team_size,
+      'Agent tools: ' + (answers.tools.length ? answers.tools.join(', ') : 'Not given')
+    ];
+    return 'mail' + 'to:' + contact.user + '@' + contact.domain +
+      '?subject=' + encodeURIComponent('Join the ApexYard waitlist') +
+      '&body=' + encodeURIComponent(lines.join('\n'));
+  }
+
+  async function submitAnswers(options) {
+    var ui = options.ui;
+    if (!options.endpoint) {
+      ui.showFallback();
+      return;
+    }
+    var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+    var timer;
+    var res;
+    try {
+      res = await Promise.race([
+        Promise.resolve().then(function () {
+          return options.fetchFn(options.endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(options.body),
+            credentials: 'omit',
+            signal: ctrl ? ctrl.signal : undefined
+          });
+        }),
+        new Promise(function (_, reject) {
+          timer = setTimeout(function () {
+            reject(new Error('Request timeout'));
+            if (ctrl) ctrl.abort();
+          }, 15000);
+        })
+      ]);
+    } catch (err) {
+      ui.showFallback();
+      return;
+    } finally {
+      if (timer) clearTimeout(timer);
+    }
+    if (res.ok) ui.showConfirmation();
+    else if (res.status === 400 || res.status === 422 || res.status === 429) ui.showError(res.status);
+    else ui.showFallback();
+  }
+
+  var api = { LABELS: LABELS, applyLinks: applyLinks, submitAnswers: submitAnswers, mailtoHref: mailtoHref };
+  window.ApexYardWaitlist = api;
+  if (typeof module !== 'undefined') module.exports = api;
+  applyLinks(document.querySelectorAll('[data-signin]'), signinOpen);
 
   var form = document.getElementById('waitlist-form');
   if (!form) return;
@@ -23,6 +83,7 @@
 
   var errBox = document.getElementById('waitlist-errors');
   var done = document.getElementById('waitlist-done');
+  var fallback = document.getElementById('waitlist-fallback');
   var submit = document.getElementById('waitlist-submit');
   var busy = false;
   form.hidden = false;
@@ -155,9 +216,39 @@
     errBox.focus();
   }
 
+  function chosenLabels(name) {
+    return Array.prototype.map.call(
+      form.querySelectorAll('input[name="' + name + '"]:checked'),
+      function (input) { return input.closest('label').textContent.trim(); });
+  }
+
+  function showFallback() {
+    var contact = document.querySelector('.mailto-cta');
+    var address = { user: contact.getAttribute('data-u'), domain: contact.getAttribute('data-d') };
+    var size = form.elements.team_size;
+    var href = mailtoHref(address, {
+      audience: chosenLabels('audience')[0],
+      govern: chosenLabels('govern'),
+      team_size: size.options[size.selectedIndex].textContent.trim(),
+      tools: chosenLabels('tools')
+    });
+    var p = document.createElement('p');
+    var link = document.createElement('a');
+    link.href = href;
+    link.textContent = address.user + '@' + address.domain;
+    p.appendChild(document.createTextNode('Our waitlist is not open yet. Email '));
+    p.appendChild(link);
+    p.appendChild(document.createTextNode(' and we will add you.'));
+    fallback.textContent = '';
+    fallback.appendChild(p);
+    fallback.hidden = false;
+    fallback.focus();
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (busy) return;
+    fallback.hidden = true;
     clearErrors();
     var r = validate();
     if (r.bad.length) {
@@ -167,12 +258,6 @@
         r.bad
       );
       errBox.focus();
-      return;
-    }
-
-    var url = cfg.waitlistEndpoint;
-    if (!url) {
-      fail('The waitlist is not open yet, so we could not send your answers. Your answers are still in the form. Try again later.');
       return;
     }
 
@@ -189,34 +274,27 @@
     busy = true;
     submit.disabled = true;
     submit.textContent = 'Sending';
-    var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
-    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 15000) : null;
-
-    fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(body),
-      credentials: 'omit',
-      signal: ctrl ? ctrl.signal : undefined
-    }).then(function (res) {
-      if (res.ok) {
-        form.hidden = true;
-        done.hidden = false;
-        done.focus();
-        if (typeof window.gtag === 'function') window.gtag('event', 'waitlist_signup');
-        return;
+    submitAnswers({
+      endpoint: cfg.waitlistEndpoint,
+      body: body,
+      fetchFn: typeof fetch === 'function' ? fetch.bind(window) : null,
+      ui: {
+        showConfirmation: function () {
+          form.hidden = true;
+          done.hidden = false;
+          done.focus();
+          if (typeof window.gtag === 'function') window.gtag('event', 'waitlist_signup');
+        },
+        showFallback: showFallback,
+        showError: function (status) {
+          if (status === 429) {
+            fail('There were too many requests. Wait a minute, then send the form again. Your answers are still in the form.');
+          } else {
+            fail('We could not accept these answers. Check the form and send it again. Your answers are still in the form.');
+          }
+        }
       }
-      if (res.status === 400 || res.status === 422) {
-        fail('We could not accept these answers. Check the form and send it again. Your answers are still in the form.');
-      } else if (res.status === 429) {
-        fail('There were too many requests. Wait a minute, then send the form again. Your answers are still in the form.');
-      } else {
-        fail('We could not save your answers. Your answers are still in the form. Send the form again in a few minutes.');
-      }
-    }).catch(function () {
-      fail('We could not reach the waitlist. Check your connection, then send the form again. Your answers are still in the form.');
     }).then(function () {
-      if (timer) clearTimeout(timer);
       busy = false;
       submit.disabled = false;
       submit.textContent = 'Join the waitlist';
