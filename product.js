@@ -282,3 +282,13 @@
     });
   }
 })();
+
+// Site flag and waitlist (#122). The two files load in order, config first.
+(function () {
+  ['/site-config.js', '/waitlist.js'].forEach(function (src) {
+    var s = document.createElement('script');
+    s.src = src;
+    s.async = false;
+    document.head.appendChild(s);
+  });
+})();
