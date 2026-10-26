@@ -7,7 +7,7 @@ window.APEXYARD_CLAIMS = {
   named_approval: 'live',   // a named approval on every merge
   evidence_export: 'live',  // the evidence record for each merge, and its export
   org_dashboard: 'live',    // the organisation view
-  kb_mcp: 'live',           // the shared knowledge base over MCP
+  kb_mcp: 'live',           // Keel, shared across the organisation over MCP
   readiness_score: 'coming', // the readiness score for each repository; 'live' when it ships
   readiness_ci: 'coming',   // the audit in your own CI with your own model key; 'live' when it ships
   team_trends: 'coming',    // trends by team in the organisation view; 'live' when it ships

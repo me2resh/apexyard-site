@@ -49,6 +49,8 @@ on:
       - "docs-site/scripts/lint-docs.mjs"
       - "docs-site/lint/**"
       - "docs-site/package.json"
+      - "install"
+      - "install.source"
   push:
     branches: [main, staging]
     paths:
@@ -73,6 +75,8 @@ on:
       - "docs-site/scripts/lint-docs.mjs"
       - "docs-site/lint/**"
       - "docs-site/package.json"
+      - "install"
+      - "install.source"
   workflow_dispatch:
 
 permissions:

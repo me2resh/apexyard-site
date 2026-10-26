@@ -10,19 +10,20 @@ Agent agnostic. Works with Claude Code, Codex, Cursor and OpenCode.
 
 ## One process, three places
 
-You write a rule once. Build guides your agents with it. The Gate checks each pull request against it. Readiness measures the whole repository. A miss comes back as a new rule.
+Keel is your team's rules and context, read by every agent. Developers write a rule once. Build, the Gate and Readiness all work from it. A miss comes back as a new rule.
 
-1. **The rule** (written once): Every change starts from a ticket.
-2. **Build** (guides the agent): The agent opens a ticket before it writes code.
-3. **Gate** (checks the pull request): A pull request with no ticket cannot merge.
-4. **Readiness** (measures the repository): It flags repositories where changes skip tickets.
-5. **A miss** (becomes a new rule): A review catches one. It becomes a new rule for every agent.
+1. **Developers** (write and approve rules): A developer writes the rule. A second developer approves it.
+2. **Keel** (your team's rules and context): Every change starts from a ticket.
+3. **Build** (agents read Keel while they write): The agent reads the rule over MCP. It opens a ticket before it writes code.
+4. **Gate** (checks each pull request against Keel): A pull request with no ticket cannot merge.
+5. **Readiness** (measures each repository against Keel): It flags repositories where changes skip tickets.
+6. **A miss** (becomes a new rule in Keel): A review finds a ticket with no test plan. The fix becomes a new rule in Keel.
 
 - About Build: <https://apexyard.ai/build>
 - About Gate: <https://apexyard.ai/gate>
 - About Readiness: <https://apexyard.ai/readiness>
 
-Underneath: one knowledge base, one evidence store and one dashboard.
+Underneath: Keel, one evidence store and one dashboard.
 
 It never reads your code. See what the GitHub App can see: <https://apexyard.ai/gate#app-access>.
 
