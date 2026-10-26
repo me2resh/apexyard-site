@@ -25,7 +25,7 @@ A guard that lists the private terms in the repository publishes them. The list 
 
 Option A, with option B as a second line.
 
-1. `.github/scripts/check-private-terms.sh` reads terms from `PRIVATE_TERMS` (one per line) and from `OVERLAY_JSON` values. It masks each term with `::add-mask::` before it prints anything. It matches the raw and HTML-escaped forms, case-insensitive, in every text file that `git ls-files` lists. A hit prints the file path and the term's index number, or the token name for an overlay value.
+1. `.github/scripts/check-private-terms.sh` reads terms from `PRIVATE_TERMS` (one per line) and from `OVERLAY_JSON` values. When `GITHUB_ACTIONS=true`, it masks each term with `::add-mask::` before it prints anything; locally it never prints a term. It matches the raw and HTML-escaped forms, case-insensitive, in every text file that `git ls-files` lists. A hit prints the file path and the term's index number, or the token name for an overlay value.
 2. `private-terms.yml` runs the check on every pull request and on pushes to `main` and `staging`, with no path filter.
 3. Without a secret the check skips with a notice. When the repository variable `PRIVATE_TERMS_REQUIRED` is `true`, a push to `main` or `staging` without the secret fails.
 4. `deploy-staging-v2.yml` runs the same check with the `STAGING_OVERLAY` values before it applies the overlay, and requires the values.
@@ -35,3 +35,7 @@ Option A, with option B as a second line.
 - The owner sets the `PRIVATE_TERMS` secret from a private file and then sets `PRIVATE_TERMS_REQUIRED` to `true`.
 - A pull request from a fork gets no check. A maintainer merge to `staging` or `main` still runs it.
 - A term that is too general, such as a common word, fails the check on unrelated files. The owner keeps the list to specific terms.
+
+## Evolution
+
+- 2026-10-26: `mask()` emits `::add-mask::` only when `GITHUB_ACTIONS=true`. Reason: a local run printed private terms in clear text via those lines; CI behaviour is unchanged. Covered by `.github/tests/test-mask-local.sh`.

@@ -28,7 +28,7 @@ Option A.
 
 1. The values live in the `STAGING_OVERLAY` secret of the `staging` environment. The environment deployment branch policy admits the `staging` branch only.
 2. `deploy-staging-v2.yml` runs on a push to `staging`. It is the only workflow that reads the secret. It declares `environment: staging` and assumes the role in the `STAGING_OVERLAY_ROLE_ARN` repository variable. It stops before any AWS call while that variable is empty.
-3. Public files wrap each value in a token with a visible fallback: `<!--{{TEAM_PRICE}}-->Pricing to be announced<!--/{{TEAM_PRICE}}-->`. `apply-overlay.sh` replaces the tokens in a copy under `$RUNNER_TEMP`. It masks each value first and logs token names and counts only.
+3. Public files wrap each value in a token with a visible fallback: `<!--{{TEAM_PRICE}}-->Pricing to be announced<!--/{{TEAM_PRICE}}-->`. `apply-overlay.sh` replaces the tokens in a copy under `$RUNNER_TEMP`. It masks each value first (`::add-mask::` only when `GITHUB_ACTIONS=true`) and logs token names and counts only. Locally it never prints a value.
 4. `check-prod-overlay-free.sh` fetches the production pages after each staging deploy and fails if any value is there.
 5. `test-overlay-isolation.sh` fails a pull request when another workflow reads the secret or enters the `staging` environment, when the v2 workflow gains another trigger or an artifact upload, or when a public file holds a bare token or price-shaped text.
 6. The `SITE_V2_ON_STAGING` repository variable pauses the main-to-staging deploy and the PR preview deploy, so they do not overwrite the overlaid site. That change lands on `main`, because `workflow_run` and `main` pushes read the workflow files of `main`.
@@ -41,9 +41,13 @@ Option A.
 - A repository admin can still change a workflow. Masking protects the logs, not the workflow source. Branch protection on `staging` limits this.
 - Anyone with the shared staging Basic Auth credential can see the values on staging.
 
+## Evolution
+
+- 2026-10-26: `mask()` emits `::add-mask::` only when `GITHUB_ACTIONS=true`. Reason: a local run printed overlay values in clear text via those lines; CI behaviour is unchanged. Covered by `.github/tests/test-mask-local.sh`.
+
 ## Artifacts
 
 - Ticket: GH-102
 - Workflow: `.github/workflows/deploy-staging-v2.yml`
 - Scripts: `.github/scripts/apply-overlay.sh`, `.github/scripts/check-prod-overlay-free.sh`
-- Tests: `.github/tests/test-apply-overlay.sh`, `.github/tests/test-overlay-isolation.sh`
+- Tests: `.github/tests/test-apply-overlay.sh`, `.github/tests/test-overlay-isolation.sh`, `.github/tests/test-mask-local.sh`

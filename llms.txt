@@ -1,102 +1,42 @@
 # ApexYard
 
-> ApexYard gives your coding agents a team's process. The Gate checks every pull request on GitHub.
-> The framework is open source (MIT).
+> Your agents write the code. Your process decides what merges.
+> ApexYard gives your agents a team's process. Then it checks every pull request against that process.
+
+ApexYard has three products and a shared layer.
+
+- Build is the open-source framework. It runs on your machine.
+- Gate checks each pull request against your process.
+- Readiness measures each repository.
+- Keel holds your team's rules and context. Every agent reads it.
 
 ## Pages
 
-- [Home](https://apexyard.ai/) — ApexYard gives your coding agents a team's process, and the Gate checks every pull request on GitHub
-- [Build](https://apexyard.ai/build) — your agents work as an engineering team: idea, spec, plan, tickets and code checked by reviewer roles, on your own machine
-- [Gate](https://apexyard.ai/gate) — each pull request checked on GitHub for a ticket, a decision record, a review and a named approval
-- [Readiness](https://apexyard.ai/readiness) — each repository audited area by area, with a go or no-go, the gaps and the top actions
-- [Docs](https://apexyard.ai/docs) — the framework guide: install, the daily loop, the gates, hooks and rules, and a real merge replayed from the log
-- [Pricing](https://apexyard.ai/pricing): the open-source framework (MIT), a free way to start with the hosted gate, Startup, Team and Enterprise plans, and assessments of how your team ships
-- [Architecture](https://apexyard.ai/architecture) — the technical 5-layer model + portfolio model
-- [Skills](https://apexyard.ai/skills) — full slash-command reference (69 skills) grouped by outcome
+- [Home](https://apexyard.ai/): what ApexYard does and how one rule moves through Build, Gate and Readiness
+- [Build](https://apexyard.ai/build): the open-source framework for your agents
+- [Gate](https://apexyard.ai/gate): the check on each pull request, and what the GitHub App can see
+- [Readiness](https://apexyard.ai/readiness): the audit of each repository
+- [Pricing](https://apexyard.ai/pricing): the plans for each product
+- [Docs](https://apexyard.ai/docs): install guide, daily loop, gates, hooks and rules
+- [Architecture](https://apexyard.ai/architecture): the five-layer model
+- [Skills](https://apexyard.ai/skills): the slash commands, grouped by outcome
 
-## Full-content companion
+## For agents
 
-- [llms-full.txt](https://apexyard.ai/llms-full.txt) — all page content in one markdown file for one-shot consumption
+- [llms-full.txt](https://apexyard.ai/llms-full.txt): the page content in one file
+- [Creator brief](https://apexyard.ai/creator-brief.md): facts and wording for people who write or make videos about ApexYard
 
-## Who can use ApexYard
+## Facts to use
 
-- **Solo founders shipping with AI** (Claude Code, Codex, OpenCode, Pi, Cursor) — needing the
-  guardrails a real team would give them, without a real team
-- **Teams of 10 to 25** — several engineers and repositories, each person
-  working with AI agents, needing one review process and one set of gates
-- **Non-technical founders running contractors or a small dev team** — needing
-  to know the work is solid without reading every commit themselves
-- **Small teams with no engineering process yet** — needing real review, real
-  testing, real release discipline before things get harder to fix
+- Build is open source under the MIT licence. It needs no account and no dashboard.
+- Build works with Claude Code, Codex, Cursor and OpenCode.
+- Gate reads pull requests on GitHub. The GitHub App never reads your code.
+- Gate shows if a pull request has a ticket, a decision record, a review and a named approval.
+- Readiness gives a go or no-go for a repository, the gaps in each area and the top actions.
+- Keel is the name for your team's rules and context. Every agent reads it.
+- Each product has its own plans. See the pricing page. This file gives no prices.
 
-## What you get
+## Source
 
-- **Automatic code review.** Every change you make — or that a contractor makes
-  — gets reviewed by a senior-engineering-level AI reviewer before it ships.
-- **Launch-readiness checks.** Before customers see it, find out what is still
-  missing across security, performance, accessibility, monitoring, docs, SEO.
-- **One view for all your products.** Every project in one inbox — PRs,
-  issues, comments, blockers — all in one screen across N products.
-- **Evidence-grounded quality gates.** Review records cite the source they checked, and quality regression can run across Claude, Cursor, Codex, pi, and opencode.
-- **Flexible tracker setup.** Issue tracking and code review can use different hosts.
-
-## Key concepts (the under-the-hood story for the technical evaluator)
-
-- **One ops repo forks the upstream framework + governs every project.** You
-  do not add apexyard to a project — projects get forged inside it. The fork
-  IS the ops repo; no nested installs, no symlinks.
-- **Strict merge gates — two-marker (code-reviewer agent + per-PR CEO approval).**
-  Plan-level "go" does not authorize a merge; each PR requires explicit per-PR
-  approval recorded via `/approve-merge <pr>`. Mechanically enforced.
-- **Persistent decision-log across the portfolio.** Every technical decision
-  lands as a markdown file in `docs/agdr/`; the `/agdr` skill searches
-  across every managed project.
-- **Audit family — 9 production-readiness audits.** `/launch-check` fans out
-  to security, accessibility, GDPR/ePrivacy compliance, analytics, SEO,
-  AI/LLM discoverability, performance, monitoring, and docs.
-- **Portfolio model.** One registry (`apexyard.projects.yaml`) lists every repo
-  under management. Skills like `/inbox`, `/status`, `/tasks` aggregate
-  across the portfolio in ~1 second.
-- **69 slash commands** grouped by outcome: keep quality high, move work
-  forward, see everything at once, onboard new code, run things.
-- **66 shell hooks** mechanically enforce the rules — ticket-first, migration
-  gate, two-marker merge gate, red-CI block, secrets scanning, branch / PR-title
-  validation, upstream-drift banner, leak protection.
-- **20 role definitions** across 6 departments (Engineering, Product, Design,
-  Security, Data). Roles activate on triggers (label, diff path, prompt).
-
-## Proof — verifiable from our own GitHub activity
-
-- 304 PRs reviewed and merged in the last 90 days, under the same guardrails
-  apexyard installs in your fork
-- 40 releases shipped (v0.1.0 through v5.10.0)
-- 144 technical decisions recorded (released to main)
-- Releases v5.7 to v5.10 add opt-in ORBIT planning, the `/scaffold` and `/preflight` skills, and a ticket marker in each working tree. v5.10.0 adds a review-depth tier for Rex and closes more gaps in the push, commit, and merge gates.
-- All visible at [github.com/me2resh/apexyard](https://github.com/me2resh/apexyard)
-
-## Adoption pattern
-
-- Install the CLI (`curl -fsSL https://apexyard.ai/install | sh`,
-  `brew install me2resh/tap/apexyard`, or `npx create-apexyard`), then run
-  `apexyard init` in your project folder. The Cockpit desktop app runs the
-  same steps. The result is the same either way.
-- Alternative: fork [`me2resh/apexyard`](https://github.com/me2resh/apexyard)
-  on GitHub, clone the fork, and treat it as your ops repo
-- Edit `onboarding.yaml` + `apexyard.projects.yaml` to register projects
-- Run `/projects`, `/inbox`, `/status` to check that the portfolio is wired
-- Adopt external repos via `/handover <repo>`
-- Two setup modes: single-fork (everything in the fork) or split-portfolio
-  (public fork + private sibling repo for adopter-specific data)
-
-## Community
-
-- Report bugs, request features, and record decisions in GitHub.
-
-## License
-
-MIT — plain markdown and shell, no SaaS, no vendor lock-in. Claude Code is the
-canonical hook runtime; adapters connect Codex, OpenCode, Pi, and Cursor.
-
-## Repository
-
-https://github.com/me2resh/apexyard
+- Framework: https://github.com/me2resh/apexyard
+- Licence: MIT

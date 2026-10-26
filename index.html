@@ -144,7 +144,7 @@
   <section class="section one-rule" id="product" aria-labelledby="one-rule-title">
     <div class="wrap" id="how-it-works">
       <h2 class="section__title" id="one-rule-title">One process, three places</h2>
-      <p class="section__lede">You write a rule once. Build guides your agents with it. The Gate checks each pull request against it. Readiness measures the whole repository. A miss comes back as a new rule.</p>
+      <p class="section__lede">Keel is your team's rules and context, read by every agent. Developers write a rule once. Build, the Gate and Readiness all work from it. A miss comes back as a new rule.</p>
       <figure class="rule-map" data-rule-map>
         <div class="rule-map__board">
           <svg class="rule-map__svg" aria-hidden="true" focusable="false">
@@ -153,28 +153,30 @@
           </svg>
           <span class="rule-map__token" aria-hidden="true"></span>
           <ol class="rule-map__stages">
-            <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-rule"><span class="rule-map__name">The rule</span><span class="rule-map__what">Written once</span></button></li>
-            <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-build"><span class="rule-map__name">Build</span><span class="rule-map__what">Guides the agent</span></button></li>
-            <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-gate"><span class="rule-map__name">Gate</span><span class="rule-map__what">Checks the pull request</span></button></li>
-            <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-readiness"><span class="rule-map__name">Readiness</span><span class="rule-map__what">Measures the repository</span></button></li>
-            <li class="rule-map__stage rule-map__stage--miss"><button type="button" class="rule-map__btn" id="rule-tab-miss"><span class="rule-map__name">A miss</span><span class="rule-map__what">Becomes a new rule</span></button></li>
+            <li class="rule-map__stage rule-map__stage--dev"><button type="button" class="rule-map__btn" id="rule-tab-dev"><span class="rule-map__name">Developers</span><span class="rule-map__what">Write and approve rules</span></button></li>
+            <li class="rule-map__stage rule-map__stage--keel"><button type="button" class="rule-map__btn rule-map__btn--keel" id="rule-tab-keel"><span class="rule-map__name">Keel<span class="visually-hidden">:</span></span><span class="rule-map__what">Your team's rules and context</span><span class="rule-map__rule" aria-hidden="true">Every change starts from a ticket.</span></button></li>
+            <li class="rule-map__stage rule-map__stage--build"><button type="button" class="rule-map__btn" id="rule-tab-build"><span class="rule-map__name">Build</span><span class="rule-map__what">Agents read Keel while they write</span></button></li>
+            <li class="rule-map__stage rule-map__stage--gate"><button type="button" class="rule-map__btn" id="rule-tab-gate"><span class="rule-map__name">Gate</span><span class="rule-map__what">Checks each pull request against Keel</span></button></li>
+            <li class="rule-map__stage rule-map__stage--readiness"><button type="button" class="rule-map__btn" id="rule-tab-readiness"><span class="rule-map__name">Readiness</span><span class="rule-map__what">Measures each repository against Keel</span></button></li>
+            <li class="rule-map__stage rule-map__stage--miss"><button type="button" class="rule-map__btn" id="rule-tab-miss"><span class="rule-map__name">A miss</span><span class="rule-map__what">Becomes a new rule in Keel</span></button></li>
           </ol>
         </div>
 
         <ol class="rule-map__says">
-          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-rule"><p class="rule-map__label"><span class="rule-map__label-name">The rule</span> <span class="rule-map__label-what">Written once</span></p><p class="rule-map__line">Every change starts from a ticket.</p></div></li>
-          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-build"><p class="rule-map__label"><span class="rule-map__label-name">Build</span> <span class="rule-map__label-what">Guides the agent</span></p><p class="rule-map__line">The agent opens a ticket before it writes code.</p></div></li>
-          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-gate"><p class="rule-map__label"><span class="rule-map__label-name">Gate</span> <span class="rule-map__label-what">Checks the pull request</span></p><p class="rule-map__line">A pull request with no ticket cannot merge.</p></div></li>
-          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-readiness"><p class="rule-map__label"><span class="rule-map__label-name">Readiness</span> <span class="rule-map__label-what">Measures the repository</span></p><p class="rule-map__line">It flags repositories where changes skip tickets.</p></div></li>
-          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-miss"><p class="rule-map__label"><span class="rule-map__label-name">A miss</span> <span class="rule-map__label-what">Becomes a new rule</span></p><p class="rule-map__line">A review catches one. It becomes a new rule for every agent.</p></div></li>
+          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-dev"><p class="rule-map__label"><span class="rule-map__label-name">Developers</span> <span class="rule-map__label-what">Write and approve rules</span></p><p class="rule-map__line">A developer writes the rule. A second developer approves it.</p></div></li>
+          <li class="rule-map__item rule-map__item--keel"><div class="rule-map__say" id="rule-say-keel"><p class="rule-map__label"><span class="rule-map__label-name">Keel</span> <span class="rule-map__label-what">Your team's rules and context</span></p><p class="rule-map__line">Every change starts from a ticket.</p></div></li>
+          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-build"><p class="rule-map__label"><span class="rule-map__label-name">Build</span> <span class="rule-map__label-what">Agents read Keel while they write</span></p><p class="rule-map__line">The agent reads the rule over MCP. It opens a ticket before it writes code.</p></div></li>
+          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-gate"><p class="rule-map__label"><span class="rule-map__label-name">Gate</span> <span class="rule-map__label-what">Checks each pull request against Keel</span></p><p class="rule-map__line">A pull request with no ticket cannot merge.</p></div></li>
+          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-readiness"><p class="rule-map__label"><span class="rule-map__label-name">Readiness</span> <span class="rule-map__label-what">Measures each repository against Keel</span></p><p class="rule-map__line">It flags repositories where changes skip tickets.</p></div></li>
+          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-miss"><p class="rule-map__label"><span class="rule-map__label-name">A miss</span> <span class="rule-map__label-what">Becomes a new rule in Keel</span></p><p class="rule-map__line">A review finds a ticket with no test plan. The fix becomes a new rule in Keel.</p></div></li>
         </ol>
 
         <p class="rule-map__tools"><button type="button" class="rule-map__control" aria-pressed="false" hidden>Pause the loop</button></p>
 
-        <figcaption class="visually-hidden">One rule travels through five stages: the rule, Build, Gate, Readiness and a miss. A miss becomes a new rule, and the loop starts again.</figcaption>
+        <figcaption class="visually-hidden">Keel is at the centre. Developers write and approve rules in Keel. Build, the Gate and Readiness all use the same rule from Keel. A miss becomes a new rule in Keel, and the loop starts again.</figcaption>
       </figure>
       <p class="one-rule__links"><a href="/build">About Build</a> <a href="/gate">About Gate</a> <a href="/readiness">About Readiness</a></p>
-      <p class="one-rule__base">Underneath: one knowledge base, one evidence store and one dashboard.</p>
+      <p class="one-rule__base">Underneath: Keel, one evidence store and one dashboard.</p>
     </div>
   </section>
 
@@ -264,6 +266,7 @@ bash bin/apexyard doctor</code></pre><button type="button" class="tabs__copy" da
       <a href="/docs">Docs</a>
       <a href="/architecture">Architecture</a>
       <a href="/skills">Skills</a>
+      <a href="/creators">Creators</a>
       <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">Changelog</a>
       <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener">GitHub</a>
     </nav>
