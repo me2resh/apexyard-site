@@ -6,7 +6,7 @@
 
 ApexYard gives your agents a team's process, then checks every pull request against it.
 
-Agent agnostic. Works with Claude Code, Codex, Cursor and OpenCode.
+Agent agnostic. Works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.
 
 ## One process, three places
 
