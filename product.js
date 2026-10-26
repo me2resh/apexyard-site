@@ -21,11 +21,15 @@
   }
 
   // Claims set a data attribute only. No state renders a visible label.
+  // data-claim-off replaces the element's text when the claim is not live.
   var claims = window.APEXYARD_CLAIMS || {};
   document.querySelectorAll('[data-claim]').forEach(function (el) {
     var state = claims[el.getAttribute('data-claim')];
     if (state === 'live' || state === 'coming') {
       el.setAttribute('data-claim-state', state);
+    }
+    if (el.hasAttribute('data-claim-off') && state !== 'live') {
+      el.textContent = el.getAttribute('data-claim-off');
     }
   });
 
