@@ -98,6 +98,60 @@
       <h1 id="product-title">Know whether each repository is ready for production, area by area.</h1>
       <p class="product-head__who">For CTOs and engineering leads who answer for what ships.</p>
       <p class="product-head__cta"><a class="btn btn--primary" href="https://cal.com/apexyard/review?src=readiness-head" rel="noopener">Book a readiness call</a></p>
+
+      <!-- A real readiness audit of a public sample app. Every verdict, count
+           and action below comes from the audit summary. Add no score and
+           no other number. -->
+      <figure class="report" aria-labelledby="report-title">
+        <div class="mock report__card">
+          <h2 class="mock__bar report__bar" id="report-title"><span class="mock__title">Readiness report</span> <span class="mock__meta">me2resh/ddd-sam-example</span></h2>
+          <div class="mock__body report__body">
+            <div class="report__verdict">
+              <p class="report__label">Overall verdict</p>
+              <p class="report__go"><span class="report__go-mark" aria-hidden="true"></span>No-go</p>
+            </div>
+            <div class="report__areas">
+              <table class="report__table">
+                <caption class="visually-hidden">The verdict and the number of gaps by severity in each of the ten areas</caption>
+                <thead>
+                  <tr>
+                    <th scope="col" rowspan="2" class="report__area-head">Area</th>
+                    <th scope="col" rowspan="2">Verdict</th>
+                    <th scope="colgroup" colspan="4" class="report__sev-group">Gaps by severity</th>
+                  </tr>
+                  <tr>
+                    <th scope="col" class="report__num"><span class="report__long">Critical</span><span class="report__short" aria-hidden="true">Crit</span></th>
+                    <th scope="col" class="report__num">High</th>
+                    <th scope="col" class="report__num"><span class="report__long">Medium</span><span class="report__short" aria-hidden="true">Med</span></th>
+                    <th scope="col" class="report__num">Low</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Security</th><td><span class="verdict verdict--fail">Fail</span></td><td class="report__num is-crit">2</td><td class="report__num">1</td><td class="report__num">4</td><td class="report__num">2</td></tr>
+                  <tr><th scope="row">Accessibility</th><td><span class="verdict verdict--warn">Warn</span></td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td><td class="report__num">1</td><td class="report__num">2</td></tr>
+                  <tr><th scope="row">Compliance</th><td><span class="verdict verdict--fail">Fail</span></td><td class="report__num is-zero">0</td><td class="report__num">1</td><td class="report__num">3</td><td class="report__num is-zero">0</td></tr>
+                  <tr><th scope="row">Analytics</th><td><span class="verdict verdict--fail">Fail</span></td><td class="report__num is-zero">0</td><td class="report__num">1</td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td></tr>
+                  <tr><th scope="row">Search</th><td><span class="verdict verdict--warn">Warn</span></td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td><td class="report__num">1</td><td class="report__num">2</td></tr>
+                  <tr><th scope="row">AI search</th><td><span class="verdict verdict--warn">Warn</span></td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td><td class="report__num">2</td></tr>
+                  <tr><th scope="row">Performance</th><td><span class="verdict verdict--pass">Pass</span></td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td></tr>
+                  <tr><th scope="row">Monitoring</th><td><span class="verdict verdict--fail">Fail</span></td><td class="report__num is-zero">0</td><td class="report__num">2</td><td class="report__num">2</td><td class="report__num">1</td></tr>
+                  <tr><th scope="row">Documentation</th><td><span class="verdict verdict--warn">Warn</span></td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td><td class="report__num">2</td><td class="report__num">3</td></tr>
+                  <tr><th scope="row">Behaviour quality</th><td><span class="verdict verdict--warn">Warn</span></td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td><td class="report__num">1</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="report__actions">
+              <h3 class="report__label">Top actions</h3>
+              <ol class="report__list">
+                <li>Add authentication to all patient appointment APIs and to the frontend.</li>
+                <li>Update the dependencies that have critical vulnerabilities, starting with protobufjs.</li>
+                <li>Add a health endpoint and an error tracking service to each API.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <figcaption class="mock__caption report__caption">A real readiness report on a public sample app. Repository: <a href="https://github.com/me2resh/ddd-sam-example">me2resh/ddd-sam-example</a>. The audit ran on commit <a href="https://github.com/me2resh/ddd-sam-example/commit/36c3ed0f379a0880f877160c88983653a0e1cb49"><code>36c3ed0</code></a> on <time datetime="2026-10-26">26 October 2026</time>.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -139,7 +193,7 @@
                 </ul>
               </div>
             </div>
-            <figcaption class="mock__caption"><span class="mock__tag">Example</span>A score card with sample data.<span class="visually-hidden"> The fictional repository example-co/payments-api scores a sample 70 out of 100. The score rose over eight weeks. Sample area scores: documentation 90, security 80, accessibility 60, monitoring 50.</span></figcaption>
+            <figcaption class="mock__caption"><span class="mock__tag">Example</span>A scheduled readiness score with sample data.<span class="visually-hidden"> The fictional repository example-co/payments-api scores a sample 70 out of 100. The score rose over eight weeks. Sample area scores: documentation 90, security 80, accessibility 60, monitoring 50.</span></figcaption>
           </figure>
         </article>
         <article class="feature">
@@ -170,6 +224,7 @@
     <div class="wrap connects">
       <h2 class="section__title" id="connects-title">How it connects</h2>
       <p class="section__lede">Turn a finding into a rule, and your agents pick it up on their next ticket in <a href="/build">Build</a>.</p>
+      <p class="connects__gate">A score tells you what is wrong. <a href="/gate">The Gate</a> stops it happening again.</p>
     </div>
   </section>
 
