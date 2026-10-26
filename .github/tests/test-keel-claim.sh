@@ -2,6 +2,7 @@
 #
 # Guard for #102: keel_versions claim hides " and versions" when not live.
 # Checks claims.js, pricing.html markup, and product.js claim-off behaviour.
+# Passes whether keel_versions is 'live' or 'coming' (planned switch-on).
 
 set -uo pipefail
 
@@ -15,10 +16,12 @@ claims="$root/claims.js"
 pricing="$root/pricing.html"
 product="$root/product.js"
 
-if grep -q "keel_versions: 'live'" "$claims"; then
-  pass "claims.js has keel_versions: 'live'"
+# Value on the keel_versions assignment line (single-quoted).
+kv=$(sed -n "s/^[[:space:]]*keel_versions:[[:space:]]*'\([^']*\)'.*/\1/p" "$claims" | head -n1)
+if [ "$kv" = "live" ] || [ "$kv" = "coming" ]; then
+  pass "claims.js has keel_versions: '$kv'"
 else
-  fail_msg "claims.js missing keel_versions: 'live'"
+  fail_msg "claims.js keel_versions must be 'live' or 'coming' (got ${kv:-missing})"
 fi
 
 check='keel_versions: Keel owners and versions work on production for a Team org (an entry shows its owner and version history over MCP and on the dashboard). If not, set keel_versions to '\''coming'\'' so the line reads '\''with owners'\'' only.'
@@ -59,6 +62,7 @@ function makeEl(attrs, text) {
   };
 }
 
+// state: undefined = use claims.js as-is; otherwise inject keel_versions.
 function run(state) {
   const outer = makeEl({ 'data-claim': 'kb_mcp' }, '');
   const inner = makeEl({ 'data-claim': 'keel_versions', 'data-claim-off': '' }, ' and versions');
@@ -95,15 +99,26 @@ function run(state) {
     },
     addEventListener: function () {}
   };
-  // Load claims, then override keel_versions for this case.
   global.window.APEXYARD_CLAIMS = undefined;
   eval(claimsSrc);
-  global.window.APEXYARD_CLAIMS.keel_versions = state;
+  if (state !== undefined) {
+    global.window.APEXYARD_CLAIMS.keel_versions = state;
+  }
+  const value = global.window.APEXYARD_CLAIMS.keel_versions;
   eval(productSrc);
-  return { inner: inner.textContent, line: lineText(), stateAttr: inner.getAttribute('data-claim-state') };
+  return { inner: inner.textContent, line: lineText(), stateAttr: inner.getAttribute('data-claim-state'), value: value };
 }
 
 let errors = [];
+
+const file = run(undefined);
+const expectedFileLine = file.value === 'live'
+  ? 'Keel shared across your organisation, with owners and versions'
+  : 'Keel shared across your organisation, with owners';
+if (file.line !== expectedFileLine) {
+  errors.push("file (" + file.value + "): line is " + JSON.stringify(file.line));
+}
+
 const live = run('live');
 if (live.inner !== ' and versions') {
   errors.push("live: inner text is " + JSON.stringify(live.inner));
@@ -130,6 +145,7 @@ if (errors.length) {
   errors.forEach(function (e) { console.log('FAIL  product.js: ' + e); });
   process.exit(1);
 }
+console.log('PASS  product.js file value yields expected Keel line');
 console.log('PASS  product.js live keeps " and versions"');
 console.log('PASS  product.js coming drops " and versions"');
 NODE
