@@ -37,7 +37,7 @@ printf '<b>{{HOOKS}}</b>\n' > "$src/og/templates/card.html"
 good_json='{"TOKEN_A":"FakeValueAlpha <9>","TOKEN_B":"FakeValueBeta"}'
 
 run_apply() { # <json> <out> -> sets rc, log
-  log=$(OVERLAY_JSON="$1" "$apply" "$src" "$2" 2>&1)
+  log=$(OVERLAY_JSON="$1" GITHUB_ACTIONS=true "$apply" "$src" "$2" 2>&1)
   rc=$?
 }
 
@@ -94,7 +94,7 @@ done
 
 # --- the real site accepts an overlay with the documented tokens ---
 real_json='{"TEAM_NOTE":"FakeValueTeamNote","ENTERPRISE_POINT_3":"FakeValueEnterprisePoint3","READINESS_REPORT_POINT_3":"FakeValueReadinessReportPoint3","READINESS_SCHEDULE_POINT_3":"FakeValueReadinessSchedulePoint3","ASSESS_SHORT_POINT_2":"FakeValueAssessShortPoint2","ASSESS_SHORT_POINT_3":"FakeValueAssessShortPoint3","COCKPIT_POINT_3":"FakeValueCockpitPoint3","ASSESS_SHORT_NAME":"FakeValueAssessShortName","ASSESS_FULL_NAME":"FakeValueAssessFullName","ASSESS_FULL_LINE":"FakeValueAssessFullLine","PLAN_HINT":"FakeValueH","FREE_REPO_LIMIT":"FakeValueFreeRepoLimit","STARTUP_PRICE":"FakeValueStartupPrice","STARTUP_LIMITS":"FakeValueStartupLimits","STARTUP_SUMMARY":"FakeValueStartupSummary","TEAM_REPO_LIMIT":"FakeValueTeamRepoLimit","TEAM_PRICE":"FakeValueP","TEAM_PRICE_NOTE":"FakeValueTeamPriceNote","FREE_BULLET_1":"FakeValueFreeBullet1","STARTUP_BULLET_1":"FakeValueStartupBullet1","TEAM_SUPPORT":"FakeValueTeamSupport","ENTERPRISE_LIMITS":"FakeValueEnterpriseLimits","ENTERPRISE_SUMMARY":"FakeValueEnterpriseSummary","REVIEW_LITE_OFFER":"FakeValueReviewLiteOffer","REVIEW_LITE_PRICE":"FakeValueReviewLitePrice","REVIEW_OFFER":"FakeValueReviewOffer","REVIEW_DETAILS":"FakeValueReviewDetails","REVIEW_PRICE":"FakeValueReviewPrice","REVIEW_TIERS":"FakeValueReviewTiers","REVIEW_GUARANTEE":"FakeValueReviewGuarantee","COCKPIT_PLAN_NAME":"FakeValueCockpitPlanName","COCKPIT_PRICE":"FakeValueCockpitPrice","READINESS_REPORT_PRICE":"FakeValueReadinessReportPrice","READINESS_SCHEDULE_NAME":"FakeValueReadinessScheduleName","READINESS_SCHEDULE_PRICE":"FakeValueReadinessSchedulePrice","REVIEWS_SUMMARY":"FakeValueReviewsSummary"}'
-rlog=$(OVERLAY_JSON="$real_json" "$apply" "$root" "$tmp/real" 2>&1)
+rlog=$(OVERLAY_JSON="$real_json" GITHUB_ACTIONS=true "$apply" "$root" "$tmp/real" 2>&1)
 rrc=$?
 assert "the real site applies the documented tokens"  test "$rrc" -eq 0
 assert "the real pricing page gets the values"        grep -q 'FakeValueP' "$tmp/real/pricing.html"

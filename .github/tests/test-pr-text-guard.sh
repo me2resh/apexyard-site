@@ -40,7 +40,7 @@ event() { # <title> <body> : writes the event payload
 run() { # [env assignments...] : sets $out and $rc
   local head
   head=$(git -C "$repo" rev-parse HEAD)
-  out=$(cd "$repo" && env -u PRIVATE_TERMS "$@" .github/scripts/check-pr-text.sh "$tmp/event.json" "$base" "$head" 2>&1)
+  out=$(cd "$repo" && env -u PRIVATE_TERMS GITHUB_ACTIONS=true "$@" .github/scripts/check-pr-text.sh "$tmp/event.json" "$base" "$head" 2>&1)
   rc=$?
 }
 visible() { grep -v '^::add-mask::' <<<"$out"; }
@@ -81,7 +81,7 @@ git -C "$repo" reset -q --hard "$base"
 commit "plain message"
 mkdir -p "$tmp/fields"
 printf 'Intro\nCrimson otter\nVelvet harbour\nend\n' > "$tmp/fields/body"
-out=$(cd "$repo" && env -u PRIVATE_TERMS -u OVERLAY_JSON OVERLAY_JSON='{"FAKE_MULTI":"Crimson otter\nVelvet harbour"}' \
+out=$(cd "$repo" && env -u PRIVATE_TERMS -u OVERLAY_JSON GITHUB_ACTIONS=true OVERLAY_JSON='{"FAKE_MULTI":"Crimson otter\nVelvet harbour"}' \
   .github/scripts/check-private-terms.sh --text-dir "$tmp/fields" 2>&1)
 rc=$?
 assert "a multi-line term is found in a field"         test "$rc" -eq 1
@@ -90,10 +90,10 @@ assert "no line of the term appears unmasked"          bash -c "! grep -v '^::ad
 
 # --- fail closed on a bad range ---
 head=$(git -C "$repo" rev-parse HEAD)
-out=$(cd "$repo" && PRIVATE_TERMS="$terms" .github/scripts/check-pr-text.sh "$tmp/event.json" 1111111111111111111111111111111111111111 "$head" 2>&1); rc=$?
+out=$(cd "$repo" && PRIVATE_TERMS="$terms" GITHUB_ACTIONS=true .github/scripts/check-pr-text.sh "$tmp/event.json" 1111111111111111111111111111111111111111 "$head" 2>&1); rc=$?
 assert "an unresolvable range fails closed"            test "$rc" -eq 1
 assert "the range error is generic"                    grep -q 'failed closed' <<<"$out"
-out=$(cd "$repo" && PRIVATE_TERMS="$terms" .github/scripts/check-pr-text.sh "$tmp/event.json" "$head" "$base" 2>&1); rc=$?
+out=$(cd "$repo" && PRIVATE_TERMS="$terms" GITHUB_ACTIONS=true .github/scripts/check-pr-text.sh "$tmp/event.json" "$head" "$base" 2>&1); rc=$?
 assert "an empty range for a non-empty PR fails closed" test "$rc" -eq 1
 
 # --- no secret ---
