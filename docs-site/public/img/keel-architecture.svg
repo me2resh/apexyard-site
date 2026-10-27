@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" role="img">
+  <title>Keel in the centre with Build, Gate hooks and Rex, and Readiness on your machine; pull request and required check on your forge; hosted check and dashboard optional</title>
+  <rect width="1200" height="760" fill="#FFFFFF"/>
+
+  <!-- Zones -->
+  <rect x="24" y="24" width="700" height="712" rx="16" ry="16" fill="#F5F7FA" stroke="#CDD4DE" stroke-width="2"/>
+  <text x="48" y="58" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="22" font-weight="600" fill="#14213D">On your machine</text>
+
+  <rect x="748" y="24" width="428" height="340" rx="16" ry="16" fill="#F5F7FA" stroke="#CDD4DE" stroke-width="2"/>
+  <text x="772" y="58" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="20" font-weight="600" fill="#14213D">Your forge (GitHub or GitLab)</text>
+
+  <rect x="748" y="388" width="428" height="348" rx="16" ry="16" fill="#F5F7FA" stroke="#CDD4DE" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="772" y="422" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="20" font-weight="600" fill="#14213D">Hosted, optional</text>
+
+  <!-- Keel (centre of machine zone) -->
+  <rect x="234" y="300" width="280" height="100" rx="10" ry="10" fill="#FFFFFF" stroke="#2D5BE3" stroke-width="3"/>
+  <text x="374" y="342" text-anchor="middle" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="26" font-weight="700" fill="#14213D">Keel</text>
+  <text x="374" y="372" text-anchor="middle" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="16" fill="#47536A">handbooks, rules, decisions</text>
+
+  <!-- Build -->
+  <rect x="64" y="120" width="240" height="88" rx="10" ry="10" fill="#FFFFFF" stroke="#CDD4DE" stroke-width="2"/>
+  <text x="184" y="158" text-anchor="middle" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="22" font-weight="600" fill="#14213D">Build</text>
+  <text x="184" y="186" text-anchor="middle" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="15" fill="#47536A">agents load the rules</text>
+
+  <!-- Gate hooks + Rex -->
+  <rect x="444" y="120" width="250" height="88" rx="10" ry="10" fill="#FFFFFF" stroke="#CDD4DE" stroke-width="2"/>
+  <text x="569" y="158" text-anchor="middle" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="20" font-weight="600" fill="#14213D">Gate hooks + Rex</text>
+  <text x="569" y="186" text-anchor="middle" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="15" fill="#47536A">checks each pull request</text>
+
+  <!-- Readiness -->
+  <rect x="234" y="520" width="280" height="88" rx="10" ry="10" fill="#FFFFFF" stroke="#CDD4DE" stroke-width="2"/>
+  <text x="374" y="558" text-anchor="middle" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="22" font-weight="600" fill="#14213D">Readiness</text>
+  <text x="374" y="586" text-anchor="middle" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="15" fill="#47536A">audits each repository</text>
+
+  <!-- Forge boxes -->
+  <rect x="790" y="100" width="344" height="88" rx="10" ry="10" fill="#FFFFFF" stroke="#CDD4DE" stroke-width="2"/>
+  <text x="962" y="152" text-anchor="middle" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="22" font-weight="600" fill="#14213D">Pull request</text>
+
+  <rect x="790" y="230" width="344" height="88" rx="10" ry="10" fill="#FFFFFF" stroke="#CDD4DE" stroke-width="2"/>
+  <text x="962" y="282" text-anchor="middle" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="22" font-weight="600" fill="#14213D">Required check</text>
+
+  <!-- Hosted boxes -->
+  <rect x="790" y="460" width="344" height="100" rx="10" ry="10" fill="#FFFFFF" stroke="#CDD4DE" stroke-width="2"/>
+  <text x="962" y="500" text-anchor="middle" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="18" font-weight="600" fill="#14213D">Hosted check</text>
+  <text x="962" y="528" text-anchor="middle" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="14" fill="#47536A">reads pull request data, no code</text>
+
+  <rect x="790" y="590" width="344" height="88" rx="10" ry="10" fill="#FFFFFF" stroke="#CDD4DE" stroke-width="2"/>
+  <text x="962" y="642" text-anchor="middle" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="22" font-weight="600" fill="#14213D">Dashboard</text>
+
+  <!-- Marker defs -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2D5BE3"/>
+    </marker>
+    <marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#47536A"/>
+    </marker>
+  </defs>
+
+  <!-- Keel -> Build -->
+  <path d="M 300 300 L 220 208" fill="none" stroke="#2D5BE3" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- Keel -> Gate hooks + Rex -->
+  <path d="M 448 300 L 530 208" fill="none" stroke="#2D5BE3" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- Keel -> Readiness -->
+  <path d="M 374 400 L 374 520" fill="none" stroke="#2D5BE3" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Build -> Pull request (over the tops; clear of Gate hooks + Rex) -->
+  <path d="M 184 120 L 184 78 L 770 78 L 770 144 L 790 144" fill="none" stroke="#2D5BE3" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Pull request -> Hosted check (outside right edge) -->
+  <path d="M 1134 144 L 1160 144 L 1160 510 L 1134 510" fill="none" stroke="#2D5BE3" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- Hosted check -> Required check (outside left edge) -->
+  <path d="M 790 510 L 765 510 L 765 274 L 790 274" fill="none" stroke="#2D5BE3" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Dashed miss -> rule: Gate hooks + Rex back to Keel -->
+  <path d="M 520 208 C 640 240, 640 280, 514 320" fill="none" stroke="#47536A" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow-muted)"/>
+  <text x="620" y="268" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="14" fill="#47536A">a miss becomes a rule</text>
+</svg>

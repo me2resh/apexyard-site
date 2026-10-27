@@ -16,16 +16,26 @@ const nav = JSON.parse(fs.readFileSync(new URL('./src/generated/nav.json', impor
 
 const sidebar = nav.sections.map((section) => ({
   label: section.title,
-  items: section.groups.map((group) => ({
-    label: group.title,
-    collapsed: group.collapsed,
-    badge: { text: String(group.pages.length), class: 'sl-count' },
-    items: group.pages.map((page) => ({
+  items: section.groups.map((group) => {
+    const items = group.pages.map((page) => ({
       label: page.title,
       slug: page.slug,
       ...(page.coming ? { badge: { text: 'Coming', class: 'sl-coming' } } : {}),
-    })),
-  })),
+    }));
+    if (group.id === 'changelog') {
+      items.push({
+        label: 'All releases',
+        link: 'https://github.com/me2resh/apexyard/releases',
+        attrs: { rel: 'noopener' },
+      });
+    }
+    return {
+      label: group.title,
+      collapsed: group.collapsed,
+      badge: { text: String(group.pages.length), class: 'sl-count' },
+      items,
+    };
+  }),
 }));
 
 export default defineConfig({

@@ -33,8 +33,6 @@
 <script>try{var t=localStorage.getItem('ay-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-<!-- Product switcher: pick the panel before first paint, so the page does not shift. product.js does the rest. -->
-<script>(function(){var m={build:'build',gate:'gate',team:'gate',readiness:'readiness',assessments:'assessments',reviews:'assessments','review-lite':'assessments','readiness-review':'assessments'};var h=(location.hash||'').slice(1);var d=document.documentElement;d.setAttribute('data-panel',m[h]||'gate');d.classList.add('has-switcher')})()</script>
 <link rel="stylesheet" href="/product.css">
 
 <!-- begin: gtag — keep in sync across all site/*.html pages (#399) -->
@@ -97,120 +95,117 @@
   <section class="page-head">
     <div class="wrap">
       <h1>Pricing</h1>
-      <p>Start free on one repository. Move to Team when you need proof for every repository.</p>
-      <nav class="switcher" aria-label="Products" data-switcher>
-        <div class="switcher__list">
-          <a class="switcher__tab" href="#build" id="switch-build">Build</a>
-          <a class="switcher__tab" href="#gate" id="switch-gate" data-default>Gate</a>
-          <a class="switcher__tab" href="#readiness" id="switch-readiness">Readiness</a>
-          <a class="switcher__tab" href="#assessments" id="switch-assessments">Assessments</a>
-        </div>
-        <p class="switcher__note">Each product is priced on its own.</p>
-      </nav>
+      <p>Build is free and open source. Every paid plan includes Build, Gate and Readiness. Plans differ by repositories, seats and evidence retention.</p>
     </div>
   </section>
 
-  <section class="section price-group" id="build" aria-labelledby="build-title">
+  <section class="section price-table" id="plans" aria-labelledby="plans-title">
     <div class="wrap">
-      <div class="price-group__head">
-        <h2 class="section__title" id="build-title">Build</h2>
-        <p class="section__lede">Keep everything on your own machine. <a href="/build">About Build</a></p>
-      </div>
-      <div class="plans plans--2">
-        <article class="plan">
-          <h3 class="plan__name">Open source</h3>
-          <p class="plan__for">For developers who want the process on their own machine.</p>
-          <div class="plan__price"><p class="plan__amount">MIT licence</p></div>
-          <ul class="plan__points">
-            <li>The framework and the command line</li>
-            <li>Tickets, plans, reviewer roles, handbooks and local hooks</li>
-            <li>No account and no dashboard needed</li>
-          </ul>
-          <div class="plan__action"><a class="btn btn--quiet" href="/#quickstart">Install the framework</a></div>
-        </article>
-        <article class="plan">
-          <h3 class="plan__name"><!--{{COCKPIT_PLAN_NAME}}-->Cockpit desktop app<!--/{{COCKPIT_PLAN_NAME}}--></h3>
-          <p class="plan__for">For people who do not use a terminal.</p>
-          <div class="plan__price"><p class="plan__amount"><!--{{COCKPIT_PRICE}}-->From £00 for each seat <span class="price-flag">Placeholder price</span><!--/{{COCKPIT_PRICE}}--></p></div>
-          <ul class="plan__points">
-            <li><span data-claim="cockpit_app">The Cockpit desktop app</span></li>
-            <li>Guided setup without a terminal</li>
-            <li><!--{{COCKPIT_POINT_3}}-->Plan detail to follow<!--/{{COCKPIT_POINT_3}}--></li>
-          </ul>
-          <div class="plan__action"><a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Notify me: Cockpit">Email us to get notified</a></div>
-        </article>
+      <h2 class="section__title" id="plans-title">Plans</h2>
+      <div class="price-table__scroll" tabindex="0" role="region" aria-labelledby="plans-title">
+        <table class="price-table__table">
+          <caption class="visually-hidden">What each plan includes</caption>
+          <thead>
+            <tr>
+              <td></td>
+              <th scope="col" id="free">Free</th>
+              <th scope="col" id="startup">Startup</th>
+              <th scope="col" id="team" class="price-table__team"><span class="plan__flag">Most teams start here</span>Team</th>
+              <th scope="col" id="enterprise">Enterprise</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Price</th>
+              <td>No cost</td>
+              <td><!--{{STARTUP_PRICE}}-->From £00 a month <span class="price-flag">Placeholder price</span><!--/{{STARTUP_PRICE}}--></td>
+              <td><!--{{TEAM_PRICE}}-->From £000 a month <span class="price-flag">Placeholder price</span><!--/{{TEAM_PRICE}}--> <span class="price-table__note"><!--{{TEAM_PRICE_NOTE}}-->Or £0,000 a year.<!--/{{TEAM_PRICE_NOTE}}--></span></td>
+              <td>Custom</td>
+            </tr>
+            <tr>
+              <th scope="row">For</th>
+              <td>Free for one person. Cockpit installs the Build framework for you. Pay when a team needs the hosted Gate, shared Keel and evidence.</td>
+              <td>For small teams that are getting started.</td>
+              <td>For engineering leads who must show who approved each change.</td>
+              <td>For organisations with procurement and security reviews.</td>
+            </tr>
+            <tr>
+              <th scope="row" id="build">Build</th>
+              <td><!--{{FREE_BULLET_1}}-->Plan detail to follow<!--/{{FREE_BULLET_1}}--></td>
+              <td>Included</td>
+              <td>Included</td>
+              <td>Included</td>
+            </tr>
+            <tr>
+              <th scope="row">Cockpit</th>
+              <td><span data-claim="cockpit_app">The Cockpit desktop app</span>, for one person</td>
+              <td>For each seat</td>
+              <td>For each seat</td>
+              <td>For each seat</td>
+            </tr>
+            <tr>
+              <th scope="row" id="gate">Gate</th>
+              <td>The hosted check on every pull request, in warning mode</td>
+              <td><!--{{STARTUP_SUMMARY}}-->More repositories and developers<!--/{{STARTUP_SUMMARY}}--> <span class="price-table__note"><!--{{STARTUP_BULLET_1}}-->Plan detail to follow<!--/{{STARTUP_BULLET_1}}--></span></td>
+              <td><span data-claim="evidence_export" data-claim-off="Proof of who approved each change, to follow">Exportable proof of who approved each change</span>, and <span data-claim="org_dashboard">the organisation dashboard</span></td>
+              <td><!--{{ENTERPRISE_POINT_3}}-->Plan detail to follow<!--/{{ENTERPRISE_POINT_3}}--></td>
+            </tr>
+            <tr>
+              <th scope="row" id="readiness">Readiness</th>
+              <td>Run the audits yourself with the framework skills</td>
+              <td><span data-claim="readiness_weekly">Readiness on a schedule</span></td>
+              <td><span data-claim="readiness_weekly">Readiness on a schedule</span></td>
+              <td><span data-claim="readiness_weekly">Readiness on a schedule</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Shared Keel</th>
+              <td>Your rules as files on your machine</td>
+              <td>Your rules as files in each repository</td>
+              <td><span data-claim="kb_mcp" data-claim-off="Keel shared across your organisation, to follow">Keel shared across your organisation, with owners<span data-claim="keel_versions" data-claim-off=""> and versions</span></span></td>
+              <td>As in the Team plan</td>
+            </tr>
+            <tr>
+              <th scope="row">Repositories and seats</th>
+              <td><!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}-->, one person</td>
+              <td><!--{{STARTUP_LIMITS}}-->Up to N repositories<!--/{{STARTUP_LIMITS}}--></td>
+              <td><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->All repositories, up to N developers<!--/{{TEAM_REPO_LIMIT}}--></span></td>
+              <td><!--{{ENTERPRISE_LIMITS}}-->Over N developers<!--/{{ENTERPRISE_LIMITS}}--></td>
+            </tr>
+            <tr>
+              <th scope="row">Evidence retention</th>
+              <td>No hosted evidence</td>
+              <td><!--{{STARTUP_RETENTION}}-->Retention to follow<!--/{{STARTUP_RETENTION}}--></td>
+              <td><!--{{TEAM_RETENTION}}-->Retention to follow<!--/{{TEAM_RETENTION}}--></td>
+              <td><!--{{ENTERPRISE_RETENTION}}-->Retention to follow<!--/{{ENTERPRISE_RETENTION}}--></td>
+            </tr>
+            <tr>
+              <th scope="row">Support</th>
+              <td>Docs and GitHub issues</td>
+              <td>Email</td>
+              <td><!--{{TEAM_SUPPORT}}-->Team support<!--/{{TEAM_SUPPORT}}--></td>
+              <td><!--{{ENTERPRISE_SUMMARY}}-->Terms that fit your procurement<!--/{{ENTERPRISE_SUMMARY}}--></td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="visually-hidden">Start</span></th>
+              <td><a class="btn btn--quiet" href="/waitlist?src=pricing-free" data-signin="https://app.apexyard.ai/signin?src=pricing-free" data-waitlist="/waitlist?src=pricing-free">Join the waitlist</a></td>
+              <td><a class="btn btn--quiet" href="https://cal.com/apexyard/demo?src=pricing-startup" rel="noopener">Book a call to start</a></td>
+              <td><p class="plan__note"><!--{{TEAM_NOTE}}-->Ask us about early access.<!--/{{TEAM_NOTE}}--></p><a class="btn btn--primary" href="https://cal.com/apexyard/demo?src=pricing-team" rel="noopener">Book a call to start</a></td>
+              <td><a class="btn btn--quiet" href="https://cal.com/apexyard/demo?src=pricing-enterprise" rel="noopener">Talk to us</a></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
 
-  <section class="section price-group" id="gate" aria-labelledby="gate-title">
+  <section class="section price-group" id="assessments" aria-labelledby="assessments-title">
     <div class="wrap">
       <div class="price-group__head">
-        <h2 class="section__title" id="gate-title">Gate</h2>
-        <p class="section__lede">Every pull request checked on GitHub. <a href="/gate">About Gate</a></p>
+        <h2 class="section__title" id="assessments-title">Reports and assessments</h2>
+        <p class="section__lede"><!--{{REVIEWS_SUMMARY}}-->Assessments: details to follow.<!--/{{REVIEWS_SUMMARY}}--></p>
       </div>
-      <div class="plans plans--4">
-        <article class="plan">
-          <h3 class="plan__name">Free</h3>
-          <p class="plan__for">For one developer who wants to try the check.</p>
-          <div class="plan__price"><p class="plan__amount">No cost</p></div>
-          <ul class="plan__points">
-            <li>The hosted check on every pull request, in warning mode</li>
-            <li>See every check on your repository in one place</li>
-            <li><!--{{FREE_BULLET_1}}-->Plan detail to follow<!--/{{FREE_BULLET_1}}--></li>
-          </ul>
-          <div class="plan__action"><a class="btn btn--quiet" href="/waitlist?src=pricing-free" data-signin="https://app.apexyard.ai/signin?src=pricing-free" data-waitlist="/waitlist?src=pricing-free">Join the waitlist</a></div>
-        </article>
-        <article class="plan">
-          <h3 class="plan__name">Startup</h3>
-          <p class="plan__for">For small teams that are getting started.</p>
-          <div class="plan__price"><p class="plan__amount"><!--{{STARTUP_PRICE}}-->From £00 a month <span class="price-flag">Placeholder price</span><!--/{{STARTUP_PRICE}}--></p></div>
-          <ul class="plan__points">
-            <li><!--{{STARTUP_LIMITS}}-->Up to N repositories<!--/{{STARTUP_LIMITS}}--></li>
-            <li><!--{{STARTUP_SUMMARY}}-->More repositories and developers<!--/{{STARTUP_SUMMARY}}--></li>
-            <li><!--{{STARTUP_BULLET_1}}-->Plan detail to follow<!--/{{STARTUP_BULLET_1}}--></li>
-          </ul>
-          <div class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/demo?src=pricing-startup" rel="noopener">Book a call to start</a></div>
-        </article>
-        <article class="plan plan--team" id="team">
-          <p class="plan__flag">Most teams start here</p>
-          <h3 class="plan__name">Team</h3>
-          <p class="plan__for">For engineering leads who must show who approved each change.</p>
-          <div class="plan__price"><p class="plan__amount"><!--{{TEAM_PRICE}}-->From £000 a month <span class="price-flag">Placeholder price</span><!--/{{TEAM_PRICE}}--></p>
-          <p class="plan__note"><!--{{TEAM_PRICE_NOTE}}-->Or £0,000 a year.<!--/{{TEAM_PRICE_NOTE}}--></p></div>
-          <ul class="plan__points">
-            <li><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->All repositories, up to N developers<!--/{{TEAM_REPO_LIMIT}}--></span></li>
-            <li><span data-claim="evidence_export">Exportable proof of who approved each change</span></li>
-            <li><span data-claim="org_dashboard">The organisation dashboard</span></li>
-            <li><span data-claim="kb_mcp">Keel shared across your organisation, with owners<span data-claim="keel_versions" data-claim-off=""> and versions</span></span> <span class="keel-gloss">Keel is your team's rules and context, read by every agent.</span></li>
-            <li><!--{{TEAM_SUPPORT}}-->Team support<!--/{{TEAM_SUPPORT}}--></li>
-          </ul>
-          <div class="plan__action"><p class="plan__note"><!--{{TEAM_NOTE}}-->Ask us about early access.<!--/{{TEAM_NOTE}}--></p><a class="btn btn--primary" href="https://cal.com/apexyard/demo?src=pricing-team" rel="noopener">Book a call to start</a></div>
-        </article>
-        <article class="plan">
-          <h3 class="plan__name">Enterprise</h3>
-          <p class="plan__for">For organisations with procurement and security reviews.</p>
-          <div class="plan__price"><p class="plan__amount">Custom</p></div>
-          <ul class="plan__points">
-            <li><!--{{ENTERPRISE_LIMITS}}-->Over N developers<!--/{{ENTERPRISE_LIMITS}}--></li>
-            <li><!--{{ENTERPRISE_SUMMARY}}-->Terms that fit your procurement<!--/{{ENTERPRISE_SUMMARY}}--></li>
-            <li><!--{{ENTERPRISE_POINT_3}}-->Plan detail to follow<!--/{{ENTERPRISE_POINT_3}}--></li>
-          </ul>
-          <div class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/demo?src=pricing-enterprise" rel="noopener">Talk to us</a></div>
-        </article>
-      </div>
-      <p class="plans__fine">Free plan limit: <!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}-->.</p>
-    </div>
-  </section>
-
-  <section class="section price-group" id="readiness" aria-labelledby="readiness-title">
-    <div class="wrap">
-      <div class="price-group__head">
-        <h2 class="section__title" id="readiness-title">Readiness</h2>
-        <p class="section__lede">Start with one report, then audit on a schedule. <a href="/readiness">About Readiness</a></p>
-      </div>
-      <div class="plans plans--2">
-        <article class="plan">
+      <div class="plans plans--3">
+        <article class="plan" id="readiness-report">
           <h3 class="plan__name">Readiness report</h3>
           <p class="plan__for">For one repository before a launch.</p>
           <div class="plan__price"><p class="plan__amount"><!--{{READINESS_REPORT_PRICE}}-->From £00 a repository <span class="price-flag">Placeholder price</span><!--/{{READINESS_REPORT_PRICE}}--></p></div>
@@ -221,28 +216,6 @@
           </ul>
           <div class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/review?src=pricing-readiness-report" rel="noopener">Book a readiness call</a></div>
         </article>
-        <article class="plan">
-          <h3 class="plan__name"><!--{{READINESS_SCHEDULE_NAME}}-->Readiness on a schedule<!--/{{READINESS_SCHEDULE_NAME}}--></h3>
-          <p class="plan__for">For teams that want every repository checked over time.</p>
-          <div class="plan__price"><p class="plan__amount"><!--{{READINESS_SCHEDULE_PRICE}}-->From £00 a month <span class="price-flag">Placeholder price</span><!--/{{READINESS_SCHEDULE_PRICE}}--></p></div>
-          <ul class="plan__points">
-            <li><span data-claim="readiness_weekly">Every repository, every week</span></li>
-            <li>The trend over time</li>
-            <li><!--{{READINESS_SCHEDULE_POINT_3}}-->Plan detail to follow<!--/{{READINESS_SCHEDULE_POINT_3}}--></li>
-          </ul>
-          <div class="plan__action"><a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Notify me: Readiness on a schedule">Email us to get notified</a></div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section price-group" id="assessments" aria-labelledby="assessments-title">
-    <div class="wrap">
-      <div class="price-group__head">
-        <h2 class="section__title" id="assessments-title">Assessments</h2>
-        <p class="section__lede"><!--{{REVIEWS_SUMMARY}}-->Assessments: details to follow.<!--/{{REVIEWS_SUMMARY}}--></p>
-      </div>
-      <div class="plans plans--2">
         <article class="plan" id="review-lite">
           <h3 class="plan__name"><!--{{ASSESS_SHORT_NAME}}-->A short assessment<!--/{{ASSESS_SHORT_NAME}}--></h3>
           <p class="plan__for">A short version of the full assessment.</p>
@@ -287,7 +260,7 @@
       <a href="/readiness">Readiness</a>
       <a href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
-      <a href="/architecture">Architecture</a>
+      <a href="/docs/quickstart/architecture">Architecture</a>
       <a href="/skills">Skills</a>
       <a href="/creators">Creators</a>
       <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">Changelog</a>

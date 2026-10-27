@@ -173,34 +173,51 @@
         <section class="kit__row kit__row--diagram one-rule" aria-labelledby="kit-diagram">
           <h3 class="kit__name" id="kit-diagram">The rule diagram</h3>
           <div class="kit__diagram">
-            <p class="kit__note">You write a rule once. Build guides your agents with it. The Gate checks each pull request against it. Readiness measures the whole repository. A miss comes back as a new rule.</p>
-            <figure class="rule-map" data-rule-map>
-              <div class="rule-map__board">
-                <svg class="rule-map__svg" aria-hidden="true" focusable="false">
-                  <path class="rule-map__track" d=""/>
-                  <g class="rule-map__legs"></g>
+            <p class="kit__note">Keel holds the rule. Build guides your agents with it. The Gate checks each pull request against it. Readiness measures the whole repository. A miss comes back as a new rule.</p>
+            <figure class="keel" data-keel aria-labelledby="creators-keel-cap">
+              <div class="keel__board">
+                <svg class="keel__svg" viewBox="0 0 400 320" aria-hidden="true" focusable="false">
+                  <defs>
+                    <marker id="creators-keel-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+                    </marker>
+                  </defs>
+                  <path class="keel__link" data-path="feed-build" d="M 155 145 L 100 76"/>
+                  <path class="keel__link" data-path="feed-gate" d="M 245 145 L 300 76"/>
+                  <path class="keel__link" data-path="measure" d="M 200 195 L 200 250"/>
+                  <path class="keel__flow" data-path="change" d="M 134 52 L 266 52" marker-end="url(#creators-keel-arrow)"/>
+                  <path class="keel__flow keel__flow--miss" data-path="miss" d="M 321 76 C 355 130, 300 195, 240 170" marker-end="url(#creators-keel-arrow)"/>
+                  <g class="keel__node keel__node--keel" data-node="keel">
+                    <rect x="120" y="125" width="160" height="70" rx="8" ry="8"/>
+                    <text class="keel__label" x="200" y="155" text-anchor="middle">Keel</text>
+                    <text class="keel__sub" x="200" y="175" text-anchor="middle">your rules</text>
+                  </g>
+                  <g class="keel__node" data-node="build">
+                    <rect x="24" y="28" width="110" height="48" rx="6" ry="6"/>
+                    <text class="keel__label" x="79" y="58" text-anchor="middle">Build</text>
+                  </g>
+                  <g class="keel__node" data-node="gate">
+                    <rect x="266" y="28" width="110" height="48" rx="6" ry="6"/>
+                    <text class="keel__label" x="321" y="58" text-anchor="middle">Gate</text>
+                    <text class="keel__flag keel__flag--block" x="360" y="42" text-anchor="middle">X</text>
+                    <text class="keel__flag keel__flag--pass" x="360" y="42" text-anchor="middle">OK</text>
+                  </g>
+                  <g class="keel__node" data-node="readiness">
+                    <rect x="130" y="250" width="140" height="48" rx="6" ry="6"/>
+                    <text class="keel__label" x="200" y="280" text-anchor="middle">Readiness</text>
+                  </g>
+                  <circle class="keel__dot" r="7" cx="79" cy="52"/>
                 </svg>
-                <span class="rule-map__token" aria-hidden="true"></span>
-                <ol class="rule-map__stages">
-                  <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-rule"><span class="rule-map__name">The rule</span><span class="rule-map__what">Written once</span></button></li>
-                  <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-build"><span class="rule-map__name">Build</span><span class="rule-map__what">Guides the agent</span></button></li>
-                  <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-gate"><span class="rule-map__name">Gate</span><span class="rule-map__what">Checks the pull request</span></button></li>
-                  <li class="rule-map__stage"><button type="button" class="rule-map__btn" id="rule-tab-readiness"><span class="rule-map__name">Readiness</span><span class="rule-map__what">Measures the repository</span></button></li>
-                  <li class="rule-map__stage rule-map__stage--miss"><button type="button" class="rule-map__btn" id="rule-tab-miss"><span class="rule-map__name">A miss</span><span class="rule-map__what">Becomes a new rule</span></button></li>
-                </ol>
               </div>
-
-              <ol class="rule-map__says">
-                <li class="rule-map__item"><div class="rule-map__say" id="rule-say-rule"><p class="rule-map__label"><span class="rule-map__label-name">The rule</span> <span class="rule-map__label-what">Written once</span></p><p class="rule-map__line">Every change starts from a ticket.</p></div></li>
-                <li class="rule-map__item"><div class="rule-map__say" id="rule-say-build"><p class="rule-map__label"><span class="rule-map__label-name">Build</span> <span class="rule-map__label-what">Guides the agent</span></p><p class="rule-map__line">The agent opens a ticket before it writes code.</p></div></li>
-                <li class="rule-map__item"><div class="rule-map__say" id="rule-say-gate"><p class="rule-map__label"><span class="rule-map__label-name">Gate</span> <span class="rule-map__label-what">Checks the pull request</span></p><p class="rule-map__line">A pull request with no ticket cannot merge.</p></div></li>
-                <li class="rule-map__item"><div class="rule-map__say" id="rule-say-readiness"><p class="rule-map__label"><span class="rule-map__label-name">Readiness</span> <span class="rule-map__label-what">Measures the repository</span></p><p class="rule-map__line">It flags repositories where changes skip tickets.</p></div></li>
-                <li class="rule-map__item"><div class="rule-map__say" id="rule-say-miss"><p class="rule-map__label"><span class="rule-map__label-name">A miss</span> <span class="rule-map__label-what">Becomes a new rule</span></p><p class="rule-map__line">A review catches one. It becomes a new rule for every agent.</p></div></li>
+              <ol class="keel__steps">
+                <li class="keel__step keel__step--rule" data-step="rule"><p class="keel__name">Keel</p><p class="keel__rule">Every API endpoint checks who is calling.</p><p class="keel__text">A rule your team adds to the knowledge base, marked blocking.</p></li>
+                <li class="keel__step" data-step="build"><p class="keel__name">Build</p><p class="keel__text">Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.</p></li>
+                <li class="keel__step" data-step="gate"><p class="keel__name">Gate</p><p class="keel__text">Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.</p></li>
+                <li class="keel__step" data-step="readiness"><p class="keel__name">Readiness</p><p class="keel__text">The readiness audit fails when a user-facing app has no authentication. On me2resh/ddd-sam-example, the top action was: add authentication to all patient appointment APIs.</p></li>
+                <li class="keel__step" data-step="miss"><p class="keel__name">A miss becomes a rule</p><p class="keel__text">When a person finds a miss in review, /codify-rule turns the comment into a draft rule. You approve it before it is saved.</p></li>
               </ol>
-
-              <p class="rule-map__tools"><button type="button" class="rule-map__control" aria-pressed="false" hidden>Pause the loop</button></p>
-
-              <figcaption class="visually-hidden">One rule travels through five stages: the rule, Build, Gate, Readiness and a miss. A miss becomes a new rule, and the loop starts again.</figcaption>
+              <p class="keel__tools"><button type="button" class="keel__pause" aria-pressed="false" hidden>Pause animation</button></p>
+              <figcaption class="visually-hidden" id="creators-keel-cap">Keel is in the centre, with Build, Gate and Readiness around it. A change goes from Build to the Gate. The Gate stops it. The miss becomes a new rule in Keel. The next change passes the Gate. Readiness measures each repository against the same rules.</figcaption>
             </figure>
           </div>
         </section>
@@ -238,7 +255,7 @@
       <a href="/readiness">Readiness</a>
       <a href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
-      <a href="/architecture">Architecture</a>
+      <a href="/docs/quickstart/architecture">Architecture</a>
       <a href="/skills">Skills</a>
       <a href="/creators" aria-current="page">Creators</a>
       <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">Changelog</a>
@@ -263,6 +280,6 @@
 
 <script src="/claims.js" defer></script>
 <script src="/product.js" defer></script>
-<script src="/rule-map.js" defer></script>
+<script src="/keel-loop.js" defer></script>
 </body>
 </html>

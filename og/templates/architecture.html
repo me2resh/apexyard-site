@@ -9,15 +9,36 @@
   .layers {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
     margin-top: 4px;
+  }
+  .cols {
+    display: flex;
+    gap: 20px;
+  }
+  .col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .col-head {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--muted);
+    letter-spacing: 0.01em;
   }
   .layer {
     display: flex;
-    align-items: center;
-    gap: 22px;
-    height: 68px;
-    padding: 0 26px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 4px;
+    height: auto;
+    min-height: 64px;
+    padding: 12px 20px;
     border: 1px solid var(--border-strong);
     border-radius: var(--radius-sm);
     background: var(--surface);
@@ -32,14 +53,15 @@
   .layer .name {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 33px;
+    font-size: 28px;
     letter-spacing: -0.01em;
     color: var(--ink);
   }
   .layer .meta {
-    margin-left: auto;
+    margin-left: 0;
     font-family: var(--font-mono);
-    font-size: 23px;
+    font-size: 18px;
+    line-height: 1.3;
     color: var(--muted);
   }
   /* the customisation overlay layer reads as the "soft accent" tier */
@@ -50,6 +72,14 @@
   }
   .layer.overlay .name { color: var(--accent); }
   .layer.overlay .meta { color: var(--accent); }
+
+  .footnote {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--muted);
+    padding-top: 14px;
+    border-top: 1px solid var(--border-strong);
+  }
 
   .signoff {
     font-family: var(--font-mono);
@@ -64,33 +94,46 @@
   <div class="pad">
     <div class="eyebrow">
       <span class="brand">~/<span class="ay">apexyard</span> — architecture</span>
-      <span class="right">5-layer model</span>
+      <span class="right">what runs where</span>
     </div>
 
     <div class="layers">
-      <div class="layer">
-        <span class="num">01</span><span class="name">governance</span>
-        <span class="meta">rules &amp; mechanical gates</span>
+      <div class="cols">
+        <div class="col">
+          <div class="col-head">on your machine</div>
+          <div class="layer">
+            <span class="name">Build</span>
+            <span class="meta">the framework, hooks, rules and skills</span>
+          </div>
+          <div class="layer">
+            <span class="name">Your agent</span>
+            <span class="meta">Claude Code, Codex, Cursor, OpenCode, Pi or omp</span>
+          </div>
+          <div class="layer">
+            <span class="name">Your code</span>
+            <span class="meta">stays in your own repositories</span>
+          </div>
+        </div>
+        <div class="col">
+          <div class="col-head">hosted (optional)</div>
+          <div class="layer overlay">
+            <span class="name">Gate</span>
+            <span class="meta">a check on each pull request</span>
+          </div>
+          <div class="layer overlay">
+            <span class="name">Keel</span>
+            <span class="meta">your rules, shared</span>
+          </div>
+          <div class="layer overlay">
+            <span class="name">Readiness</span>
+            <span class="meta">launch reports</span>
+          </div>
+        </div>
       </div>
-      <div class="layer">
-        <span class="num">02</span><span class="name">capability</span>
-        <span class="meta">roles · skills · agents · hooks</span>
-      </div>
-      <div class="layer">
-        <span class="num">03</span><span class="name">defaults</span>
-        <span class="meta">golden-path pipelines &amp; templates</span>
-      </div>
-      <div class="layer overlay">
-        <span class="num">04</span><span class="name">customisation overlay</span>
-        <span class="meta">/setup · onboarding.yaml</span>
-      </div>
-      <div class="layer">
-        <span class="num">05</span><span class="name">per-project data</span>
-        <span class="meta">apexyard.projects.yaml · registry</span>
-      </div>
+      <div class="footnote">The hosted check reads pull request data, not your code.</div>
     </div>
 
-    <div class="signoff">governance built in, not bolted on — <span class="accent">apexyard</span></div>
+    <div class="signoff">governance built in, not bolted on - <span class="accent">apexyard</span></div>
   </div>
 </div>
 </body>

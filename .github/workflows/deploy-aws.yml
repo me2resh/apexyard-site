@@ -122,6 +122,7 @@ jobs:
           role-to-assume: ${{ env.ROLE_ARN }}
           aws-region: eu-west-1
 
+      # #137: previews.html and staging-only.js are staging-only (AgDR-0011).
       - name: Sync static site to production S3
         run: |
           aws s3 sync . "s3://${BUCKET_PROD}" \
@@ -139,7 +140,9 @@ jobs:
             --exclude ".lycheeignore" \
             --exclude "install" \
             --exclude "install.html" \
-            --exclude "install.source"
+            --exclude "install.source" \
+            --exclude "previews.html" \
+            --exclude "staging-only.js"
 
       - name: Publish markdown alternates to production
         run: |

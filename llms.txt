@@ -18,7 +18,7 @@ ApexYard has three products and a shared layer.
 - [Readiness](https://apexyard.ai/readiness): the audit of each repository
 - [Pricing](https://apexyard.ai/pricing): the plans for each product
 - [Docs](https://apexyard.ai/docs): install guide, daily loop, gates, hooks and rules
-- [Architecture](https://apexyard.ai/architecture): the five-layer model
+- [Architecture](https://apexyard.ai/docs/quickstart/architecture): what runs locally, what is hosted, the data flow and the GitHub App permissions
 - [Skills](https://apexyard.ai/skills): the slash commands, grouped by outcome
 
 ## For agents

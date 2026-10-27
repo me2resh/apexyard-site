@@ -1,0 +1,330 @@
+<!doctype html>
+<!--
+  ApexYard, © 2026 me2resh
+  apexyard.ai, github.com/me2resh/apexyard, MIT licence
+  Staging-only review page. Production must not serve this file (AgDR-0011).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Previews: features that are not live yet</title>
+<meta name="author" content="me2resh">
+<meta name="description" content="Designed previews of ApexYard features that are not live yet. For staging review only.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#EEF1F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1B2E" media="(prefers-color-scheme: dark)">
+
+<script>try{var t=localStorage.getItem('ay-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/plex-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/product.css">
+
+<!-- begin: gtag — keep in sync across all site/*.html pages (#399) -->
+<!-- Google tag (gtag.js) with Consent Mode v2 - analytics_storage defaults to denied
+     until the consent banner below records an explicit choice. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G3EMR3CB02"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied'
+  });
+  try {
+    if (localStorage.getItem('ay-consent') === 'granted') {
+      gtag('consent', 'update', { 'analytics_storage': 'granted' });
+    }
+  } catch (e) {}
+  gtag('js', new Date());
+  gtag('config', 'G-G3EMR3CB02');
+</script>
+<!-- end: gtag -->
+</head>
+<body>
+
+<a href="#main" class="skip">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__bar">
+    <a href="/" class="brand"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" fill="#2D5BE3"/><text x="50" y="53" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="46" font-weight="700" letter-spacing="-4" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">AY</text></svg><span>ApexYard</span></a>
+    <button class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false" data-theme-toggle hidden>
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 2.75a7.25 7.25 0 0 1 0 14.5z" fill="currentColor"/></svg>
+    </button>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <div class="site-nav__group">
+        <button class="site-nav__menu" type="button" aria-expanded="false" aria-controls="product-menu">Product</button>
+        <ul class="site-nav__sub" id="product-menu">
+          <li><a href="/build">Build</a></li>
+          <li><a href="/gate">Gate</a></li>
+          <li><a href="/readiness">Readiness</a></li>
+        </ul>
+      </div>
+      <a href="/pricing">Pricing</a>
+      <a href="/docs">Docs</a>
+      <div class="site-nav__right">
+        <a href="https://app.apexyard.ai" class="site-nav__login">Log in</a>
+        <a href="https://cal.com/apexyard/demo?src=nav" class="btn btn--primary btn--small" rel="noopener">Book a demo</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="product-head" aria-labelledby="product-title">
+    <div class="wrap">
+      <p class="product-head__name">Previews</p>
+      <h1 id="product-title">How the features that are not live yet might look.</h1>
+      <p class="product-head__who">Each card is a designed preview with sample data. The final design can change. This page is for review on staging only.</p>
+    </div>
+  </section>
+
+  <section class="section section--flush" aria-labelledby="previews-title">
+    <div class="wrap">
+      <h2 class="visually-hidden" id="previews-title">Previews</h2>
+      <div class="previews">
+
+        <article class="preview" id="gate-dashboard">
+          <figure class="preview__media">
+            <img src="/img/placeholder-dashboard.svg" width="1600" height="1000" loading="lazy" alt="Preview of the hosted Gate dashboard for one pull request, with sample data">
+            <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Hosted Gate dashboard with sample data.</figcaption>
+          </figure>
+          <div class="preview__text">
+            <h3>The hosted Gate dashboard</h3>
+            <p>See each open pull request, what it is missing, and who it waits for.</p>
+          </div>
+        </article>
+
+        <article class="preview" id="keel">
+          <figure class="preview__media">
+            <div class="mock" aria-hidden="true">
+              <div class="mock__bar"><span class="mock__title">Keel</span><span class="mock__meta">example-co</span></div>
+              <div class="mock__body">
+                <ul class="mock-rules">
+                  <li>
+                    <p class="mock-rules__text">Every API endpoint checks who is calling.</p>
+                    <p class="mock-rules__meta"><span>platform</span><span>v3</span><span class="mock-chip">Blocking</span></p>
+                  </li>
+                  <li>
+                    <p class="mock-rules__text">Each migration has a rollback step.</p>
+                    <p class="mock-rules__meta"><span>data</span><span>v1</span><span class="mock-chip">Blocking</span></p>
+                  </li>
+                  <li>
+                    <p class="mock-rules__text">Name tests after the behaviour.</p>
+                    <p class="mock-rules__meta"><span>web</span><span>v2</span><span class="mock-chip">Advisory</span></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Shared Keel rules with sample owners and versions.</figcaption>
+          </figure>
+          <div class="preview__text">
+            <h3><span data-claim="kb_mcp">Keel, shared across your organisation</span></h3>
+            <p>See each rule, its owner, its version and whether it blocks a merge. Your agents read the same rules over MCP.</p>
+          </div>
+        </article>
+
+        <article class="preview" id="evidence-export">
+          <figure class="preview__media">
+            <img src="/img/placeholder-evidence.svg" width="1200" height="800" loading="lazy" alt="Preview of an evidence record for a merged pull request, with sample data">
+            <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Evidence record for a merged pull request.</figcaption>
+          </figure>
+          <div class="preview__text">
+            <h3><span data-claim="evidence_export">Evidence export</span></h3>
+            <p>Export the record of each merge: the checks, the review, the named approver and the commit.</p>
+          </div>
+        </article>
+
+        <article class="preview" id="team-cockpit">
+          <figure class="preview__media">
+            <div class="mock" aria-hidden="true">
+              <div class="mock__bar"><span class="mock-window__dots"><span></span><span></span><span></span></span><span class="mock__title">Cockpit</span><span class="mock__meta">example-co</span></div>
+              <div class="mock-cockpit">
+                <div class="mock-cockpit__side">
+                  <b>People</b>
+                  <span>Dana</span>
+                  <span>Sam</span>
+                  <span>Lee</span>
+                </div>
+                <div class="mock-cockpit__main">
+                  <p class="mock-cockpit__ticket">Ticket 42: Add refund limits</p>
+                  <ul class="mock-cockpit__steps">
+                    <li><span>Spec</span><span>Approved</span></li>
+                    <li><span>Plan</span><span>Approved</span></li>
+                    <li><span>Code</span><span>In progress</span></li>
+                    <li><span>Review</span><span>Waiting</span></li>
+                  </ul>
+                  <span class="mock-cockpit__next">Run the next step</span>
+                </div>
+              </div>
+            </div>
+            <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Team cockpit with sample seats.</figcaption>
+          </figure>
+          <div class="preview__text">
+            <h3><span data-claim="cockpit_app">The team cockpit</span></h3>
+            <p>Give people who never open a terminal the same steps: spec, plan, code and review, for each seat in the team.</p>
+          </div>
+        </article>
+
+        <article class="preview" id="web-dashboard">
+          <figure class="preview__media">
+            <img src="/img/placeholder-org-dashboard.svg" width="1200" height="800" loading="lazy" alt="Preview of the organisation view with sample teams">
+            <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Organisation view with sample teams.</figcaption>
+          </figure>
+          <div class="preview__text">
+            <h3>The organisation view</h3>
+            <p>See which pull requests skipped a step, across every repository. <span data-claim="team_trends">Trends by team show where steps get skipped.</span></p>
+          </div>
+        </article>
+
+        <article class="preview" id="readiness-score">
+          <figure class="preview__media">
+            <div class="mock" aria-hidden="true">
+              <div class="mock__bar"><span class="mock__title">Readiness</span><span class="mock__meta">example-co/payments-api</span></div>
+              <div class="mock__body">
+                <ul class="mock-score-bars">
+                  <li><span class="mock-score-bars__label">Security</span><span class="mock-score-bars__track"><span class="mock-score-bars__fill" style="width:72%"></span></span></li>
+                  <li><span class="mock-score-bars__label">Accessibility</span><span class="mock-score-bars__track"><span class="mock-score-bars__fill" style="width:58%"></span></span></li>
+                  <li><span class="mock-score-bars__label">Compliance</span><span class="mock-score-bars__track"><span class="mock-score-bars__fill" style="width:64%"></span></span></li>
+                  <li><span class="mock-score-bars__label">Analytics</span><span class="mock-score-bars__track"><span class="mock-score-bars__fill" style="width:40%"></span></span></li>
+                  <li><span class="mock-score-bars__label">Search</span><span class="mock-score-bars__track"><span class="mock-score-bars__fill" style="width:55%"></span></span></li>
+                  <li><span class="mock-score-bars__label">AI search</span><span class="mock-score-bars__track"><span class="mock-score-bars__fill" style="width:48%"></span></span></li>
+                  <li><span class="mock-score-bars__label">Performance</span><span class="mock-score-bars__track"><span class="mock-score-bars__fill" style="width:95%"></span></span></li>
+                  <li><span class="mock-score-bars__label">Monitoring</span><span class="mock-score-bars__track"><span class="mock-score-bars__fill" style="width:42%"></span></span></li>
+                  <li><span class="mock-score-bars__label">Documentation</span><span class="mock-score-bars__track"><span class="mock-score-bars__fill" style="width:78%"></span></span></li>
+                  <li><span class="mock-score-bars__label">Behaviour quality</span><span class="mock-score-bars__track"><span class="mock-score-bars__fill" style="width:70%"></span></span></li>
+                </ul>
+                <svg class="mock-score__trend" viewBox="0 0 320 80" focusable="false">
+                  <polyline class="mock-score__line" points="10,55 52,55 95,48 138,42 181,40 224,36 267,28 310,22"/>
+                </svg>
+              </div>
+            </div>
+            <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Readiness score and trend with sample data.</figcaption>
+          </figure>
+          <div class="preview__text">
+            <h3><span data-claim="readiness_score">The readiness score and trend</span></h3>
+            <p>See a score for each repository and how it moves over time.</p>
+          </div>
+        </article>
+
+        <article class="preview" id="readiness-ci">
+          <figure class="preview__media">
+            <div class="mock mock--term" aria-hidden="true">
+              <div class="mock__bar"><span class="mock__title">CI log</span><span class="mock__meta">example-co/payments-api</span></div>
+              <pre>$ apexyard readiness --ci
+Security ........ warn
+Monitoring ...... fail
+Upload: scores and findings only</pre>
+            </div>
+            <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Readiness audit in CI with sample output.</figcaption>
+          </figure>
+          <div class="preview__text">
+            <h3><span data-claim="readiness_ci">Readiness in your own CI</span></h3>
+            <p>Run the audit in your CI with your own model key. Only the scores and findings go to the dashboard.</p>
+          </div>
+        </article>
+
+        <article class="preview" id="readiness-schedule">
+          <figure class="preview__media">
+            <div class="mock" aria-hidden="true">
+              <div class="mock__bar"><span class="mock__title">Readiness</span><span class="mock__meta">weekly</span></div>
+              <div class="mock__body">
+                <ul class="mock-schedule">
+                  <li><span>example-co/payments-api</span><span class="mock-chip">Warn</span></li>
+                  <li><span>example-co/web-shop</span><span class="mock-chip">Pass</span></li>
+                  <li><span>example-co/mobile-app</span><span class="mock-chip">Fail</span></li>
+                </ul>
+              </div>
+            </div>
+            <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Weekly readiness across sample repositories.</figcaption>
+          </figure>
+          <div class="preview__text">
+            <h3><span data-claim="readiness_weekly">Readiness on a schedule</span></h3>
+            <p>Audit every repository every week, and see the trend.</p>
+          </div>
+        </article>
+
+        <article class="preview" id="ci-attestation">
+          <figure class="preview__media">
+            <div class="mock" aria-hidden="true">
+              <div class="mock__bar"><span class="mock__title">Checks</span><span class="mock__meta">pull request #214</span></div>
+              <div class="mock__body">
+                <ol class="mock-ci">
+                  <li><span>Review attested by CI run 4182 at commit 3f9c2a1</span><span>pass</span></li>
+                </ol>
+              </div>
+            </div>
+            <figcaption class="mock__caption"><span class="mock__tag">Preview</span>CI attestation check with sample data.</figcaption>
+          </figure>
+          <div class="preview__text">
+            <h3><span data-claim="ci_attestation">Review attested by your CI</span></h3>
+            <p>Your CI can attest that each review ran, at the exact commit.</p>
+          </div>
+        </article>
+
+        <article class="preview" id="agent-sign-in">
+          <figure class="preview__media">
+            <div class="mock mock--term" aria-hidden="true">
+              <div class="mock__bar"><span class="mock__title">Terminal</span></div>
+              <pre>&gt; /mcp
+Signed in as dana@example-co
+Keel: 12 rules loaded</pre>
+            </div>
+            <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Agent sign-in over MCP with sample data.</figcaption>
+          </figure>
+          <div class="preview__text">
+            <h3>Agent sign-in over MCP</h3>
+            <p>Connect a coding agent to the hosted Gate with your own sign-in.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <nav aria-label="Footer">
+      <a href="/build">Build</a>
+      <a href="/gate">Gate</a>
+      <a href="/readiness">Readiness</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/docs">Docs</a>
+      <a href="/docs/quickstart/architecture">Architecture</a>
+      <a href="/skills">Skills</a>
+      <a href="/creators">Creators</a>
+      <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">Changelog</a>
+      <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <p>© 2026 <a href="https://me2resh.com" target="_blank" rel="noopener">me2resh</a>. The ApexYard framework is open source under the MIT licence.</p>
+  </div>
+</footer>
+
+<div id="consent" class="consent" role="region" aria-label="Cookie consent" hidden>
+  <div class="consent__inner">
+    <p class="consent__msg">
+      This site uses Google Analytics to count visits. No ads, no cross-site tracking.
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy</a>.
+    </p>
+    <div class="consent__actions">
+      <button type="button" class="consent__btn" data-consent="denied">Decline</button>
+      <button type="button" class="consent__btn consent__btn--accept" data-consent="granted">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script src="/claims.js" defer></script>
+<script src="/product.js" defer></script>
+</body>
+</html>

@@ -10,14 +10,13 @@ Agent agnostic. Works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.
 
 ## One process, three places
 
-Keel is your team's rules and context, read by every agent. Developers write a rule once. Build, the Gate and Readiness all work from it. A miss comes back as a new rule.
+Keel is your team's rules and context. Build, the Gate and Readiness all work from it. A miss comes back as a new rule.
 
-1. **Developers** (write and approve rules): A developer writes the rule. A second developer approves it.
-2. **Keel** (your team's rules and context): Every change starts from a ticket.
-3. **Build** (agents read Keel while they write): The agent reads the rule over MCP. It opens a ticket before it writes code.
-4. **Gate** (checks each pull request against Keel): A pull request with no ticket cannot merge.
-5. **Readiness** (measures each repository against Keel): It flags repositories where changes skip tickets.
-6. **A miss** (becomes a new rule in Keel): A review finds a ticket with no test plan. The fix becomes a new rule in Keel.
+1. **Keel**: Every API endpoint checks who is calling. A rule your team adds to the knowledge base, marked blocking.
+2. **Build**: Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.
+3. **Gate**: Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.
+4. **Readiness**: The readiness audit fails when a user-facing app has no authentication. On me2resh/ddd-sam-example, the top action was: add authentication to all patient appointment APIs.
+5. **A miss becomes a rule**: When a person finds a miss in review, /codify-rule turns the comment into a draft rule. You approve it before it is saved.
 
 - About Build: <https://apexyard.ai/build>
 - About Gate: <https://apexyard.ai/gate>
@@ -25,45 +24,40 @@ Keel is your team's rules and context, read by every agent. Developers write a r
 
 Underneath: Keel, one evidence store and one dashboard.
 
+20 roles, 69 skills, 23 agents and 66 hooks (framework release v5.10.1).
+
 It never reads your code. See what the GitHub App can see: <https://apexyard.ai/gate#app-access>.
 
-## Install Build for free
+## Install Build
 
-Give your agents tickets, plans and reviewers today. Every rule, hook and review agent is a plain file you can read, change or remove.
+Open source. MIT. Always free.
 
-Fork <https://github.com/me2resh/apexyard> into your organisation on GitHub. Then run these commands.
+The hosted parts are paid. Every rule, hook and review agent is a plain file you can read, change or remove.
 
 ```sh
-# macOS
-brew install jq
-git clone https://github.com/your-org/apexyard.git
-cd apexyard
-bash bin/apexyard doctor
-
-# Linux
-sudo apt-get install jq
-git clone https://github.com/your-org/apexyard.git
-cd apexyard
-bash bin/apexyard doctor
+brew install me2resh/tap/apexyard
+apexyard init --org <your-org> --name ops --private
 ```
 
-On Fedora, use `sudo dnf install jq`.
+```sh
+npx create-apexyard --org <your-org> --name ops --private
+```
 
-On Windows, use Git Bash (from Git for Windows) or WSL. The hooks are Bash scripts. PowerShell and cmd.exe cannot run them. In Git Bash, install jq with `winget install jqlang.jq`. Then run the clone, cd and doctor commands above. In WSL, use the Linux commands.
+You need git. `apexyard doctor` checks for jq and the GitHub CLI (gh) and tells you how to install what is missing.
 
-Then open Claude Code in the folder and run `/setup`. Read the install guide for Codex, Cursor and OpenCode: <https://apexyard.ai/docs/quickstart/install>.
+Then open the new folder in your coding agent and run `/setup`. Works with Claude Code, Codex, Cursor, OpenCode, Pi and omp. On Windows, use Git Bash or WSL. Read the install guide: <https://apexyard.ai/docs/quickstart/install>.
 
 ## Book a demo
 
 Bring one of your repositories, and see what the Gate would have held. Book from <https://apexyard.ai/#book-a-demo>.
 
-Start on GitHub at no cost. Add your team when you need a record of every approval. See plans: <https://apexyard.ai/pricing>.
+Free for one person. Cockpit installs the Build framework for you. Pay when a team needs the hosted Gate, shared Keel and evidence. See plans: <https://apexyard.ai/pricing>.
 
 ## More
 
 - Pricing: <https://apexyard.ai/pricing>
 - Docs: <https://apexyard.ai/docs>
-- Architecture: <https://apexyard.ai/architecture.md>
+- Architecture: <https://apexyard.ai/docs/quickstart/architecture>
 - Skills: <https://apexyard.ai/skills.md>
 - Source: <https://github.com/me2resh/apexyard>
 - Changelog: <https://github.com/me2resh/apexyard/releases>

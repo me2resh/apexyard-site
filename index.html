@@ -144,53 +144,72 @@
   <section class="section one-rule" id="product" aria-labelledby="one-rule-title">
     <div class="wrap" id="how-it-works">
       <h2 class="section__title" id="one-rule-title">One process, three places</h2>
-      <p class="section__lede">Keel is your team's rules and context, read by every agent. Developers write a rule once. Build, the Gate and Readiness all work from it. A miss comes back as a new rule.</p>
-      <figure class="rule-map" data-rule-map>
-        <div class="rule-map__board">
-          <svg class="rule-map__svg" aria-hidden="true" focusable="false">
-            <path class="rule-map__track" d=""/>
-            <g class="rule-map__legs"></g>
+      <p class="section__lede">Keel is your team's rules and context. Build, the Gate and Readiness all work from it. A miss comes back as a new rule.</p>
+      <figure class="keel" data-keel aria-labelledby="home-keel-cap">
+        <div class="keel__board">
+          <svg class="keel__svg" viewBox="0 0 400 320" aria-hidden="true" focusable="false">
+            <defs>
+              <marker id="home-keel-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+              </marker>
+            </defs>
+            <path class="keel__link" data-path="feed-build" d="M 155 145 L 100 76"/>
+            <path class="keel__link" data-path="feed-gate" d="M 245 145 L 300 76"/>
+            <path class="keel__link" data-path="measure" d="M 200 195 L 200 250"/>
+            <path class="keel__flow" data-path="change" d="M 134 52 L 266 52" marker-end="url(#home-keel-arrow)"/>
+            <path class="keel__flow keel__flow--miss" data-path="miss" d="M 321 76 C 355 130, 300 195, 240 170" marker-end="url(#home-keel-arrow)"/>
+            <g class="keel__node keel__node--keel" data-node="keel">
+              <rect x="120" y="125" width="160" height="70" rx="8" ry="8"/>
+              <text class="keel__label" x="200" y="155" text-anchor="middle">Keel</text>
+              <text class="keel__sub" x="200" y="175" text-anchor="middle">your rules</text>
+            </g>
+            <g class="keel__node" data-node="build">
+              <rect x="24" y="28" width="110" height="48" rx="6" ry="6"/>
+              <text class="keel__label" x="79" y="58" text-anchor="middle">Build</text>
+            </g>
+            <g class="keel__node" data-node="gate">
+              <rect x="266" y="28" width="110" height="48" rx="6" ry="6"/>
+              <text class="keel__label" x="321" y="58" text-anchor="middle">Gate</text>
+              <text class="keel__flag keel__flag--block" x="360" y="42" text-anchor="middle">X</text>
+              <text class="keel__flag keel__flag--pass" x="360" y="42" text-anchor="middle">OK</text>
+            </g>
+            <g class="keel__node" data-node="readiness">
+              <rect x="130" y="250" width="140" height="48" rx="6" ry="6"/>
+              <text class="keel__label" x="200" y="280" text-anchor="middle">Readiness</text>
+            </g>
+            <circle class="keel__dot" r="7" cx="79" cy="52"/>
           </svg>
-          <span class="rule-map__token" aria-hidden="true"></span>
-          <ol class="rule-map__stages">
-            <li class="rule-map__stage rule-map__stage--dev"><button type="button" class="rule-map__btn" id="rule-tab-dev"><span class="rule-map__name">Developers</span><span class="rule-map__what">Write and approve rules</span></button></li>
-            <li class="rule-map__stage rule-map__stage--keel"><button type="button" class="rule-map__btn rule-map__btn--keel" id="rule-tab-keel"><span class="rule-map__name">Keel<span class="visually-hidden">:</span></span><span class="rule-map__what">Your team's rules and context</span><span class="rule-map__rule" aria-hidden="true">Every change starts from a ticket.</span></button></li>
-            <li class="rule-map__stage rule-map__stage--build"><button type="button" class="rule-map__btn" id="rule-tab-build"><span class="rule-map__name">Build</span><span class="rule-map__what">Agents read Keel while they write</span></button></li>
-            <li class="rule-map__stage rule-map__stage--gate"><button type="button" class="rule-map__btn" id="rule-tab-gate"><span class="rule-map__name">Gate</span><span class="rule-map__what">Checks each pull request against Keel</span></button></li>
-            <li class="rule-map__stage rule-map__stage--readiness"><button type="button" class="rule-map__btn" id="rule-tab-readiness"><span class="rule-map__name">Readiness</span><span class="rule-map__what">Measures each repository against Keel</span></button></li>
-            <li class="rule-map__stage rule-map__stage--miss"><button type="button" class="rule-map__btn" id="rule-tab-miss"><span class="rule-map__name">A miss</span><span class="rule-map__what">Becomes a new rule in Keel</span></button></li>
-          </ol>
         </div>
-
-        <ol class="rule-map__says">
-          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-dev"><p class="rule-map__label"><span class="rule-map__label-name">Developers</span> <span class="rule-map__label-what">Write and approve rules</span></p><p class="rule-map__line">A developer writes the rule. A second developer approves it.</p></div></li>
-          <li class="rule-map__item rule-map__item--keel"><div class="rule-map__say" id="rule-say-keel"><p class="rule-map__label"><span class="rule-map__label-name">Keel</span> <span class="rule-map__label-what">Your team's rules and context</span></p><p class="rule-map__line">Every change starts from a ticket.</p></div></li>
-          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-build"><p class="rule-map__label"><span class="rule-map__label-name">Build</span> <span class="rule-map__label-what">Agents read Keel while they write</span></p><p class="rule-map__line">The agent reads the rule over MCP. It opens a ticket before it writes code.</p></div></li>
-          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-gate"><p class="rule-map__label"><span class="rule-map__label-name">Gate</span> <span class="rule-map__label-what">Checks each pull request against Keel</span></p><p class="rule-map__line">A pull request with no ticket cannot merge.</p></div></li>
-          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-readiness"><p class="rule-map__label"><span class="rule-map__label-name">Readiness</span> <span class="rule-map__label-what">Measures each repository against Keel</span></p><p class="rule-map__line">It flags repositories where changes skip tickets.</p></div></li>
-          <li class="rule-map__item"><div class="rule-map__say" id="rule-say-miss"><p class="rule-map__label"><span class="rule-map__label-name">A miss</span> <span class="rule-map__label-what">Becomes a new rule in Keel</span></p><p class="rule-map__line">A review finds a ticket with no test plan. The fix becomes a new rule in Keel.</p></div></li>
+        <ol class="keel__steps">
+          <li class="keel__step keel__step--rule" data-step="rule"><p class="keel__name">Keel</p><p class="keel__rule">Every API endpoint checks who is calling.</p><p class="keel__text">A rule your team adds to the knowledge base, marked blocking.</p></li>
+          <li class="keel__step" data-step="build"><p class="keel__name">Build</p><p class="keel__text">Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.</p></li>
+          <li class="keel__step" data-step="gate"><p class="keel__name">Gate</p><p class="keel__text">Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.</p></li>
+          <li class="keel__step" data-step="readiness"><p class="keel__name">Readiness</p><p class="keel__text">The readiness audit fails when a user-facing app has no authentication. On me2resh/ddd-sam-example, the top action was: add authentication to all patient appointment APIs.</p></li>
+          <li class="keel__step" data-step="miss"><p class="keel__name">A miss becomes a rule</p><p class="keel__text">When a person finds a miss in review, /codify-rule turns the comment into a draft rule. You approve it before it is saved.</p></li>
         </ol>
-
-        <p class="rule-map__tools"><button type="button" class="rule-map__control" aria-pressed="false" hidden>Pause the loop</button></p>
-
-        <figcaption class="visually-hidden">Keel is at the centre. Developers write and approve rules in Keel. Build, the Gate and Readiness all use the same rule from Keel. A miss becomes a new rule in Keel, and the loop starts again.</figcaption>
+        <p class="keel__tools"><button type="button" class="keel__pause" aria-pressed="false" hidden>Pause animation</button></p>
+        <figcaption class="visually-hidden" id="home-keel-cap">Keel is in the centre, with Build, Gate and Readiness around it. A change goes from Build to the Gate. The Gate stops it. The miss becomes a new rule in Keel. The next change passes the Gate. Readiness measures each repository against the same rules.</figcaption>
       </figure>
       <p class="one-rule__links"><a href="/build">About Build</a> <a href="/gate">About Gate</a> <a href="/readiness">About Readiness</a></p>
       <p class="one-rule__base">Underneath: Keel, one evidence store and one dashboard.</p>
     </div>
   </section>
 
-  <section class="proof" aria-label="Sample outcome metrics">
+  <section class="proof" aria-labelledby="proof-title">
     <div class="wrap">
+      <h2 class="visually-hidden" id="proof-title">The framework in numbers</h2>
       <ul class="proof__metrics">
-        <!-- Switch-on blocker: replace each sample with a real customer metric from a design partner or the demo org. -->
-        <!-- Definition: median review findings per pull request in days 31 to 60 after install, compared with days 1 to 30, same repositories. -->
-        <li><strong class="proof__figure">00%</strong> <span class="proof__sample">Sample</span> fewer review findings per pull request after 30 days</li>
-        <!-- Definition: merged pull requests with a recorded named approval, divided by all merged pull requests, last 90 days. -->
-        <li><strong class="proof__figure">00%</strong> <span class="proof__sample">Sample</span> of pull requests merged with a named approval</li>
-        <!-- Definition: median time from the first failed ApexYard check on a pull request to the first passing check on the same pull request, last 90 days. -->
-        <li><strong class="proof__figure">0.0 h</strong> <span class="proof__sample">Sample</span> median time from a red check to green</li>
+        <li><strong class="proof__figure">20</strong> roles</li>
+        <li><strong class="proof__figure">69</strong> skills</li>
+        <li><strong class="proof__figure">23</strong> agents</li>
+        <li><strong class="proof__figure">66</strong> hooks</li>
       </ul>
+      <p class="proof__source">Counted in the framework release v5.10.1. <a href="https://github.com/me2resh/apexyard/releases/tag/v5.10.1">See the release</a>.</p>
+      <p class="proof__repo" data-gh-stats hidden><span data-gh-stars></span> stars and <span data-gh-forks></span> forks on <a href="https://github.com/me2resh/apexyard">me2resh/apexyard</a>, as of <span data-gh-asof></span>.</p>
+      <figure class="quote-slot" data-staging-only hidden aria-label="Customer story slot">
+        <div class="quote-slot__body" aria-hidden="true"><span></span><span></span><span></span></div>
+        <figcaption class="quote-slot__note"><span class="mock__tag">Preview</span> A slot for a customer story. It shows no quote until a customer approves one.</figcaption>
+      </figure>
       <p class="proof__access">It never reads your code. <a href="/gate#app-access">See what the GitHub App can see</a>.</p>
     </div>
   </section>
@@ -198,43 +217,29 @@
   <section class="section" id="open-source" aria-labelledby="oss-title">
     <div class="wrap oss">
       <div class="oss__text">
-        <h2 class="section__title" id="oss-title">Install Build for free</h2>
-        <p class="section__lede">Give your agents tickets, plans and reviewers today. Every rule, hook and review agent is a plain file you can read, change or remove.</p>
+        <h2 class="section__title" id="oss-title">Install Build</h2>
+        <p class="section__lede">Open source. MIT. Always free.</p>
+        <p class="oss__paid">The hosted parts are paid. Every rule, hook and review agent is a plain file you can read, change or remove.</p>
       </div>
       <div id="quickstart" class="install">
         <div class="tabs" data-tabs>
-          <div class="tabs__list" role="tablist" aria-label="Operating system">
-            <button type="button" class="tabs__tab" id="tab-macos" role="tab" aria-selected="true" aria-controls="panel-macos" tabindex="0">macOS</button>
-            <button type="button" class="tabs__tab" id="tab-linux" role="tab" aria-selected="false" aria-controls="panel-linux" tabindex="-1">Linux</button>
-            <button type="button" class="tabs__tab" id="tab-windows" role="tab" aria-selected="false" aria-controls="panel-windows" tabindex="-1">Windows</button>
+          <div class="tabs__list" role="tablist" aria-label="Install method">
+            <button type="button" class="tabs__tab" id="tab-brew" role="tab" aria-selected="true" aria-controls="panel-brew" tabindex="0">Homebrew</button>
+            <button type="button" class="tabs__tab" id="tab-npx" role="tab" aria-selected="false" aria-controls="panel-npx" tabindex="-1">npx</button>
           </div>
-          <div class="tabs__panel" id="panel-macos" role="tabpanel" aria-labelledby="tab-macos" tabindex="0">
-            <p>Fork <a href="https://github.com/me2resh/apexyard">me2resh/apexyard</a> into your organisation on GitHub. Then run these commands.</p>
-            <div class="cmd"><pre tabindex="0"><code id="cmd-macos">brew install jq
-git clone https://github.com/your-org/apexyard.git
-cd apexyard
-bash bin/apexyard doctor</code></pre><button type="button" class="tabs__copy" data-copy-target="cmd-macos" aria-label="Copy commands for macOS">Copy commands</button></div>
+          <div class="tabs__panel" id="panel-brew" role="tabpanel" aria-labelledby="tab-brew" tabindex="0">
+            <p>Install the command line tool with Homebrew. Then create your ops repository.</p>
+            <div class="cmd"><pre tabindex="0"><code id="cmd-brew">brew install me2resh/tap/apexyard
+apexyard init --org &lt;your-org&gt; --name ops --private</code></pre><button type="button" class="tabs__copy" data-copy-target="cmd-brew" aria-label="Copy the Homebrew commands">Copy commands</button></div>
           </div>
-          <div class="tabs__panel" id="panel-linux" role="tabpanel" aria-labelledby="tab-linux" tabindex="0">
-            <p>Fork <a href="https://github.com/me2resh/apexyard">me2resh/apexyard</a> into your organisation on GitHub. Then run these commands.</p>
-            <div class="cmd"><pre tabindex="0"><code id="cmd-linux">sudo apt-get install jq
-git clone https://github.com/your-org/apexyard.git
-cd apexyard
-bash bin/apexyard doctor</code></pre><button type="button" class="tabs__copy" data-copy-target="cmd-linux" aria-label="Copy commands for Linux">Copy commands</button></div>
-            <p>On Fedora, use <code>sudo dnf install jq</code>.</p>
-          </div>
-          <div class="tabs__panel" id="panel-windows" role="tabpanel" aria-labelledby="tab-windows" tabindex="0">
-            <p>Fork <a href="https://github.com/me2resh/apexyard">me2resh/apexyard</a> into your organisation on GitHub. Then run these commands.</p>
-            <p>The hooks are Bash scripts. Use Git Bash (from Git for Windows) or WSL. PowerShell and cmd.exe cannot run them.</p>
-            <div class="cmd"><pre tabindex="0"><code id="cmd-windows">winget install jqlang.jq
-git clone https://github.com/your-org/apexyard.git
-cd apexyard
-bash bin/apexyard doctor</code></pre><button type="button" class="tabs__copy" data-copy-target="cmd-windows" aria-label="Copy commands for Windows">Copy commands</button></div>
-            <p>Run these commands in Git Bash. In WSL, use the Linux commands. <a href="/docs/quickstart/install">Read the install guide</a>.</p>
+          <div class="tabs__panel" id="panel-npx" role="tabpanel" aria-labelledby="tab-npx" tabindex="0">
+            <p>This installs the command line tool if it is not there, then creates your ops repository.</p>
+            <div class="cmd"><pre tabindex="0"><code id="cmd-npx">npx create-apexyard --org &lt;your-org&gt; --name ops --private</code></pre><button type="button" class="tabs__copy" data-copy-target="cmd-npx" aria-label="Copy the npx command">Copy commands</button></div>
           </div>
           <p class="tabs__status" id="tabs-status" aria-live="polite"></p>
         </div>
-        <p>Then open Claude Code in the folder and run <code>/setup</code>. <a href="/docs/quickstart/install">Read the install guide</a> for Codex, Cursor and OpenCode.</p>
+        <p>You need git. <code>apexyard doctor</code> checks for jq and the GitHub CLI (gh) and tells you how to install what is missing.</p>
+        <p>Then open the new folder in your coding agent and run <code>/setup</code>. Works with Claude Code, Codex, Cursor, OpenCode, Pi and omp. On Windows, use Git Bash or WSL. <a href="/docs/quickstart/install">Read the install guide</a>.</p>
       </div>
     </div>
   </section>
@@ -249,7 +254,7 @@ bash bin/apexyard doctor</code></pre><button type="button" class="tabs__copy" da
         <!-- Booking URL: switch-on blocker until the live booking page exists. -->
         <p><a class="btn btn--primary" href="https://cal.com/apexyard/demo?src=close" rel="noopener">Book a 20-minute demo</a></p>
         <p class="book__mail">Prefer email? <a href="#" class="mailto-cta" data-u="hello" data-d="apexyard.ai">Write to us</a>.</p>
-        <p class="book__plans" id="compare">Start on GitHub at no cost. Add your team when you need a record of every approval. <a href="/pricing">See plans</a></p>
+        <p class="book__plans" id="compare">Free for one person. Cockpit installs the Build framework for you. Pay when a team needs the hosted Gate, shared Keel and evidence. <a href="/pricing">See plans</a></p>
       </div>
     </div>
   </section>
@@ -264,7 +269,7 @@ bash bin/apexyard doctor</code></pre><button type="button" class="tabs__copy" da
       <a href="/readiness">Readiness</a>
       <a href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
-      <a href="/architecture">Architecture</a>
+      <a href="/docs/quickstart/architecture">Architecture</a>
       <a href="/skills">Skills</a>
       <a href="/creators">Creators</a>
       <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">Changelog</a>
@@ -289,6 +294,6 @@ bash bin/apexyard doctor</code></pre><button type="button" class="tabs__copy" da
 
 <script src="/claims.js" defer></script>
 <script src="/product.js" defer></script>
-<script src="/rule-map.js" defer></script>
+<script src="/keel-loop.js" defer></script>
 </body>
 </html>
