@@ -30,7 +30,7 @@ ApexYard has three products and a shared layer.
 
 - Build is open source under the MIT licence. It needs no account and no dashboard.
 - Build works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.
-- Gate reads pull requests on GitHub. The GitHub App never reads your code.
+- Gate reads pull requests on GitHub. Our servers never fetch your code.
 - Gate shows if a pull request has a ticket, a decision record, a review and a named approval.
 - Readiness gives a go or no-go for a repository, the gaps in each area and the top actions.
 - Keel is the name for your team's rules and context. Every agent reads it.

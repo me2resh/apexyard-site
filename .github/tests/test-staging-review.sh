@@ -9,7 +9,6 @@ root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 prod="$root/.github/workflows/deploy-aws.yml"
 staging="$root/.github/workflows/deploy-staging-v2.yml"
 redirects="$root/_redirects"
-script="$root/.github/scripts/write-github-stats.sh"
 pass=0
 fail=0
 
@@ -49,29 +48,29 @@ assert "no public file holds brew install jq" \
 
 # --- 3. Install block ---
 qs=$(awk '/id="quickstart"/,/<\/section>/' "$root/index.html")
-assert "quickstart holds works-with list" \
-  holds "$qs" 'Claude Code, Codex, Cursor, OpenCode, Pi and omp'
+assert "quickstart omits works-with list" \
+  lacks "$qs" 'Claude Code, Codex, Cursor, OpenCode, Pi and omp'
 assert "quickstart holds brew install me2resh/tap/apexyard" \
   holds "$qs" 'brew install me2resh/tap/apexyard'
 assert "quickstart holds npx create-apexyard command" \
-  holds "$qs" 'npx create-apexyard --org &lt;your-org&gt; --name ops --private'
-assert "quickstart holds You need git." \
-  holds "$qs" 'You need git.'
+  holds "$qs" 'npx create-apexyard --org &lt;your-org&gt; --name &lt;new-private-repo&gt; --private'
+assert "quickstart omits You need git." \
+  lacks "$qs" 'You need git.'
 assert "quickstart holds no git clone" lacks "$qs" 'git clone'
 assert "quickstart holds no Fork " lacks "$qs" 'Fork '
 
-assert "index.md.gen holds works-with list" \
-  grep -Fq 'Claude Code, Codex, Cursor, OpenCode, Pi and omp' "$root/index.md.gen"
+assert "index.md.gen omits install details" \
+  file_lacks "$root/index.md.gen" 'Then open the new folder'
 assert "index.md.gen holds brew install me2resh/tap/apexyard" \
   grep -Fq 'brew install me2resh/tap/apexyard' "$root/index.md.gen"
 assert "index.md.gen holds npx create-apexyard command" \
-  grep -Fq 'npx create-apexyard --org <your-org> --name ops --private' "$root/index.md.gen"
+  grep -Fq 'npx create-apexyard --org <your-org> --name <new-private-repo> --private' "$root/index.md.gen"
 assert "index.md.gen holds no git clone" file_lacks "$root/index.md.gen" 'git clone'
 
 assert "content-map holds brew install me2resh/tap/apexyard" \
   grep -Fq 'brew install me2resh/tap/apexyard' "$root/docs-site/content-map.mjs"
 assert "content-map holds npx create-apexyard command" \
-  grep -Fq 'npx create-apexyard --org <your-org> --name ops --private' "$root/docs-site/content-map.mjs"
+  grep -Fq 'npx create-apexyard --org <your-org> --name <new-private-repo> --private' "$root/docs-site/content-map.mjs"
 
 # --- 4. Keel component ---
 keel_pages=(index.html build.html gate.html readiness.html creators.html)
@@ -140,8 +139,6 @@ no_sample() {
 }
 assert "index.html holds no sample metrics" no_sample "$root/index.html"
 assert "index.md.gen holds no sample metrics" no_sample "$root/index.md.gen"
-assert "index.html holds data-gh-stats hidden" \
-  grep -Fq 'data-gh-stats hidden' "$root/index.html"
 assert "index.html holds data-staging-only hidden" \
   grep -Fq 'data-staging-only hidden' "$root/index.html"
 
@@ -233,82 +230,6 @@ PY
 }
 assert "architecture text has no Members or verified" arch_text_clean
 
-# --- 8. write-github-stats.sh ---
-tmp=$(mktemp -d)
-trap 'rm -rf "$tmp"' EXIT
-
-cat >"$tmp/good.json" <<'EOF'
-{"stargazers_count": 1234, "forks_count": 56}
-EOF
-out="$tmp/out.json"
-rm -f "$out"
-GITHUB_STATS_INPUT="$tmp/good.json" GITHUB_STATS_DATE=2026-10-27 \
-  bash "$script" "$out" >/dev/null 2>"$tmp/good.err"
-good_rc=$?
-stats_ok() {
-  [ "$good_rc" -eq 0 ] && [ -f "$out" ] && python3 -I - "$out" <<'PY'
-import json, sys
-data = json.load(open(sys.argv[1], encoding="utf-8"))
-assert data == {"stars": 1234, "forks": 56, "asOf": "2026-10-27"}, data
-PY
-}
-assert "write-github-stats writes 1234/56 dated JSON" stats_ok
-
-soft_no_out() { # <rc> <out>
-  [ "$1" -eq 0 ] && [ ! -f "$2" ]
-}
-
-cat >"$tmp/bad-count.json" <<'EOF'
-{"stargazers_count": "x"}
-EOF
-bad_out="$tmp/bad-out.json"
-rm -f "$bad_out"
-GITHUB_STATS_INPUT="$tmp/bad-count.json" bash "$script" "$bad_out" >/dev/null 2>"$tmp/bad.err"
-bad_rc=$?
-assert "write-github-stats soft-fails on bad counts" soft_no_out "$bad_rc" "$bad_out"
-
-printf 'not json at all\n' >"$tmp/not-json.txt"
-nj_out="$tmp/nj-out.json"
-rm -f "$nj_out"
-GITHUB_STATS_INPUT="$tmp/not-json.txt" bash "$script" "$nj_out" >/dev/null 2>"$tmp/nj.err"
-nj_rc=$?
-assert "write-github-stats soft-fails on non-JSON" soft_no_out "$nj_rc" "$nj_out"
-
-miss_out="$tmp/miss-out.json"
-rm -f "$miss_out"
-GITHUB_STATS_INPUT="$tmp/missing-input.json" bash "$script" "$miss_out" >/dev/null 2>"$tmp/miss.err"
-miss_rc=$?
-assert "write-github-stats soft-fails on missing input" soft_no_out "$miss_rc" "$miss_out"
-
-stats_run_needle=$(printf '%s%s%s' \
-  '.github/scripts/write-github-stats.sh "' '$' 'RUNNER_TEMP/site/github-stats.json"')
-assert "staging runs write-github-stats.sh on github-stats.json" \
-  grep -Fq "$stats_run_needle" "$staging"
-
-stats_step_order() {
-  python3 - "$staging" <<'PY'
-import sys
-lines = open(sys.argv[1], encoding="utf-8").read().splitlines()
-needle = '.github/scripts/write-github-stats.sh "$RUNNER_TEMP/site/github-stats.json"'
-overlay = stats = sync = None
-for i, line in enumerate(lines):
-    if "Apply the private overlay" in line:
-        overlay = i
-    if needle in line:
-        stats = i
-    if sync is None and "aws s3 sync" in line:
-        sync = i
-if overlay is None or stats is None or sync is None:
-    print(f"    markers missing: overlay={overlay} stats={stats} sync={sync}")
-    sys.exit(1)
-if not (overlay < stats < sync):
-    print(f"    order wrong: overlay={overlay} stats={stats} sync={sync}")
-    sys.exit(1)
-sys.exit(0)
-PY
-}
-assert "write-github-stats runs after overlay and before s3 sync" stats_step_order
-
 # --- 9. Copy checks ---
 assert "gate.html holds agent does not review it" \
   grep -Fq 'The agent that wrote a change does not review it.' "$root/gate.html"
@@ -351,12 +272,12 @@ banned_free() {
 assert "no root html (except game) holds banned free/sign-off copy" banned_free
 
 assert "pricing.html holds id=plans" grep -Fq 'id="plans"' "$root/pricing.html"
-one_table() {
+two_tables() {
   local n
   n=$(grep -c '<table' "$root/pricing.html")
-  [ "$n" -eq 1 ]
+  [ "$n" -eq 2 ]
 }
-assert "pricing.html holds one table" one_table
+assert "pricing.html holds two tables" two_tables
 assert "pricing.html evidence_export has data-claim-off" \
   grep -Fq 'data-claim="evidence_export" data-claim-off=' "$root/pricing.html"
 assert "pricing.html kb_mcp has data-claim-off" \

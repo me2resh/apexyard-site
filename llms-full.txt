@@ -66,7 +66,7 @@ Build is for founders and engineering leads who want agent speed and a real proc
 
 The hooks are Bash scripts. On macOS and Linux, Bash is there already. On Windows, use Git Bash or WSL.
 
-1. Install the command line tool: `brew install me2resh/tap/apexyard`, then run `apexyard init --org <your-org> --name ops --private`. Or run `npx create-apexyard --org <your-org> --name ops --private`.
+1. Install the command line tool: `brew install me2resh/tap/apexyard`, then run `apexyard init --org <your-org> --name <new-private-repo> --private`. Or run `npx create-apexyard --org <your-org> --name <new-private-repo> --private`.
 2. You need git. `apexyard doctor` checks for jq and the GitHub CLI (gh) and tells you how to install what is missing.
 3. Open the new folder in your coding agent and run /setup.
 
@@ -97,7 +97,7 @@ Gate blocks a merge only when you make the check required in GitHub.
 
 ## What the GitHub App can see
 
-The App never reads your code. It has no Contents permission. From each pull request it takes the names of the changed files and nothing else.
+The App never fetches your code. It has no Contents permission. From each pull request it takes the title, the description and the names of the changed files.
 
 - Pull requests: read. Titles, descriptions, reviews and the list of changed files.
 - Checks: write. The App posts the ApexYard check on each pull request.

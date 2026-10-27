@@ -26,7 +26,7 @@ Underneath: Keel, one evidence store and one dashboard.
 
 20 roles, 69 skills, 23 agents and 66 hooks (framework release v5.10.1).
 
-It never reads your code. See what the GitHub App can see: <https://apexyard.ai/gate#app-access>.
+Our servers never fetch your code. The GitHub App sees pull request titles, descriptions and changed file names, not the files. See what the GitHub App can see: <https://apexyard.ai/gate#app-access>.
 
 ## Install Build
 
@@ -36,16 +36,12 @@ The hosted parts are paid. Every rule, hook and review agent is a plain file you
 
 ```sh
 brew install me2resh/tap/apexyard
-apexyard init --org <your-org> --name ops --private
+apexyard init --org <your-org> --name <new-private-repo> --private
 ```
 
 ```sh
-npx create-apexyard --org <your-org> --name ops --private
+npx create-apexyard --org <your-org> --name <new-private-repo> --private
 ```
-
-You need git. `apexyard doctor` checks for jq and the GitHub CLI (gh) and tells you how to install what is missing.
-
-Then open the new folder in your coding agent and run `/setup`. Works with Claude Code, Codex, Cursor, OpenCode, Pi and omp. On Windows, use Git Bash or WSL. Read the install guide: <https://apexyard.ai/docs/quickstart/install>.
 
 ## Book a demo
 
