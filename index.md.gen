@@ -24,7 +24,7 @@ Keel is your team's rules and context. Build, the Gate and Readiness all work fr
 
 Underneath: Keel, one evidence store and one dashboard.
 
-20 roles, 69 skills, 23 agents and 66 hooks (framework release v5.10.1).
+20 roles, 69 skills, 23 agents and 66 hooks.
 
 Our servers never fetch your code. The GitHub App sees pull request titles, descriptions and changed file names, not the files. See what the GitHub App can see: <https://apexyard.ai/gate#app-access>.
 

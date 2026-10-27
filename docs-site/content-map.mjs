@@ -117,7 +117,7 @@ const learn = [
             '- Metadata: read',
             '- Pull requests: read',
             '',
-            'The App has no Contents permission. It cannot read your code. It gets these events: `pull_request`, `installation` and `installation_repositories`.',
+            'The App has no Contents permission. Our servers never fetch your code. The GitHub App sees pull request titles, descriptions and changed file names, not the files. It gets these events: `pull_request`, `installation` and `installation_repositories`.',
           ].join('\n'),
         }],
       },

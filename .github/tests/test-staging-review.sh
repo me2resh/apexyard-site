@@ -20,15 +20,12 @@ holds() { printf '%s' "$1" | grep -Fq -- "$2"; }
 lacks() { ! printf '%s' "$1" | grep -Fq -- "$2"; }
 file_lacks() { ! grep -Fq -- "$2" "$1"; }
 
-# Public file set for banned-phrase scans (items 1 and 2).
+# Public pages, Markdown/text alternates, and all docs-site sources.
 public_files() {
-  local f
-  for f in "$root"/*.html "$root"/*.md.gen "$root"/*.txt; do
-    [ -f "$f" ] && printf '%s\n' "$f"
-  done
-  for f in skill.md creator-brief.md docs-site/content-map.mjs; do
-    [ -f "$root/$f" ] && printf '%s\n' "$root/$f"
-  done
+  find "$root" \( -type d \( -name .git -o -name node_modules \
+    -o -path "$root/.github" -o -path "$root/docs/agdr" \) -prune \) -o \
+    \( -type f \( -name '*.html' -o -name '*.md' -o -name '*.txt' \
+    -o -name '*.md.gen' -o -path "$root/docs-site/*" \) -print \)
 }
 
 none_hold() { # <needle>
@@ -45,6 +42,25 @@ assert "no public file holds Every change starts from a ticket" \
   none_hold 'Every change starts from a ticket'
 assert "no public file holds brew install jq" \
   none_hold 'brew install jq'
+
+# Strong code-access claims overstate what the GitHub App permissions imply.
+no_strong_code_claims() {
+  local f hits=""
+  while IFS= read -r f; do
+    if grep -Eiq -- "cannot read your code|never reads your code|can't read your code|doesn't read your code|does not read your code|cannot open" "$f"; then
+      hits="$hits ${f#"$root"/}"
+    fi
+  done < <(public_files)
+  [ -z "$hits" ] || { echo "    found in:$hits"; return 1; }
+}
+assert "public files omit strong code-access claims" no_strong_code_claims
+
+for page in index.html index.md.gen; do
+  assert "$page omits counted framework release wording" \
+    file_lacks "$root/$page" 'Counted in the framework release'
+  assert "$page omits framework release version" \
+    file_lacks "$root/$page" 'framework release v'
+done
 
 # --- 3. Install block ---
 qs=$(awk '/id="quickstart"/,/<\/section>/' "$root/index.html")

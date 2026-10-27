@@ -97,7 +97,7 @@ Gate blocks a merge only when you make the check required in GitHub.
 
 ## What the GitHub App can see
 
-The App never fetches your code. It has no Contents permission. From each pull request it takes the title, the description and the names of the changed files.
+Our servers never fetch your code. The App has no Contents permission. From each pull request it takes the title, the description and the names of the changed files.
 
 - Pull requests: read. Titles, descriptions, reviews and the list of changed files.
 - Checks: write. The App posts the ApexYard check on each pull request.
