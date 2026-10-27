@@ -21,6 +21,9 @@ name: Shell Tests
 #
 # The docs lint files are in the filter because #107 added test-docs-lint.sh,
 # which runs docs-site/scripts/lint-docs.mjs on fixtures.
+#
+# creator-brief.md and skill.md are in the filter because #102 added
+# test-works-with.sh, which reads both files.
 
 # The two path lists are duplicated rather than shared via a YAML anchor:
 # GitHub Actions' workflow parser does not support anchors/aliases, so `&`/`*`
@@ -44,6 +47,7 @@ on:
       - "*.txt"
       - "*.xml"
       - "skill.md"
+      - "creator-brief.md"
       - "claims.js"
       - "waitlist.js"
       - "site-config.js"
@@ -73,6 +77,7 @@ on:
       - "*.txt"
       - "*.xml"
       - "skill.md"
+      - "creator-brief.md"
       - "claims.js"
       - "waitlist.js"
       - "site-config.js"

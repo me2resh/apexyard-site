@@ -21,6 +21,12 @@ for f in index.html index.md.gen creators.html llms.txt llms-full.txt creator-br
   fi
 done
 
+if grep -w omp "$root/skill.md" >/dev/null; then
+  pass "skill.md names omp"
+else
+  fail_msg "skill.md does not name omp"
+fi
+
 hits=0
 for f in "$root"/*.html "$root"/*.md.gen "$root"/*.txt "$root"/creator-brief.md; do
   [ -f "$f" ] || continue
