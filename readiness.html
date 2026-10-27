@@ -226,36 +226,59 @@
       <p class="section__lede">Measures each repository against <a href="/#product">Keel</a>, and turns repeated gaps into new rules.</p>
       <p class="section__lede">Turn a finding into a rule, and your agents pick it up on their next ticket in <a href="/build">Build</a>.</p>
       <p class="connects__gate">A score tells you what is wrong. <a href="/gate">The Gate</a> stops it happening again.</p>
+      <figure class="keel" data-keel data-keel-highlight="readiness" aria-labelledby="readiness-keel-cap">
+        <div class="keel__board">
+          <svg class="keel__svg" viewBox="0 0 400 320" aria-hidden="true" focusable="false">
+            <defs>
+              <marker id="readiness-keel-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+              </marker>
+            </defs>
+            <path class="keel__link" data-path="feed-build" d="M 155 145 L 100 76"/>
+            <path class="keel__link" data-path="feed-gate" d="M 245 145 L 300 76"/>
+            <path class="keel__link" data-path="measure" d="M 200 195 L 200 250"/>
+            <path class="keel__flow" data-path="change" d="M 134 52 L 266 52" marker-end="url(#readiness-keel-arrow)"/>
+            <path class="keel__flow keel__flow--miss" data-path="miss" d="M 321 76 C 355 130, 300 195, 240 170" marker-end="url(#readiness-keel-arrow)"/>
+            <g class="keel__node keel__node--keel" data-node="keel">
+              <rect x="120" y="125" width="160" height="70" rx="8" ry="8"/>
+              <text class="keel__label" x="200" y="155" text-anchor="middle">Keel</text>
+              <text class="keel__sub" x="200" y="175" text-anchor="middle">your rules</text>
+            </g>
+            <g class="keel__node" data-node="build">
+              <rect x="24" y="28" width="110" height="48" rx="6" ry="6"/>
+              <text class="keel__label" x="79" y="58" text-anchor="middle">Build</text>
+            </g>
+            <g class="keel__node" data-node="gate">
+              <rect x="266" y="28" width="110" height="48" rx="6" ry="6"/>
+              <text class="keel__label" x="321" y="58" text-anchor="middle">Gate</text>
+              <text class="keel__flag keel__flag--block" x="360" y="42" text-anchor="middle">X</text>
+              <text class="keel__flag keel__flag--pass" x="360" y="42" text-anchor="middle">OK</text>
+            </g>
+            <g class="keel__node" data-node="readiness">
+              <rect x="130" y="250" width="140" height="48" rx="6" ry="6"/>
+              <text class="keel__label" x="200" y="280" text-anchor="middle">Readiness</text>
+            </g>
+            <circle class="keel__dot" r="7" cx="79" cy="52"/>
+          </svg>
+        </div>
+        <ol class="keel__steps">
+          <li class="keel__step keel__step--rule" data-step="rule"><p class="keel__name">Keel</p><p class="keel__rule">Every API endpoint checks who is calling.</p><p class="keel__text">A rule your team adds to the knowledge base, marked blocking.</p></li>
+          <li class="keel__step" data-step="build"><p class="keel__name">Build</p><p class="keel__text">Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.</p></li>
+          <li class="keel__step" data-step="gate"><p class="keel__name">Gate</p><p class="keel__text">Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.</p></li>
+          <li class="keel__step" data-step="readiness"><p class="keel__name">Readiness</p><p class="keel__text">The readiness audit fails when a user-facing app has no authentication. On me2resh/ddd-sam-example, the top action was: add authentication to all patient appointment APIs.</p></li>
+          <li class="keel__step" data-step="miss"><p class="keel__name">A miss becomes a rule</p><p class="keel__text">When a person finds a miss in review, /codify-rule turns the comment into a draft rule. You approve it before it is saved.</p></li>
+        </ol>
+        <p class="keel__tools"><button type="button" class="keel__pause" aria-pressed="false" hidden>Pause animation</button></p>
+        <figcaption class="visually-hidden" id="readiness-keel-cap">Keel is in the centre, with Build, Gate and Readiness around it. A change goes from Build to the Gate. The Gate stops it. The miss becomes a new rule in Keel. The next change passes the Gate. Readiness measures each repository against the same rules.</figcaption>
+      </figure>
     </div>
   </section>
 
   <section class="section" aria-labelledby="plans-title">
-    <div class="wrap">
+    <div class="wrap plans-pointer">
       <h2 class="section__title" id="plans-title">Plans</h2>
-      <p class="section__lede">Start with one report. Assessments by people are on the <a href="/pricing#assessments">pricing page</a>.</p>
-      <div class="plans plans--2">
-        <article class="plan">
-          <h3 class="plan__name">Readiness report</h3>
-          <p class="plan__for">For one repository before a launch.</p>
-          <div class="plan__price"><p class="plan__amount"><!--{{READINESS_REPORT_PRICE}}-->From £00 a repository <span class="price-flag">Placeholder price</span><!--/{{READINESS_REPORT_PRICE}}--></p></div>
-          <ul class="plan__points">
-            <li>One repository, on demand</li>
-            <li>A written report with the next steps</li>
-          </ul>
-          <div class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/review?src=readiness-report" rel="noopener">Book a readiness call</a></div>
-        </article>
-        <article class="plan">
-          <h3 class="plan__name"><!--{{READINESS_SCHEDULE_NAME}}-->Readiness on a schedule<!--/{{READINESS_SCHEDULE_NAME}}--></h3>
-          <p class="plan__for">For teams that want every repository checked over time.</p>
-          <div class="plan__price"><p class="plan__amount"><!--{{READINESS_SCHEDULE_PRICE}}-->From £00 a month <span class="price-flag">Placeholder price</span><!--/{{READINESS_SCHEDULE_PRICE}}--></p></div>
-          <ul class="plan__points">
-            <li><span data-claim="readiness_weekly">Every repository, every week</span></li>
-            <li>The trend over time</li>
-          </ul>
-          <div class="plan__action"><a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Notify me: Readiness on a schedule">Email us to get notified</a></div>
-        </article>
-      </div>
-      <p class="plans__cta"><a class="plans__link" href="/pricing#readiness">Compare every plan</a></p>
+      <p class="section__lede">Build is free and open source. Every paid plan includes Build, Gate and Readiness. Plans differ by repositories, seats and evidence retention.</p>
+      <p class="plans__cta"><a class="plans__link" href="/pricing">See plans and pricing</a></p>
     </div>
   </section>
 
@@ -269,7 +292,7 @@
       <a href="/readiness">Readiness</a>
       <a href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
-      <a href="/architecture">Architecture</a>
+      <a href="/docs/quickstart/architecture">Architecture</a>
       <a href="/skills">Skills</a>
       <a href="/creators">Creators</a>
       <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">Changelog</a>
@@ -294,5 +317,6 @@
 
 <script src="/claims.js" defer></script>
 <script src="/product.js" defer></script>
+<script src="/keel-loop.js" defer></script>
 </body>
 </html>

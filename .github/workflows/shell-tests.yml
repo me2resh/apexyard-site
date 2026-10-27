@@ -51,6 +51,11 @@ on:
       - "claims.js"
       - "waitlist.js"
       - "site-config.js"
+      # #137: test-staging-review.sh reads the page scripts, _redirects and the docs content map and config.
+      - "*.js"
+      - "_redirects"
+      - "docs-site/content-map.mjs"
+      - "docs-site/astro.config.mjs"
       - "product.css"
       - "apexdock/**"
       - "docs-site/scripts/lint-docs.mjs"
@@ -81,6 +86,11 @@ on:
       - "claims.js"
       - "waitlist.js"
       - "site-config.js"
+      # #137: test-staging-review.sh reads the page scripts, _redirects and the docs content map and config.
+      - "*.js"
+      - "_redirects"
+      - "docs-site/content-map.mjs"
+      - "docs-site/astro.config.mjs"
       - "product.css"
       - "apexdock/**"
       - "docs-site/scripts/lint-docs.mjs"

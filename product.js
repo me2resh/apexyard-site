@@ -1,4 +1,4 @@
-/* ApexYard product pages (#102): nav, live star count, install tabs,
+/* ApexYard product pages (#102): nav, GitHub stats from /github-stats.json, install tabs,
    copy buttons, claim state attributes, mail links, cookie consent, and redirects for the old
    home-page anchors that now live on /docs. No dependencies. */
 (function () {
@@ -101,20 +101,41 @@
     });
   }
 
-  // Live GitHub star count. If the API call fails, the count stays hidden.
-  var starEls = document.querySelectorAll('[data-stars]');
-  if (starEls.length && window.fetch) {
-    fetch('https://api.github.com/repos/me2resh/apexyard', { headers: { Accept: 'application/vnd.github+json' } })
+  // Same-origin GitHub stats. On any failure the block stays hidden.
+  var ghStats = document.querySelectorAll('[data-gh-stats]');
+  if (ghStats.length && window.fetch) {
+    var months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    fetch('/github-stats.json')
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (d) {
-        if (!d || typeof d.stargazers_count !== 'number') return;
-        var n = d.stargazers_count.toLocaleString('en-GB');
-        starEls.forEach(function (el) {
-          el.textContent = n;
-          el.hidden = false;
-          var wrap = el.closest('[data-stars-wrap]');
-          if (wrap) wrap.hidden = false;
+        if (!d) return;
+        var stars = d.stars;
+        var forks = d.forks;
+        var asOf = d.asOf;
+        if (!Number.isFinite(stars) || stars < 0 || stars !== Math.floor(stars)) return;
+        if (!Number.isFinite(forks) || forks < 0 || forks !== Math.floor(forks)) return;
+        if (typeof asOf !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(asOf)) return;
+        var parts = asOf.split('-');
+        var y = +parts[0];
+        var m = +parts[1];
+        var day = +parts[2];
+        if (m < 1 || m > 12 || day < 1 || day > 31) return;
+        var dateText = day + ' ' + months[m - 1] + ' ' + y;
+        var starsText = stars.toLocaleString('en-GB');
+        var forksText = forks.toLocaleString('en-GB');
+        document.querySelectorAll('[data-gh-stars]').forEach(function (el) {
+          el.textContent = starsText;
         });
+        document.querySelectorAll('[data-gh-forks]').forEach(function (el) {
+          el.textContent = forksText;
+        });
+        document.querySelectorAll('[data-gh-asof]').forEach(function (el) {
+          el.textContent = dateText;
+        });
+        ghStats.forEach(function (el) { el.removeAttribute('hidden'); });
       })
       .catch(function () {});
   }
@@ -172,81 +193,6 @@
       });
     });
   });
-
-  // Pricing product switcher (WAI-ARIA tabs pattern). Without JavaScript the
-  // links jump to each product and every panel stays visible. The URL hash
-  // selects the tab; an id inside a panel (for example #team) selects that
-  // panel. The old #reviews anchor selects Assessments.
-  var switcher = document.querySelector('[data-switcher]');
-  if (switcher) {
-    var sTabs = Array.prototype.slice.call(switcher.querySelectorAll('.switcher__tab'));
-    var sPanels = sTabs.map(function (t) { return document.getElementById(t.getAttribute('href').slice(1)); });
-    if (sPanels.every(Boolean)) {
-      var sList = switcher.querySelector('.switcher__list');
-      switcher.setAttribute('role', 'none');
-      sList.setAttribute('role', 'tablist');
-      sList.setAttribute('aria-label', 'Products');
-      sList.setAttribute('aria-orientation', 'horizontal');
-      sTabs.forEach(function (t, i) {
-        t.setAttribute('role', 'tab');
-        t.setAttribute('aria-controls', sPanels[i].id);
-        sPanels[i].setAttribute('role', 'tabpanel');
-        sPanels[i].setAttribute('aria-labelledby', t.id);
-      });
-      document.documentElement.classList.add('has-switcher');
-
-      var sSelect = function (i, focus) {
-        sTabs.forEach(function (t, j) {
-          var on = i === j;
-          t.setAttribute('aria-selected', on ? 'true' : 'false');
-          t.tabIndex = on ? 0 : -1;
-          sPanels[j].hidden = !on;
-        });
-        // The head script of pricing.html set data-panel before first paint,
-        // so the page does not shift. Keep it in step with the selected tab.
-        document.documentElement.setAttribute('data-panel', sPanels[i].id);
-        if (focus) sTabs[i].focus();
-      };
-      // The tab with data-default (Gate) opens when the hash names no panel.
-      var sDefault = Math.max(0, sTabs.findIndex(function (t) { return t.hasAttribute('data-default'); }));
-      var fromHash = function () {
-        var h = '';
-        try { h = decodeURIComponent((location.hash || '').slice(1)); } catch (e) {}
-        if (h === 'reviews') h = 'assessments';
-        if (!h) return sDefault;
-        var el = document.getElementById(h);
-        for (var i = 0; i < sPanels.length; i++) {
-          if (el && (sPanels[i] === el || sPanels[i].contains(el))) return i;
-        }
-        return sDefault;
-      };
-      var setHash = function (i) {
-        if (window.history && history.replaceState) history.replaceState(null, '', '#' + sPanels[i].id);
-      };
-      sSelect(fromHash(), false);
-      window.addEventListener('hashchange', function () { sSelect(fromHash(), false); });
-      sTabs.forEach(function (t, i) {
-        t.addEventListener('click', function (e) {
-          e.preventDefault();
-          sSelect(i, false);
-          setHash(i);
-        });
-        t.addEventListener('keydown', function (e) {
-          var next = -1;
-          // A horizontal tab list: Up and Down stay with the page scroll.
-          if (e.key === 'ArrowRight') next = (i + 1) % sTabs.length;
-          else if (e.key === 'ArrowLeft') next = (i - 1 + sTabs.length) % sTabs.length;
-          else if (e.key === 'Home') next = 0;
-          else if (e.key === 'End') next = sTabs.length - 1;
-          else if (e.key === ' ') { e.preventDefault(); sSelect(i, false); setHash(i); return; }
-          if (next < 0) return;
-          e.preventDefault();
-          sSelect(next, true);
-          setHash(next);
-        });
-      });
-    }
-  }
 
   // Mail links: the address is assembled here, so the HTML holds no address.
   document.querySelectorAll('.mailto-cta').forEach(function (a) {

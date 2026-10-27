@@ -214,7 +214,7 @@ async function main() {
   console.log('PASS  Thrown callbacks resolve and try fallback');
   await pageTests(contact);
 
-  for (const src of ['home-hero', 'pricing-free', 'gate-head', 'gate-free']) {
+  for (const src of ['home-hero', 'pricing-free', 'gate-head']) {
     const data = { href: '/waitlist?src=' + src, 'data-signin': 'https://app.apexyard.ai/signin?src=' + src };
     const a = anchor(data);
     for (const open of [false, true, false]) {
@@ -246,7 +246,7 @@ async function main() {
       }
     }
   }
-  assert.strictEqual(count, 4);
+  assert.strictEqual(count, 3);
   console.log('PASS  Static links match the flag');
   const fallback = attrs(read('waitlist.html').match(/<div\b[^>]*id="waitlist-fallback"[^>]*>/)[0]);
   assert.strictEqual(fallback.role, 'status');

@@ -16,7 +16,12 @@
 # for old bookmarks pointing at the .html form). Canonical is the clean form
 # per #327 + the SEO-audit S14 finding.
 
-/architecture        /architecture.html      200
+/architecture        /docs/quickstart/architecture    301
 /skills              /skills.html            200
 /how-it-works        /how-it-works.html      200
 /game                /game.html              200
+
+# #137: staging-only files. Production returns 404 for them (AgDR-0011).
+/previews            /404.html               404!
+/previews.html       /404.html               404!
+/staging-only.js     /404.html               404!

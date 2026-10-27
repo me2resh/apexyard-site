@@ -134,5 +134,5 @@ Sync the framework, parallelise independent work, cut a release, debug something
 ## Links
 
 - Home: <https://apexyard.ai/index.md>
-- Architecture: <https://apexyard.ai/architecture.md>
+- Architecture: <https://apexyard.ai/docs/quickstart/architecture>
 - GitHub source for each skill: <https://github.com/me2resh/apexyard/tree/main/.claude/skills>

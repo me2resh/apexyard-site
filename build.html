@@ -97,7 +97,8 @@
       <p class="product-head__name">Build</p>
       <h1 id="product-title">Your agents plan before they code, and every change meets a reviewer before it leaves your machine.</h1>
       <p class="product-head__who">For founders and engineering leads who want agent speed without losing the process.</p>
-      <p class="product-head__cta"><a class="btn btn--primary" href="/#quickstart">Install the framework</a></p>
+      <p class="product-head__cta"><a class="btn btn--primary" href="/#quickstart">Install Build</a></p>
+      <p class="product-head__free">Open source. MIT. Always free. The hosted parts are paid.</p>
     </div>
   </section>
 
@@ -108,7 +109,7 @@
         <article class="feature">
           <div class="feature__text">
             <h3>From idea to tickets before any code</h3>
-            <p>Agents turn an idea into a spec, a plan and small tickets. Each step has a person who signs it off.</p>
+            <p>Agents turn an idea into a spec, a plan and small tickets. Every step leaves a record: the ticket, the decision record, the review and the pull request. A person signs off where your team chooses. By default, that is the merge.</p>
           </div>
           <figure class="feature__media">
             <img src="/img/placeholder-build-flow.svg" width="1200" height="800" alt="Placeholder illustration of the flow from idea to spec, plan, tickets and code">
@@ -116,20 +117,51 @@
         </article>
         <article class="feature">
           <div class="feature__text">
-            <h3>Reviewer roles on every change</h3>
-            <p>Code, security, architecture and QA reviewers each check what they know best, and say what to fix.</p>
+            <h3>Reviewers sized to the change</h3>
+            <p>The reviewers depend on the size of the change. A person approves the merge at every size.</p>
+            <ul class="sizes">
+              <li><strong>Lean</strong> Docs, comments and config text. Rex, the review agent, gives a quick review.</li>
+              <li><strong>Standard</strong> Ordinary code changes. Rex gives one full review.</li>
+              <li><strong>Heavy</strong> Auth, secrets, migrations, designs and large changes. Rex reviews. Security and architecture reviews also run when the changed paths match.</li>
+            </ul>
           </div>
           <figure class="feature__media">
-            <img src="/img/placeholder-build-roles.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of four reviewer roles and their findings on one change">
+            <div class="mock" aria-hidden="true">
+              <div class="mock__bar"><span class="mock__title">Review plan</span><span class="mock__meta">pull request #214</span></div>
+              <div class="mock__body">
+                <ul class="mock-sizes">
+                  <li><span class="mock-sizes__label">Lean</span><span class="mock-chip">Rex (quick)</span><span class="mock-chip">You</span></li>
+                  <li><span class="mock-sizes__label">Standard</span><span class="mock-chip">Rex</span><span class="mock-chip">You</span></li>
+                  <li><span class="mock-sizes__label">Heavy</span><span class="mock-chip">Rex</span><span class="mock-chip">Security</span><span class="mock-chip">Architecture</span><span class="mock-chip">You</span></li>
+                </ul>
+              </div>
+            </div>
+            <figcaption class="mock__caption"><span class="mock__tag">Example</span>Who reviews a change at each size.</figcaption>
           </figure>
         </article>
         <article class="feature">
           <div class="feature__text">
             <h3>Adopt what you have, or start new</h3>
-            <p>Point it at an existing repository and it adds handbooks and agent guidance in place. Or begin a product from an empty folder.</p>
+            <p>Hand over a repository you already have:</p>
+            <ol class="steps-list">
+              <li>Run <code>/handover</code> with a project name and the path or URL of the repository.</li>
+              <li>It clones the repository into the workspace folder of your ops repository.</li>
+              <li>It reads the code, finds the stack and scores how ready the code is for agents, in five areas.</li>
+              <li>It writes a handover assessment: the current state, the risks and a plan.</li>
+              <li>You choose the documents to make, such as architecture diagrams and an AGENTS.md file.</li>
+              <li>It adds the project to your registry and offers to file the next steps as tickets.</li>
+            </ol>
+            <p>Or start a new product: run <code>/scaffold</code>. It asks a short interview and makes the project floor.</p>
           </div>
           <figure class="feature__media">
-            <img src="/img/placeholder-build-terminal.svg" width="1200" height="800" loading="lazy" alt="Placeholder illustration of a terminal that shows the install steps: fork the repository, install jq, clone it, run bin/apexyard doctor, then run /setup in Claude Code">
+            <div class="mock mock--term" aria-hidden="true">
+              <div class="mock__bar"><span class="mock__title">Terminal</span></div>
+              <pre>$ brew install me2resh/tap/apexyard
+$ apexyard init --org example-co --name ops --private
+$ cd ops
+&gt; /handover payments-api https://github.com/example-co/payments-api</pre>
+            </div>
+            <figcaption class="mock__caption"><span class="mock__tag">Example</span>Install, then hand over an existing repository.</figcaption>
           </figure>
         </article>
         <article class="feature">
@@ -171,36 +203,59 @@
       <h2 class="section__title" id="connects-title">How it connects</h2>
       <p class="section__lede">Your agents read <a href="/#product">Keel</a>, your team's rules and context, while they write.</p>
       <p class="section__lede">The ticket, decision record and review your agents produce here are what the <a href="/gate">Gate</a> checks on GitHub.</p>
+      <figure class="keel" data-keel data-keel-highlight="build" aria-labelledby="build-keel-cap">
+        <div class="keel__board">
+          <svg class="keel__svg" viewBox="0 0 400 320" aria-hidden="true" focusable="false">
+            <defs>
+              <marker id="build-keel-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+              </marker>
+            </defs>
+            <path class="keel__link" data-path="feed-build" d="M 155 145 L 100 76"/>
+            <path class="keel__link" data-path="feed-gate" d="M 245 145 L 300 76"/>
+            <path class="keel__link" data-path="measure" d="M 200 195 L 200 250"/>
+            <path class="keel__flow" data-path="change" d="M 134 52 L 266 52" marker-end="url(#build-keel-arrow)"/>
+            <path class="keel__flow keel__flow--miss" data-path="miss" d="M 321 76 C 355 130, 300 195, 240 170" marker-end="url(#build-keel-arrow)"/>
+            <g class="keel__node keel__node--keel" data-node="keel">
+              <rect x="120" y="125" width="160" height="70" rx="8" ry="8"/>
+              <text class="keel__label" x="200" y="155" text-anchor="middle">Keel</text>
+              <text class="keel__sub" x="200" y="175" text-anchor="middle">your rules</text>
+            </g>
+            <g class="keel__node" data-node="build">
+              <rect x="24" y="28" width="110" height="48" rx="6" ry="6"/>
+              <text class="keel__label" x="79" y="58" text-anchor="middle">Build</text>
+            </g>
+            <g class="keel__node" data-node="gate">
+              <rect x="266" y="28" width="110" height="48" rx="6" ry="6"/>
+              <text class="keel__label" x="321" y="58" text-anchor="middle">Gate</text>
+              <text class="keel__flag keel__flag--block" x="360" y="42" text-anchor="middle">X</text>
+              <text class="keel__flag keel__flag--pass" x="360" y="42" text-anchor="middle">OK</text>
+            </g>
+            <g class="keel__node" data-node="readiness">
+              <rect x="130" y="250" width="140" height="48" rx="6" ry="6"/>
+              <text class="keel__label" x="200" y="280" text-anchor="middle">Readiness</text>
+            </g>
+            <circle class="keel__dot" r="7" cx="79" cy="52"/>
+          </svg>
+        </div>
+        <ol class="keel__steps">
+          <li class="keel__step keel__step--rule" data-step="rule"><p class="keel__name">Keel</p><p class="keel__rule">Every API endpoint checks who is calling.</p><p class="keel__text">A rule your team adds to the knowledge base, marked blocking.</p></li>
+          <li class="keel__step" data-step="build"><p class="keel__name">Build</p><p class="keel__text">Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.</p></li>
+          <li class="keel__step" data-step="gate"><p class="keel__name">Gate</p><p class="keel__text">Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.</p></li>
+          <li class="keel__step" data-step="readiness"><p class="keel__name">Readiness</p><p class="keel__text">The readiness audit fails when a user-facing app has no authentication. On me2resh/ddd-sam-example, the top action was: add authentication to all patient appointment APIs.</p></li>
+          <li class="keel__step" data-step="miss"><p class="keel__name">A miss becomes a rule</p><p class="keel__text">When a person finds a miss in review, /codify-rule turns the comment into a draft rule. You approve it before it is saved.</p></li>
+        </ol>
+        <p class="keel__tools"><button type="button" class="keel__pause" aria-pressed="false" hidden>Pause animation</button></p>
+        <figcaption class="visually-hidden" id="build-keel-cap">Keel is in the centre, with Build, Gate and Readiness around it. A change goes from Build to the Gate. The Gate stops it. The miss becomes a new rule in Keel. The next change passes the Gate. Readiness measures each repository against the same rules.</figcaption>
+      </figure>
     </div>
   </section>
 
   <section class="section" aria-labelledby="plans-title">
-    <div class="wrap">
+    <div class="wrap plans-pointer">
       <h2 class="section__title" id="plans-title">Plans</h2>
-      <p class="section__lede">Start today, with no sign-up and no card.</p>
-      <div class="plans plans--2">
-        <article class="plan">
-          <h3 class="plan__name">Open source</h3>
-          <p class="plan__for">For developers who want the process on their own machine.</p>
-          <div class="plan__price"><p class="plan__amount">MIT licence</p></div>
-          <ul class="plan__points">
-            <li>Rules, roles, handbooks and hooks as plain files</li>
-            <li>No account and no dashboard needed</li>
-          </ul>
-          <div class="plan__action"><a class="btn btn--quiet" href="/#quickstart">Install the framework</a></div>
-        </article>
-        <article class="plan">
-          <h3 class="plan__name"><!--{{COCKPIT_PLAN_NAME}}-->Cockpit desktop app<!--/{{COCKPIT_PLAN_NAME}}--></h3>
-          <p class="plan__for">For people who do not use a terminal.</p>
-          <div class="plan__price"><p class="plan__amount"><!--{{COCKPIT_PRICE}}-->From £00 for each seat <span class="price-flag">Placeholder price</span><!--/{{COCKPIT_PRICE}}--></p></div>
-          <ul class="plan__points">
-            <li><span data-claim="cockpit_app">The Cockpit desktop app</span></li>
-            <li>Guided setup and the same gates, without a terminal</li>
-          </ul>
-          <div class="plan__action"><a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Notify me: Cockpit">Email us to get notified</a></div>
-        </article>
-      </div>
-      <p class="plans__cta"><a class="plans__link" href="/pricing#build">Compare every plan</a></p>
+      <p class="section__lede">Build is free and open source. Every paid plan includes Build, Gate and Readiness. Plans differ by repositories, seats and evidence retention.</p>
+      <p class="plans__cta"><a class="plans__link" href="/pricing">See plans and pricing</a></p>
     </div>
   </section>
 
@@ -214,7 +269,7 @@
       <a href="/readiness">Readiness</a>
       <a href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
-      <a href="/architecture">Architecture</a>
+      <a href="/docs/quickstart/architecture">Architecture</a>
       <a href="/skills">Skills</a>
       <a href="/creators">Creators</a>
       <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">Changelog</a>
@@ -239,5 +294,6 @@
 
 <script src="/claims.js" defer></script>
 <script src="/product.js" defer></script>
+<script src="/keel-loop.js" defer></script>
 </body>
 </html>

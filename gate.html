@@ -117,7 +117,7 @@
         <article class="feature">
           <div class="feature__text">
             <h3>An agent never approves its own work</h3>
-            <p><span data-claim="named_approval">With named approval set up, the merge waits for a person your team named.</span> <span data-claim="evidence_export">When an auditor asks, you export the record.</span> <span data-claim="ci_attestation">Your CI can attest that each review ran.</span></p>
+            <p>The agent that wrote a change does not review it. A separate review agent with its own persona reviews it, and it can run on a different model. By default, reviewers run on a stronger model than builders. <span data-claim="named_approval">A person your team names approves the merge.</span> An agent never gives the final sign-off.</p>
           </div>
           <figure class="feature__media">
             <img src="/img/placeholder-evidence.svg" width="1200" height="800" loading="lazy" alt="Example evidence record for a merged pull request in a fictional repository. It shows the check result, the review attested by a CI run, the named approver and the merge time, with an Export button.">
@@ -169,57 +169,59 @@
       <h2 class="section__title" id="connects-title">How it connects</h2>
       <p class="section__lede">Checks each pull request against the rules in <a href="/#product">Keel</a>.</p>
       <p class="section__lede">The Gate checks the ticket, decision record and review that your agents produce in <a href="/build">Build</a>.</p>
+      <figure class="keel" data-keel data-keel-highlight="gate" aria-labelledby="gate-keel-cap">
+        <div class="keel__board">
+          <svg class="keel__svg" viewBox="0 0 400 320" aria-hidden="true" focusable="false">
+            <defs>
+              <marker id="gate-keel-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+              </marker>
+            </defs>
+            <path class="keel__link" data-path="feed-build" d="M 155 145 L 100 76"/>
+            <path class="keel__link" data-path="feed-gate" d="M 245 145 L 300 76"/>
+            <path class="keel__link" data-path="measure" d="M 200 195 L 200 250"/>
+            <path class="keel__flow" data-path="change" d="M 134 52 L 266 52" marker-end="url(#gate-keel-arrow)"/>
+            <path class="keel__flow keel__flow--miss" data-path="miss" d="M 321 76 C 355 130, 300 195, 240 170" marker-end="url(#gate-keel-arrow)"/>
+            <g class="keel__node keel__node--keel" data-node="keel">
+              <rect x="120" y="125" width="160" height="70" rx="8" ry="8"/>
+              <text class="keel__label" x="200" y="155" text-anchor="middle">Keel</text>
+              <text class="keel__sub" x="200" y="175" text-anchor="middle">your rules</text>
+            </g>
+            <g class="keel__node" data-node="build">
+              <rect x="24" y="28" width="110" height="48" rx="6" ry="6"/>
+              <text class="keel__label" x="79" y="58" text-anchor="middle">Build</text>
+            </g>
+            <g class="keel__node" data-node="gate">
+              <rect x="266" y="28" width="110" height="48" rx="6" ry="6"/>
+              <text class="keel__label" x="321" y="58" text-anchor="middle">Gate</text>
+              <text class="keel__flag keel__flag--block" x="360" y="42" text-anchor="middle">X</text>
+              <text class="keel__flag keel__flag--pass" x="360" y="42" text-anchor="middle">OK</text>
+            </g>
+            <g class="keel__node" data-node="readiness">
+              <rect x="130" y="250" width="140" height="48" rx="6" ry="6"/>
+              <text class="keel__label" x="200" y="280" text-anchor="middle">Readiness</text>
+            </g>
+            <circle class="keel__dot" r="7" cx="79" cy="52"/>
+          </svg>
+        </div>
+        <ol class="keel__steps">
+          <li class="keel__step keel__step--rule" data-step="rule"><p class="keel__name">Keel</p><p class="keel__rule">Every API endpoint checks who is calling.</p><p class="keel__text">A rule your team adds to the knowledge base, marked blocking.</p></li>
+          <li class="keel__step" data-step="build"><p class="keel__name">Build</p><p class="keel__text">Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.</p></li>
+          <li class="keel__step" data-step="gate"><p class="keel__name">Gate</p><p class="keel__text">Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.</p></li>
+          <li class="keel__step" data-step="readiness"><p class="keel__name">Readiness</p><p class="keel__text">The readiness audit fails when a user-facing app has no authentication. On me2resh/ddd-sam-example, the top action was: add authentication to all patient appointment APIs.</p></li>
+          <li class="keel__step" data-step="miss"><p class="keel__name">A miss becomes a rule</p><p class="keel__text">When a person finds a miss in review, /codify-rule turns the comment into a draft rule. You approve it before it is saved.</p></li>
+        </ol>
+        <p class="keel__tools"><button type="button" class="keel__pause" aria-pressed="false" hidden>Pause animation</button></p>
+        <figcaption class="visually-hidden" id="gate-keel-cap">Keel is in the centre, with Build, Gate and Readiness around it. A change goes from Build to the Gate. The Gate stops it. The miss becomes a new rule in Keel. The next change passes the Gate. Readiness measures each repository against the same rules.</figcaption>
+      </figure>
     </div>
   </section>
 
   <section class="section" aria-labelledby="plans-title">
-    <div class="wrap">
+    <div class="wrap plans-pointer">
       <h2 class="section__title" id="plans-title">Plans</h2>
-      <p class="section__lede">Start on GitHub at no cost. Grow into every repository you own.</p>
-      <div class="plans plans--4">
-        <article class="plan">
-          <h3 class="plan__name">Free</h3>
-          <p class="plan__for">For one developer who wants to try the check.</p>
-          <div class="plan__price"><p class="plan__amount">No cost</p></div>
-          <ul class="plan__points">
-            <li>The hosted check on every pull request, in warning mode</li>
-            <li>Sign in with GitHub</li>
-          </ul>
-          <div class="plan__action"><a class="btn btn--quiet" href="/waitlist?src=gate-free" data-signin="https://app.apexyard.ai/signin?src=gate-free" data-waitlist="/waitlist?src=gate-free">Join the waitlist</a></div>
-        </article>
-        <article class="plan">
-          <h3 class="plan__name">Startup</h3>
-          <p class="plan__for">For small teams that are getting started.</p>
-          <div class="plan__price"><p class="plan__amount"><!--{{STARTUP_PRICE}}-->From £00 a month <span class="price-flag">Placeholder price</span><!--/{{STARTUP_PRICE}}--></p></div>
-          <ul class="plan__points">
-            <li><!--{{STARTUP_LIMITS}}-->Up to N repositories<!--/{{STARTUP_LIMITS}}--></li>
-          </ul>
-          <div class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/demo?src=gate-startup" rel="noopener">Book a call to start</a></div>
-        </article>
-        <article class="plan plan--team">
-          <p class="plan__flag">Most teams start here</p>
-          <h3 class="plan__name">Team</h3>
-          <p class="plan__for">For engineering leads who must show who approved each change.</p>
-          <div class="plan__price"><p class="plan__amount"><!--{{TEAM_PRICE}}-->From £000 a month <span class="price-flag">Placeholder price</span><!--/{{TEAM_PRICE}}--></p>
-          <p class="plan__note"><!--{{TEAM_PRICE_NOTE}}-->Or £0,000 a year.<!--/{{TEAM_PRICE_NOTE}}--></p></div>
-          <ul class="plan__points">
-            <li><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->All repositories, up to N developers<!--/{{TEAM_REPO_LIMIT}}--></span></li>
-            <li><!--{{TEAM_SUPPORT}}-->Team support<!--/{{TEAM_SUPPORT}}--></li>
-          </ul>
-          <div class="plan__action"><a class="btn btn--primary" href="https://cal.com/apexyard/demo?src=gate-team" rel="noopener">Book a call to start</a></div>
-        </article>
-        <article class="plan">
-          <h3 class="plan__name">Enterprise</h3>
-          <p class="plan__for">For organisations with procurement and security reviews.</p>
-          <div class="plan__price"><p class="plan__amount">Custom</p></div>
-          <ul class="plan__points">
-            <li><!--{{ENTERPRISE_LIMITS}}-->Over N developers<!--/{{ENTERPRISE_LIMITS}}--></li>
-          </ul>
-          <div class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/demo?src=gate-enterprise" rel="noopener">Talk to us</a></div>
-        </article>
-      </div>
-      <p class="plans__fine">Free plan limit: <!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}-->.</p>
-      <p class="plans__cta"><a class="plans__link" href="/pricing#gate">Compare every plan</a></p>
+      <p class="section__lede">Build is free and open source. Every paid plan includes Build, Gate and Readiness. Plans differ by repositories, seats and evidence retention.</p>
+      <p class="plans__cta"><a class="plans__link" href="/pricing">See plans and pricing</a></p>
     </div>
   </section>
 
@@ -233,7 +235,7 @@
       <a href="/readiness">Readiness</a>
       <a href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
-      <a href="/architecture">Architecture</a>
+      <a href="/docs/quickstart/architecture">Architecture</a>
       <a href="/skills">Skills</a>
       <a href="/creators">Creators</a>
       <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">Changelog</a>
@@ -258,5 +260,6 @@
 
 <script src="/claims.js" defer></script>
 <script src="/product.js" defer></script>
+<script src="/keel-loop.js" defer></script>
 </body>
 </html>
