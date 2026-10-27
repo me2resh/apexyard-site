@@ -102,7 +102,6 @@ The App never reads your code. It has no Contents permission. From each pull req
 - Pull requests: read. Titles, descriptions, reviews and the list of changed files.
 - Checks: write. The App posts the ApexYard check on each pull request.
 - Metadata: read. Repository names, and who can write to each repository.
-- Members: read. The App confirms who can manage your organisation when you sign in.
 
 You can remove the App at any time.
 
@@ -159,7 +158,7 @@ Read the pricing page for the plans. This file gives no prices.
 # Docs, architecture and skills
 
 - Docs: https://apexyard.ai/docs. The install guide, the daily loop, the gates, hooks and rules.
-- Architecture: https://apexyard.ai/docs/quickstart/architecture. The five-layer model and the portfolio model.
+- Architecture: https://apexyard.ai/docs/quickstart/architecture. What runs on your machine, what is hosted, the data flow and the GitHub App permissions.
 - Skills: https://apexyard.ai/skills. The slash commands, grouped by outcome.
 
 ---

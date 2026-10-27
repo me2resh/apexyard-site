@@ -8,9 +8,9 @@
 window.APEXYARD_CLAIMS = {
   gate_all_repos: 'live',   // the gate on every repository of an organisation
   named_approval: 'live',   // a named approval on every merge
-  evidence_export: 'live',  // the evidence record for each merge, and its export
+  evidence_export: 'coming',  // the evidence record for each merge, and its export
   org_dashboard: 'live',    // the organisation view
-  kb_mcp: 'live',           // Keel, shared across the organisation over MCP
+  kb_mcp: 'coming',           // Keel, shared across the organisation over MCP
   keel_versions: 'live',    // Keel entries show owners and version history, over MCP and on the dashboard
   readiness_score: 'coming', // the readiness score for each repository; 'live' when it ships
   readiness_ci: 'coming',   // the audit in your own CI with your own model key; 'live' when it ships
