@@ -145,7 +145,7 @@
             <p>Hand over a repository you already have:</p>
             <ol class="steps-list">
               <li>Run <code>/handover</code> with a project name and the path or URL of the repository.</li>
-              <li>It clones the repository into the workspace folder of your ops repository.</li>
+              <li>It clones the repository into the workspace folder of your &lt;new-private-repo&gt; repository.</li>
               <li>It reads the code, finds the stack and scores how ready the code is for agents, in five areas.</li>
               <li>It writes a handover assessment: the current state, the risks and a plan.</li>
               <li>You choose the documents to make, such as architecture diagrams and an AGENTS.md file.</li>
@@ -157,8 +157,8 @@
             <div class="mock mock--term" aria-hidden="true">
               <div class="mock__bar"><span class="mock__title">Terminal</span></div>
               <pre>$ brew install me2resh/tap/apexyard
-$ apexyard init --org example-co --name ops --private
-$ cd ops
+$ apexyard init --org example-co --name &lt;new-private-repo&gt; --private
+$ cd &lt;new-private-repo&gt;
 &gt; /handover payments-api https://github.com/example-co/payments-api</pre>
             </div>
             <figcaption class="mock__caption"><span class="mock__tag">Example</span>Install, then hand over an existing repository.</figcaption>

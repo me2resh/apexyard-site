@@ -107,11 +107,6 @@ jobs:
           OVERLAY_JSON: ${{ secrets.STAGING_OVERLAY }}
         run: .github/scripts/apply-overlay.sh . "$RUNNER_TEMP/site"
 
-      - name: Write GitHub stars and forks for the home page
-        # #137. Public data, no token. If the read fails, the script writes
-        # no file and the home page hides the numbers (AgDR-0011).
-        run: .github/scripts/write-github-stats.sh "$RUNNER_TEMP/site/github-stats.json"
-
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:

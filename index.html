@@ -204,13 +204,15 @@
         <li><strong class="proof__figure">23</strong> agents</li>
         <li><strong class="proof__figure">66</strong> hooks</li>
       </ul>
-      <p class="proof__source">Counted in the framework release v5.10.1. <a href="https://github.com/me2resh/apexyard/releases/tag/v5.10.1">See the release</a>.</p>
-      <p class="proof__repo" data-gh-stats hidden><span data-gh-stars></span> stars and <span data-gh-forks></span> forks on <a href="https://github.com/me2resh/apexyard">me2resh/apexyard</a>, as of <span data-gh-asof></span>.</p>
+      <div class="proof__repo">
+        <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener"><img src="https://img.shields.io/github/stars/me2resh/apexyard?style=flat-square&amp;logo=github&amp;label=stars&amp;color=2F6DF6" alt="GitHub stars, live count" width="104" height="20" loading="lazy"></a>
+        <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener"><img src="https://img.shields.io/github/forks/me2resh/apexyard?style=flat-square&amp;logo=github&amp;label=forks&amp;color=2F6DF6" alt="GitHub forks, live count" width="102" height="20" loading="lazy"></a>
+      </div>
       <figure class="quote-slot" data-staging-only hidden aria-label="Customer story slot">
         <div class="quote-slot__body" aria-hidden="true"><span></span><span></span><span></span></div>
         <figcaption class="quote-slot__note"><span class="mock__tag">Preview</span> A slot for a customer story. It shows no quote until a customer approves one.</figcaption>
       </figure>
-      <p class="proof__access">It never reads your code. <a href="/gate#app-access">See what the GitHub App can see</a>.</p>
+      <p class="proof__access">Our servers never fetch your code. The GitHub App sees pull request titles, descriptions and changed file names, not the files. <a href="/gate#app-access">See what the GitHub App can see</a>.</p>
     </div>
   </section>
 
@@ -228,18 +230,16 @@
             <button type="button" class="tabs__tab" id="tab-npx" role="tab" aria-selected="false" aria-controls="panel-npx" tabindex="-1">npx</button>
           </div>
           <div class="tabs__panel" id="panel-brew" role="tabpanel" aria-labelledby="tab-brew" tabindex="0">
-            <p>Install the command line tool with Homebrew. Then create your ops repository.</p>
+            <p>Install the command line tool with Homebrew. Then create your &lt;new-private-repo&gt; repository.</p>
             <div class="cmd"><pre tabindex="0"><code id="cmd-brew">brew install me2resh/tap/apexyard
-apexyard init --org &lt;your-org&gt; --name ops --private</code></pre><button type="button" class="tabs__copy" data-copy-target="cmd-brew" aria-label="Copy the Homebrew commands">Copy commands</button></div>
+apexyard init --org &lt;your-org&gt; --name &lt;new-private-repo&gt; --private</code></pre><button type="button" class="tabs__copy" data-copy-target="cmd-brew" aria-label="Copy the Homebrew commands">Copy commands</button></div>
           </div>
           <div class="tabs__panel" id="panel-npx" role="tabpanel" aria-labelledby="tab-npx" tabindex="0">
-            <p>This installs the command line tool if it is not there, then creates your ops repository.</p>
-            <div class="cmd"><pre tabindex="0"><code id="cmd-npx">npx create-apexyard --org &lt;your-org&gt; --name ops --private</code></pre><button type="button" class="tabs__copy" data-copy-target="cmd-npx" aria-label="Copy the npx command">Copy commands</button></div>
+            <p>This installs the command line tool if it is not there, then creates your &lt;new-private-repo&gt; repository.</p>
+            <div class="cmd"><pre tabindex="0"><code id="cmd-npx">npx create-apexyard --org &lt;your-org&gt; --name &lt;new-private-repo&gt; --private</code></pre><button type="button" class="tabs__copy" data-copy-target="cmd-npx" aria-label="Copy the npx command">Copy commands</button></div>
           </div>
           <p class="tabs__status" id="tabs-status" aria-live="polite"></p>
         </div>
-        <p>You need git. <code>apexyard doctor</code> checks for jq and the GitHub CLI (gh) and tells you how to install what is missing.</p>
-        <p>Then open the new folder in your coding agent and run <code>/setup</code>. Works with Claude Code, Codex, Cursor, OpenCode, Pi and omp. On Windows, use Git Bash or WSL. <a href="/docs/quickstart/install">Read the install guide</a>.</p>
       </div>
     </div>
   </section>
