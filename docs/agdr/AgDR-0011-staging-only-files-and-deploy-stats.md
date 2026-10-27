@@ -34,6 +34,7 @@ Chosen: **A**.
 5. `.github/scripts/write-github-stats.sh` reads the public GitHub API (or a test input file) and writes dated stars and forks. A failed read writes no file.
 6. Production shows no stars until a later change adds the same stats step to the production deploy. Production shows no testimonial slot while it excludes `staging-only.js`.
 7. `shell-tests.yml` also runs on changes to `*.js`, `_redirects`, `docs-site/content-map.mjs` and `docs-site/astro.config.mjs`, because `.github/tests/test-staging-review.sh` reads them.
+8. `product.js` loads `staging-only.js` only on the staging host, so production pages never request it.
 
 ## Consequences
 

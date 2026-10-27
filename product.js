@@ -238,3 +238,13 @@
     document.head.appendChild(s);
   });
 })();
+
+// staging.apexyard.ai is SITE_DOMAIN in .github/workflows/deploy-staging-v2.yml; production excludes staging-only.js (AgDR-0011).
+(function () {
+  if (location.hostname === 'staging.apexyard.ai') {
+    var s = document.createElement('script');
+    s.src = '/staging-only.js';
+    s.defer = true;
+    document.head.appendChild(s);
+  }
+})();

@@ -357,6 +357,11 @@ one_table() {
   [ "$n" -eq 1 ]
 }
 assert "pricing.html holds one table" one_table
+assert "pricing.html evidence_export has data-claim-off" \
+  grep -Fq 'data-claim="evidence_export" data-claim-off=' "$root/pricing.html"
+assert "pricing.html kb_mcp has data-claim-off" \
+  grep -Fq 'data-claim="kb_mcp" data-claim-off=' "$root/pricing.html"
+
 
 no_old_tokens() {
   local f hits="" t

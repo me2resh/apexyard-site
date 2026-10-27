@@ -5,7 +5,7 @@ Four 1200×630 share-preview PNGs referenced from the `<meta property="og:image"
 | File | Page it backs | Purpose |
 |------|---------------|---------|
 | `index.png` | `index.html` | Hero banner — product name + tagline + the live component-count footer |
-| `architecture.png` | `architecture.html` | The 5-layer architecture model |
+| `architecture.png` | `architecture.html` | What runs where |
 | `skills.png` | `skills.html` | Skills-focused — a sample of slash commands + the skill count |
 | `game.png` | `game.html` ("You vs. the LLM") | The game intro — 11 topic chips + CTA |
 
