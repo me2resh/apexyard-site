@@ -7,6 +7,10 @@
 
 > In the context of the staging review, facing tracked files that must not reach production and home-page stats that must not be stale or invented, I decided to exclude named staging-only files from the production sync and return 404 for them on Netlify, and to write GitHub stars and forks at staging deploy time, to keep production free of review-only surfaces and to show dated public counts, accepting that production shows no stars until the same step is added there.
 
+## Update for GH-139
+
+The home page now uses live GitHub badge images. The deploy-time stats script, JSON fetch and tests are removed. This replaces the stats part of this decision. The staging-only file rules still apply.
+
 ## Context
 
 - The staging review needs a page of feature previews and a testimonial slot that production must not show.

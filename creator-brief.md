@@ -35,7 +35,7 @@ Example rule: "Every API endpoint checks who is calling." Your team adds it to t
 - Build runs on the developer's machine.
 - Gate checks each pull request on GitHub.
 - Gate checks for a ticket, a decision record, a review and a named approval.
-- The Gate GitHub App never reads your code. It has no Contents permission.
+- Our servers never fetch your code. The Gate GitHub App has no Contents permission. It sees pull request titles, descriptions and changed file names, not the files.
 - Gate blocks a merge only when the team makes the check required in GitHub.
 - Readiness gives a go or no-go for a repository, the gaps in each area and the top actions.
 - Readiness covers ten areas, from security to documentation.

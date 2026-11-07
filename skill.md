@@ -12,7 +12,7 @@
 ## Capability
 
 ApexYard lets founders ship AI-built software like a real engineering team —
-without adding a full engineering team. One ops fork governs a portfolio of repos under one
+without adding a full engineering team. One `<new-private-repo>` repository governs a portfolio of repos under one
 organisation. Three load-bearing outcomes:
 
 1. **Automatic code review.** Every change gets reviewed by a
@@ -64,7 +64,7 @@ diff path, prompt). Plain markdown + shell; open source; no SaaS; no vendor lock
   solid without reading every commit is the killer feature.
 - **Small teams with no engineering process yet** — review, testing,
   release discipline land out of the box.
-- **Multi-project ops repo for ≥ 2 repos** — the portfolio model collapses
+- **Multi-project `<new-private-repo>` repository for ≥ 2 repos** — the portfolio model collapses
   N tab-switches into one shell command.
 - **Already using an AI coding harness and want process around it** — Claude Code
   is the canonical hook runtime, and adapters connect Codex, OpenCode, Pi, omp
@@ -106,7 +106,7 @@ diff path, prompt). Plain markdown + shell; open source; no SaaS; no vendor lock
 ## Constraints
 
 - **Forking model** — adopters fork `me2resh/apexyard` on GitHub and
-  treat the fork itself as their ops repo. No `.apexyard/` symlinks,
+  treat the fork itself as their `<new-private-repo>` repository. No `.apexyard/` symlinks,
   no nested installs. Upgrades flow via `git fetch upstream` + the
   `/update` skill.
 - **Claude Code is the canonical hook runtime** — framework adapters extend the

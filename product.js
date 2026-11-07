@@ -1,4 +1,4 @@
-/* ApexYard product pages (#102): nav, GitHub stats from /github-stats.json, install tabs,
+/* ApexYard product pages (#102): nav, install tabs,
    copy buttons, claim state attributes, mail links, cookie consent, and redirects for the old
    home-page anchors that now live on /docs. No dependencies. */
 (function () {
@@ -99,45 +99,6 @@
         toggle.focus();
       }
     });
-  }
-
-  // Same-origin GitHub stats. On any failure the block stays hidden.
-  var ghStats = document.querySelectorAll('[data-gh-stats]');
-  if (ghStats.length && window.fetch) {
-    var months = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    fetch('/github-stats.json')
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (d) {
-        if (!d) return;
-        var stars = d.stars;
-        var forks = d.forks;
-        var asOf = d.asOf;
-        if (!Number.isFinite(stars) || stars < 0 || stars !== Math.floor(stars)) return;
-        if (!Number.isFinite(forks) || forks < 0 || forks !== Math.floor(forks)) return;
-        if (typeof asOf !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(asOf)) return;
-        var parts = asOf.split('-');
-        var y = +parts[0];
-        var m = +parts[1];
-        var day = +parts[2];
-        if (m < 1 || m > 12 || day < 1 || day > 31) return;
-        var dateText = day + ' ' + months[m - 1] + ' ' + y;
-        var starsText = stars.toLocaleString('en-GB');
-        var forksText = forks.toLocaleString('en-GB');
-        document.querySelectorAll('[data-gh-stars]').forEach(function (el) {
-          el.textContent = starsText;
-        });
-        document.querySelectorAll('[data-gh-forks]').forEach(function (el) {
-          el.textContent = forksText;
-        });
-        document.querySelectorAll('[data-gh-asof]').forEach(function (el) {
-          el.textContent = dateText;
-        });
-        ghStats.forEach(function (el) { el.removeAttribute('hidden'); });
-      })
-      .catch(function () {});
   }
 
   // Copy buttons.

@@ -543,6 +543,7 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 /* The Team card note sits above the button and reads stronger than the price note. */
 .plan__action .plan__note { margin: 0 0 0.75rem; color: var(--ink); font-weight: 600; }
 .plans__fine { margin-top: 1rem; font-size: 14px; color: var(--ink-2); }
+.fine-print__title { margin-top: 3rem; margin-bottom: 1rem; }
 @media (min-width: 700px) {
   .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; }
   .plan { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 0.9rem; }
@@ -907,7 +908,7 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
   font-size: 14px;
 }
 .price-table__table .btn { width: 100%; text-align: center; font-size: 15px; padding: 0.55rem 0.75rem; }
-.price-table__table .plan__note { margin: 0 0 0.75rem; color: var(--ink); font-weight: 600; font-size: 15px; }
+.price-table__table .plan__note { margin: 0.75rem 0 0; color: var(--ink); font-weight: 600; font-size: 15px; }
 
 /* ---------- Build feature lists and mocks ---------- */
 .sizes {
