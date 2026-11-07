@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  ApexYard, © 2026 me2resh
+  ApexYard, &copy; 2026 me2resh
   apexyard.ai, github.com/me2resh/apexyard, MIT licence
 -->
 <html lang="en">
@@ -31,11 +31,13 @@
 <meta name="twitter:description" content="Facts, links, logos, screenshots and a rule diagram for developers and bootcamp graduates who make videos or posts about ApexYard.">
 <meta name="twitter:image" content="https://apexyard.ai/og/index.png">
 <script>try{var t=localStorage.getItem('ay-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
-<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/plex-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/product.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,800&family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site.css">
 
-<!-- begin: gtag — keep in sync across all site/*.html pages (#399) -->
+<!-- begin: gtag  -  keep in sync across all site/*.html pages (#399) -->
 <!-- Google tag (gtag.js) with Consent Mode v2 - analytics_storage defaults to denied
      until the consent banner below records an explicit choice. -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-G3EMR3CB02"></script>
@@ -57,36 +59,21 @@
   gtag('config', 'G-G3EMR3CB02');
 </script>
 <!-- end: gtag -->
+<script>document.documentElement.classList.add("js")</script>
+<script src="/site.js" defer></script>
 </head>
 <body>
 
 <a href="#main" class="skip">Skip to content</a>
 
-<header class="site-header">
-  <div class="wrap site-header__bar">
-    <a href="/" class="brand"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" fill="#2D5BE3"/><text x="50" y="53" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="46" font-weight="700" letter-spacing="-4" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">AY</text></svg><span>ApexYard</span></a>
-    <button class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false" data-theme-toggle hidden>
-      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 2.75a7.25 7.25 0 0 1 0 14.5z" fill="currentColor"/></svg>
-    </button>
-    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
-      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
-    </button>
-    <nav class="site-nav" id="site-nav" aria-label="Primary">
-      <div class="site-nav__group">
-        <button class="site-nav__menu" type="button" aria-expanded="false" aria-controls="product-menu">Product</button>
-        <ul class="site-nav__sub" id="product-menu">
-          <li><a href="/build">Build</a></li>
-          <li><a href="/gate">Gate</a></li>
-          <li><a href="/readiness">Readiness</a></li>
-        </ul>
-      </div>
-      <a href="/pricing">Pricing</a>
-      <a href="/docs">Docs</a>
-      <div class="site-nav__right">
-        <a href="https://app.apexyard.ai" class="site-nav__login">Log in</a>
-        <a href="https://cal.com/apexyard/demo?src=nav" class="btn btn--primary btn--small" rel="noopener">Book a demo</a>
-      </div>
-    </nav>
+<header class="hdr">
+  <div class="hdr__bar">
+    <a href="/" class="brand" aria-label="ApexYard home"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" fill="#2F6DF6"/><text x="50" y="52" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="46" font-weight="700" letter-spacing="-4" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">AY</text></svg><span>ApexYard</span></a>
+    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="https://app.apexyard.ai" class="nav__login">Log in</a></nav>
+    <div class="hdr__keys">
+      <a class="key key--primary key--sm" href="https://cal.com/apexyard/demo?src=nav" rel="noopener"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <button class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false" data-theme-toggle hidden>Theme</button></div>
   </div>
 </header>
 
@@ -101,9 +88,10 @@
     </div>
   </section>
 
-  <section class="section section--flush" id="for" aria-labelledby="for-title">
+  <section class="section section--flush sec t-deep" id="for" aria-labelledby="for-title" data-side="l">
+<div class="rail" aria-hidden="true"></div>
     <div class="wrap creators-for">
-      <h2 class="section__title" id="for-title">Who this is for</h2>
+      <h2 class="section__title" id="for-title"><span class="stn" aria-hidden="true"></span>Who this is for</h2>
       <ul class="creators-for__list">
         <li><strong>Developers.</strong> You use coding agents. You show how a team's process keeps their work in check.</li>
         <li><strong>Bootcamp graduates.</strong> You are learning how real teams ship. You show what you learned with a tool that uses it.</li>
@@ -112,9 +100,10 @@
     </div>
   </section>
 
-  <section class="section section--tint" id="kit" aria-labelledby="kit-title">
+  <section class="section section--tint sec t-dark" id="kit" aria-labelledby="kit-title" data-side="r">
+<div class="join" aria-hidden="true"><i></i><i></i><i></i></div><div class="rail" aria-hidden="true"></div>
     <div class="wrap">
-      <h2 class="section__title" id="kit-title">The creator kit</h2>
+      <h2 class="section__title" id="kit-title"><span class="stn" aria-hidden="true"></span>The creator kit</h2>
       <p class="section__lede">A creator kit is the facts, links and files you need to make content. Use any part of it.</p>
 
       <div class="kit">
@@ -234,9 +223,10 @@
     </div>
   </section>
 
-  <section class="section" id="examples" aria-labelledby="examples-title">
+  <section class="section sec t-panel" id="examples" aria-labelledby="examples-title" data-side="l">
+<div class="join join--rl" aria-hidden="true"><i></i><i></i><i></i></div><div class="rail" aria-hidden="true"></div>
     <div class="wrap">
-      <h2 class="section__title" id="examples-title">Examples</h2>
+      <h2 class="section__title" id="examples-title"><span class="stn" aria-hidden="true"></span>Examples</h2>
       <div class="creators-empty">
         <p class="creators-empty__title">No examples yet.</p>
         <p>Videos and posts about ApexYard will appear here when they exist.</p>
@@ -247,9 +237,9 @@
 
 </main>
 
-<footer class="site-footer">
-  <div class="wrap site-footer__inner">
-    <nav aria-label="Footer">
+<footer class="site-footer ftr t-dark">
+  <div class="wrap site-footer__inner ftr__in">
+    <nav class="ftr__nav" aria-label="Footer">
       <a href="/build">Build</a>
       <a href="/gate">Gate</a>
       <a href="/readiness">Readiness</a>
@@ -261,7 +251,7 @@
       <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">Changelog</a>
       <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener">GitHub</a>
     </nav>
-    <p>© 2026 <a href="https://me2resh.com" target="_blank" rel="noopener">me2resh</a>. The ApexYard framework is open source under the MIT licence.</p>
+    <p>&copy; 2026 <a href="https://me2resh.com" target="_blank" rel="noopener">me2resh</a>. ApexScript. The ApexYard framework is open source under the MIT licence.</p>
   </div>
 </footer>
 

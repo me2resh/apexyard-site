@@ -3,7 +3,6 @@
  * Canonical source: apexyard design-system tokens.css [data-theme="light"]
  * Used by all four 1200x630 OG card templates.
  * ==================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
 :root {
   /* surfaces */

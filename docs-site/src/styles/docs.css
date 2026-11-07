@@ -501,3 +501,18 @@ site-search button[data-open-modal]:hover {
   white-space: nowrap;
   overflow-wrap: normal;
 }
+
+/* Interlock reading layout; navigation and counts still come from nav.json. */
+.ay-index { padding-inline-start: 0; border-inline-start: 0; border-top: 3px solid var(--ay-text); padding-top: 1.5rem; }
+.ay-index__head h2 { font-stretch: normal; font-size: 2.5rem; line-height: 1; }
+.ay-row { border-bottom: 2px solid var(--ay-rule); padding-block: 1.25rem; }
+.ay-row__title { font-family: var(--ay-font-display); font-size: 1.75rem; }
+.ay-row__icon { color: var(--ay-blue); }
+.ay-brand__name { font-family: Archivo, system-ui, sans-serif; }
+@media (max-width: 50rem) {
+  .ay-row a, .ay-home__more a, .ay-footer a { display: inline-flex; align-items: center; min-height: 44px; }
+  .ay-index__head { flex-wrap: wrap; }
+}
+
+.ay-index__head h2::before { content: ""; display: inline-block; width: .75rem; height: .75rem; border: 3px solid var(--ay-text); border-radius: 50%; margin-right: .75rem; }
+.ay-header { border-bottom: 3px solid var(--ay-text); }
