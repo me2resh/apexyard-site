@@ -33,7 +33,7 @@ const pages = (n: number) => `${n} ${n === 1 ? 'page' : 'pages'}`;
         <p class="ay-index__summary">{section.summary}</p>
         <ul class="ay-index__list dlist not-content">
           {section.groups.map((group) => (
-            <li class="ay-row dr" id={group.id}>
+            <li class="ay-row" id={group.id}>
               {/* nav.json is generated JSON, so its icon field is a plain string. content-map.mjs uses only Starlight icon names. */}
               <Icon name={group.icon as any} class="ay-row__icon" size="1.25rem" />
               <div class="ay-row__body dr__body">
