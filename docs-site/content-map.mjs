@@ -336,7 +336,7 @@ const learn = [
     id: 'portfolio',
     title: 'Portfolio',
     icon: 'list-format',
-    summary: 'Run many projects from one ops repository, in one shared or split layout.',
+    summary: 'Run many projects from one `<new-private-repo>` repository, in one shared or split layout.',
     pages: [
       {
         slug: 'portfolio/multi-project',
