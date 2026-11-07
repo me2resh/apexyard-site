@@ -62,6 +62,9 @@ export default defineConfig({
         MobileMenuFooter: './src/components/MobileMenuFooter.astro',
       },
       head: [
+        { tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' } },
+        { tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' } },
+        { tag: 'link', attrs: { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,800&family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@700&family=JetBrains+Mono:wght@400;500;700&display=swap' } },
         { tag: 'script', attrs: { src: '/copy-for-ai.js', defer: true } },
         { tag: 'meta', attrs: { name: 'theme-color', content: '#14213D' } },
       ],

@@ -25,18 +25,18 @@ const pages = (n: number) => `${n} ${n === 1 ? 'page' : 'pages'}`;
 
   {
     nav.sections.map((section) => (
-      <section class={`ay-index ay-index--${section.id}`} aria-labelledby={section.id}>
-        <div class="ay-index__head">
+      <section class={`ay-index dsec ay-index--${section.id}`} aria-labelledby={section.id}>
+        <div class="ay-index__head dsec__head">
           <h2 id={section.id}>{section.title}</h2>
           <p class="ay-index__count">{pages(section.count)}</p>
         </div>
         <p class="ay-index__summary">{section.summary}</p>
-        <ul class="ay-index__list not-content">
+        <ul class="ay-index__list dlist not-content">
           {section.groups.map((group) => (
             <li class="ay-row" id={group.id}>
               {/* nav.json is generated JSON, so its icon field is a plain string. content-map.mjs uses only Starlight icon names. */}
               <Icon name={group.icon as any} class="ay-row__icon" size="1.25rem" />
-              <div class="ay-row__body">
+              <div class="ay-row__body dr__body">
                 <h3 class="ay-row__title">
                   <a href={`/docs/${group.pages[0].slug}`}>{group.title}</a>
                 </h3>

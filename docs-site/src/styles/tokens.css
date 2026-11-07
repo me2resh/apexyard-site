@@ -10,21 +10,15 @@
  * token (4.5:1 minimum). tests/contrast.test.mjs checks every pair.
  */
 
-@import '@fontsource/ibm-plex-sans/latin-400.css';
-@import '@fontsource/ibm-plex-sans/latin-400-italic.css';
-@import '@fontsource/ibm-plex-sans/latin-600.css';
-@import '@fontsource/ibm-plex-mono/latin-400.css';
-@import '@fontsource/ibm-plex-mono/latin-600.css';
-@import '@fontsource-variable/archivo/wdth.css';
 
 :root {
   /* brand */
-  --ay-ink: #14213D;
-  --ay-paper: #EEF1F4;
+  --ay-ink: #1E2429;
+  --ay-paper: #E6E9EB;
   --ay-white: #FFFFFF;
-  --ay-blue: #2D5BE3;
+  --ay-blue: #2F6DF6;
   --ay-pass: #1F8A5B;
-  --ay-wait: #B7791F;
+  --ay-wait: #A96B18;
   --ay-block: #B4232C;
 
   /* roles in the light theme */
@@ -32,11 +26,11 @@
   --ay-surface: var(--ay-white);
   --ay-text: var(--ay-ink);
   --ay-text-muted: #4A5670;
-  --ay-link: var(--ay-blue);
-  --ay-rule: #CDD3DC;
+  --ay-link: #1B4FC4;
+  --ay-rule: #A8B0B7;
   --ay-rule-strong: #6F7B8F;
   --ay-focus: var(--ay-blue);
-  --ay-wait-text: #956214;
+  --ay-wait-text: #895910;
   --ay-note: var(--ay-ink);
   --ay-required: var(--ay-block);
   --ay-advisory: var(--ay-wait);
@@ -47,20 +41,20 @@
   --ay-tint-coming: #E3EAFB;
 
   /* type */
-  --ay-font-display: 'Archivo Variable', 'Archivo', 'Arial Narrow', system-ui, sans-serif;
-  --ay-font-text: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --ay-font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --ay-font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --ay-font-text: 'Barlow', system-ui, sans-serif;
+  --ay-font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --ay-measure: 70ch;
 }
 
 :root[data-theme='dark'] {
-  --ay-bg: #0F1B2E;
-  --ay-surface: #16243B;
+  --ay-bg: #1E2429;
+  --ay-surface: #2A3138;
   --ay-text: var(--ay-paper);
   --ay-text-muted: #A3AFC2;
   --ay-link: #8EA8F5;
   --ay-rule: #2A3A55;
-  --ay-rule-strong: #5E6E87;
+  --ay-rule-strong: #7C8DA4;
   --ay-focus: #8EA8F5;
   --ay-pass: #4CC38A;
   --ay-wait: #E3A542;

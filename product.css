@@ -528,9 +528,9 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
   margin-top: 2rem; display: grid; gap: 1px;
   background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
 }
-.plan { position: relative; display: flex; flex-direction: column; gap: 0.9rem; padding: 1.5rem 1.25rem; background: var(--surface); }
-.plan > * { min-width: 0; }
-.plan--team { border-top: 4px solid var(--ink); padding-top: 2.75rem; }
+.plans .plan { position: relative; display: flex; flex-direction: column; gap: 0.9rem; padding: 1.5rem 1.25rem; background: var(--surface); }
+.plans .plan > * { min-width: 0; }
+.plans .plan--team { border-top: 4px solid var(--ink); padding-top: 2.75rem; }
 .plan__flag { position: absolute; top: 0.6rem; left: 1.25rem; font: 600 14px/1.3 var(--text); color: var(--brand); }
 .plan__name { font: 760 1.3rem/1.3 var(--display); font-stretch: 108%; }
 .plan__for { color: var(--ink-2); font-size: 15px; }
@@ -546,7 +546,7 @@ code, pre { font-family: var(--mono); font-size: 0.88em; }
 .fine-print__title { margin-top: 3rem; margin-bottom: 1rem; }
 @media (min-width: 700px) {
   .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; }
-  .plan { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 0.9rem; }
+  .plans .plan { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 0.9rem; }
   /* Every card keeps room for the Team flag, so the names share one line. */
   .plans--4 .plan { padding-top: 2.75rem; }
   .plans--4 .plan--team { padding-top: calc(2.75rem - 4px); }

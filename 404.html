@@ -1,25 +1,21 @@
 <!doctype html>
 <!--
-  ApexYard · © 2026 me2resh
-  apexyard.ai · github.com/me2resh/apexyard · MIT
+  ApexYard &#183; &copy; 2026 me2resh
+  apexyard.ai &#183; github.com/me2resh/apexyard &#183; MIT
   Multi-project SDLC framework for Claude Code.
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>404 — page not found · ApexYard</title>
+<title>404  -  page not found &#183; ApexYard</title>
 <meta name="author" content="me2resh">
-<meta name="copyright" content="© 2026 ApexYard · MIT">
+<meta name="copyright" content="&copy; 2026 ApexYard &#183; MIT">
 <meta name="description" content="The page you were looking for doesn't exist. Try the homepage, quickstart, or any of the docs.">
 <meta name="robots" content="noindex, follow">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -138,7 +134,7 @@ footer {
 }
 footer a { color: var(--ink-soft); border-bottom: 1px dotted currentColor; }
 footer a:hover { color: var(--accent); border-bottom-color: var(--accent); }
-/* begin: consent-css — keep in sync across all site/*.html pages (#399) */
+/* begin: consent-css  -  keep in sync across all site/*.html pages (#399) */
 .consent {
   position: fixed;
   bottom: 0;
@@ -190,7 +186,7 @@ footer a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 /* end: consent-css */
 </style>
 
-<!-- begin: gtag — keep in sync across all site/*.html pages (#399) -->
+<!-- begin: gtag  -  keep in sync across all site/*.html pages (#399) -->
 <!-- Google tag (gtag.js) with Consent Mode v2 - analytics_storage defaults to denied
      until the consent banner below records an explicit choice. -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-G3EMR3CB02"></script>
@@ -212,12 +208,28 @@ footer a:hover { color: var(--accent); border-bottom-color: var(--accent); }
   gtag('config', 'G-G3EMR3CB02');
 </script>
 <!-- end: gtag -->
+<script>document.documentElement.classList.add("js")</script>
+<script src="/site.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,800&family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site.css">
 </head>
 <body>
+<header class="hdr">
+  <div class="hdr__bar">
+    <a href="/" class="brand" aria-label="ApexYard home"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" fill="#2F6DF6"/><text x="50" y="52" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="46" font-weight="700" letter-spacing="-4" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">AY</text></svg><span>ApexYard</span></a>
+    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="https://app.apexyard.ai" class="nav__login">Log in</a></nav>
+    <div class="hdr__keys">
+      <a class="key key--primary key--sm" href="https://cal.com/apexyard/demo?src=nav" rel="noopener"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <button class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false" data-theme-toggle hidden>Theme</button></div>
+  </div>
+</header>
 
-<div class="bar">~/<b>apexyard</b> <span style="color: var(--ink-faint);">· 404</span></div>
+<div class="bar">~/<b>apexyard</b> <span style="color: var(--ink-faint);">&#183; 404</span></div>
 
-<main>
+<main id="main" class="nf">
   <div class="box">
     <div class="code">404</div>
     <h1>Page not found</h1>
@@ -230,17 +242,34 @@ footer a:hover { color: var(--accent); border-bottom-color: var(--accent); }
       <a href="/#quickstart"><span class="label">quickstart</span><span class="desc">install and /setup in minutes</span></a>
       <a href="/docs/quickstart/architecture"><span class="label">architecture</span><span class="desc">what runs where</span></a>
       <a href="/skills"><span class="label">skills</span><span class="desc">69 active slash commands</span></a>
-      <a href="/game"><span class="label">play the game</span><span class="desc">You vs. the LLM — how well do you know AI?</span></a>
-      <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener"><span class="label">github ↗</span><span class="desc">source repo</span></a>
+      <a href="/game"><span class="label">play the game</span><span class="desc">You vs. the LLM  -  how well do you know AI?</span></a>
+      <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener"><span class="label">github &#8599;</span><span class="desc">source repo</span></a>
     </nav>
   </div>
 </main>
 
-<footer>
-  © 2026 <a href="https://me2resh.com" target="_blank" rel="noopener">me2resh</a> · ApexYard · open source · plain markdown · zero dependencies
+<footer class="site-footer ftr t-dark">
+  <div class="wrap site-footer__inner ftr__in">
+    <nav class="ftr__nav" aria-label="Footer">
+      <a href="/build">Build</a>
+      <a href="/gate">Gate</a>
+      <a href="/readiness">Readiness</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/docs">Docs</a>
+      <a href="/docs/quickstart/architecture">Architecture</a>
+      <a href="/skills">Skills</a>
+      <a href="/creators">Creators</a>
+      <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">Changelog</a>
+      <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <p>&copy; 2026 <a href="https://me2resh.com" target="_blank" rel="noopener">me2resh</a>. ApexScript Ltd. Company number: to follow. The ApexYard framework is open source under the MIT licence.</p>
+  </div>
 </footer>
+<div class="wrap legacy-legal">
+  &copy; 2026 <a href="https://me2resh.com" target="_blank" rel="noopener">me2resh</a> &#183; ApexYard &#183; open source &#183; plain markdown &#183; zero dependencies
+</div>
 
-<!-- begin: consent — keep in sync across all site/*.html pages (#399) -->
+<!-- begin: consent  -  keep in sync across all site/*.html pages (#399) -->
 <!-- ============================================================
      COOKIE CONSENT BANNER
      Hidden if a prior choice is stored. On Accept, updates gtag
@@ -293,5 +322,6 @@ footer a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 </script>
 <!-- end: consent -->
 
+<script src="/product.js" defer></script>
 </body>
 </html>
