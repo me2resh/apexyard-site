@@ -1045,6 +1045,8 @@ main { position: relative; }
 /* Below 1024 the plan turns on its side and the track swaps gutters to meet it. */
 @media (max-width: 1023px) {
   :root { --rail-x: 9px; }
+  /* The rail now sits 9px from the edge: the full label would hang off the page. */
+  .marker b { width: 12px; height: 28px; padding: 0; font-size: 0; }
   .sec[data-side="l"] > .rail { left: auto; right: var(--rail-x); }
   .sec[data-side="r"] > .rail { right: auto; left: var(--rail-x); }
   .sec[data-side="l"] .stn { left: auto; right: calc(var(--rail-x) + var(--t) / 2 - 8px); }
@@ -1100,8 +1102,6 @@ main { position: relative; }
   body { font-size: 1.03125rem; }
   .stn { width: 16px; height: 16px; border-width: 3px; margin-top: calc(.5em - 8px); }
   .join i:nth-child(odd) { flex-basis: var(--join-h); }
-
-  .marker b { width: 12px; height: 28px; padding: 0; font-size: 0; }
 
   .hdr__bar { gap: .5rem; padding-inline: 14px; justify-content: space-between; }
   .brand { font-size: 1.5rem; }
