@@ -28,6 +28,8 @@ if [ -z "${OVERLAY_JSON:-}" ]; then
   exit 2
 fi
 
+COMMON_WORDING_FILE="$(cd "$(dirname "$0")" && pwd)/overlay-common-wording.txt"
+export COMMON_WORDING_FILE
 python3 -I - "$site" "$@" <<'PY'
 import html
 import json
@@ -53,8 +55,14 @@ if not paths:
         if os.path.isfile(os.path.join(site, name)):
             paths.append("/" + name)
 
+# Keys whose values are plain plan wording (overlay-common-wording.txt) are
+# not matched: the same wording is public text, so a match proves nothing.
+with open(os.environ["COMMON_WORDING_FILE"], encoding="utf-8") as fh:
+    common = {ln.strip() for ln in fh if ln.strip() and not ln.startswith("#")}
 forms = []
 for key, value in overlay.items():
+    if key in common:
+        continue
     for form in {value, html.escape(value, quote=True)}:
         forms.append((key, form))
 

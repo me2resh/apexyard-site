@@ -44,6 +44,7 @@ Option A.
 ## Evolution
 
 - 2026-10-26: `mask()` emits `::add-mask::` only when `GITHUB_ACTIONS=true`. Reason: a local run printed overlay values in clear text via those lines; CI behaviour is unchanged. Covered by `.github/tests/test-mask-local.sh`.
+- 2026-11-09: `check-prod-overlay-free.sh` skips the keys in `.github/scripts/overlay-common-wording.txt` when it matches production pages, the same list as the private-terms check (AgDR-0006). Reason: those values are plain plan wording that public pages also carry, so a match proves no leak. Every other overlay value is still matched. Covered by `.github/tests/test-apply-overlay.sh`.
 
 ## Artifacts
 

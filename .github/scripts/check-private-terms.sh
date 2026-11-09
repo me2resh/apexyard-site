@@ -18,7 +18,8 @@
 #   PRIVATE_TERMS  newline-separated terms (the PRIVATE_TERMS repo secret).
 #                  Empty lines and lines that start with # are ignored.
 #   OVERLAY_JSON   the staging overlay (the STAGING_OVERLAY secret). Each
-#                  value is a term.
+#                  value is a term, except the keys listed in
+#                  overlay-common-wording.txt (masked, not matched; AgDR-0006).
 #
 # Matching is case-insensitive, on the raw term and its HTML-escaped form,
 # in every file that `git ls-files` lists. Binary files are skipped.
@@ -58,6 +59,8 @@ fi
 
 # Terms are read from the environment by python, never from a command line.
 # -I keeps python from importing anything from the repository.
+COMMON_WORDING_FILE="$(cd "$(dirname "$0")" && pwd)/overlay-common-wording.txt"
+export COMMON_WORDING_FILE
 python3 -I - "$repo" "$mode" <<'PY'
 import html
 import json
@@ -86,11 +89,6 @@ def mask(value):
 
 terms = []  # (label, term)
 
-# Overlay keys whose values are plain plan wording that also occurs in public
-# text, so matching them would fail every deploy. Their values are still masked
-# in the log; only the leak match skips them. Prices and every other key stay
-# checked. Add a key here only when its value is not private on its own.
-COMMON_WORDING = {"FP_API_FREE", "FP_CHECKS_FREE", "FP_CHECKS_STARTUP", "FP_KEEL_FREE"}
 
 for line in (os.environ.get("PRIVATE_TERMS") or "").splitlines():
     term = line.strip()
@@ -106,6 +104,15 @@ if raw:
         sys.exit(2)
     if not isinstance(overlay, dict):
         print("check-private-terms: OVERLAY_JSON must be a JSON object.", file=sys.stderr)
+        sys.exit(2)
+    # Overlay keys whose values are plain plan wording that also occurs in
+    # public text (overlay-common-wording.txt). Their values are still masked;
+    # only the leak match skips them. A missing list file fails the check.
+    try:
+        with open(os.environ["COMMON_WORDING_FILE"], encoding="utf-8") as fh:
+            COMMON_WORDING = {ln.strip() for ln in fh if ln.strip() and not ln.startswith("#")}
+    except OSError:
+        print("check-private-terms: overlay-common-wording.txt is missing.", file=sys.stderr)
         sys.exit(2)
     for key in sorted(overlay):
         value = overlay[key]
