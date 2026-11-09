@@ -1765,6 +1765,10 @@ main#main.nf { padding: 3rem var(--gutter); }
   border: 2px solid var(--line, currentColor); color: var(--fg, var(--ink));
 }
 .crew-intro-wrap .crew-intro { margin-bottom: 0; }
+/* In a feature list, an intro belongs to the feature after it: cancel most of
+   the list gap below it, and pull a leading intro up into the section padding. */
+.features > .crew-intro { margin-bottom: calc(1.5rem - clamp(3rem, 7vw, 5.5rem)); }
+.features > .crew-intro:first-child { margin-top: calc(1.5rem - var(--pad)); }
 .crew-intro img { width: 96px; height: 96px; border-radius: 50%; background: var(--crew-av); }
 .crew-intro__role { margin: 0; font: 600 .875rem/1.2 var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--sub, var(--ink-2)); }
 .crew-intro__name { margin: .15rem 0 0; font: 800 1.75rem/1 var(--display); }
