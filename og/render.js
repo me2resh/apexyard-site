@@ -22,8 +22,12 @@ const counts = {
   HOOKS: process.env.HOOKS || '0',
 };
 
+// The mark is the shared brand SVG (no text inside it). One source: ../brand/apexyard-mark.svg.
+const MARK = fs.readFileSync(path.join(__dirname, '..', 'brand', 'apexyard-mark.svg'), 'utf8')
+  .replace(/ role="img" aria-label="ApexYard"/, ' aria-hidden="true"').trim();
+
 (async () => {
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(process.env.OG_CHROME_CHANNEL ? { channel: process.env.OG_CHROME_CHANNEL } : {});
   const page = await browser.newPage({
     viewport: { width: 1200, height: 630 },
     deviceScaleFactor: 1,
@@ -34,6 +38,7 @@ const counts = {
   for (const card of CARDS) {
     const tplPath = path.join(TPL_DIR, `${card}.html`);
     let html = fs.readFileSync(tplPath, 'utf8');
+    html = html.replaceAll('{{MARK}}', MARK);
     for (const [k, v] of Object.entries(counts)) {
       html = html.replaceAll(`{{${k}}}`, v);
     }

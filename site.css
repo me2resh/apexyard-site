@@ -1723,7 +1723,7 @@ main#main.nf { padding: 3rem var(--gutter); }
 @keyframes gc-floor { 0% { opacity: 0; } 35% { opacity: 1; filter: brightness(1.5); } 100% { opacity: 1; filter: none; } }
 @keyframes gc-rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .is-playing { --gc-t0: .6s; --gc-step: .65s; }
-.is-playing .gc-row { animation: gc-row .35s ease-out both; animation-delay: calc(var(--gc-t0) + var(--i) * var(--gc-step)); }
+.is-playing .gc-av img { animation: gc-row .35s ease-out both; animation-delay: calc(var(--gc-t0) + var(--i) * var(--gc-step)); }
 .is-playing .gc-av::after { animation: gc-ring 1s ease-out both; animation-delay: calc(var(--gc-t0) + var(--i) * var(--gc-step)); }
 .is-playing .gc-state { animation: gc-state .3s cubic-bezier(.2, .8, .2, 1.2) both; animation-delay: calc(var(--gc-t0) + var(--i) * var(--gc-step) + .25s); }
 .is-playing .hero-crew__floor i:not(.idle) { animation: gc-floor .7s ease-out both; animation-delay: calc(var(--gc-t0) + var(--i) * var(--gc-step)); }
