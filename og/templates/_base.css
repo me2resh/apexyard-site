@@ -80,7 +80,8 @@ html, body { width: 1200px; height: 630px; }
   color: var(--muted);
   letter-spacing: 0.01em;
 }
-.eyebrow .brand { color: var(--ink); font-weight: 600; }
+.eyebrow .brand { color: var(--ink); font-weight: 600; display: inline-flex; align-items: center; gap: 12px; }
+.eyebrow .brand svg { width: 34px; height: 34px; flex: none; margin-block: -8px; }
 .eyebrow .brand .ay { color: var(--accent); }
 .eyebrow .right { color: var(--faint); }
 

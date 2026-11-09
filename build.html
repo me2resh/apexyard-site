@@ -32,9 +32,6 @@
 <meta name="twitter:image" content="https://apexyard.ai/og/index.png">
 <script>try{var t=localStorage.getItem('ay-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 <link rel="stylesheet" href="/product.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,800&family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/site.css">
 
 <!-- begin: gtag  -  keep in sync across all site/*.html pages (#399) -->
@@ -68,7 +65,7 @@
 
 <header class="hdr">
   <div class="hdr__bar">
-    <a href="/" class="brand" aria-label="ApexYard home"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" fill="#2F6DF6"/><text x="50" y="52" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="46" font-weight="700" letter-spacing="-4" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">AY</text></svg><span>ApexYard</span></a>
+    <a href="/" class="brand" aria-label="ApexYard home"><img class="brand__mark" src="/brand/apexyard-mark.svg" width="36" height="36" alt=""><span class="brand__word">ApexYard</span></a>
     <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build" aria-current="page">Build</a><a href="/gate">Gate</a><a href="/readiness">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="https://app.apexyard.ai" class="nav__login">Log in</a></nav>
     <div class="hdr__keys">
       <a class="key key--primary key--sm" href="https://cal.com/apexyard/demo?src=nav" rel="noopener"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
@@ -94,6 +91,10 @@
     <div class="wrap">
       <h2 class="visually-hidden" id="build-points">What Build does</h2>
       <div class="features">
+<div class="crew-intro">
+        <picture><source type="image/avif" srcset="/img/crew/pt-mariam-160.avif 160w, /img/crew/pt-mariam-320.avif 320w" sizes="96px"><source type="image/webp" srcset="/img/crew/pt-mariam-160.webp 160w, /img/crew/pt-mariam-320.webp 320w" sizes="96px"><img src="/img/crew/pt-mariam-320.png" srcset="/img/crew/pt-mariam-160.png 160w, /img/crew/pt-mariam-320.png 320w" sizes="96px" width="96" height="96" alt="Mariam, the planning agent. She owns the plan check." loading="lazy" decoding="async"></picture>
+        <div class="crew-intro__text"><p class="crew-intro__role">Plans and tickets</p><p class="crew-intro__name">Mariam</p><p class="crew-intro__line">Mariam plans the work. Each change starts from a ticket and a plan step.</p></div>
+      </div>
         <article class="feature">
           <div class="feature__text">
             <h3>From idea to tickets before any code</h3>
@@ -103,6 +104,10 @@
             <img src="/img/placeholder-build-flow.svg" width="1200" height="800" alt="Placeholder illustration of the flow from idea to spec, plan, tickets and code">
           </figure>
         </article>
+<div class="crew-intro">
+        <picture><source type="image/avif" srcset="/img/crew/pt-tariq-160.avif 160w, /img/crew/pt-tariq-320.avif 320w" sizes="96px"><source type="image/webp" srcset="/img/crew/pt-tariq-160.webp 160w, /img/crew/pt-tariq-320.webp 320w" sizes="96px"><img src="/img/crew/pt-tariq-320.png" srcset="/img/crew/pt-tariq-160.png 160w, /img/crew/pt-tariq-320.png 320w" sizes="96px" width="96" height="96" alt="Tariq, the design agent. He owns the design check." loading="lazy" decoding="async"></picture>
+        <div class="crew-intro__text"><p class="crew-intro__role">Design</p><p class="crew-intro__name">Tariq</p><p class="crew-intro__line">Tariq gives the architecture review on heavy changes.</p></div>
+      </div>
         <article class="feature">
           <div class="feature__text">
             <h3>Reviewers sized to the change</h3>
