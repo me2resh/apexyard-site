@@ -405,9 +405,11 @@ main {
 
 @media (max-width: 720px) {
   .skill {
-    grid-template-columns: 1fr;
+    /* minmax(0, 1fr): a long command or argument wraps instead of widening the page */
+    grid-template-columns: minmax(0, 1fr);
     gap: 0.4rem;
   }
+  .skill__name, .skill__desc { overflow-wrap: anywhere; }
 }
 
 /* closing CTA (let the skill-browser end with a fork action) */
