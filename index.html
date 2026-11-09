@@ -44,10 +44,8 @@
 }
 </script>
 <script>try{var t=localStorage.getItem('ay-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="preload" as="image" type="image/avif" imagesrcset="/img/crew/crew-768.avif 768w, /img/crew/crew-1152.avif 1152w, /img/crew/crew-1536.avif 1536w" imagesizes="(max-width: 899px) calc(100vw - 48px), 56vw" fetchpriority="high">
 <link rel="stylesheet" href="/product.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,800&family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/site.css">
 
 <!-- begin: gtag  -  keep in sync across all site/*.html pages (#399) -->
@@ -81,7 +79,7 @@
 
 <header class="hdr">
   <div class="hdr__bar">
-    <a href="/" class="brand" aria-label="ApexYard home"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" fill="#2F6DF6"/><text x="50" y="52" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="46" font-weight="700" letter-spacing="-4" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">AY</text></svg><span>ApexYard</span></a>
+    <a href="/" class="brand" aria-label="ApexYard home"><img class="brand__mark" src="/brand/apexyard-mark.svg" width="36" height="36" alt=""><span class="brand__word">ApexYard</span></a>
     <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="https://app.apexyard.ai" class="nav__login">Log in</a></nav>
     <div class="hdr__keys">
       <a class="key key--primary key--sm" href="https://cal.com/apexyard/demo?src=nav" rel="noopener"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
@@ -92,82 +90,68 @@
 
 <main id="main">
 
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="wrap hero__grid hero__top">
-      <div class="hero__head">
-        <p class="hero__risk">Can you prove a person approved each change your agents made?</p>
-        <h1 id="hero-title"><span>Your agents write the code.</span> <span>Your process decides what merges.</span></h1>
-      </div>
-      <div class="hero__text hero__side">
-        <p class="hero__sub">ApexYard gives your agents a team's process, then checks every pull request against it.</p>
+  <section class="hero hero--crew is-playing" id="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-crew">
+      <div class="hero-crew__copy">
+        <h1 id="hero-title">Your agents build. The gate decides what ships.</h1>
+        <p class="hero__sub hero-crew__ph"><span class="hero-crew__tag">Placeholder</span> Supporting line to come from the owner.</p>
         <div class="hero__actions">
           <a class="btn btn--primary" href="https://cal.com/apexyard/demo?src=hero" rel="noopener">Book a demo</a>
           <a class="btn btn--quiet" href="/waitlist?src=home-hero" data-signin="https://app.apexyard.ai/signin?src=home-hero" data-waitlist="/waitlist?src=home-hero">Join the waitlist</a>
         </div>
-        <p class="hero__hint"><!--{{PLAN_HINT}}-->Plan details to follow.<!--/{{PLAN_HINT}}--></p>
-        <p class="hero__works">Agent agnostic. Works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.</p>
       </div>
-      </div>
-<figure class="panel t-dark" data-interlock aria-labelledby="panel-cap">
-    <div class="panel__head">
-      <p class="panel__title">Add refund limits to the payments API</p>
-      <p class="panel__pr"><span class="mono">example-co/payments-api, pull request #214</span><span class="tag">Example</span></p>
-    </div>
-    <div class="plan">
-      <div class="plan__main" aria-hidden="true"><span class="plan__label mono">main</span></div>
-      <div class="plan__row">
-        <div class="plan__lead" aria-hidden="true"><i></i><b></b></div>
-        <h2 class="vh">Pull request 214, condition by condition</h2>
-        <ol class="plan__conds">
-          <li class="cond" data-cond="ticket" data-state="held">
-  <span class="cond__word" data-word>Missing</span>
-  <span class="cond__sig" aria-hidden="true"></span>
-  <span class="cond__route" aria-hidden="true"></span>
-  <h3 class="cond__name">Ticket linked</h3>
-  <p class="cond__rule">must pass</p>
-  <button type="button" class="key key--cond" data-press="0" aria-pressed="false" disabled><span class="lamp lamp--dark" aria-hidden="true"></span><span>Link the ticket</span></button>
-</li>
-          <li class="cond" data-cond="decision" data-state="warn">
-  <span class="cond__word" data-word>Not found</span>
-  <span class="cond__sig" aria-hidden="true"></span>
-  <span class="cond__route" aria-hidden="true"></span>
-  <h3 class="cond__name">Decision record</h3>
-  <p class="cond__rule">warns</p>
-  <button type="button" class="key key--cond" data-press="1" aria-pressed="false" disabled><span class="lamp lamp--dark" aria-hidden="true"></span><span>Add the record</span></button>
-</li>
-          <li class="cond" data-cond="review" data-state="warn">
-  <span class="cond__word" data-word>Not recorded</span>
-  <span class="cond__sig" aria-hidden="true"></span>
-  <span class="cond__route" aria-hidden="true"></span>
-  <h3 class="cond__name">Review</h3>
-  <p class="cond__rule">warns</p>
-  <button type="button" class="key key--cond" data-press="2" aria-pressed="false" disabled><span class="lamp lamp--dark" aria-hidden="true"></span><span>Record the review</span></button>
-</li>
-          <li class="cond" data-cond="named" data-state="wait">
-  <span class="cond__word" data-word>Waiting</span>
-  <span class="cond__sig" aria-hidden="true"></span>
-  <span class="cond__route" aria-hidden="true"></span>
-  <h3 class="cond__name">Named approval</h3>
-  <p class="cond__rule">must pass</p>
-  <button type="button" class="key key--cond" data-press="3" aria-pressed="false" disabled><span class="lamp lamp--named" aria-hidden="true"></span><span>Approve as Dana Reyes</span></button>
-</li>
-        </ol>
-        <div class="plan__jn">
-          <div class="jn" aria-hidden="true"><span class="jn__sig"></span><i class="jn__blade"></i><i class="jn__stop"></i></div>
-          <h3 class="route" data-route="held"><span data-route-word>Merge blocked</span></h3>
-          <button type="button" class="key key--reset" data-reset hidden><span class="lamp lamp--dark" aria-hidden="true"></span><span>Reset the panel</span></button>
+
+      <figure class="hero-crew__art">
+        <div class="hero-crew__floor" aria-hidden="true"><i style="--i:0;--fx:12.6"></i><i style="--i:1;--fx:27.5"></i><i style="--i:2;--fx:41.8"></i><i style="--i:3;--fx:57"></i><i style="--i:4;--fx:71.5"></i><i class="idle" style="--fx:88.5"></i></div>
+        <picture><source type="image/avif" srcset="/img/crew/crew-768.avif 768w, /img/crew/crew-1152.avif 1152w, /img/crew/crew-1536.avif 1536w" sizes="(max-width: 899px) calc(100vw - 48px), 56vw"><source type="image/webp" srcset="/img/crew/crew-768.webp 768w, /img/crew/crew-1152.webp 1152w, /img/crew/crew-1536.webp 1536w" sizes="(max-width: 899px) calc(100vw - 48px), 56vw"><img src="/img/crew/crew-1536.png" srcset="/img/crew/crew-768.png 768w, /img/crew/crew-1152.png 1152w, /img/crew/crew-1536.png 1536w" sizes="(max-width: 899px) calc(100vw - 48px), 56vw" width="1536" height="1024" fetchpriority="high" decoding="async" alt="The ApexYard crew stand in a row. From left: Mariam, the planning agent, who holds a plan; Tariq, the design agent, with a stylus and a tablet; Rex, the review agent, a robot dog; Hakim, the security agent, who holds a key of light; the Founder, the person who approves each merge, with arms folded; and Spark, a small round guide who helps you start."></picture>
+      </figure>
+
+      <section class="gate-card" aria-labelledby="gc-title">
+        <div class="gc-head">
+          <h2 class="gc-pr" id="gc-title">Pull request <a href="https://github.com/me2resh/apexyard/pull/1925">me2resh/apexyard#1925</a></h2>
+          <p class="gc-title">feat(#1919): self-contained HTML diagram view, step 2 of 3</p>
         </div>
-      </div>
-      <div class="panel__foot">
-        <p class="panel__msg" role="status" data-msg>No ticket is linked, so the route stays held.</p>
-        <p class="panel__fine">A team setup: ticket and named approval must pass. Agent agnostic. Works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.</p>
-      </div>
-      <div class="plan__exit" aria-hidden="true"></div>
+        <ol class="gc-rows">
+          <li class="gc-row" style="--i:0">
+            <span class="gc-av"><picture><source type="image/avif" srcset="/img/crew/av-mariam-48.avif 48w, /img/crew/av-mariam-96.avif 96w" sizes="44px"><source type="image/webp" srcset="/img/crew/av-mariam-48.webp 48w, /img/crew/av-mariam-96.webp 96w" sizes="44px"><img src="/img/crew/av-mariam-96.png" srcset="/img/crew/av-mariam-48.png 48w, /img/crew/av-mariam-96.png 96w" sizes="44px" width="44" height="44" alt="" decoding="async"></picture></span>
+            <span class="gc-step"><b>Plan</b><span>Mariam</span></span>
+            <a class="gc-fact" href="https://github.com/me2resh/apexyard/issues/1919">#1919, steps 4 and 5</a>
+            <span class="gc-state"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="8" fill="currentColor"/><path d="M4.6 8.2l2.2 2.2 4.6-4.8" fill="none" stroke="var(--gc-tick)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Passed</span>
+          </li>
+          <li class="gc-row" style="--i:1">
+            <span class="gc-av"><picture><source type="image/avif" srcset="/img/crew/av-tariq-48.avif 48w, /img/crew/av-tariq-96.avif 96w" sizes="44px"><source type="image/webp" srcset="/img/crew/av-tariq-48.webp 48w, /img/crew/av-tariq-96.webp 96w" sizes="44px"><img src="/img/crew/av-tariq-96.png" srcset="/img/crew/av-tariq-48.png 48w, /img/crew/av-tariq-96.png 96w" sizes="44px" width="44" height="44" alt="" decoding="async"></picture></span>
+            <span class="gc-step"><b>Design</b><span>Tariq</span></span>
+            <a class="gc-fact" href="https://github.com/me2resh/apexyard/pull/1923">Tariq approved the plan</a>
+            <span class="gc-state"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="8" fill="currentColor"/><path d="M4.6 8.2l2.2 2.2 4.6-4.8" fill="none" stroke="var(--gc-tick)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Passed</span>
+          </li>
+          <li class="gc-row" style="--i:2">
+            <span class="gc-av"><picture><source type="image/avif" srcset="/img/crew/av-rex-48.avif 48w, /img/crew/av-rex-96.avif 96w" sizes="44px"><source type="image/webp" srcset="/img/crew/av-rex-48.webp 48w, /img/crew/av-rex-96.webp 96w" sizes="44px"><img src="/img/crew/av-rex-96.png" srcset="/img/crew/av-rex-48.png 48w, /img/crew/av-rex-96.png 96w" sizes="44px" width="44" height="44" alt="" decoding="async"></picture></span>
+            <span class="gc-step"><b>Review</b><span>Rex</span></span>
+            <a class="gc-fact" href="https://github.com/me2resh/apexyard/pull/1925">Rex approved <code>ecb2e07</code></a>
+            <span class="gc-state"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="8" fill="currentColor"/><path d="M4.6 8.2l2.2 2.2 4.6-4.8" fill="none" stroke="var(--gc-tick)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Passed</span>
+          </li>
+          <li class="gc-row" style="--i:3">
+            <span class="gc-av"><picture><source type="image/avif" srcset="/img/crew/av-hakim-48.avif 48w, /img/crew/av-hakim-96.avif 96w" sizes="44px"><source type="image/webp" srcset="/img/crew/av-hakim-48.webp 48w, /img/crew/av-hakim-96.webp 96w" sizes="44px"><img src="/img/crew/av-hakim-96.png" srcset="/img/crew/av-hakim-48.png 48w, /img/crew/av-hakim-96.png 96w" sizes="44px" width="44" height="44" alt="" decoding="async"></picture></span>
+            <span class="gc-step"><b>Security</b><span>Hakim</span></span>
+            <a class="gc-fact" href="https://github.com/me2resh/apexyard/pull/1925">Hakim approved <code>ecb2e07</code></a>
+            <span class="gc-state"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="8" fill="currentColor"/><path d="M4.6 8.2l2.2 2.2 4.6-4.8" fill="none" stroke="var(--gc-tick)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Passed</span>
+          </li>
+          <li class="gc-row gc-row--approved" style="--i:4">
+            <span class="gc-av"><picture><source type="image/avif" srcset="/img/crew/av-founder-48.avif 48w, /img/crew/av-founder-96.avif 96w" sizes="44px"><source type="image/webp" srcset="/img/crew/av-founder-48.webp 48w, /img/crew/av-founder-96.webp 96w" sizes="44px"><img src="/img/crew/av-founder-96.png" srcset="/img/crew/av-founder-48.png 48w, /img/crew/av-founder-96.png 96w" sizes="44px" width="44" height="44" alt="" decoding="async"></picture></span>
+            <span class="gc-step"><b>Approval</b><span>The Founder</span></span>
+            <a class="gc-fact" href="https://github.com/me2resh/apexyard/pull/1925">@me2resh approved <code>252a28d</code></a>
+            <span class="gc-state"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="8" fill="currentColor"/><path d="M4.6 8.2l2.2 2.2 4.6-4.8" fill="none" stroke="var(--gc-tick)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Approved</span>
+          </li>
+        </ol>
+        <div class="gc-foot">
+          <a class="gc-merged" href="https://github.com/me2resh/apexyard/commit/fd1b5057e7491423bd272d03dc07e8c1945dc3fb"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="4" cy="3.5" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="4" cy="12.5" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="8" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 5.5v5M4 5.5c0 2.5 2 2.5 6 2.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Merged &middot; <code>fd1b505</code></span></a>
+          <button class="gc-replay" type="button" data-replay hidden>Replay</button>
+        </div>
+      </section>
     </div>
-    <p class="vh" id="panel-cap">Example pull request 214, "Add refund limits to the payments API", in the fictional repository example-co/payments-api. This is a team setup with four steps. Ticket linked and named approval must pass; decision record and review give a warning. The first run blocked the merge because no ticket was linked, and it warned that the decision record and the review were missing. After a new commit, all four steps passed. Approved by Dana Reyes at 14:32 UTC, at commit 3f9c2a1. The pull request is ready to merge.</p>
-    <noscript><p class="panel__nojs">The first run blocked the merge. After a new commit, all four steps passed. Approved by Dana Reyes, 14:32 UTC, at commit <code>3f9c2a1</code>. Ready to merge.</p></noscript>
-  <figcaption class="ledger__caption"><span class="visually-hidden">Example pull request 214, &ldquo;Add refund limits to the payments API&rdquo;, in the fictional repository example-co/payments-api. This is a team setup with four steps. Ticket linked and named approval must pass; decision record and review give a warning. The first run blocked the merge because no ticket was linked, and it warned that the decision record and the review were missing. After a new commit, all four steps passed. Approved by Dana Reyes at 14:32 UTC, at commit 3f9c2a1. The pull request is ready to merge. </span>A team setup: ticket and named approval must pass.</figcaption></figure>
-<div class="wrap hero__end">
+    <div class="wrap hero-crew__fine">
+      <p class="hero__hint"><!--{{PLAN_HINT}}-->Plan details to follow.<!--/{{PLAN_HINT}}--></p>
+      <p class="hero__works">Agent agnostic. Works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.</p>
     </div>
   </section>
 
@@ -251,6 +235,12 @@
 
   <section class="section sec t-panel" id="open-source" aria-labelledby="oss-title" data-side="l">
 <div class="join join--rl" aria-hidden="true"><i></i><i></i><i></i></div><div class="rail" aria-hidden="true"></div>
+<div class="wrap crew-intro-wrap">
+      <div class="crew-intro">
+        <picture><source type="image/avif" srcset="/img/crew/pt-spark-160.avif 160w, /img/crew/pt-spark-320.avif 320w" sizes="96px"><source type="image/webp" srcset="/img/crew/pt-spark-160.webp 160w, /img/crew/pt-spark-320.webp 320w" sizes="96px"><img src="/img/crew/pt-spark-320.png" srcset="/img/crew/pt-spark-160.png 160w, /img/crew/pt-spark-320.png 320w" sizes="96px" width="96" height="96" alt="Spark, the guide who helps you get started and find help." loading="lazy" decoding="async"></picture>
+        <div class="crew-intro__text"><p class="crew-intro__role">Getting started and help</p><p class="crew-intro__name">Spark</p><p class="crew-intro__line">Spark helps you install ApexYard and start your first ticket.</p></div>
+      </div>
+    </div>
     <div class="wrap oss">
       <div class="oss__text">
         <h2 class="section__title" id="oss-title"><span class="stn" aria-hidden="true"></span>Install Build</h2>
@@ -330,5 +320,6 @@ apexyard init --org &lt;your-org&gt; --name &lt;new-private-repo&gt; --private</
 <script src="/claims.js" defer></script>
 <script src="/product.js" defer></script>
 <script src="/keel-loop.js" defer></script>
+<script src="/crew-hero.js" defer></script>
 </body>
 </html>

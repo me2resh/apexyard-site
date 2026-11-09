@@ -1,9 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512">
-  <!-- ApexYard favicon — Swiss Graphite AY monogram (Direction A).
-       Tokens: white #FFFFFF on accent blue #2F6DF6. Sharp corners. -->
-  <rect width="100" height="100" fill="#2F6DF6"/>
-  <text x="50" y="52"
-        font-family="'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace"
-        font-size="46" font-weight="700" letter-spacing="-4"
-        fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">AY</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><style>@media (prefers-color-scheme: dark){.b{fill:#5B8CFF}}</style><path class="b" d="M32 4 L62 58 L46 58 L32 32 L18 58 L2 58 Z" fill="#2F6DF6"/><path d="M24.6 50 L39.4 50 L42.6 58 L21.4 58 Z" fill="#F5821F"/></svg>

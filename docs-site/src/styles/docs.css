@@ -1,3 +1,18 @@
+/* Self-hosted fonts (latin subsets, OFL 1.1, licences in /fonts). No page loads a font from a public font host. */
+@font-face { font-family: 'Barlow Condensed'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/barlow-condensed-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow Condensed'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/barlow-condensed-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow Condensed'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/barlow-condensed-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow Condensed'; font-style: normal; font-weight: 800; font-display: swap; src: url('/fonts/barlow-condensed-latin-800-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow Condensed'; font-style: normal; font-weight: 900; font-display: swap; src: url('/fonts/barlow-condensed-latin-900-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/barlow-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/barlow-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/barlow-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/barlow-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/jetbrains-mono-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Archivo'; font-style: normal; font-weight: 600 900; font-stretch: 100% 125%; font-display: swap; src: url('/fonts/archivo-latin.woff2') format('woff2'); }
+
 /*
  * ApexYard docs components. One class per block, low specificity, no
  * !important. Tokens live in tokens.css.
@@ -508,7 +523,7 @@ site-search button[data-open-modal]:hover {
 .ay-row { border-bottom: 2px solid var(--ay-rule); padding-block: 1.25rem; }
 .ay-row__title { font-family: var(--ay-font-display); font-size: 1.75rem; }
 .ay-row__icon { color: var(--ay-blue); }
-.ay-brand__name { font-family: Archivo, system-ui, sans-serif; }
+.ay-brand__name { font-family: var(--ay-font-display); font-weight: 800; font-stretch: normal; font-size: 1.5rem; }
 @media (max-width: 50rem) {
   .ay-row a, .ay-home__more a, .ay-footer a { display: inline-flex; align-items: center; min-height: 44px; }
   .ay-index__head { flex-wrap: wrap; }
