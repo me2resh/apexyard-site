@@ -86,6 +86,12 @@ def mask(value):
 
 terms = []  # (label, term)
 
+# Overlay keys whose values are plain plan wording that also occurs in public
+# text, so matching them would fail every deploy. Their values are still masked
+# in the log; only the leak match skips them. Prices and every other key stay
+# checked. Add a key here only when its value is not private on its own.
+COMMON_WORDING = {"FP_API_FREE", "FP_CHECKS_FREE", "FP_CHECKS_STARTUP", "FP_KEEL_FREE"}
+
 for line in (os.environ.get("PRIVATE_TERMS") or "").splitlines():
     term = line.strip()
     if term and not term.startswith("#"):
@@ -105,6 +111,8 @@ if raw:
         value = overlay[key]
         if isinstance(value, str) and value.strip():
             mask(value)
+            if key in COMMON_WORDING:
+                continue
             terms.append((f"overlay {key}" if key.replace("_", "").isalnum() else f"term {len(terms) + 1}", value.strip()))
 
 if not terms:

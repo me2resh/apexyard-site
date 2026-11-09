@@ -88,6 +88,19 @@ assert "each line of the value is masked on its own"      bash -c "grep -qx '::a
 assert "no line of the value appears unmasked"            bash -c "! grep -v '^::add-mask::' <<<\"\$1\" | grep -qiE 'crimson|velvet|amber'" _ "$out"
 assert "every output line with the value is a mask"       bash -c "! grep -iE 'crimson|velvet' <<<\"\$1\" | grep -qv '^::add-mask::'" _ "$out"
 
+# --- a common-wording overlay key is masked but not matched ---
+mkrepo "$tmp/cw"
+printf 'Included\n' > "$tmp/cw/page.md"
+git -C "$tmp/cw" add page.md
+run "$tmp/cw" OVERLAY_JSON='{"FP_CHECKS_FREE":"Included","FAKE_TOKEN":"Sapphire ledger plan"}'
+assert "a common-wording key does not fail the check"     test "$rc" -eq 0
+assert "a common-wording value is still masked"           grep -qx '::add-mask::Included' <<<"$out"
+assert "other overlay keys are still matched"             grep -q 'check-private-terms: 1 term(s), 2 file(s), 0 hit(s)' <<<"$out"
+printf 'Sapphire ledger plan\n' >> "$tmp/cw/page.md"
+git -C "$tmp/cw" add page.md
+run "$tmp/cw" OVERLAY_JSON='{"FP_CHECKS_FREE":"Included","FAKE_TOKEN":"Sapphire ledger plan"}'
+assert "a private key in the same overlay still fails"   test "$rc" -eq 1
+
 run "$tmp/ov" OVERLAY_JSON='not json'
 assert "a malformed overlay exits 2"                      test "$rc" -eq 2
 
