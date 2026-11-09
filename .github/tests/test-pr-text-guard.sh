@@ -18,7 +18,8 @@ assert() { local n="$1"; shift; if "$@"; then ok "$n"; else bad "$n"; fi; }
 # A repo that holds the guard scripts and the hooks, plus a base commit.
 repo="$tmp/repo"
 mkdir -p "$repo/.github/scripts"
-cp "$root/.github/scripts/check-private-terms.sh" "$root/.github/scripts/check-pr-text.sh" "$repo/.github/scripts/"
+cp "$root/.github/scripts/check-private-terms.sh" "$root/.github/scripts/check-pr-text.sh" \
+  "$root/.github/scripts/overlay-common-wording.txt" "$repo/.github/scripts/"
 cp -R "$root/.githooks" "$repo/.githooks"
 git -C "$repo" init -q
 git -C "$repo" config user.email t@example.invalid
