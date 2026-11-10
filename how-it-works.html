@@ -905,10 +905,19 @@ main { background: var(--paper); }
   function record(choice) {
     if (el.hidden) return;
     try { localStorage.setItem(KEY, choice); } catch (e) {}
-    if (choice === 'granted' && typeof window.ayLoadAnalytics === 'function') {
-      window.ayLoadAnalytics();
-    } else if (choice === 'denied' && window.ayAnalyticsLoaded) {
-      gtag('consent', 'update', { 'analytics_storage': 'denied' });
+    // ga-disable stops a loaded tag from sending anything after Decline (#154).
+    if (choice === 'granted') {
+      window['ga-disable-G-G3EMR3CB02'] = false;
+      if (window.ayAnalyticsLoaded) {
+        gtag('consent', 'update', { 'analytics_storage': 'granted' });
+      } else if (typeof window.ayLoadAnalytics === 'function') {
+        window.ayLoadAnalytics();
+      }
+    } else if (choice === 'denied') {
+      window['ga-disable-G-G3EMR3CB02'] = true;
+      if (window.ayAnalyticsLoaded) {
+        gtag('consent', 'update', { 'analytics_storage': 'denied' });
+      }
     }
     el.hidden = true;
   }

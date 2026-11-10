@@ -172,6 +172,7 @@
 
   // Cookie consent (same contract as the other pages, #399).
   var KEY = 'ay-consent';
+  var GA_OFF = 'ga-disable-G-G3EMR3CB02';
   var banner = document.getElementById('consent');
   if (banner) {
     var stored = null;
@@ -180,11 +181,18 @@
     var record = function (choice) {
       if (banner.hidden) return;
       try { localStorage.setItem(KEY, choice); } catch (e) {}
-      if (choice === 'granted' && typeof window.ayLoadAnalytics === 'function') {
-        window.ayLoadAnalytics();
-      } else if (choice === 'denied' && analyticsOn()) {
-        // A loaded tag cannot be unloaded. Turn analytics storage off.
-        window.gtag('consent', 'update', { analytics_storage: 'denied' });
+      // ga-disable stops a loaded tag from sending anything after Decline.
+      if (choice === 'granted') {
+        window[GA_OFF] = false;
+        if (analyticsOn()) {
+          window.gtag('consent', 'update', { analytics_storage: 'granted' });
+        } else if (typeof window.ayLoadAnalytics === 'function') {
+          window.ayLoadAnalytics();
+        }
+      } else if (choice === 'denied') {
+        // A loaded tag cannot be unloaded. Stop it and turn analytics storage off.
+        window[GA_OFF] = true;
+        if (analyticsOn()) window.gtag('consent', 'update', { analytics_storage: 'denied' });
       }
       banner.hidden = true;
     };
@@ -202,6 +210,7 @@
       btn.hidden = false;
       btn.addEventListener('click', function () {
         try { localStorage.removeItem(KEY); } catch (e) {}
+        window[GA_OFF] = true;
         if (analyticsOn()) {
           window.gtag('consent', 'update', { analytics_storage: 'denied' });
         }

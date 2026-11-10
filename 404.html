@@ -303,10 +303,19 @@ footer a:hover { color: var(--accent); border-bottom-color: var(--accent); }
   function record(choice) {
     if (el.hidden) return;
     try { localStorage.setItem(KEY, choice); } catch (e) {}
-    if (choice === 'granted' && typeof window.ayLoadAnalytics === 'function') {
-      window.ayLoadAnalytics();
-    } else if (choice === 'denied' && window.ayAnalyticsLoaded) {
-      gtag('consent', 'update', { 'analytics_storage': 'denied' });
+    // ga-disable stops a loaded tag from sending anything after Decline (#154).
+    if (choice === 'granted') {
+      window['ga-disable-G-G3EMR3CB02'] = false;
+      if (window.ayAnalyticsLoaded) {
+        gtag('consent', 'update', { 'analytics_storage': 'granted' });
+      } else if (typeof window.ayLoadAnalytics === 'function') {
+        window.ayLoadAnalytics();
+      }
+    } else if (choice === 'denied') {
+      window['ga-disable-G-G3EMR3CB02'] = true;
+      if (window.ayAnalyticsLoaded) {
+        gtag('consent', 'update', { 'analytics_storage': 'denied' });
+      }
     }
     el.hidden = true;
   }
@@ -316,7 +325,7 @@ footer a:hover { color: var(--accent); border-bottom-color: var(--accent); }
     record(btn.getAttribute('data-consent'));
   });
   // Escape dismisses the banner as "denied" - keyboard users without
-  // a mouse shouldn't be stuck with a fixed-bottom banner they can't
+  // a mouse shouldn't be stuck with a fixed-bottom banner they cannot
   // dismiss. "Denied" is the non-consenting default per Consent Mode v2.
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !el.hidden) {

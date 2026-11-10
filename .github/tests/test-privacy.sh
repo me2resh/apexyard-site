@@ -186,6 +186,35 @@ inline_consent_uses_loader() {
 }
 assert "inline consent scripts call the loader on Accept" inline_consent_uses_loader
 
+# A loaded tag cannot be unloaded, so Decline and reopen set Google's
+# disable flag. That stops the collect request when the page closes.
+product_decline_disables() {
+  grep -Fq "var GA_OFF = 'ga-disable-G-G3EMR3CB02';" "$root/product.js" \
+    && grep -F -A3 "} else if (choice === 'denied') {" "$root/product.js" | grep -Fq 'window[GA_OFF] = true;'
+}
+assert "product.js sets ga-disable on Decline" product_decline_disables
+assert "product.js sets ga-disable on reopen" \
+  grep -Fq 'window[GA_OFF] = true;' "$root/product.js"
+assert "product.js clears ga-disable on Accept" \
+  grep -Fq 'window[GA_OFF] = false;' "$root/product.js"
+
+inline_consent() { awk '/begin: consent/,/end: consent/' "$1" | sed -n '/<script>/,/<\/script>/p'; }
+inline_consent_identical() {
+  local f canon="" hits="" n=0
+  for f in "$root"/*.html; do
+    grep -Fq "var KEY = 'ay-consent';" "$f" || continue
+    n=$((n + 1))
+    inline_consent "$f" | grep -Fq "window['ga-disable-G-G3EMR3CB02'] = true;" \
+      || hits="$hits $(basename "$f")"
+    if [ -z "$canon" ]; then canon=$(inline_consent "$f")
+    elif [ "$(inline_consent "$f")" != "$canon" ]; then hits="$hits $(basename "$f")(differs)"
+    fi
+  done
+  [ "$n" -ge 4 ] || { echo "    only $n inline consent scripts"; return 1; }
+  [ -z "$hits" ] || { echo "    problem in:$hits"; return 1; }
+}
+assert "inline consent scripts are identical and set ga-disable on Decline" inline_consent_identical
+
 assert "privacy.html says the site sends nothing to Google before Accept" \
   file_has "$page" 'Before that, the site sends nothing to Google.'
 assert "privacy.html has no cookieless-signal text" file_lacks "$page" 'signal'
