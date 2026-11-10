@@ -86,14 +86,16 @@ Gate is for engineering leads whose teams merge code that agents wrote.
 
 ## What Gate does
 
-- It puts the result in the checks of the pull request. The result shows what passed, what is missing and the next step.
+- It puts the result in the checks of the pull request. The result shows what passed, what is missing and the next step. [Early teams (by hand)]
 - It checks four things: a linked ticket, a decision record, a review and a named approval.
-- An agent never approves its own work. With named approval set up, the merge waits for a person that your team named.
-- You can export the record of each merge for an auditor.
-- It shows every open change on one screen. You see what each pull request is missing and who holds it up.
-- The organisation view shows which pull requests skipped a step, in every repository.
+- An agent never approves its own work. With named approval set up, the merge waits for a person that your team named. [Early teams (by hand)]
+- You can export the record of each merge for an auditor. [Planned]
+- It shows every open change on one screen. You see what each pull request is missing and who holds it up. [Early teams (by hand)]
+- The organisation view shows which pull requests skipped a step, in every repository. [Early teams (by hand)]
 
 Gate blocks a merge only when you make the check required in GitHub.
+
+Each hosted part has one label: Available now, Early teams (by hand), or Planned with its date. The hosted Gate runs by hand for early teams today.
 
 ## What the GitHub App can see
 
@@ -152,6 +154,7 @@ The rules that you write one time live in Keel. Build uses them to guide your ag
 
 Each product has its own plans: Build, Gate and Readiness. A fourth section lists assessments by people.
 Read the pricing page for the plans. This file gives no prices.
+Plan limits are not set yet. We publish them when the plans open. [Planned for 1 Mar 2027]
 
 ---
 

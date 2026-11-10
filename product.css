@@ -290,6 +290,18 @@ code, pre { font-family: var(--mono); font-weight: 500; font-size: 0.88em; }
   border: 1px dashed var(--ink-2); border-radius: 4px; vertical-align: middle;
 }
 
+/* capability labels (#160): one per hosted capability, as static text.
+   The words carry the state. The colour and the border style only help. */
+.cap {
+  display: inline-block; margin-left: 0.5rem; padding: 0 0.45rem;
+  font: 600 12px/1.7 var(--text); letter-spacing: 0; vertical-align: middle;
+  border: 1px solid currentColor; border-radius: 4px; background: transparent;
+}
+.cap--now { color: var(--pass-ink); background: var(--pass-bg); }
+.cap--hand { color: var(--brand-ink); }
+.cap--planned { color: var(--ink-2); border-style: dashed; }
+.cap--preview { color: var(--wait-ink); }
+
 /* feature rows */
 .features { margin-top: clamp(2.5rem, 5vw, 4rem); display: grid; gap: clamp(3rem, 7vw, 5.5rem); }
 .feature { display: grid; gap: 1.5rem; align-items: center; }
@@ -432,7 +444,7 @@ code, pre { font-family: var(--mono); font-weight: 500; font-size: 0.88em; }
 /* The Team card note sits above the button and reads stronger than the price note. */
 .plan__action .plan__note { margin: 0 0 0.75rem; color: var(--ink); font-weight: 600; }
 .plans__fine { margin-top: 1rem; font-size: 14px; color: var(--ink-2); }
-.fine-print__title { margin-top: 3rem; margin-bottom: 1rem; }
+.price-table__note.plan-limits { margin-top: 1.5rem; font-size: 1rem; color: var(--ink-2); }
 @media (min-width: 700px) {
   .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; }
   .plans .plan { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 0.9rem; }

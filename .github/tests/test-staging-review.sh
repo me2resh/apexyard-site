@@ -281,13 +281,13 @@ assert "pricing.html holds id=plans" grep -Fq 'id="plans"' "$root/pricing.html"
 two_tables() {
   local n
   n=$(grep -c '<table' "$root/pricing.html")
-  [ "$n" -eq 2 ]
+  [ "$n" -eq 1 ]
 }
-assert "pricing.html holds two tables" two_tables
-assert "pricing.html evidence_export has data-claim-off" \
-  grep -Fq 'data-claim="evidence_export" data-claim-off=' "$root/pricing.html"
-assert "pricing.html kb_mcp has data-claim-off" \
-  grep -Fq 'data-claim="kb_mcp" data-claim-off=' "$root/pricing.html"
+assert "pricing.html holds one table (the fine-print table is gone, #160)" two_tables
+assert "pricing.html evidence_export carries its label (#160)" \
+  grep -Fq 'data-cap="evidence_export"' "$root/pricing.html"
+assert "pricing.html kb_mcp carries its label (#160)" \
+  grep -Fq 'data-cap="kb_mcp"' "$root/pricing.html"
 
 
 no_old_tokens() {
