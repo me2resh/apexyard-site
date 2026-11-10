@@ -797,8 +797,9 @@
     .intro-card h1,.outro-card h1{font-size:32px;}
     .ag-grid{grid-template-columns:1fr;}
     .compare-row{grid-template-columns:1fr;}
-    header{padding:12px 14px;gap:12px;}
-    .progress{gap:4px;}
+    header{padding:12px 14px;gap:10px 12px;flex-wrap:wrap;justify-content:space-between;}
+    /* the dots take their own row so the score stays on screen */
+    .progress{gap:4px;order:3;flex-basis:100%;}
     .pdot{width:18px;}.pdot.cur{width:30px;}
     .tok-char{font-size:32px;}
     .rag-tile{min-width:90px;padding:12px 8px;}

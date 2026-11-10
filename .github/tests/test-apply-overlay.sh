@@ -116,6 +116,12 @@ assert "the leak names the token"                   bash -c "grep -q 'LEAK   /le
 assert "the leak log has no value"                  bash -c "! grep -q 'FakeValue' <<<\"\$1\"" _ "$clog"
 clog=$(OVERLAY_JSON="$good_json" PROD_BASE="file://$prod" "$check" "$tmp/out1" /missing.html 2>&1)
 assert "an unreadable page fails the check"         test $? -ne 0
+printf '<p>Included in every plan</p>\n' > "$prod/common.html"
+cw_json='{"FP_CHECKS_FREE":"Included","TOKEN_A":"FakeValueAlpha <9>"}'
+clog=$(OVERLAY_JSON="$cw_json" PROD_BASE="file://$prod" "$check" "$tmp/out1" /common.html 2>&1)
+assert "a common-wording value on production passes" test $? -eq 0
+clog=$(OVERLAY_JSON="$cw_json" PROD_BASE="file://$prod" "$check" "$tmp/out1" /leak.html 2>&1)
+assert "other keys still fail on production"        test $? -ne 0
 
 echo
 echo "passed $pass, failed $fail"

@@ -9,8 +9,9 @@
    The test then expects the label that matches the flag.
    waitlistEndpoint   The full URL that receives the form (HTTP POST, JSON).
                       An empty value means the endpoint is not live yet.
-                      Add the origin of this URL to connect-src in netlify.toml
-                      when it is on another origin. */
+                      If a Content-Security-Policy is added later, its
+                      connect-src must allow the origin of this URL when it
+                      is on another origin. */
 window.APEXYARD_SITE = {
   signinOpen: false,
   waitlistEndpoint: ''

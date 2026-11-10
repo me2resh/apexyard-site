@@ -65,7 +65,7 @@ jobs:
 
       - name: Publish markdown alternates at clean .md keys
         run: |
-          # Netlify served the .md.gen files at /skills.md etc. via _redirects.
+          # The site serves each .md.gen file at a clean .md route.
           # On CloudFront we publish each .md.gen at its bare .md key so the
           # LLM-consumer alternates keep resolving.
           shopt -s nullglob

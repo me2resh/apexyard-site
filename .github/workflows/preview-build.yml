@@ -24,8 +24,6 @@ on:
       - "apple-touch-icon.png"
       - "brand/**"
       - "apexdock/**"
-      - "_headers"
-      - "_redirects"
       - "robots.txt"
       - "sitemap.xml"
       - "nav-toggle.js"

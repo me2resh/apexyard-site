@@ -1,0 +1,9 @@
+# Overlay keys whose values are plain plan wording that also occurs in public
+# text. The leak checks skip these keys when they match; their values are
+# still masked in the log. Add a key only when its value is not private on
+# its own. One key per line. Read by check-private-terms.sh and
+# check-prod-overlay-free.sh.
+FP_API_FREE
+FP_CHECKS_FREE
+FP_CHECKS_STARTUP
+FP_KEEL_FREE

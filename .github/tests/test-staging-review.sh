@@ -8,7 +8,6 @@ set -uo pipefail
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 prod="$root/.github/workflows/deploy-aws.yml"
 staging="$root/.github/workflows/deploy-staging-v2.yml"
-redirects="$root/_redirects"
 pass=0
 fail=0
 
@@ -198,13 +197,6 @@ assert "deploy-production sync excludes previews.html" \
 assert "deploy-production sync excludes staging-only.js" \
   prod_excludes '--exclude "staging-only.js"'
 
-assert "_redirects 404 /previews" \
-  grep -Eq '^/previews[[:space:]]+/404\.html[[:space:]]+404!' "$redirects"
-assert "_redirects 404 /previews.html" \
-  grep -Eq '^/previews\.html[[:space:]]+/404\.html[[:space:]]+404!' "$redirects"
-assert "_redirects 404 /staging-only.js" \
-  grep -Eq '^/staging-only\.js[[:space:]]+/404\.html[[:space:]]+404!' "$redirects"
-
 assert "staging deploy has no exclude for previews.html" \
   file_lacks "$staging" '--exclude "previews.html"'
 assert "staging deploy has no exclude for staging-only.js" \
@@ -218,8 +210,6 @@ arch_refresh() {
 assert "architecture.html holds refresh to docs architecture" arch_refresh
 assert "architecture.html holds canonical to docs architecture" \
   grep -Fq '<link rel="canonical" href="https://apexyard.ai/docs/quickstart/architecture">' "$root/architecture.html"
-assert "_redirects 301 /architecture to docs" \
-  grep -Eq '^/architecture[[:space:]]+/docs/quickstart/architecture[[:space:]]+301$' "$redirects"
 assert "sitemap.xml has no /architecture URL" \
   file_lacks "$root/sitemap.xml" 'https://apexyard.ai/architecture<'
 assert "content-map has slug quickstart/architecture" \
