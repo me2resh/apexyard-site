@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
 # Checks:
-#   - production sync excludes previews.html and staging-only.js;
-#   - Netlify _redirects 404 the staging-only paths;
+#   - production sync excludes previews.html and staging-only.js, so
+#     production never holds them (S3 and CloudFront serve the site);
 #   - the home page has both live GitHub badge images.
 
 set -uo pipefail
@@ -10,7 +10,6 @@ set -uo pipefail
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 wf="$root/.github/workflows"
 prod="$wf/deploy-aws.yml"
-redirects="$root/_redirects"
 pass=0
 fail=0
 
@@ -36,13 +35,6 @@ assert "prod sync excludes previews.html" \
   grep -Fq -- '--exclude "previews.html"' "$prod"
 assert "prod sync excludes staging-only.js" \
   grep -Fq -- '--exclude "staging-only.js"' "$prod"
-
-assert "_redirects 404 /previews" \
-  grep -Eq '^/previews[[:space:]]+/404\.html[[:space:]]+404!' "$redirects"
-assert "_redirects 404 /previews.html" \
-  grep -Eq '^/previews\.html[[:space:]]+/404\.html[[:space:]]+404!' "$redirects"
-assert "_redirects 404 /staging-only.js" \
-  grep -Eq '^/staging-only\.js[[:space:]]+/404\.html[[:space:]]+404!' "$redirects"
 
 live_badges() {
   grep -Fq 'src="https://img.shields.io/github/stars/me2resh/apexyard?' "$root/index.html" &&

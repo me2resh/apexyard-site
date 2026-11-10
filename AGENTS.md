@@ -12,7 +12,7 @@ Public ApexYard marketing and docs site. Hand-authored static HTML, Markdown alt
 - Framework: none
 - Database: none
 - Test framework: bash suites under `.github/tests/`
-- Hosting: Netlify (`netlify.toml`) and AWS S3 + CloudFront (OIDC deploy workflows)
+- Hosting: AWS S3 + CloudFront (OIDC deploy workflows)
 
 ## Commands
 
@@ -23,7 +23,7 @@ There is no root `package.json`. Do not run `npm install` or `npm run build` at 
 # N/A at repo root
 
 # build
-# N/A. Netlify and AWS publish the repo root as static files.
+# N/A. The deploy workflows publish the repo root to S3 as static files.
 
 # test (verified 2026-09-18)
 .github/tests/test-derive-counts.sh
@@ -38,7 +38,7 @@ shellcheck -x --source-path=SCRIPTDIR \
 APEXYARD_REPO=/path/to/apexyard REF=v5.10.0 .github/scripts/verify-counts.sh
 
 # run / dev
-# Open HTML files locally, or use Netlify/AWS preview. No `npm run dev`.
+# Serve the repo root locally (python3 -m http.server), or use staging. No `npm run dev`.
 ```
 
 ## Project layout
@@ -46,7 +46,6 @@ APEXYARD_REPO=/path/to/apexyard REF=v5.10.0 .github/scripts/verify-counts.sh
 - `*.html` — public pages (`index`, `architecture`, `skills`, `how-it-works`, `game`, `404`)
 - `*.md.gen` — markdown alternates served as `/foo.md`
 - `llms.txt`, `llms-full.txt`, `skill.md` — agent-facing manifests
-- `netlify.toml`, `_headers`, `_redirects` — Netlify CSP, MIME types, rewrites
 - `.github/workflows/` — link-check, shell-tests, AWS staging and production deploy
 - `.github/scripts/` — count derivation, count verify, CloudFront invalidation
 - `og/` — committed OG PNGs plus Playwright render helpers
@@ -62,9 +61,9 @@ APEXYARD_REPO=/path/to/apexyard REF=v5.10.0 .github/scripts/verify-counts.sh
 
 ## Gotchas
 
-- Dual publish path: Netlify git deploy and AWS S3/CloudFront both exist. Confirm which host answers https://apexyard.ai before changing deploy.
+- One host: S3 and CloudFront serve both staging and production. There is no Netlify deploy. Clean URLs, response headers and the distributions live in the infrastructure repository, not here.
 - `main` has no GitHub branch protection. Do not push directly to `main`. Open a PR.
-- CSP in `netlify.toml` allows `'unsafe-inline'` for script and style. That is required for inline CSS, gtag, and animation JS.
+- The pages use inline CSS, inline gtag and inline animation JS. A future Content-Security-Policy must allow `'unsafe-inline'` for script and style, or the pages must move that code to files first.
 - No coverage threshold. Shell tests passing does not mean HTML/JS is covered.
 - `og/package.json` is gitignored. OG render dependencies are throwaway.
 - Production AWS deploy waits on the GitHub `production` environment, through the `approve-production` job (no AWS access). Jobs that assume the AWS role must not declare `environment:`: the shared role trusts the `main` branch only. Staging deploys from `main` only (`deploy-aws.yml`, or a manual `deploy-aws-staging.yml` run from `main`).

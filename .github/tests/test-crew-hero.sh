@@ -10,9 +10,9 @@ assert() { local d="$1"; shift; if "$@" >/dev/null 2>&1; then ok "$d"; else bad 
 pages=("$root"/*.html "$root"/apexdock/index.html "$root"/apexdock/onboarding/index.html)
 
 no_font_host() {
-  ! grep -lE 'fonts\.(googleapis|gstatic)\.com' "${pages[@]}" "$root/netlify.toml" "$root/docs-site/astro.config.mjs" 2>/dev/null | grep .
+  ! grep -lE 'fonts\.(googleapis|gstatic)\.com' "${pages[@]}" "$root/docs-site/astro.config.mjs" 2>/dev/null | grep .
 }
-assert "no served page, CSP or docs config names a public font host" no_font_host
+assert "no served page or docs config names a public font host" no_font_host
 
 fonts_exist() {
   local f missing=0

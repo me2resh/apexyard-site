@@ -52,7 +52,7 @@ cat > "$workdir/bin/curl" <<'STUB'
 #!/usr/bin/env bash
 case "${STUB_CURL:-unreachable}" in
   cloudfront)  printf 'HTTP/2 200\r\nserver: AmazonS3\r\nx-cache: Hit from cloudfront\r\nx-amz-cf-id: abc123==\r\n'; exit 0 ;;
-  other)       printf 'HTTP/2 200\r\nserver: Netlify\r\nx-nf-request-id: xyz\r\n'; exit 0 ;;
+  other)       printf 'HTTP/2 200\r\nserver: nginx\r\n'; exit 0 ;;
   unreachable) exit 6 ;;
 esac
 STUB
@@ -108,9 +108,8 @@ run "lookup throttled fails the job"     nonzero throttled ok   unreachable "aws
 
 # The legitimate warn-and-continue window, and its impostor.
 run "unprovisioned stack warns, exits 0" 0       absent    ok   unreachable "pre-apply window"
-# Production today: the domain answers 200, but from Netlify, not CloudFront —
-# deploy-aws.yml runs alongside Netlify until the DNS cutover. A non-CloudFront
-# origin must NOT be read as an alias mismatch.
+# A domain that answers 200 from an origin other than CloudFront (for example
+# during a DNS move) must NOT be read as an alias mismatch.
 run "non-CloudFront origin still warns"  0       absent    ok   other       "pre-apply window"
 run "alias mismatch fails the job"       nonzero absent    ok   cloudfront  "different alias"
 

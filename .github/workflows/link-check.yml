@@ -36,11 +36,11 @@ jobs:
           # Root HTML pages + Markdown alternates. --no-progress keeps CI logs
           # clean; a non-zero exit fails the job so broken links block merge.
           # --root-dir resolves the site's root-relative links (/favicon.ico,
-          # /#quickstart, …) against the repo root. The Netlify clean-URL +
-          # rewrite routes (/game → game.html, /foo.md → foo.md.gen) don't
-          # exist as local files, so they're excluded — Netlify's own
-          # deploy-preview + redirect-rules checks validate that internal
-          # routing. me2resh.com (author's blog, up; CI-flaky 301) is excluded.
+          # /#quickstart, …) against the repo root. The clean-URL routes
+          # (/game → game.html, /foo.md → foo.md.gen) exist only after the
+          # deploy: a CloudFront Function serves the first, and the deploy
+          # uploads the second. They are not local files, so they're
+          # excluded. me2resh.com (author's blog, up; CI-flaky 301) is excluded.
           # Verified locally: 97 OK / 0 errors / 64 excluded.
           args: >-
             --no-progress

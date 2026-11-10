@@ -51,9 +51,8 @@ on:
       - "claims.js"
       - "waitlist.js"
       - "site-config.js"
-      # #137: test-staging-review.sh reads the page scripts, _redirects and the docs content map and config.
+      # #137: test-staging-review.sh reads the page scripts and the docs content map and config.
       - "*.js"
-      - "_redirects"
       - "docs-site/content-map.mjs"
       - "docs-site/astro.config.mjs"
       - "product.css"
@@ -86,9 +85,8 @@ on:
       - "claims.js"
       - "waitlist.js"
       - "site-config.js"
-      # #137: test-staging-review.sh reads the page scripts, _redirects and the docs content map and config.
+      # #137: test-staging-review.sh reads the page scripts and the docs content map and config.
       - "*.js"
-      - "_redirects"
       - "docs-site/content-map.mjs"
       - "docs-site/astro.config.mjs"
       - "product.css"
