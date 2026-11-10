@@ -1637,6 +1637,7 @@ main#main.nf { padding: 3rem var(--gutter); }
   --gc-foot: var(--page-2); --gc-link: var(--brand-ink);
   --gc-pass: var(--pass-ink); --gc-pass-bg: var(--pass-bg); --gc-tick: #FFFFFF;
   --gc-av: var(--av-bg); --gc-light: var(--light);
+  --gc-rail: var(--ink-3); --gc-wait: var(--wait);
   --crew-av: var(--av-bg);
 }
 
@@ -1671,6 +1672,7 @@ main#main.nf { padding: 3rem var(--gutter); }
 .hero-crew__floor i.idle { background: radial-gradient(closest-side, rgba(47, 109, 246, .28), transparent); }
 
 .gate-card {
+  --gc-pad: 2.75rem; --gc-rx: 1.375rem; --gc-hadi: 24px;
   grid-area: gate; margin-top: .5rem; min-width: 0;
   background: var(--gc-bg); color: var(--gc-ink);
   border: 1px solid var(--gc-line); border-radius: var(--r-card); box-shadow: var(--shadow);
@@ -1684,10 +1686,10 @@ main#main.nf { padding: 3rem var(--gutter); }
 .gc-pr { margin: 0; font: 600 .9375rem/1.3 var(--text); letter-spacing: 0; color: var(--gc-ink); }
 .gc-pr a { font-family: var(--mono); font-weight: 500; font-size: .9em; }
 .gc-title { margin: .15rem 0 0; font-size: .8125rem; line-height: 1.35; color: var(--gc-ink-2); }
-.gc-rows { list-style: none; margin: 0; padding: .375rem 0; }
+.gc-rows { list-style: none; margin: 0; padding: .375rem 0; position: relative; }
 .gc-row {
   display: grid; grid-template-columns: 44px 6em minmax(0, 1fr) auto; align-items: center; column-gap: .875rem;
-  padding: .5625rem 1.125rem;
+  padding: .5625rem 1.125rem .5625rem var(--gc-pad); position: relative;
 }
 .gc-row + .gc-row { border-top: 1px solid var(--gc-line); }
 .gc-av { position: relative; width: 44px; height: 44px; }
@@ -1706,7 +1708,8 @@ main#main.nf { padding: 3rem var(--gutter); }
 .gc-state svg { width: 15px; height: 15px; flex: none; }
 .gc-foot {
   display: flex; align-items: center; justify-content: space-between; gap: .75rem;
-  padding: .75rem 1.125rem .875rem; background: var(--gc-foot); border-top: 1px solid var(--gc-line);
+  padding: .75rem 1.125rem .875rem var(--gc-pad); background: var(--gc-foot); border-top: 1px solid var(--gc-line);
+  position: relative;
 }
 .gc-merged { display: inline-flex; align-items: center; gap: .5rem; font: 600 .875rem/1.2 var(--text); }
 .gc-merged svg { width: 18px; height: 18px; flex: none; color: var(--brand); }
@@ -1716,17 +1719,60 @@ main#main.nf { padding: 3rem var(--gutter); }
 }
 .gc-replay:hover { color: var(--gc-ink); }
 
+/* Hadi, the main thread (#157): a small icon in a thin rail on the left of the rows.
+   Hadi only moves. Each tick comes from the row's own character. The rail and Hadi are decorative. */
+.gc-rows::before, .gc-foot::before {
+  content: ""; position: absolute; left: calc(var(--gc-rx) - 1px); top: 0; bottom: 0;
+  border-left: 2px dotted var(--gc-rail); pointer-events: none;
+}
+.gc-foot::before { bottom: 50%; }
+.gc-hadi {
+  --gc-hadi-ring: var(--gc-bg);
+  position: absolute; z-index: 1; left: calc(var(--gc-rx) - var(--gc-hadi) / 2); top: 50%;
+  width: var(--gc-hadi); height: var(--gc-hadi); margin-top: calc(var(--gc-hadi) / -2);
+  border-radius: 50%; pointer-events: none; opacity: 0;
+  background: var(--gc-av) url("/img/crew/av-hadi-48.png") center / cover no-repeat;
+  background-image: image-set(url("/img/crew/av-hadi-48.avif") type("image/avif"), url("/img/crew/av-hadi-48.webp") type("image/webp"), url("/img/crew/av-hadi-48.png") type("image/png"));
+  box-shadow: 0 0 0 2px var(--gc-hadi-ring);
+}
+.gc-hadi::after {
+  content: ""; position: absolute; inset: -5px; border-radius: 50%;
+  border: 2px solid var(--gc-wait); opacity: 0;
+}
+.gc-hadi--end { --gc-hadi-ring: var(--gc-foot); opacity: 1; }
+
 @keyframes gc-row { from { opacity: .35; } to { opacity: 1; } }
 @keyframes gc-ring { 0% { opacity: 0; transform: scale(.85); } 30% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.12); } }
 @keyframes gc-state { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: none; } }
 @keyframes gc-floor { 0% { opacity: 0; } 35% { opacity: 1; filter: brightness(1.5); } 100% { opacity: 1; filter: none; } }
 @keyframes gc-rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-.is-playing { --gc-t0: .6s; --gc-step: .65s; }
-.is-playing .gc-av img { animation: gc-row .35s ease-out both; animation-delay: calc(var(--gc-t0) + var(--i) * var(--gc-step)); }
-.is-playing .gc-av::after { animation: gc-ring 1s ease-out both; animation-delay: calc(var(--gc-t0) + var(--i) * var(--gc-step)); }
-.is-playing .gc-state { animation: gc-state .3s cubic-bezier(.2, .8, .2, 1.2) both; animation-delay: calc(var(--gc-t0) + var(--i) * var(--gc-step) + .25s); }
-.is-playing .hero-crew__floor i:not(.idle) { animation: gc-floor .7s ease-out both; animation-delay: calc(var(--gc-t0) + var(--i) * var(--gc-step)); }
-.is-playing .gc-merged { animation: gc-rise .45s ease-out both; animation-delay: calc(var(--gc-t0) + 5 * var(--gc-step) + .2s); }
+/* Hadi steps down one row per check. The step length is --gc-step (.65s). */
+@keyframes gc-hadi-step {
+  0% { opacity: 0; transform: translateY(-12px); } 30% { opacity: 1; transform: none; }
+  80% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(10px); }
+}
+/* At the human row, Hadi waits. The length is .25s in + --gc-pause (1.5s) + .55s for the tick + .2s out = 2.5s. */
+@keyframes gc-hadi-wait {
+  0% { opacity: 0; transform: translateY(-12px); } 10% { opacity: 1; transform: none; }
+  92% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(10px); }
+}
+@keyframes gc-hadi-pulse { 0% { opacity: 0; transform: scale(.8); } 40% { opacity: 1; } 100% { opacity: 0; transform: scale(1.25); } }
+@keyframes gc-hadi-end { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
+/* --gc-d is the time a row's own character gives its tick. The human row waits for --gc-pause. */
+.is-playing { --gc-t0: .6s; --gc-step: .65s; --gc-pause: 1.5s; --gc-human: calc(var(--gc-t0) + 4 * var(--gc-step) + var(--gc-pause)); }
+.is-playing .gc-row, .is-playing .hero-crew__floor i { --gc-d: calc(var(--gc-t0) + var(--i) * var(--gc-step)); }
+.is-playing .gc-row--approved, .is-playing .hero-crew__floor i:nth-child(5) { --gc-d: var(--gc-human); }
+.is-playing .gc-av img { animation: gc-row .35s ease-out both; animation-delay: var(--gc-d); }
+.is-playing .gc-av::after { animation: gc-ring 1s ease-out both; animation-delay: var(--gc-d); }
+.is-playing .gc-state { animation: gc-state .3s cubic-bezier(.2, .8, .2, 1.2) both; animation-delay: calc(var(--gc-d) + .25s); }
+.is-playing .hero-crew__floor i:not(.idle) { animation: gc-floor .7s ease-out both; animation-delay: var(--gc-d); }
+.is-playing .gc-hadi { animation: gc-hadi-step var(--gc-step) ease-out both; animation-delay: calc(var(--gc-t0) + var(--i) * var(--gc-step) - .25s); }
+.is-playing .gc-row--approved .gc-hadi { animation: gc-hadi-wait 2.5s ease-out both; animation-delay: calc(var(--gc-t0) + 4 * var(--gc-step) - .25s); }
+.is-playing .gc-row--approved .gc-hadi::after { animation: gc-hadi-pulse .7s ease-out 2; animation-delay: calc(var(--gc-t0) + 4 * var(--gc-step) + .3s); }
+.is-playing .gc-hadi--end { animation: gc-hadi-end .3s ease-out both; animation-delay: calc(var(--gc-human) + .7s); }
+.is-playing .gc-merged { animation: gc-rise .45s ease-out both; animation-delay: calc(var(--gc-human) + .8s); }
+/* The story waits until the card scrolls into view (crew-hero.js). */
+.gc-hold.is-playing *, .gc-hold.is-playing *::before, .gc-hold.is-playing *::after { animation-play-state: paused !important; }
 @media (prefers-reduced-motion: reduce) {
   .is-playing *, .is-playing *::before, .is-playing *::after { animation: none !important; }
   .gc-replay { display: none; }
@@ -1740,10 +1786,12 @@ main#main.nf { padding: 3rem var(--gutter); }
 }
 @media (max-width: 719px) {
   .gc-head { padding: .7rem .85rem .6rem; }
+  .gate-card { --gc-pad: 1.625rem; --gc-rx: .875rem; --gc-hadi: 20px; }
+  .gc-hadi::after { inset: -3px; }
   .gc-row {
     grid-template-columns: 40px minmax(0, 1fr) auto;
     grid-template-areas: "av step state" "av fact fact";
-    column-gap: .75rem; row-gap: .15rem; padding: .6rem .85rem;
+    column-gap: .625rem; row-gap: .15rem; padding: .6rem .75rem .6rem var(--gc-pad);
   }
   .gc-av { grid-area: av; width: 40px; height: 40px; align-self: start; }
   .gc-av img { width: 40px; height: 40px; }
@@ -1752,8 +1800,8 @@ main#main.nf { padding: 3rem var(--gutter); }
   .gc-step span::before { content: " \00B7 "; }
   .gc-fact { grid-area: fact; }
   .gc-fact code { margin-inline-start: .3em; }
-  .gc-state { grid-area: state; }
-  .gc-foot { padding: .5rem .85rem; }
+  .gc-state { grid-area: state; padding-inline-end: .5rem; }
+  .gc-foot { padding: .5rem .75rem .5rem var(--gc-pad); }
 }
 
 /* Section intros: one character card opens a section. */

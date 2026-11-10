@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Guards for the crew hero, the section intros, the self-hosted fonts and the mark (#144).
+# Guards for the crew hero, the section intros, the self-hosted fonts and the mark (#144),
+# and for Hadi, the main thread, on the gate card (#157).
 set -uo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 pass=0; fail=0
@@ -50,6 +51,33 @@ assert "no page header draws the old AY square" no_old_mark
 assert "headers use the new mark and an HTML wordmark" bash -c "for f in '$root'/index.html '$root'/build.html '$root'/gate.html '$root'/pricing.html; do grep -Fq 'class=\"brand__mark\" src=\"/brand/apexyard-mark.svg\"' \$f && grep -Fq '<span class=\"brand__word\">ApexYard</span>' \$f || exit 1; done"
 assert "mark SVGs hold no text" bash -c "! grep -l '<text' '$root'/brand/apexyard-mark*.svg '$root'/favicon.svg"
 assert "favicon.svg uses a 64 x 64 viewBox" grep -Fq 'viewBox="0 0 64 64"' "$root/favicon.svg"
+
+# Hadi, the main thread (#157). Build the old names from parts so this file does not match itself.
+old_names=("Sp""ark" "At""las")
+no_old_name() {
+  local hits
+  hits=$(git -C "$root" grep -I -l -F -e "$1" -- . ':(exclude)docs/screenshots' 2>/dev/null)
+  [ -z "$hits" ] || { echo "    $1 in: $hits"; return 1; }
+}
+for n in "${old_names[@]}"; do
+  assert "no tracked site file names the old character ${n:0:2}" no_old_name "$n"
+done
+hadi_images_exist() {
+  local f ext missing=0
+  for f in av-hadi-48 av-hadi-96 pt-hadi-160 pt-hadi-320; do
+    for ext in avif webp png; do
+      [ -f "$root/img/crew/$f.$ext" ] || { echo "    missing img/crew/$f.$ext"; missing=1; }
+    done
+  done
+  return "$missing"
+}
+assert "the twelve Hadi images exist" hadi_images_exist
+assert "the crew intro names Hadi, the main thread" grep -Fq '<p class="crew-intro__role">The main thread</p><p class="crew-intro__name">Hadi</p>' "$root/index.html"
+assert "the hero alt text names Hadi, the main thread" grep -Fq 'Hadi, the main thread, routes the work to the crew' "$root/index.html"
+hadi_slots() { [ "$(grep -c '<span class="gc-hadi[^"]*" aria-hidden="true"></span>' "$root/index.html")" -eq 6 ]; }
+assert "Hadi has a decorative slot in each gate row and beside Merged" hadi_slots
+assert "the story waits for the card to scroll into view" grep -Fq 'IntersectionObserver' "$root/crew-hero.js"
+assert "the human row waits before its tick" grep -Fq '.is-playing .gc-row--approved, .is-playing .hero-crew__floor i:nth-child(5) { --gc-d: var(--gc-human); }' "$root/site.css"
 
 outside='Vercel|Linear|Stripe|Notion|Figma|Cursor Cloud|Midjourney'
 assert "no outside product names in hero or intros" bash -c "! sed -n '/id=\"hero\"/,/<\\/section>/p' '$root/index.html' | grep -Eiq '$outside'"
