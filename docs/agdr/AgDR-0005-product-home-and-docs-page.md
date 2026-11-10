@@ -40,3 +40,7 @@ Option A.
 - Ticket: GH-102
 - Pages: `index.html`, `pricing.html`, `docs.html`
 - Assets: `product.css`, `product.js`, `img/check-pr9.webp`
+
+## Evolution
+
+- 2026-11-10 (#154): `link-check.yml` also excludes the clean `/privacy` URL. It is not a local file; the CloudFront Function serves it from `privacy.html`.
