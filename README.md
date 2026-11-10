@@ -2,17 +2,20 @@
 
 [![Governed by ApexYard](https://img.shields.io/badge/governed_by-ApexYard-2F6DF6?style=flat-square)](https://github.com/me2resh/apexyard)
 
-The ApexYard marketing and docs site — static HTML, deployed on Netlify at [apexyard.ai](https://apexyard.ai).
+The ApexYard marketing and docs site — static HTML on AWS S3 and CloudFront at [apexyard.ai](https://apexyard.ai).
 
 ## What's here
 
-Hand-authored HTML pages (`index.html`, `architecture.html`, `skills.html`, `how-it-works.html`, `game.html`) plus Markdown alternates (`.md.gen` files) served as clean `/foo.md` routes for AI agents and tooling that prefer low-token plain text over full HTML. Supporting assets: `_headers`, `_redirects`, `netlify.toml`, `robots.txt`, `sitemap.xml`, `llms.txt`, `llms-full.txt`.
+Hand-authored HTML pages (`index.html`, `architecture.html`, `skills.html`, `how-it-works.html`, `game.html`) plus Markdown alternates (`.md.gen` files) served as clean `/foo.md` routes for AI agents and tooling that prefer low-token plain text over full HTML. Supporting assets: `robots.txt`, `sitemap.xml`, `llms.txt`, `llms-full.txt`.
 
 ## How it deploys
 
-Native Netlify git deploy — push to `main` triggers a deploy automatically. No build step. Publish directory is the repo root (Netlify default).
+GitHub Actions sync the repo root to S3 and then clear the CloudFront cache. There is no root build step. The `docs-site/` sub-build makes the `/docs` pages.
 
-Security headers and the canonical 301 redirect from `apexyard.netlify.app` to `apexyard.ai` are set in `netlify.toml`. Markdown-alternate `Link:` response headers and MIME types are in `_headers`. Clean-URL rewrites and markdown-alternate rewrites are in `_redirects`.
+- **Staging** (`staging.apexyard.ai`, basic auth): a push to `staging` runs `deploy-staging-v2.yml`.
+- **Production** (`apexyard.ai`): a push to `main` runs `deploy-aws.yml`. The production job waits for approval on the GitHub `production` environment. It does not upload the staging-only files (`previews.html`, `staging-only.js`).
+
+Each deploy uploads every `.md.gen` file at its clean `.md` key with the `text/markdown` type. A CloudFront Function serves extensionless paths such as `/game` from the matching `.html` file. The CloudFront distributions, the function and any response headers live in the infrastructure repository, not here.
 
 ## Manually maintained content
 

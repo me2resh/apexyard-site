@@ -46,3 +46,7 @@ Chosen: **A**.
 - `architecture.md.gen`
 - `_redirects`
 - `sitemap.xml`
+
+## Evolution
+
+- 2026-11-10 (#151): `_redirects` is deleted, so there is no 301 from `/architecture`. CloudFront serves `/architecture` from `architecture.html`. Its meta refresh and its canonical link point to `/docs/quickstart/architecture`. `.github/tests/test-staging-review.sh` checks both.
