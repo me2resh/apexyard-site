@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+#
+# #159. Paid review guards:
+#   1. No tracked file links the dead booking pages. Each booking button
+#      opens an email through the obfuscated mail link, with a subject.
+#   2. The two review name tokens are intact, with their public fallbacks.
+#   3. The sample report PDF exists and the Readiness and Pricing pages,
+#      and the report template docs page, link it.
+#   4. The pricing review section points to the refund promise.
+
+set -uo pipefail
+
+root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
+pricing="$root/pricing.html"
+readiness="$root/readiness.html"
+pdf="$root/reports/sample-readiness-report.pdf"
+pdf_href='href="/reports/sample-readiness-report.pdf"'
+pass=0
+fail=0
+
+ok()  { pass=$((pass + 1)); printf '  ok    %s\n' "$1"; }
+bad() { fail=$((fail + 1)); printf '  FAIL  %s\n' "$1"; }
+assert() { local n="$1"; shift; if "$@"; then ok "$n"; else bad "$n"; fi; }
+
+file_has()   { grep -Fq -- "$2" "$1"; }
+file_lacks() { ! grep -Fq -- "$2" "$1"; }
+
+# --- 1. Booking buttons ---
+
+# Tracked text files that can hold a link. This test and the lychee ignore
+# file are left out: they name the dead pages on purpose or not at all.
+no_dead_booking_links() {
+  local hits
+  hits=$(git -C "$root" grep -l -I -E 'cal\.com/apexyard/(demo|review)' -- \
+    ':!.github/tests/test-paid-review.sh' ':!docs/reviews/**' ':!docs/screenshots/**' || true)
+  [ -z "$hits" ] || { echo "    dead booking link in: $hits"; return 1; }
+}
+assert "no tracked file links the dead booking pages" no_dead_booking_links
+assert ".lycheeignore has no booking-service entry" file_lacks "$root/.lycheeignore" 'cal\.com'
+
+# Each <a> whose text starts with "Book", plus "Talk to us", must be a
+# mailto-cta with the address parts and a subject.
+booking_buttons_mail() {
+  python3 -I - "$root" <<'PY'
+import re, subprocess, sys
+root = sys.argv[1]
+files = subprocess.run(["git", "-C", root, "ls-files", "*.html", "apexdock/*.html"],
+                       capture_output=True, text=True, check=True).stdout.split()
+tag = re.compile(r"<a\b([^>]*)>(.*?)</a>", re.S | re.I)
+bad, seen = [], 0
+for name in sorted(set(files)):
+    text = open(f"{root}/{name}", encoding="utf-8").read()
+    for attrs, inner in tag.findall(text):
+        label = re.sub(r"<[^>]+>", "", inner).strip()
+        if not (label.lower().startswith("book ") or label == "Talk to us"):
+            continue
+        seen += 1
+        cls = re.search(r'class="([^"]*)"', attrs)
+        subj = re.search(r'data-s="([^"]+)"', attrs)
+        if not (cls and "mailto-cta" in cls.group(1).split()
+                and 'data-u="hello"' in attrs and 'data-d="apexyard.ai"' in attrs
+                and subj and subj.group(1).strip()
+                and 'href="#"' in attrs):
+            bad.append(f"{name}: {label}")
+if seen < 20:
+    print(f"    only {seen} booking buttons found")
+    sys.exit(1)
+if bad:
+    print("    not an email link: " + "; ".join(bad))
+    sys.exit(1)
+PY
+}
+assert "every booking button opens an email with a subject" booking_buttons_mail
+
+assert "the review buttons name the request in the subject" \
+  bash -c "grep -Fq 'data-s=\"Book a short review\"' \"\$1\" && grep -Fq 'data-s=\"Book a full assessment\"' \"\$1\" && grep -Fq 'data-s=\"Book a readiness call\"' \"\$1\"" _ "$pricing"
+assert "the ApexDock onboarding page assembles its mail link" \
+  file_has "$root/apexdock/onboarding/index.html" "document.querySelectorAll('.mailto-cta')"
+assert "product.js assembles the mail links" \
+  file_has "$root/product.js" "document.querySelectorAll('.mailto-cta')"
+assert "privacy.html no longer names a booking service" \
+  file_lacks "$root/privacy.html" 'booking service'
+
+# --- 2. Name tokens ---
+token_once() { # <key> <fallback>
+  local n
+  n=$(grep -o "<!--{{$1}}-->[^<]*<!--/{{$1}}-->" "$pricing" | wc -l | tr -d ' ')
+  [ "$n" = "1" ] || { echo "    $1: $n wrapped tokens"; return 1; }
+  grep -Fq "<!--{{$1}}-->$2<!--/{{$1}}-->" "$pricing" || { echo "    $1: fallback is not '$2'"; return 1; }
+}
+assert "ASSESS_SHORT_NAME token is intact with fallback 'Short review'" token_once ASSESS_SHORT_NAME 'Short review'
+assert "ASSESS_FULL_NAME token is intact with fallback 'Full assessment'" token_once ASSESS_FULL_NAME 'Full assessment'
+assert "the two name keys are on the common-wording list" \
+  bash -c "grep -qx ASSESS_SHORT_NAME \"\$1\" && grep -qx ASSESS_FULL_NAME \"\$1\"" _ "$root/.github/scripts/overlay-common-wording.txt"
+
+# --- 3. Sample report ---
+pdf_ok() {
+  [ -f "$pdf" ] || { echo "    missing: reports/sample-readiness-report.pdf"; return 1; }
+  [ "$(head -c 5 "$pdf")" = "%PDF-" ] || { echo "    not a PDF"; return 1; }
+  local size
+  size=$(wc -c < "$pdf" | tr -d ' ')
+  [ "$size" -gt 20000 ] && [ "$size" -lt 2000000 ] || { echo "    size $size bytes"; return 1; }
+}
+assert "the sample report PDF exists" pdf_ok
+assert "pricing.html links the sample report" file_has "$pricing" "$pdf_href"
+assert "readiness.html links the sample report" file_has "$readiness" "$pdf_href"
+assert "the docs content map holds the report template page" \
+  file_has "$root/docs-site/content-map.mjs" "slug: 'readiness/report-template'"
+assert "the report template page links the sample report" \
+  file_has "$root/docs-site/content-map.mjs" '(/reports/sample-readiness-report.pdf)'
+assert "pricing.html links the report template" file_has "$pricing" 'href="/docs/readiness/report-template"'
+assert "readiness.html links the report template" file_has "$readiness" 'href="/docs/readiness/report-template"'
+
+# --- 4. Review section ---
+assert "pricing.html points to the refund promise in the statement of work" \
+  file_has "$pricing" 'The statement of work holds our refund promise.'
+assert "pricing.html states the short review time" file_has "$pricing" '5 working days, then a 30-minute call'
+assert "pricing.html states the full assessment time" file_has "$pricing" 'Two weeks. It ends with the gate on your repositories for 30 days.'
+
+printf '\n%d passed, %d failed\n' "$pass" "$fail"
+[ "$fail" -eq 0 ]

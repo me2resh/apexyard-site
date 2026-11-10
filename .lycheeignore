@@ -1,12 +1,5 @@
 # Links that lychee must skip. One regular expression per line.
 #
-# Placeholder booking URL in the home page "Book a demo" block (#102). The
-# page does not exist yet, so it returns 404. Remove this line when the real
-# booking page replaces it. Switch-on checklist item in PR #106: "Replace the
-# placeholder booking URL https://cal.com/apexyard/demo with the real
-# booking page".
-^https://cal\.com/apexyard/(demo|review)(\?.*)?$
-
 # Clean URLs of the three product pages (#102). The CDN serves /build,
 # /gate and /readiness from build.html, gate.html and readiness.html, so
 # the offline file check cannot resolve them. The CI workflow excludes the
@@ -16,6 +9,7 @@
 # Pages of the /docs sub-build. build-docs.sh builds them from docs-site/
 # at deploy time, so they are not files in the repository root.
 ^file://.*/docs/quickstart/install$
+^file://.*/docs/readiness/report-template$
 # Their canonical production URLs return 404 until the pages reach
 # production. Remove this line after the switch-on deploy.
 ^https://apexyard\.ai/(build|gate|readiness)$

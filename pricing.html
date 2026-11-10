@@ -73,7 +73,7 @@
     <a href="/" class="brand" aria-label="ApexYard home"><img class="brand__mark" src="/brand/apexyard-mark.svg" width="36" height="36" alt=""><span class="brand__word">ApexYard</span></a>
     <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness">Readiness</a><a href="/pricing" aria-current="page">Pricing</a><a href="/docs">Docs</a><a href="https://app.apexyard.ai" class="nav__login">Log in</a></nav>
     <div class="hdr__keys">
-      <a class="key key--primary key--sm" href="https://cal.com/apexyard/demo?src=nav" rel="noopener"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
+      <a class="key key--primary key--sm mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     <button class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false" data-theme-toggle hidden>Theme</button></div>
   </div>
@@ -179,9 +179,9 @@
             <tr>
               <th scope="row"><span class="visually-hidden">Start</span></th>
               <td><a class="btn btn--quiet" href="/waitlist?src=pricing-free" data-signin="https://app.apexyard.ai/signin?src=pricing-free" data-waitlist="/waitlist?src=pricing-free">Join the waitlist</a></td>
-              <td><a class="btn btn--quiet" href="https://cal.com/apexyard/demo?src=pricing-startup" rel="noopener">Book a call to start</a></td>
-              <td><a class="btn btn--primary" href="https://cal.com/apexyard/demo?src=pricing-team" rel="noopener">Book a call to start</a><p class="plan__note"><!--{{TEAM_NOTE}}-->Ask us about early access.<!--/{{TEAM_NOTE}}--></p></td>
-              <td><a class="btn btn--quiet" href="https://cal.com/apexyard/demo?src=pricing-enterprise" rel="noopener">Talk to us</a></td>
+              <td><a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a call: Startup plan">Book a call to start</a></td>
+              <td><a class="btn btn--primary mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a call: Team plan">Book a call to start</a><p class="plan__note"><!--{{TEAM_NOTE}}-->Ask us about early access.<!--/{{TEAM_NOTE}}--></p></td>
+              <td><a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Talk to us: Enterprise plan">Talk to us</a></td>
             </tr>
           </tbody>
         </table>
@@ -256,6 +256,15 @@
         <h2 class="section__title" id="assessments-title"><span class="stn" aria-hidden="true"></span>Reports and assessments</h2>
         <p class="section__lede"><!--{{REVIEWS_SUMMARY}}-->Assessments: details to follow.<!--/{{REVIEWS_SUMMARY}}--></p>
       </div>
+      <div class="review-what">
+        <h3 class="review-what__title" id="review-what-title">What a review gives you</h3>
+        <ol class="review-what__steps">
+          <li><b>The audit.</b> We run the readiness audit on your repository. It checks ten areas, from security to behaviour quality.</li>
+          <li><b>The report.</b> You get a written report: a go or no-go verdict, the gaps in each area and the top actions.</li>
+          <li><b>The call.</b> We take you through the report and answer your questions.</li>
+        </ol>
+        <p class="review-what__links"><a href="/reports/sample-readiness-report.pdf" data-sample-report>Read a sample report (PDF)</a><a href="/docs/readiness/report-template">See the report template</a></p>
+      </div>
       <div class="plans plans--3">
         <article class="plan" id="readiness-report">
           <h3 class="plan__name">Readiness report</h3>
@@ -266,22 +275,22 @@
             <li>The verdict, the gaps in each area and the top actions</li>
             <li><!--{{READINESS_REPORT_POINT_3}}-->Plan detail to follow<!--/{{READINESS_REPORT_POINT_3}}--></li>
           </ul>
-          <div class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/review?src=pricing-readiness-report" rel="noopener">Book a readiness call</a></div>
+          <div class="plan__action"><a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a readiness call">Book a readiness call</a></div>
         </article>
         <article class="plan" id="review-lite">
-          <h3 class="plan__name"><!--{{ASSESS_SHORT_NAME}}-->A short assessment<!--/{{ASSESS_SHORT_NAME}}--></h3>
-          <p class="plan__for">A short version of the full assessment.</p>
+          <h3 class="plan__name"><!--{{ASSESS_SHORT_NAME}}-->Short review<!--/{{ASSESS_SHORT_NAME}}--></h3>
+          <p class="plan__for">One repository.<span class="plan__when"><span class="plan__when-label">Time</span> The report in 5 working days, then a 30-minute call.</span></p>
           <div class="plan__price"><p class="plan__amount"><!--{{REVIEW_LITE_PRICE}}-->Price to follow. <span class="price-flag">Placeholder price</span><!--/{{REVIEW_LITE_PRICE}}--></p></div>
           <ul class="plan__points">
             <li><!--{{REVIEW_LITE_OFFER}}-->Scope to follow.<!--/{{REVIEW_LITE_OFFER}}--></li>
             <li><!--{{ASSESS_SHORT_POINT_2}}-->Plan detail to follow<!--/{{ASSESS_SHORT_POINT_2}}--></li>
             <li><!--{{ASSESS_SHORT_POINT_3}}-->Plan detail to follow<!--/{{ASSESS_SHORT_POINT_3}}--></li>
           </ul>
-          <div class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/review?src=pricing-review-short" rel="noopener">Book an assessment</a></div>
+          <div class="plan__action"><a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a short review">Book an assessment</a></div>
         </article>
         <article class="plan" id="readiness-review">
-          <h3 class="plan__name"><!--{{ASSESS_FULL_NAME}}-->A full assessment<!--/{{ASSESS_FULL_NAME}}--></h3>
-          <p class="plan__for"><!--{{ASSESS_FULL_LINE}}-->An engineering assessment.<!--/{{ASSESS_FULL_LINE}}--></p>
+          <h3 class="plan__name"><!--{{ASSESS_FULL_NAME}}-->Full assessment<!--/{{ASSESS_FULL_NAME}}--></h3>
+          <p class="plan__for"><!--{{ASSESS_FULL_LINE}}-->An engineering assessment.<!--/{{ASSESS_FULL_LINE}}--><span class="plan__when"><span class="plan__when-label">Time</span> Two weeks. It ends with the gate on your repositories for 30 days.</span></p>
           <div class="plan__price"><p class="plan__amount"><!--{{REVIEW_PRICE}}-->Price to follow. <span class="price-flag">Placeholder price</span><!--/{{REVIEW_PRICE}}--></p></div>
           <ul class="plan__points">
             <li><!--{{REVIEW_OFFER}}-->Details to follow.<!--/{{REVIEW_OFFER}}--></li>
@@ -289,9 +298,10 @@
             <li><!--{{REVIEW_TIERS}}-->Price to follow for N engineers and N repositories.<!--/{{REVIEW_TIERS}}--></li>
             <li><!--{{REVIEW_GUARANTEE}}-->Ask us about the scope.<!--/{{REVIEW_GUARANTEE}}--></li>
           </ul>
-          <div class="plan__action"><a class="btn btn--quiet" href="https://cal.com/apexyard/review?src=pricing-review-full" rel="noopener">Book an assessment</a></div>
+          <div class="plan__action"><a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a full assessment">Book an assessment</a></div>
         </article>
       </div>
+      <p class="plans__fine review-refund">Each review has a statement of work. The statement of work holds our refund promise.</p>
     </div>
   </section>
 
@@ -299,7 +309,7 @@
 <div class="join join--rl" aria-hidden="true"><i></i><i></i><i></i></div><div class="rail" aria-hidden="true"></div>
     <div class="wrap teaser">
       <h2 class="section__title"><span class="stn" aria-hidden="true"></span>Questions about a plan?</h2>
-      <p><a class="btn btn--primary" href="https://cal.com/apexyard/demo?src=pricing" rel="noopener">Book a demo</a></p>
+      <p><a class="btn btn--primary mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo">Book a demo</a></p>
     </div>
   </section>
 
