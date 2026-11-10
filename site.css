@@ -1728,13 +1728,20 @@ main#main.nf { padding: 3rem var(--gutter); }
 /* Two examples (#160): a merge that passed and a merge that was blocked. Only the active one shows. */
 .gc-run:not(.is-active) { display: none; }
 html:not(.js) .gc-tabs { display: none; }
+/* Both runs share one grid cell, so the card keeps the taller run's height
+   and switching runs moves nothing below it. The hidden run leaves the
+   accessibility tree and the tab order through visibility. */
+html.js .gate-card { display: grid; grid-template-columns: minmax(0, 1fr); }
+html.js .gate-card > .gc-tabs { grid-row: 1; }
+html.js .gate-card > .gc-run { grid-row: 2; grid-column: 1; }
+html.js .gate-card > .gc-run:not(.is-active) { display: block; visibility: hidden; }
 .gc-tabs { display: flex; gap: .25rem; padding: .375rem; background: var(--gc-foot); border-bottom: 1px solid var(--gc-line); }
 .gc-tab {
   flex: 1 1 0; min-height: 44px; padding: .5rem .5rem; display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
-  font: 600 .875rem/1.2 var(--text); color: var(--gc-ink-2); background: none; cursor: pointer;
-  border: 1px solid transparent; border-radius: 9px;
+  font: 600 .875rem/1.2 var(--text); color: var(--gc-ink); background: none; cursor: pointer;
+  border: 1px solid var(--gc-line); border-radius: 9px;
 }
-.gc-tab:hover { color: var(--gc-ink); }
+.gc-tab:hover { background: var(--gc-bg); }
 .gc-tab[aria-pressed="true"] { color: var(--gc-ink); background: var(--gc-bg); border-color: var(--gc-line); box-shadow: var(--shadow-sm); }
 .gc-tab[aria-pressed="true"]::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--brand); flex: none; }
 
