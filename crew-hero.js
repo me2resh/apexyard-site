@@ -24,7 +24,10 @@
           return;
         }
       }
-    }, { threshold: 0.35 });
+    // Start as soon as any part of the card is on screen, a little above the
+    // bottom edge. A ratio threshold never fires when the card is taller than
+    // the viewport (for example at 400% zoom), which would leave the ticks hidden.
+    }, { threshold: 0, rootMargin: '0px 0px -15% 0px' });
     io.observe(card);
   }
 
