@@ -517,3 +517,6 @@ site-search button[data-open-modal]:hover {
 }
 
 .ay-index__head h2::before { content: ""; display: inline-block; width: .625rem; height: .625rem; background: var(--ay-blue); border-radius: 50%; margin-right: .75rem; vertical-align: .15em; }
+
+/* Search field border: 3:1 or more against the field and the page (WCAG 1.4.11). */
+#starlight__search { --pagefind-ui-border: var(--ay-rule-strong); }
