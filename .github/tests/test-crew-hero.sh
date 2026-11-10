@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Guards for the crew hero, the section intros, the self-hosted fonts and the mark (#144),
-# and for Hadi, the main thread, on the gate card (#157).
+# for Hadi, the main thread, on the gate card (#157), and for the hero motion, the blocked example,
+# the row evidence and the buyer's question (#160).
 set -uo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 pass=0; fail=0
@@ -34,12 +35,12 @@ crew_refs_exist() {
 assert "every crew image named in a page exists" crew_refs_exist
 
 assert "home headline" grep -Fq 'Your agents build. The gate decides what ships.' "$root/index.html"
-assert "hero image is preloaded as AVIF" grep -Eq '<link rel="preload" as="image" type="image/avif"[^>]*crew-1152\.avif' "$root/index.html"
-assert "gate card holds five rows and a merged footer" bash -c "[ \$(grep -c '<li class=\"gc-row' '$root/index.html') -eq 5 ] && grep -Fq 'fd1b505' '$root/index.html'"
+assert "hero image is preloaded as AVIF" grep -Eq '<link rel="preload" as="image" type="image/avif"[^>]*crew-base-1152\.avif' "$root/index.html"
+assert "gate card holds two examples of five rows, each with a merged footer" bash -c "[ \$(grep -c '<li class=\"gc-row' '$root/index.html') -eq 10 ] && grep -Fq 'fd1b505' '$root/index.html' && grep -Fq '8d0df1b' '$root/index.html'"
 assert "Replay control is a button" grep -Fq '<button class="gc-replay" type="button" data-replay' "$root/index.html"
 assert "reduced motion turns the story off" grep -Fq '.is-playing *, .is-playing *::before, .is-playing *::after { animation: none !important; }' "$root/site.css"
 
-hero_avif=$(wc -c < "$root/img/crew/crew-1152.avif")
+hero_avif=$(wc -c < "$root/img/crew/crew-base-1152.avif")
 assert "hero AVIF at 1440 px is 150 KB or less" test "$hero_avif" -le 153600
 
 intro_count=$(cat "$root/index.html" "$root/build.html" "$root/gate.html" | grep -c 'class="crew-intro"')
@@ -74,10 +75,115 @@ hadi_images_exist() {
 assert "the twelve Hadi images exist" hadi_images_exist
 assert "the crew intro names Hadi, the main thread" grep -Fq '<p class="crew-intro__role">The main thread</p><p class="crew-intro__name">Hadi</p>' "$root/index.html"
 assert "the hero alt text names Hadi, the main thread" grep -Fq 'Hadi, the main thread, routes the work to the crew' "$root/index.html"
-hadi_slots() { [ "$(grep -c '<span class="gc-hadi[^"]*" aria-hidden="true"></span>' "$root/index.html")" -eq 6 ]; }
-assert "Hadi has a decorative slot in each gate row and beside Merged" hadi_slots
+hadi_slots() { [ "$(grep -c '<span class="gc-hadi[^"]*" aria-hidden="true"></span>' "$root/index.html")" -eq 12 ]; }
+assert "Hadi has a decorative slot in each gate row and beside Merged, in both examples" hadi_slots
 assert "the story waits for the card to scroll into view" grep -Fq 'IntersectionObserver' "$root/crew-hero.js"
 assert "the human row waits before its tick" grep -Fq '.is-playing .gc-row--approved, .is-playing .hero-crew__floor i:nth-child(5) { --gc-d: var(--gc-human); }' "$root/site.css"
+
+# ---- #160: large Hadi on the crew picture ----
+css="$root/site.css"
+js="$root/crew-hero.js"
+home="$root/index.html"
+
+large_hadi_images() {
+  local f ext missing=0
+  for f in crew-base-768 crew-base-1152 crew-base-1536 hadi-lg-150 hadi-lg-300; do
+    for ext in avif webp png; do
+      [ -f "$root/img/crew/$f.$ext" ] || { echo "    missing img/crew/$f.$ext"; missing=1; }
+    done
+  done
+  return "$missing"
+}
+assert "the picture without Hadi and the large Hadi cut-out exist in three formats" large_hadi_images
+no_old_picture() { ! grep -lE '/img/crew/crew-(768|1152|1536)\.' "$root"/*.html; }
+assert "no page still names the old crew picture" no_old_picture
+
+sprite_line() { grep 'class="hero-crew__hadi"' "$home"; }
+one_sprite() { [ "$(sprite_line | wc -l)" -eq 1 ] && sprite_line | grep -Fq 'aria-hidden="true"' && sprite_line | grep -Fq 'alt=""'; }
+assert "one large Hadi sprite, hidden from screen readers, with empty alt text" one_sprite
+sprite_is_plain() { ! sprite_line | grep -Eiq 'gc-state|Passed|Approved|<svg'; }
+assert "large Hadi never carries text, a tick or a state" sprite_is_plain
+for k in 0 1 2 3 4; do
+  assert "large Hadi has a stop $k beside a crew member" grep -Eq -- "--lh-s$k: [0-9.]+;" "$css"
+done
+hop_block() { sed -n '/^\.is-playing \.hero-crew__hadi {/,/^}/p' "$css"; }
+hops_use_timeline() {
+  local v
+  for v in r0 r1 r2 r3 r4 human; do
+    hop_block | grep -Fq "var(--gc-$v)" || { echo "    no var(--gc-$v) in the large Hadi hops"; return 1; }
+  done
+}
+assert "large Hadi hops use the card timeline, not their own clock" hops_use_timeline
+one_clock() { [ "$(grep -c -- '--gc-t0: 1s;' "$css")" -eq 1 ] && grep -Fq '.is-playing[data-run="blocked"] {' "$css"; }
+assert "the timeline variables are set in one place for both examples" one_clock
+stack_block() { sed -n '/^@media (max-width: 899px)/,/^}/p' "$css"; }
+stack_home() { stack_block | grep -Fq '.is-playing .hero-crew__hadi'; }
+assert "large Hadi stays at home where the picture stacks under the card" stack_home
+home_block() { sed -n '/^\.hero-crew__hadi {/,/^}/p' "$css"; }
+behind_at_rest() { grep -Fq '@keyframes gc-lh-z' "$css" && home_block | grep -Fq 'z-index: 0'; }
+assert "large Hadi sits behind the boot at rest and moves in front only while it walks" behind_at_rest
+no_layout_motion() { ! sed -n '/^@keyframes gc-lh-/p' "$css" | grep -Eq '(left|top|margin|width|height):'; }
+assert "large Hadi moves by transform only, so it causes no layout shift" no_layout_motion
+
+# ---- #160: the blocked example (me2resh/apexyard#2010), nothing invented ----
+assert "the blocked example names pull request 2010 and its ticket" bash -c "grep -Fq 'me2resh/apexyard#2010' '$home' && grep -Fq 'issues/2006' '$home'"
+real_commits() {
+  local c
+  for c in c809c6e 22e1b67 8d0df1bf65b648d28e542e9c309bed733342781d; do
+    grep -Fq "$c" "$home" || { echo "    missing $c"; return 1; }
+  done
+}
+assert "the blocked example uses the real commits" real_commits
+assert "the blocked example links the real security block and the final approval" bash -c "grep -Fq 'pull/2010#pullrequestreview-5818250332' '$home' && grep -Fq 'pull/2010#pullrequestreview-5819187528' '$home'"
+card_html() { sed -n '/class="gate-card"/,/<\/section>/p' "$home"; }
+foreign_links() { card_html | grep -o 'href="[^"]*"' | grep -v 'href="https://github.com/me2resh/apexyard/' | grep .; }
+only_public_links() { ! foreign_links; }
+assert "every link in the hero card points at the public ApexYard repository" only_public_links
+blocked_layers() { [ "$(grep -c 'class="gc-bad" aria-hidden="true"' "$home")" -eq 4 ] && [ "$(grep -c 'gc-state--block' "$home")" -eq 2 ]; }
+assert "the blocked rows hold a blocked layer and a final layer" blocked_layers
+assert "the final layer is the resting state, so reduced motion shows the whole story" bash -c "sed -n '/^\.gc-swap \.gc-bad {/p' '$css' | grep -Fq 'opacity: 0'"
+assert "a fix note links the changes between the block and the approval" grep -Fq 'compare/c809c6e...22e1b67' "$home"
+
+# ---- #160: tabs, Replay and row evidence ----
+tabs_ok() {
+  [ "$(grep -c 'class="gc-tab"' "$home")" -eq 2 ] &&
+    grep -Fq 'data-run="clean" aria-pressed="true"' "$home" &&
+    grep -Fq 'data-run="blocked" aria-pressed="false"' "$home"
+}
+assert "two example buttons, one pressed" tabs_ok
+evidence_ok() {
+  local h n
+  h=$(card_html)
+  n=$(echo "$h" | grep -o 'class="gc-more" type="button" aria-expanded="false" aria-controls="ev-' | wc -l)
+  [ "$n" -eq 10 ] || { echo "    $n evidence buttons"; return 1; }
+  n=$(echo "$h" | grep -o '<div class="gc-ev" id="ev-[a-z]-[0-4]" hidden>' | wc -l)
+  [ "$n" -eq 10 ] || { echo "    $n hidden panels"; return 1; }
+  n=$(echo "$h" | grep -o '<dt>Evidence</dt><dd><a href="https://github.com/me2resh/apexyard/' | wc -l)
+  [ "$n" -eq 10 ] || { echo "    $n evidence links"; return 1; }
+  n=$(echo "$h" | grep -c '<dt>Checked</dt>')
+  [ "$n" -eq 10 ] || { echo "    $n checked lines"; return 1; }
+  n=$(echo "$h" | grep -c '<dt>By</dt>')
+  [ "$n" -eq 10 ]
+}
+assert "each row has an evidence button and a hidden panel: what was checked, by whom, a link" evidence_ok
+controls_real() {
+  local id
+  for id in $(grep -o 'aria-controls="ev-[a-z]-[0-4]"' "$home" | cut -d'"' -f2); do
+    grep -Fq "id=\"$id\"" "$home" || { echo "    no panel $id"; return 1; }
+  done
+}
+assert "every aria-controls value names a real panel" controls_real
+assert "the script opens evidence with aria-expanded and closes it on Escape" bash -c "grep -Fq 'aria-expanded' '$js' && grep -Fq \"'Escape'\" '$js' && grep -Fq 'btn.focus()' '$js'"
+assert "the script switches examples through data-run and replays the active one" bash -c "grep -Fq \"hero.setAttribute('data-run'\" '$js' && grep -Fq 'replays[r].addEventListener' '$js'"
+assert "the row evidence has a visible focus ring" grep -Fq '.gc-more:focus-visible::after { outline: 3px solid var(--focus)' "$css"
+assert "evidence links stay above the row's click area" bash -c "sed -n '/^\.gc-fact {/p' '$css' | grep -Fq 'z-index: 2'"
+
+# ---- #160: the buyer's question ----
+assert "the buyer's question leads the hero" bash -c "sed -n '/<div class=\"hero-crew__copy\">/,/<h1/p' '$home' | grep -Fq 'An agent wrote it. Who approved it?'"
+assert "the supporting lines stay as they were" bash -c "grep -Fq 'Use AI coding agents with a controlled engineering process.' '$home' && grep -Fq 'Every merge leaves a record: what was checked, who approved it, and the exact commit.' '$home'"
+hero_html() { sed -n '/id="hero"/,/<\/section>/p' "$home"; }
+no_price() { ! hero_html | grep -Eq '(\$|\xC2\xA3|\xE2\x82\xAC)[0-9]'; }
+assert "no price in the hero" no_price
 
 outside='Vercel|Linear|Stripe|Notion|Figma|Cursor Cloud|Midjourney'
 assert "no outside product names in hero or intros" bash -c "! sed -n '/id=\"hero\"/,/<\\/section>/p' '$root/index.html' | grep -Eiq '$outside'"
