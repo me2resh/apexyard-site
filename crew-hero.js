@@ -1,11 +1,16 @@
-/* Crew hero: the gate card story (#144, #157).
-   The story is CSS only. This file starts it once, when the card first scrolls into view,
-   and restarts it on Replay. It never loops. */
+/* Crew hero: the gate card story (#144, #157, #160).
+   The story is CSS only. All times come from the variables in site.css (--gc-*), so the card,
+   small Hadi, large Hadi and the floor lights never drift apart.
+   This file starts the story once, when the card first scrolls into view, restarts it on Replay,
+   switches between the two examples, and opens a row's evidence. It never loops. */
 (function () {
   var hero = document.getElementById('hero');
-  var btn = document.querySelector('[data-replay]');
-  if (!hero || !btn) return;
+  if (!hero) return;
   var card = hero.querySelector('.gate-card');
+  if (!card) return;
+  var runs = card.querySelectorAll('.gc-run');
+  var tabs = card.querySelectorAll('.gc-tab');
+  var replays = card.querySelectorAll('[data-replay]');
 
   function play() {
     hero.classList.remove('gc-hold');
@@ -14,7 +19,60 @@
     hero.classList.add('is-playing');
   }
 
-  if (card && 'IntersectionObserver' in window) {
+  // Row evidence. One row is open at a time. Escape closes it and puts focus back on its button.
+  function closeEvidence() {
+    var open = card.querySelectorAll('.gc-row.is-open');
+    for (var n = 0; n < open.length; n++) {
+      var btn = open[n].querySelector('.gc-more');
+      var panel = document.getElementById(btn.getAttribute('aria-controls'));
+      open[n].classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+      if (panel) panel.hidden = true;
+    }
+  }
+  card.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('.gc-more') : null;
+    if (!btn) return;
+    var panel = document.getElementById(btn.getAttribute('aria-controls'));
+    var row = btn.closest('.gc-row');
+    var wasOpen = btn.getAttribute('aria-expanded') === 'true';
+    closeEvidence();
+    if (!wasOpen && panel && row) {
+      row.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+      panel.hidden = false;
+    }
+  });
+  card.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape' && e.key !== 'Esc') return;
+    var row = card.querySelector('.gc-row.is-open');
+    if (!row) return;
+    var btn = row.querySelector('.gc-more');
+    closeEvidence();
+    btn.focus();
+  });
+
+  // The two examples: a merge that passed and a merge that was blocked.
+  function show(name) {
+    closeEvidence();
+    for (var n = 0; n < runs.length; n++) {
+      runs[n].classList.toggle('is-active', runs[n].getAttribute('data-run') === name);
+    }
+    for (var m = 0; m < tabs.length; m++) {
+      tabs[m].setAttribute('aria-pressed', tabs[m].getAttribute('data-run') === name ? 'true' : 'false');
+    }
+    hero.setAttribute('data-run', name);
+    play();
+  }
+  for (var t = 0; t < tabs.length; t++) {
+    tabs[t].addEventListener('click', function (e) {
+      var name = e.currentTarget.getAttribute('data-run');
+      if (hero.getAttribute('data-run') !== name) show(name);
+      else play();
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
     hero.classList.add('gc-hold');
     var io = new IntersectionObserver(function (entries) {
       for (var n = 0; n < entries.length; n++) {
@@ -31,6 +89,8 @@
     io.observe(card);
   }
 
-  btn.hidden = false;
-  btn.addEventListener('click', play);
+  for (var r = 0; r < replays.length; r++) {
+    replays[r].hidden = false;
+    replays[r].addEventListener('click', play);
+  }
 }());
