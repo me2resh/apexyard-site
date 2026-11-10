@@ -168,9 +168,9 @@ evidence_ok() {
 assert "each row has an evidence button and a hidden panel: what was checked, by whom, a link" evidence_ok
 controls_real() {
   local id
-  for id in $(grep -o 'aria-controls="ev-[a-z]-[0-4]"' "$home" | cut -d'"' -f2); do
+  while IFS= read -r id; do
     grep -Fq "id=\"$id\"" "$home" || { echo "    no panel $id"; return 1; }
-  done
+  done < <(grep -o 'aria-controls="ev-[a-z]-[0-4]"' "$home" | cut -d'"' -f2)
 }
 assert "every aria-controls value names a real panel" controls_real
 assert "the script opens evidence with aria-expanded and closes it on Escape" bash -c "grep -Fq 'aria-expanded' '$js' && grep -Fq \"'Escape'\" '$js' && grep -Fq 'btn.focus()' '$js'"
