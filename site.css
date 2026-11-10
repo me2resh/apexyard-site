@@ -1645,16 +1645,19 @@ main#main.nf { padding: 3rem var(--gutter); }
 .hero-crew {
   display: grid; align-items: start;
   grid-template-columns: minmax(0, 44fr) minmax(0, 56fr);
-  grid-template-areas: "copy art" "gate art";
-  grid-template-rows: auto 1fr;
+  grid-template-areas: "copy copy" "gate art";
+  grid-template-rows: auto auto;
   column-gap: clamp(1.5rem, 3vw, 2.5rem); row-gap: 1.5rem;
 }
 .hero-crew__copy { grid-area: copy; min-width: 0; }
 .hero.hero--crew { background: var(--page); }
-.hero.hero--crew h1 { font-size: clamp(2.125rem, 4.1vw, 3.75rem); line-height: 1.02; letter-spacing: -.03em; font-weight: 800; max-width: none; }
+.hero.hero--crew h1 { font-size: clamp(2.125rem, 5vw, 4.5rem); line-height: 1.02; letter-spacing: -.03em; font-weight: 800; max-width: none; }
+/* The headline is the full-width band (#176). Each sentence is one line. The small text stays at reading width. */
+.hero.hero--crew h1 .hero-crew__line { display: block; }
+.hero-crew__ask, .hero-crew__lede, .hero-crew__record { max-width: 60ch; }
 .hero-crew__ask { margin: 0 0 .75rem; font: 700 clamp(1.125rem, 1.7vw, 1.5rem)/1.2 var(--display); letter-spacing: -.015em; color: var(--brand-ink); text-wrap: balance; }
-.hero-crew__lede { margin-top: 1.125rem; max-width: 33em; font-size: clamp(1rem, 1.25vw, 1.1875rem); line-height: 1.5; color: var(--ink-2); }
-.hero-crew__record { margin-top: .5rem; max-width: 40em; font-size: .9375rem; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+.hero-crew__lede { margin-top: 1.125rem; font-size: clamp(1rem, 1.25vw, 1.1875rem); line-height: 1.5; color: var(--ink-2); }
+.hero-crew__record { margin-top: .5rem; font-size: .9375rem; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
 .hero-crew__copy .hero__actions { margin-top: 1rem; }
 .hero-crew__fine { display: flex; flex-wrap: wrap; gap: .25rem 2rem; margin-top: 1.25rem; }
 .hero-crew__fine .hero__hint, .hero-crew__fine .hero__works { margin: 0; font-size: .9375rem; color: var(--ink-2); }
@@ -1663,7 +1666,7 @@ main#main.nf { padding: 3rem var(--gutter); }
   font: 500 .6875rem/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2);
   border: 1px dashed var(--ink-3); border-radius: 3px;
 }
-.hero-crew__art { grid-area: art; align-self: end; position: relative; margin: 0 calc(-1 * var(--gutter)) 0 0; min-width: 0; }
+.hero-crew__art { grid-area: art; align-self: start; position: relative; margin: 0 calc(-1 * var(--gutter)) 0 0; min-width: 0; }
 .hero-crew__art picture, .hero-crew__art img { display: block; width: 100%; height: auto; position: relative; z-index: 1; }
 .hero-crew__floor { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .hero-crew__floor i {
@@ -1675,7 +1678,7 @@ main#main.nf { padding: 3rem var(--gutter); }
 
 .gate-card {
   --gc-pad: 2.75rem; --gc-rx: 1.375rem; --gc-hadi: 24px;
-  grid-area: gate; margin-top: .5rem; min-width: 0;
+  grid-area: gate; margin-top: 0; min-width: 0;
   background: var(--gc-bg); color: var(--gc-ink);
   border: 1px solid var(--gc-line); border-radius: var(--r-card); box-shadow: var(--shadow);
   overflow: hidden; font-family: var(--text); text-align: left;
@@ -1919,6 +1922,7 @@ html.js .gate-card > .gc-run:not(.is-active) { display: block; visibility: hidde
 @media (max-width: 899px) {
   .hero-crew { grid-template-columns: minmax(0, 1fr); grid-template-areas: "copy" "art" "gate"; grid-template-rows: none; }
   .hero.hero--crew h1 { font-size: clamp(2.5rem, 11vw, 3.5rem); max-width: none; }
+  .hero.hero--crew h1 .hero-crew__line { display: inline; }
   .hero-crew__art { margin: .5rem 0 0; }
   .gate-card { margin-top: 0; }
   /* The picture stacks above the card here, so large Hadi stays at home. */
