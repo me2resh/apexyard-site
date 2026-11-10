@@ -51,10 +51,20 @@ assert "privacy.html has no inline consent script" file_lacks "$page" "localStor
 assert "privacy.html does not name the booking company" file_lacks "$page" 'Cal.com'
 
 # --- 2. Footers ---
+# The footer markup only: the consent banner also links /privacy, so a
+# whole-file match would pass with the footer link gone. Footer.astro is
+# the docs footer itself.
+footer_markup() { # <file>
+  case "$1" in
+    *.astro) cat "$1" ;;
+    *) awk '/<footer/,/<\/footer>/' "$1" ;;
+  esac
+}
+
 footers_link_privacy() {
   local f hits=""
   while IFS= read -r f; do
-    grep -Fq 'href="/privacy"' "$f" || hits="$hits ${f#"$root"/}"
+    footer_markup "$f" | grep -Fq 'href="/privacy"' || hits="$hits ${f#"$root"/}"
   done < <(footer_pages)
   [ -z "$hits" ] || { echo "    missing in:$hits"; return 1; }
 }
