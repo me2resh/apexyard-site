@@ -78,6 +78,17 @@ The ticket, the decision record and the review that your agents make in Build ar
 
 ---
 
+# Cockpit (https://apexyard.ai/cockpit)
+
+Cockpit is a preview of the desktop app for Build. It is not a fourth product. [Preview]
+
+- What works today: a setup panel, governed runs that stop at each gate, a run view, a needs-you panel, and an ORBIT planning view.
+- Known limit: sign-in with your ApexYard account is off. [Planned]
+- Known limit: a governed run can call gh with your GitHub login, and that login can merge pull requests.
+- How to get it: there is no download yet. Today you build it from source, and you need access to the source repository. Write to us to ask for access.
+
+---
+
 # Gate (https://apexyard.ai/gate)
 
 Gate checks each pull request against your process. Every merge leaves a record: what was checked, who approved it and the exact commit.

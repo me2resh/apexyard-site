@@ -1,0 +1,182 @@
+<!doctype html>
+<!--
+  ApexYard, &copy; 2026 me2resh
+  apexyard.ai, github.com/me2resh/apexyard, MIT licence
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cockpit preview: the desktop app for Build | ApexYard</title>
+<meta name="author" content="me2resh">
+<meta name="description" content="Cockpit is a preview of the desktop app for ApexYard Build. See what works today, the known limits and how to get it.">
+<link rel="canonical" href="https://apexyard.ai/cockpit">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#EEF1F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1B2E" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ApexYard">
+<meta property="og:url" content="https://apexyard.ai/cockpit">
+<meta property="og:title" content="Cockpit preview: the desktop app for Build | ApexYard">
+<meta property="og:description" content="Cockpit is a preview of the desktop app for ApexYard Build. See what works today, the known limits and how to get it.">
+<meta property="og:image" content="https://apexyard.ai/og/index.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://apexyard.ai/cockpit">
+<meta name="twitter:title" content="Cockpit preview: the desktop app for Build | ApexYard">
+<meta name="twitter:description" content="Cockpit is a preview of the desktop app for ApexYard Build. See what works today, the known limits and how to get it.">
+<meta name="twitter:image" content="https://apexyard.ai/og/index.png">
+<script>try{var t=localStorage.getItem('ay-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="/product.css">
+<link rel="stylesheet" href="/site.css">
+
+<!-- begin: gtag  -  keep in sync across all site/*.html pages (#399) -->
+<!-- Google tag (gtag.js) loads only after the visitor presses Accept (#154).
+     Before consent, the page sends no request to Google. -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  window.ayLoadAnalytics = function () {
+    if (window.ayAnalyticsLoaded) return;
+    window.ayAnalyticsLoaded = true;
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'granted'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-G3EMR3CB02');
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-G3EMR3CB02';
+    document.head.appendChild(s);
+  };
+  try {
+    if (localStorage.getItem('ay-consent') === 'granted') window.ayLoadAnalytics();
+  } catch (e) {}
+</script>
+<!-- end: gtag -->
+<script>document.documentElement.classList.add("js")</script>
+<script src="/site.js" defer></script>
+</head>
+<body>
+
+<a href="#main" class="skip">Skip to content</a>
+
+<header class="hdr">
+  <div class="hdr__bar">
+    <a href="/" class="brand" aria-label="ApexYard home"><img class="brand__mark" src="/brand/apexyard-mark.svg" width="36" height="36" alt=""><span class="brand__word">ApexYard</span></a>
+    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="https://app.apexyard.ai" class="nav__login">Log in</a></nav>
+    <div class="hdr__keys">
+      <a class="key key--primary key--sm mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <button class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false" data-theme-toggle hidden>Theme</button></div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="product-head" aria-labelledby="product-title">
+    <div class="wrap">
+      <p class="product-head__name">Cockpit <span class="cap cap--preview" data-cap="cockpit_app">Preview</span></p>
+      <h1 id="product-title"><span data-claim="cockpit_app">The desktop app for Build, for people who prefer a window to a terminal.</span></h1>
+      <p class="product-head__who">Cockpit is not a fourth product. It runs the steps of <a href="/build">Build</a> on your machine. The Gate and Readiness stay as they are.</p>
+      <p class="product-head__cta"><a class="btn btn--primary mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Ask for Cockpit access">Ask for access</a></p>
+      <p class="product-head__free">This is a preview. You cannot download it yet.</p>
+    </div>
+  </section>
+  <section class="section section--flush sec t-deep" id="works-today" aria-labelledby="works-title" data-side="l">
+<div class="rail" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="features">
+        <article class="feature feature--text">
+          <div class="feature__text">
+            <h2 class="section__title" id="works-title"><span class="stn" aria-hidden="true"></span>What works today</h2>
+            <ul class="app-access__list">
+              <li><strong>Setup.</strong> A setup panel checks the framework, jq and the GitHub CLI on your machine. It installs what is missing.</li>
+              <li><strong>Governed runs.</strong> Cockpit starts a coding agent job on your machine. The job stops at each gate and continues when you decide. A Claude job and a sandboxed Codex job both work.</li>
+              <li><strong>Run view.</strong> Each run shows as a list of events, so you can see what the agent did.</li>
+              <li><strong>Needs you.</strong> One panel lists what waits for you. A board shows each run.</li>
+              <li><strong>Planning.</strong> A planning view shows your ORBIT plans and slices.</li>
+              <li><strong>One project picker.</strong> Every screen uses the project that you pick.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section class="section section--tint sec t-dark" id="limits" aria-labelledby="limits-title" data-side="r">
+<div class="join" aria-hidden="true"><i></i><i></i><i></i></div><div class="rail" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="features">
+        <article class="feature feature--text">
+          <div class="feature__text">
+            <h2 class="section__title" id="limits-title"><span class="stn" aria-hidden="true"></span>Known limits</h2>
+            <ul class="app-access__list">
+              <li><strong>Sign-in with your ApexYard account is off.</strong> Cockpit works on your machine without an account. Sign-in with GitHub through ApexYard is <span data-claim="cockpit_signin">not on yet</span>. <span class="cap cap--planned" data-cap="cockpit_signin">Planned</span></li>
+              <li><strong>A run uses your own GitHub login.</strong> A governed run can call <code>gh</code> with your login, and that login can merge pull requests. Do not assume that a run cannot reach your GitHub credentials. We track a fix.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section class="section sec t-panel" id="get-it" aria-labelledby="get-title" data-side="l">
+<div class="join join--rl" aria-hidden="true"><i></i><i></i><i></i></div><div class="rail" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="features">
+        <article class="feature feature--text">
+          <div class="feature__text">
+            <h2 class="section__title" id="get-title"><span class="stn" aria-hidden="true"></span>How to get it</h2>
+            <p>There is no download yet. Today you build Cockpit from its source code. You need access to the source repository first. Write to us to ask for access.</p>
+            <p>Cockpit is not part of a plan yet. Until it has a download, the plans do not charge for it. We will say here when you can download it.</p>
+            <p><a href="/docs/cockpit/overview">Read the Cockpit docs</a>. <a href="/pricing#cockpit">See Cockpit on the pricing page</a>.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer ftr t-dark">
+  <div class="wrap site-footer__inner ftr__in">
+    <nav class="ftr__nav" aria-label="Footer">
+      <a href="/build">Build</a>
+      <a href="/gate">Gate</a>
+      <a href="/readiness">Readiness</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/docs">Docs</a>
+      <a href="/docs/quickstart/architecture">Architecture</a>
+      <a href="/skills">Skills</a>
+      <a href="/creators">Creators</a>
+      <a href="https://github.com/me2resh/apexyard/releases" target="_blank" rel="noopener">Changelog</a>
+      <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener">GitHub</a>
+      <a href="/privacy">Privacy</a>
+    </nav>
+    <p>&copy; 2026 <a href="https://me2resh.com" target="_blank" rel="noopener">me2resh</a>. ApexScript Ltd. Company number: <span class="hero-crew__tag" data-owner-fact="company-number">Placeholder</span>. The ApexYard framework is open source under the MIT licence.</p>
+  </div>
+</footer>
+
+<div id="consent" class="consent" role="region" aria-label="Cookie consent" hidden>
+  <div class="consent__inner">
+    <p class="consent__msg">
+      This site uses Google Analytics to count visits. No ads, no cross-site tracking.
+      <a href="/privacy">Privacy</a>.
+    </p>
+    <div class="consent__actions">
+      <button type="button" class="consent__btn" data-consent="denied">Decline</button>
+      <button type="button" class="consent__btn consent__btn--accept" data-consent="granted">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script src="/claims.js" defer></script>
+<script src="/product.js" defer></script>
+<script src="/keel-loop.js" defer></script>
+</body>
+</html>

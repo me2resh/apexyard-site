@@ -24,6 +24,7 @@ window.APEXYARD_CLAIMS = {
   ci_attestation: 'coming', // review attested by your CI; 'live' when it ships
   readiness_weekly: 'coming', // Readiness on a schedule for every repository; 'live' when it ships
   cockpit_app: 'coming',    // the Cockpit desktop app; 'live' when it can be downloaded
+  cockpit_signin: 'coming', // sign in to the Cockpit with GitHub through ApexYard; 'live' when it ships
   free_checks: 'coming',    // the free hosted check on public repositories; 'live' when the free tier opens
   paid_plans: 'coming'      // plans that open by card, with evidence retention; 'live' when they open
 };
@@ -40,6 +41,7 @@ window.APEXYARD_LABELS = {
   ci_attestation: 'Planned',
   readiness_weekly: 'Planned for 1 Mar 2027',
   cockpit_app: 'Preview',
+  cockpit_signin: 'Planned',
   free_checks: 'Planned for 1 Feb 2027',
   paid_plans: 'Planned for 1 Mar 2027'
 };
