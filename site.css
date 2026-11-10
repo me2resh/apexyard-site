@@ -1652,7 +1652,8 @@ main#main.nf { padding: 3rem var(--gutter); }
 .hero-crew__copy { grid-area: copy; min-width: 0; }
 .hero.hero--crew { background: var(--page); }
 .hero.hero--crew h1 { font-size: clamp(2.125rem, 4.1vw, 3.75rem); line-height: 1.02; letter-spacing: -.03em; font-weight: 800; max-width: none; }
-.hero-crew__ph { margin-top: 1.125rem; max-width: 33em; font-size: clamp(1rem, 1.25vw, 1.1875rem); line-height: 1.5; color: var(--ink-2); }
+.hero-crew__lede { margin-top: 1.125rem; max-width: 33em; font-size: clamp(1rem, 1.25vw, 1.1875rem); line-height: 1.5; color: var(--ink-2); }
+.hero-crew__record { margin-top: .5rem; max-width: 40em; font-size: .9375rem; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
 .hero-crew__copy .hero__actions { margin-top: 1rem; }
 .hero-crew__fine { display: flex; flex-wrap: wrap; gap: .25rem 2rem; margin-top: 1.25rem; }
 .hero-crew__fine .hero__hint, .hero-crew__fine .hero__works { margin: 0; font-size: .9375rem; color: var(--ink-2); }
