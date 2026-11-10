@@ -1563,7 +1563,7 @@ pre { max-width: 100%; overflow-x: auto; }
 .skill__desc { font-family: var(--text); color: inherit; }
 .skills-sec { padding-inline: max(var(--gutter), calc((100vw - var(--wrap)) / 2)); }
 .skills-sec h2 { font: 800 clamp(1.875rem, 3.2vw, 2.75rem)/1.06 var(--display); letter-spacing: -.025em; text-transform: none; border-bottom-color: var(--line); }
-.skfind input { width: 100%; max-width: 40rem; min-height: 48px; border: 1px solid var(--line-2); border-radius: var(--r-btn); background: var(--card); color: var(--ink); padding: .75rem; font: 400 1rem/1.3 var(--text); }
+.skfind input { width: 100%; max-width: 40rem; min-height: 48px; border: 1px solid var(--field-line); border-radius: var(--r-btn); background: var(--card); color: var(--ink); padding: .75rem; font: 400 1rem/1.3 var(--text); }
 .skfind label { display: block; font-weight: 600; }
 .skfind { padding-block: 1.5rem; }
 .skfind p { margin-top: .5rem; }
