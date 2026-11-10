@@ -117,7 +117,7 @@ claude            # start Claude Code in the repo</code></pre></div>
   <p class="note"><strong>Step 1 — install the CLI.</strong> Run from <b>anywhere</b>. Paste the token at the hidden prompt; we export it as <code>APEXYARD_DEPLOY_TOKEN</code> so the wizard reuses it in Step 2 (no second prompt):</p>
   <div class="cmd"><button class="copy">Copy</button><pre><code>read -rs APEXYARD_DEPLOY_TOKEN; export APEXYARD_DEPLOY_TOKEN; echo
 pipx install "&lt;package URL from your invitation&gt;"</code></pre></div>
-  <p class="note">Access is by invitation. <a href="https://cal.com/apexyard/demo?src=apexdock">Book a demo</a> to get set up.</p>
+  <p class="note">Access is by invitation. <a class="mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo">Book a demo</a> to get set up.</p>
 
   <p class="note"><strong>Step 2 — run the wizard.</strong> Run from <b>your apexyard fork</b> (it detects your roots from there). The <code>--confirm</code> flag lets you pick the gated (🔒) skills like <code>/roundtable</code> and enables them for you:</p>
   <div class="cmd"><button class="copy">Copy</button><pre><code>cd ~/path/to/your-apexyard-fork
@@ -308,6 +308,14 @@ gh repo create … --private   → the portal's own private repo + register it
 </div>
 
 <script>
+  // Mail links: the address is assembled here, so the HTML holds no address (same as product.js).
+  document.querySelectorAll('.mailto-cta').forEach(function (a) {
+    var u = a.getAttribute('data-u');
+    var d = a.getAttribute('data-d');
+    if (!u || !d) return;
+    a.setAttribute('href', 'mail' + 'to:' + encodeURIComponent(u) + '@' + encodeURIComponent(d) +
+      '?subject=' + encodeURIComponent(a.getAttribute('data-s') || 'ApexYard Team'));
+  });
   document.querySelectorAll('.cmd .copy').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var code = btn.parentElement.querySelector('code');

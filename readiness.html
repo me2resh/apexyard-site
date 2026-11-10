@@ -73,7 +73,7 @@
     <a href="/" class="brand" aria-label="ApexYard home"><img class="brand__mark" src="/brand/apexyard-mark.svg" width="36" height="36" alt=""><span class="brand__word">ApexYard</span></a>
     <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness" aria-current="page">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="https://app.apexyard.ai" class="nav__login">Log in</a></nav>
     <div class="hdr__keys">
-      <a class="key key--primary key--sm" href="https://cal.com/apexyard/demo?src=nav" rel="noopener"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
+      <a class="key key--primary key--sm mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     <button class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false" data-theme-toggle hidden>Theme</button></div>
   </div>
@@ -86,11 +86,12 @@
       <p class="product-head__name">Readiness</p>
       <h1 id="product-title">Know whether each repository is ready for production, area by area.</h1>
       <p class="product-head__who">For CTOs and engineering leads who answer for what ships.</p>
-      <p class="product-head__cta"><a class="btn btn--primary" href="https://cal.com/apexyard/review?src=readiness-head" rel="noopener">Book a readiness call</a></p>
+      <p class="product-head__cta"><a class="btn btn--primary mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a readiness call">Book a readiness call</a></p>
 
       <!-- A real readiness audit of a public sample app. Every verdict, count
-           and action below comes from the audit summary. Add no score and
-           no other number. -->
+           and action below comes from the sample report PDF
+           (/reports/sample-readiness-report.pdf, #159). Keep the two in step.
+           Add no score and no other number. -->
       <figure class="report" aria-labelledby="report-title">
         <div class="mock report__card">
           <h2 class="mock__bar report__bar" id="report-title"><span class="mock__title">Readiness report</span> <span class="mock__meta">me2resh/ddd-sam-example</span></h2>
@@ -125,7 +126,7 @@
                   <tr><th scope="row">Performance</th><td><span class="verdict verdict--pass">Pass</span></td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td></tr>
                   <tr><th scope="row">Monitoring</th><td><span class="verdict verdict--fail">Fail</span></td><td class="report__num is-zero">0</td><td class="report__num">2</td><td class="report__num">2</td><td class="report__num">1</td></tr>
                   <tr><th scope="row">Documentation</th><td><span class="verdict verdict--warn">Warn</span></td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td><td class="report__num">2</td><td class="report__num">3</td></tr>
-                  <tr><th scope="row">Behaviour quality</th><td><span class="verdict verdict--warn">Warn</span></td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td><td class="report__num">1</td></tr>
+                  <tr><th scope="row">Behaviour quality</th><td><span class="verdict verdict--warn">Warn</span></td><td class="report__num is-zero">0</td><td class="report__num is-zero">0</td><td class="report__num">1</td><td class="report__num">1</td></tr>
                 </tbody>
               </table>
             </div>
@@ -139,7 +140,8 @@
             </div>
           </div>
         </div>
-        <figcaption class="mock__caption report__caption">A real readiness report on a public sample app. Repository: <a href="https://github.com/me2resh/ddd-sam-example">me2resh/ddd-sam-example</a>. The audit ran on commit <a href="https://github.com/me2resh/ddd-sam-example/commit/36c3ed0f379a0880f877160c88983653a0e1cb49"><code>36c3ed0</code></a> on <time datetime="2026-10-26">26 October 2026</time>.</figcaption>
+        <p class="report__sample"><a href="/reports/sample-readiness-report.pdf" data-sample-report>Read the full sample report (PDF)</a>. It lists each gap with the file and the line that show it. <a href="/docs/readiness/report-template">See the report template</a>.</p>
+        <figcaption class="mock__caption report__caption">A real readiness report on a public sample app. Repository: <a href="https://github.com/me2resh/ddd-sam-example">me2resh/ddd-sam-example</a>. The audit ran on commit <a href="https://github.com/me2resh/ddd-sam-example/commit/36c3ed0f379a0880f877160c88983653a0e1cb49"><code>36c3ed0</code></a> on <time datetime="2026-11-10">10 November 2026</time>.</figcaption>
       </figure>
     </div>
   </section>

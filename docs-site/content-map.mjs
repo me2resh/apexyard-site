@@ -22,6 +22,11 @@ export const SOURCE = {
   editBranch: 'dev',
 };
 
+// Root paths of the main site that docs text can link to. The sync step
+// keeps a link under one of these prefixes as it is, so it points at the
+// site file, not at a file in the framework repository (#159).
+export const SITE_PATHS = ['/reports/'];
+
 // Source paths that never become a page. The sync step fails when a page in
 // this map, or a generated page, reads a file under one of these prefixes.
 export const EXCLUDED_PREFIXES = [
@@ -528,6 +533,63 @@ const learn = [
             ].join('\n'),
           },
           { source: '.claude/skills/launch-check/SKILL.md', sections: ['Output format', 'Step 4: Compile the verdict', 'Step 5: Output'] },
+        ],
+      },
+      {
+        slug: 'readiness/report-template',
+        title: 'The readiness report',
+        description: 'The parts of a readiness report: the verdict, the gaps by area and the top actions.',
+        parts: [
+          {
+            text: [
+              'A readiness report shows if a repository is ready for production. This page shows the parts of the report.',
+              'We write this report when we review a repository for you. When you run [`/launch-check`](/docs/reference/skills/launch-check) yourself, you get the same verdict and the same areas.',
+              '',
+              '[Read a sample report (PDF)](/reports/sample-readiness-report.pdf). It comes from a real audit of the public sample app [me2resh/ddd-sam-example](https://github.com/me2resh/ddd-sam-example).',
+              '',
+              '## The verdict',
+              '',
+              'The first page starts with one verdict for the repository. One sentence under the verdict gives the reason.',
+              '',
+              '| Verdict | When |',
+              '| --- | --- |',
+              '| Go | No area fails. The report lists the warnings to fix before the next milestone. |',
+              '| Conditional go | One or two areas fail. Fix the blocking items before you release. |',
+              '| No-go | Three or more areas fail, or the audit finds a critical security gap. |',
+              '',
+              '## The gaps by area',
+              '',
+              'The audit checks ten areas. Each area gets one result: pass, warn or fail.',
+              'On the first page, a table shows the result of each area. The table counts the gaps in each area by severity: critical, high, medium and low.',
+              'The pages after it list each gap. Each gap names the file and the line that show it.',
+              '',
+              '| Area | What the audit checks |',
+              '| --- | --- |',
+              '| Security | Dependency advisories, secrets in the code, authentication, injection, CORS and security headers |',
+              '| Accessibility | Text alternatives, page structure, labels, keyboard use, contrast and reflow |',
+              '| Compliance | A privacy notice, terms, cookie consent and a way to delete personal data |',
+              '| Analytics | An analytics tool and the events that it records |',
+              '| Search engine optimisation (SEO) | Titles, descriptions, Open Graph tags, a sitemap, the robots file and structured data |',
+              '| Generative-engine discoverability | `llms.txt`, `AGENTS.md`, rules for AI crawlers and citation metadata |',
+              '| Performance | Bundle size, image size, lazy loading and code splitting |',
+              '| Monitoring | Error tracking, a health endpoint, alerts, logs and a runbook |',
+              '| Documentation | Setup, run and deploy steps, an API reference, a changelog and the age of the README |',
+              '| Behaviour quality | How well the tests constrain behaviour. Mutation testing measures this. |',
+              '',
+              '## The top actions',
+              '',
+              'The top actions are on the first page, next to the verdict. Each action fixes one or more gaps.',
+              'The actions for blocking items come first. A blocking item is a gap that makes an area fail.',
+              'The actions for warnings come after them.',
+              '',
+              '## How we run the review',
+              '',
+              '1. You choose the repository and book the review.',
+              '2. We run the readiness audit on your repository.',
+              '3. We write the report in the shape that this page shows.',
+              '4. We take you through the report on a call.',
+            ].join('\n'),
+          },
         ],
       },
       {
