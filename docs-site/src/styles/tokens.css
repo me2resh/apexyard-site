@@ -8,16 +8,19 @@
  * State colours (pass, wait, block) carry meaning only. They are used as rules
  * and icons (non-text, 3:1 minimum). Text in a state hue uses the *-text
  * token (4.5:1 minimum). tests/contrast.test.mjs checks every pair.
+ *
+ * The values follow the site look (#156): the page, card, ink and line of
+ * the hero prototype, the brand blue #2F6DF6, Archivo and IBM Plex Mono.
  */
 
 
 :root {
   /* brand */
-  --ay-ink: #1E2429;
-  --ay-paper: #E6E9EB;
+  --ay-ink: #0D1B2A;
+  --ay-paper: #F3F6F9;
   --ay-white: #FFFFFF;
   --ay-blue: #2F6DF6;
-  --ay-pass: #1F8A5B;
+  --ay-pass: #11804C;
   --ay-wait: #A96B18;
   --ay-block: #B4232C;
 
@@ -25,49 +28,51 @@
   --ay-bg: var(--ay-paper);
   --ay-surface: var(--ay-white);
   --ay-text: var(--ay-ink);
-  --ay-text-muted: #4A5670;
-  --ay-link: #1B4FC4;
-  --ay-rule: #A8B0B7;
-  --ay-rule-strong: #6F7B8F;
+  --ay-text-muted: #4A5D70;
+  --ay-link: #1F5BD6;
+  --ay-rule: #D9E1E9;
+  --ay-rule-strong: #7A8A9A;
   --ay-focus: var(--ay-blue);
   --ay-wait-text: #895910;
   --ay-note: var(--ay-ink);
   --ay-required: var(--ay-block);
   --ay-advisory: var(--ay-wait);
   --ay-coming: var(--ay-blue);
-  --ay-tint-note: #E4E8EE;
-  --ay-tint-required: #F7E6E7;
-  --ay-tint-advisory: #F6EDDF;
-  --ay-tint-coming: #E3EAFB;
+  --ay-tint-note: #E8EEF4;
+  --ay-tint-required: #F9E8E8;
+  --ay-tint-advisory: #E8EEF4;
+  --ay-tint-coming: #E6EEFE;
+  --ay-shadow: 0 1px 2px rgba(13, 27, 42, 0.05), 0 18px 40px -24px rgba(13, 27, 42, 0.35);
 
   /* type */
-  --ay-font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-  --ay-font-text: 'Barlow', system-ui, sans-serif;
-  --ay-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --ay-font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --ay-font-text: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --ay-font-mono: 'IBM Plex Mono', ui-monospace, monospace;
   --ay-measure: 70ch;
 }
 
 :root[data-theme='dark'] {
-  --ay-bg: #1E2429;
-  --ay-surface: #2A3138;
-  --ay-text: var(--ay-paper);
-  --ay-text-muted: #A3AFC2;
-  --ay-link: #8EA8F5;
-  --ay-rule: #2A3A55;
-  --ay-rule-strong: #7C8DA4;
-  --ay-focus: #8EA8F5;
-  --ay-pass: #4CC38A;
+  --ay-bg: #0C121A;
+  --ay-surface: #141E29;
+  --ay-text: #E8EEF5;
+  --ay-text-muted: #A3B3C3;
+  --ay-link: #6D9BFF;
+  --ay-rule: #24323F;
+  --ay-rule-strong: #6B7C8D;
+  --ay-focus: #6D9BFF;
+  --ay-pass: #3FCF86;
   --ay-wait: #E3A542;
   --ay-block: #F0767D;
   --ay-wait-text: #E3A542;
-  --ay-note: var(--ay-paper);
+  --ay-note: #E8EEF5;
   --ay-required: var(--ay-block);
   --ay-advisory: var(--ay-wait);
-  --ay-coming: #8EA8F5;
-  --ay-tint-note: #1A2942;
-  --ay-tint-required: #2B1D2A;
-  --ay-tint-advisory: #2A2620;
-  --ay-tint-coming: #18284A;
+  --ay-coming: #6D9BFF;
+  --ay-tint-note: #111A24;
+  --ay-tint-required: #2A1A1F;
+  --ay-tint-advisory: #111A24;
+  --ay-tint-coming: #142445;
+  --ay-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 18px 40px -24px rgba(0, 0, 0, 0.6);
 }
 
 /* Map the tokens onto Starlight's properties. */
@@ -83,7 +88,7 @@
   --sl-color-text: var(--ay-text);
   --sl-color-text-accent: var(--ay-link);
   --sl-color-bg: var(--ay-bg);
-  --sl-color-bg-nav: var(--ay-surface);
+  --sl-color-bg-nav: var(--ay-bg);
   --sl-color-bg-sidebar: var(--ay-bg);
   --sl-color-bg-inline-code: var(--ay-tint-note);
   --sl-color-hairline-light: var(--ay-rule);
@@ -96,7 +101,7 @@
   --sl-color-gray-5: var(--ay-rule);
   --sl-color-gray-6: var(--ay-surface);
   --sl-color-gray-7: var(--ay-bg);
-  --sl-color-backdrop-overlay: rgba(15, 27, 46, 0.6);
+  --sl-color-backdrop-overlay: rgba(12, 18, 26, 0.6);
   --sl-text-h1: clamp(2rem, 1.4rem + 2.4vw, 2.75rem);
   --sl-text-h2: 1.625rem;
   --sl-text-h3: 1.25rem;
@@ -104,8 +109,8 @@
   --sl-line-height: 1.65;
   --sl-content-width: 46rem;
   --sl-shadow-sm: none;
-  --sl-shadow-md: 0 8px 24px rgba(15, 27, 46, 0.18);
-  --sl-shadow-lg: 0 16px 40px rgba(15, 27, 46, 0.28);
+  --sl-shadow-md: var(--ay-shadow);
+  --sl-shadow-lg: 0 16px 40px rgba(13, 27, 42, 0.28);
 }
 
 :root[data-theme='light'],
@@ -123,7 +128,7 @@
   --sl-color-accent: var(--ay-blue);
   --sl-color-accent-high: var(--ay-link);
   --sl-color-text-accent: var(--ay-link);
-  --sl-color-bg-nav: var(--ay-surface);
+  --sl-color-bg-nav: var(--ay-bg);
   --sl-color-bg-sidebar: var(--ay-bg);
 }
 

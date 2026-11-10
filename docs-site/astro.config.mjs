@@ -70,12 +70,12 @@ export default defineConfig({
       },
       head: [
         { tag: 'script', attrs: { src: '/copy-for-ai.js', defer: true } },
-        { tag: 'meta', attrs: { name: 'theme-color', content: '#14213D' } },
+        { tag: 'meta', attrs: { name: 'theme-color', content: '#0D1B2A' } },
       ],
       expressiveCode: {
         themes: ['github-dark-default', 'github-light-default'],
         styleOverrides: {
-          borderRadius: '6px',
+          borderRadius: '10px',
           borderColor: 'var(--ay-rule)',
           codeFontFamily: 'var(--ay-font-mono)',
           uiFontFamily: 'var(--ay-font-text)',
