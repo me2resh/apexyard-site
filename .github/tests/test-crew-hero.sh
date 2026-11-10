@@ -36,7 +36,7 @@ assert "every crew image named in a page exists" crew_refs_exist
 
 assert "home headline" grep -Fq 'Your agents build. The gate decides what ships.' "$root/index.html"
 assert "hero image is preloaded as AVIF" grep -Eq '<link rel="preload" as="image" type="image/avif"[^>]*crew-base-1152\.avif' "$root/index.html"
-assert "gate card holds two examples of five rows, each with a merged footer" bash -c "[ \$(grep -c '<li class=\"gc-row' '$root/index.html') -eq 10 ] && grep -Fq 'fd1b505' '$root/index.html' && grep -Fq '8d0df1b' '$root/index.html'"
+assert "gate card holds two examples of five rows, each with a merged footer" bash -c "[ \$(grep -c '<li class=\"gc-row' '$root/index.html') -eq 10 ] && grep -Fq 'fa4bf37' '$root/index.html' && grep -Fq '8d0df1b' '$root/index.html'"
 assert "Replay control is a button" grep -Fq '<button class="gc-replay" type="button" data-replay' "$root/index.html"
 assert "reduced motion turns the story off" grep -Fq '.is-playing *, .is-playing *::before, .is-playing *::after { animation: none !important; }' "$root/site.css"
 
@@ -187,6 +187,35 @@ assert "no price in the hero" no_price
 
 outside='Vercel|Linear|Stripe|Notion|Figma|Cursor Cloud|Midjourney'
 assert "no outside product names in hero or intros" bash -c "! sed -n '/id=\"hero\"/,/<\\/section>/p' '$root/index.html' | grep -Eiq '$outside'"
+
+# ---- #174: a complete passed example (me2resh/apexyard#934, ticket #914) and new-tab links ----
+clean_html() { sed -n '/class="gc-run gc-run--clean/,/class="gc-run gc-run--blocked"/p' "$home"; }
+assert "the passed example names pull request 934 and its ticket 914" bash -c "grep -Fq 'me2resh/apexyard#934' '$home' && grep -Fq 'issues/914\"' '$home' && grep -Fq 'feat(#914)' '$home'"
+old_run_gone() { ! grep -Eq 'apexyard#1925|issues/1919|pull/1925|pull/1923|fd1b505|apexyard#1584|issues/1576|pull/1578|c40c4c7' "$home"; }
+assert "the earlier passed examples (#1925, #1584) are gone" old_run_gone
+passed_records() {
+  local h c
+  h=$(clean_html)
+  for c in pull/934#pullrequestreview-4712910975 pull/934#pullrequestreview-4712906106 pull/934#pullrequestreview-4712973274 pull/930#pullrequestreview-4712404847 commit/fa4bf376474b5553f8c3711e40e6ae3f541ad1f5; do
+    echo "$h" | grep -Fq "$c" || { echo "    missing $c"; return 1; }
+  done
+}
+assert "the passed example links the real reviews, the approval and the merge commit" passed_records
+links_open_new_tab() {
+  local a bad=0 n=0
+  while IFS= read -r a; do
+    n=$((n + 1))
+    echo "$a" | grep -Fq 'target="_blank"' || { echo "    no target: $a"; bad=1; }
+    echo "$a" | grep -Eq 'rel="[^"]*noopener' || { echo "    no noopener: $a"; bad=1; }
+  done < <(card_html | grep -o '<a [^>]*>')
+  [ "$n" -eq 29 ] || { echo "    $n links, expected 29"; bad=1; }
+  return "$bad"
+}
+assert "every link in the gate card opens in a new tab with rel noopener" links_open_new_tab
+new_tab_hint() {
+  [ "$(card_html | grep -o '</a>' | wc -l)" -eq "$(card_html | grep -o '<span class="vh"> (opens in a new tab)</span></a>' | wc -l)" ]
+}
+assert "every link in the gate card tells screen readers it opens in a new tab" new_tab_hint
 
 echo
 echo "passed $pass, failed $fail"
