@@ -43,6 +43,9 @@ export default defineConfig({
   base: '/docs',
   trailingSlash: 'never',
   build: { format: 'file' },
+  // Astro 7 defaults to 'jsx', which drops the whitespace between inline
+  // elements. Keep the Astro 5 behaviour so link text keeps its spaces.
+  compressHTML: true,
   integrations: [
     starlight({
       title: 'ApexYard docs',
