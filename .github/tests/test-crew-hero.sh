@@ -34,7 +34,10 @@ crew_refs_exist() {
 }
 assert "every crew image named in a page exists" crew_refs_exist
 
-assert "home headline" grep -Fq 'Your agents build. The gate decides what ships.' "$root/index.html"
+# The headline is one h1 with one span per sentence (#176). The tags go, the text stays exact.
+headline_text() { grep -o '<h1 id="hero-title">.*</h1>' "$root/index.html" | sed -e 's/<[^>]*>//g'; }
+assert "home headline" test "$(headline_text)" = 'Your agents build. The gate decides what ships.'
+assert "home headline is two sentence lines" test "$(grep -o 'class="hero-crew__line"' "$root/index.html" | wc -l | tr -d ' ')" = 2
 assert "hero image is preloaded as AVIF" grep -Eq '<link rel="preload" as="image" type="image/avif"[^>]*crew-base-1152\.avif' "$root/index.html"
 assert "gate card holds two examples of five rows, each with a merged footer" bash -c "[ \$(grep -c '<li class=\"gc-row' '$root/index.html') -eq 10 ] && grep -Fq 'fa4bf37' '$root/index.html' && grep -Fq '8d0df1b' '$root/index.html'"
 assert "Replay control is a button" grep -Fq '<button class="gc-replay" type="button" data-replay' "$root/index.html"
