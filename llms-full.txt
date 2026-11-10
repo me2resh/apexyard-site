@@ -99,7 +99,7 @@ Gate is for engineering leads whose teams merge code that agents wrote.
 
 - It puts the result in the checks of the pull request. The result shows what passed, what is missing and the next step. [Early teams (by hand)]
 - It checks four things: a linked ticket, a decision record, a review and a named approval.
-- An agent never approves its own work. With named approval set up, the merge waits for a person that your team named. [Early teams (by hand)]
+- An agent never approves its own work. By default, reviewers run on a stronger model than builders (checked on 10 November 2026 in the agent files of the framework). With named approval set up, the merge waits for a person that your team named. [Early teams (by hand)]
 - You can export the record of each merge for an auditor. [Planned]
 - It shows every open change on one screen. You see what each pull request is missing and who holds it up. [Early teams (by hand)]
 - The organisation view shows which pull requests skipped a step, in every repository. [Early teams (by hand)]
@@ -115,6 +115,9 @@ Our servers never fetch your code. The App has no Contents permission. From each
 - Pull requests: read. Titles, descriptions, reviews and the list of changed files.
 - Checks: write. The App posts the ApexYard check on each pull request.
 - Metadata: read. Repository names, and who can write to each repository.
+- Members: read. Who belongs to your organisation.
+
+Checked on 10 November 2026 with the GitHub API: the App holds these four permissions and no others.
 
 You can remove the App at any time.
 

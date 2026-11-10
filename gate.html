@@ -71,7 +71,7 @@
 <header class="hdr">
   <div class="hdr__bar">
     <a href="/" class="brand" aria-label="ApexYard home"><img class="brand__mark" src="/brand/apexyard-mark.svg" width="36" height="36" alt=""><span class="brand__word">ApexYard</span></a>
-    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate" aria-current="page">Gate</a><a href="/readiness">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="https://app.apexyard.ai" class="nav__login">Log in</a></nav>
+    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate" aria-current="page">Gate</a><a href="/readiness">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
     <div class="hdr__keys">
       <a class="key key--primary key--sm mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -87,7 +87,7 @@
       <h1 id="product-title">Every merge leaves a record: what was checked, who approved it, and the exact commit.</h1>
       <p class="product-head__who">For engineering leads whose teams merge code that agents wrote.</p>
       <p class="product-head__cta"><a class="btn btn--primary" href="/waitlist?src=gate-head" data-signin="https://app.apexyard.ai/signin?src=gate-head" data-waitlist="/waitlist?src=gate-head">Join the waitlist</a></p>
-      <p class="product-head__free">The hosted Gate runs by hand for early teams today. <span class="cap cap--hand" data-cap="gate_all_repos"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></p>
+      <p class="product-head__free">The hosted Gate runs by hand for early teams today. <span class="state state--hand" data-cap="gate_all_repos"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></p>
     </div>
   </section>
 
@@ -102,7 +102,7 @@
       </div>
         <article class="feature">
           <div class="feature__text">
-            <h3><span data-claim="gate_all_repos">Feedback where your team already reviews</span> <span class="cap cap--hand" data-cap="gate_all_repos"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></h3>
+            <h3><span data-claim="gate_all_repos">Feedback where your team already reviews</span> <span class="state state--hand" data-cap="gate_all_repos"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></h3>
             <p>The result sits in the pull request's checks: what passed, what is missing, and the exact next step.</p>
           </div>
           <figure class="feature__media">
@@ -116,16 +116,16 @@
         <article class="feature">
           <div class="feature__text">
             <h3>An agent never approves its own work</h3>
-            <p>The agent that wrote a change does not review it. A separate review agent with its own persona reviews it, and it can run on a different model. By default, reviewers run on a stronger model than builders. <span data-claim="named_approval">A person your team names approves the merge.</span> <span class="cap cap--hand" data-cap="named_approval"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span> An agent never gives the final sign-off.</p>
+            <p>The agent that wrote a change does not review it. A separate review agent with its own persona reviews it, and it can run on a different model. By default, reviewers run on a stronger model than builders. <span data-claim="named_approval">A person your team names approves the merge.</span> <span class="state state--hand" data-cap="named_approval"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span> An agent never gives the final sign-off. <span class="verified"><strong>Checked on 10 November 2026:</strong> Rex and Hakim run on the top model tier. The builder agents run on the tier below. <a href="https://github.com/me2resh/apexyard/tree/v5.10.1/.claude/agents" target="_blank" rel="noopener">Read the agent files</a>.</span></p>
           </div>
           <figure class="feature__media">
             <img src="/img/placeholder-evidence.svg" width="1200" height="800" loading="lazy" alt="Example evidence record for a merged pull request in a fictional repository. It shows the check result, the review attested by a CI run, the named approver and the merge time, with an Export button.">
-            <figcaption><span class="mock__tag">Example</span>An evidence record with sample data. The export is <span class="cap cap--planned" data-cap="evidence_export">Planned</span>. A review attested by your CI is <span class="cap cap--planned" data-cap="ci_attestation">Planned</span>.</figcaption>
+            <figcaption><span class="mock__tag">Example</span>An evidence record with sample data. The export is <span class="state state--planned" data-cap="evidence_export">Planned</span>. A review attested by your CI is <span class="state state--planned" data-cap="ci_attestation">Planned</span>.</figcaption>
           </figure>
         </article>
         <article class="feature">
           <div class="feature__text">
-            <h3><span data-claim="org_dashboard">Every open change on one screen</span> <span class="cap cap--hand" data-cap="org_dashboard"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></h3>
+            <h3><span data-claim="org_dashboard">Every open change on one screen</span> <span class="state state--hand" data-cap="org_dashboard"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></h3>
             <p>See what each pull request is missing and who is holding it up.</p>
           </div>
           <figure class="feature__media">
@@ -134,8 +134,8 @@
         </article>
         <article class="feature">
           <div class="feature__text">
-            <h3><span data-claim="org_dashboard">The organisation view</span> <span class="cap cap--hand" data-cap="org_dashboard"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></h3>
-            <p>See which pull requests skipped a step, across every repository. <span data-claim="team_trends">Trends by team show where steps get skipped.</span> <span class="cap cap--planned" data-cap="team_trends">Planned</span></p>
+            <h3><span data-claim="org_dashboard">The organisation view</span> <span class="state state--hand" data-cap="org_dashboard"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></h3>
+            <p>See which pull requests skipped a step, across every repository. <span data-claim="team_trends">Trends by team show where steps get skipped.</span> <span class="state state--planned" data-cap="team_trends">Planned</span></p>
           </div>
           <figure class="feature__media">
             <img src="/img/placeholder-org-dashboard.svg" width="1200" height="800" loading="lazy" alt="Example organisation view for a fictional organisation with four teams and eight repositories. Each team shows its share of passed checks and a trend for the last seven days.">
@@ -163,7 +163,9 @@
           <li><strong>Pull requests: read.</strong> Titles, descriptions, reviews and the list of changed files.</li>
           <li><strong>Checks: write.</strong> To post the ApexYard check on each pull request.</li>
           <li><strong>Metadata: read.</strong> Repository names, and who can write to each repository.</li>
+          <li><strong>Members: read.</strong> Who belongs to your organisation.</li>
         </ul>
+        <p class="app-access__checked"><strong>Checked on 10 November 2026</strong> with the GitHub API. The App holds these four permissions and no others. It has no Contents permission.</p>
         <p class="app-access__control">The check blocks a merge only when you make it required in GitHub. You can remove the App at any time.</p>
       </div>
     </div>
