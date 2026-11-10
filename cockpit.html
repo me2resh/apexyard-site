@@ -71,7 +71,7 @@
 <header class="hdr">
   <div class="hdr__bar">
     <a href="/" class="brand" aria-label="ApexYard home"><img class="brand__mark" src="/brand/apexyard-mark.svg" width="36" height="36" alt=""><span class="brand__word">ApexYard</span></a>
-    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="https://app.apexyard.ai" class="nav__login">Log in</a></nav>
+    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
     <div class="hdr__keys">
       <a class="key key--primary key--sm mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -82,7 +82,7 @@
 <main id="main">
   <section class="product-head" aria-labelledby="product-title">
     <div class="wrap">
-      <p class="product-head__name">Cockpit <span class="cap cap--preview" data-cap="cockpit_app">Preview</span></p>
+      <p class="product-head__name">Cockpit <span class="state state--preview" data-cap="cockpit_app">Preview</span></p>
       <h1 id="product-title"><span data-claim="cockpit_app">The desktop app for Build, for people who prefer a window to a terminal.</span></h1>
       <p class="product-head__who">Cockpit is not a fourth product. It runs the steps of <a href="/build">Build</a> on your machine. The Gate and Readiness stay as they are.</p>
       <p class="product-head__cta"><a class="btn btn--primary mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Ask for Cockpit access">Ask for access</a></p>
@@ -117,7 +117,7 @@
           <div class="feature__text">
             <h2 class="section__title" id="limits-title"><span class="stn" aria-hidden="true"></span>Known limits</h2>
             <ul class="app-access__list">
-              <li><strong>Sign-in with your ApexYard account is off.</strong> Cockpit works on your machine without an account. Sign-in with GitHub through ApexYard is <span data-claim="cockpit_signin">not on yet</span>. <span class="cap cap--planned" data-cap="cockpit_signin">Planned</span></li>
+              <li><strong>Sign-in with your ApexYard account is off.</strong> Cockpit works on your machine without an account. Sign-in with GitHub through ApexYard is <span data-claim="cockpit_signin">not on yet</span>. <span class="state state--planned" data-cap="cockpit_signin">Planned</span></li>
               <li><strong>A run uses your own GitHub login.</strong> A governed run can call <code>gh</code> with your login, and that login can merge pull requests. Do not assume that a run cannot reach your GitHub credentials. We track a fix.</li>
             </ul>
           </div>

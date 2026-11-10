@@ -18,6 +18,14 @@
     });
   }
 
+  // The "Log in" link in the header keeps its label. Only the target changes:
+  // the waitlist while the product is waitlist-only, the app after that (#160).
+  function applyLogin(anchors, open) {
+    Array.prototype.forEach.call(anchors, function (a) {
+      a.setAttribute('href', a.getAttribute(open ? 'data-login' : 'data-waitlist'));
+    });
+  }
+
   function mailtoHref(contact, answers) {
     var lines = [
       'Who it is for: ' + answers.audience,
@@ -75,10 +83,11 @@
     }
   }
 
-  var api = { LABELS: LABELS, applyLinks: applyLinks, submitAnswers: submitAnswers, mailtoHref: mailtoHref };
+  var api = { LABELS: LABELS, applyLinks: applyLinks, applyLogin: applyLogin, submitAnswers: submitAnswers, mailtoHref: mailtoHref };
   window.ApexYardWaitlist = api;
   if (typeof module !== 'undefined') module.exports = api;
   applyLinks(document.querySelectorAll('[data-signin]'), signinOpen);
+  applyLogin(document.querySelectorAll('[data-login]'), signinOpen);
 
   var form = document.getElementById('waitlist-form');
   if (!form) return;

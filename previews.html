@@ -59,7 +59,7 @@
 <header class="hdr">
   <div class="hdr__bar">
     <a href="/" class="brand" aria-label="ApexYard home"><img class="brand__mark" src="/brand/apexyard-mark.svg" width="36" height="36" alt=""><span class="brand__word">ApexYard</span></a>
-    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="https://app.apexyard.ai" class="nav__login">Log in</a></nav>
+    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
     <div class="hdr__keys">
       <a class="key key--primary key--sm mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -118,7 +118,7 @@
             <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Shared Keel rules with sample owners and versions.</figcaption>
           </figure>
           <div class="preview__text">
-            <h3><span data-claim="kb_mcp">Keel, shared across your organisation</span> <span class="cap cap--planned" data-cap="kb_mcp">Planned for 18 Jan 2027</span></h3>
+            <h3><span data-claim="kb_mcp">Keel, shared across your organisation</span> <span class="state state--planned" data-cap="kb_mcp">Planned for 18 Jan 2027</span></h3>
             <p>See each rule, its owner, its version and whether it blocks a merge. Your agents read the same rules over MCP.</p>
           </div>
         </article>
@@ -129,7 +129,7 @@
             <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Evidence record for a merged pull request.</figcaption>
           </figure>
           <div class="preview__text">
-            <h3><span data-claim="evidence_export">Evidence export</span> <span class="cap cap--planned" data-cap="evidence_export">Planned</span></h3>
+            <h3><span data-claim="evidence_export">Evidence export</span> <span class="state state--planned" data-cap="evidence_export">Planned</span></h3>
             <p>Export the record of each merge: the checks, the review, the named approver and the commit.</p>
           </div>
         </article>
@@ -160,7 +160,7 @@
             <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Team cockpit with sample seats.</figcaption>
           </figure>
           <div class="preview__text">
-            <h3><span data-claim="cockpit_app">The team cockpit</span> <span class="cap cap--preview" data-cap="cockpit_app">Preview</span></h3>
+            <h3><span data-claim="cockpit_app">The team cockpit</span> <span class="state state--preview" data-cap="cockpit_app">Preview</span></h3>
             <p>Give people who never open a terminal the same steps: spec, plan, code and review, for each seat in the team.</p>
           </div>
         </article>
@@ -172,7 +172,7 @@
           </figure>
           <div class="preview__text">
             <h3>The organisation view</h3>
-            <p>See which pull requests skipped a step, across every repository. <span data-claim="team_trends">Trends by team show where steps get skipped.</span> <span class="cap cap--planned" data-cap="team_trends">Planned</span></p>
+            <p>See which pull requests skipped a step, across every repository. <span data-claim="team_trends">Trends by team show where steps get skipped.</span> <span class="state state--planned" data-cap="team_trends">Planned</span></p>
           </div>
         </article>
 
@@ -201,7 +201,7 @@
             <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Readiness score and trend with sample data.</figcaption>
           </figure>
           <div class="preview__text">
-            <h3><span data-claim="readiness_score">The readiness score and trend</span> <span class="cap cap--planned" data-cap="readiness_score">Planned for 4 Dec 2026</span></h3>
+            <h3><span data-claim="readiness_score">The readiness score and trend</span> <span class="state state--planned" data-cap="readiness_score">Planned for 4 Dec 2026</span></h3>
             <p>See a score for each repository and how it moves over time.</p>
           </div>
         </article>
@@ -218,7 +218,7 @@ Upload: scores and findings only</pre>
             <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Readiness audit in CI with sample output.</figcaption>
           </figure>
           <div class="preview__text">
-            <h3><span data-claim="readiness_ci">Readiness in your own CI</span> <span class="cap cap--planned" data-cap="readiness_ci">Planned for 1 Mar 2027</span></h3>
+            <h3><span data-claim="readiness_ci">Readiness in your own CI</span> <span class="state state--planned" data-cap="readiness_ci">Planned for 1 Mar 2027</span></h3>
             <p>Run the audit in your CI with your own model key. Only the scores and findings go to the dashboard.</p>
           </div>
         </article>
@@ -238,7 +238,7 @@ Upload: scores and findings only</pre>
             <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Weekly readiness across sample repositories.</figcaption>
           </figure>
           <div class="preview__text">
-            <h3><span data-claim="readiness_weekly">Readiness on a schedule</span> <span class="cap cap--planned" data-cap="readiness_weekly">Planned for 1 Mar 2027</span></h3>
+            <h3><span data-claim="readiness_weekly">Readiness on a schedule</span> <span class="state state--planned" data-cap="readiness_weekly">Planned for 1 Mar 2027</span></h3>
             <p>Audit every repository every week, and see the trend.</p>
           </div>
         </article>
@@ -256,7 +256,7 @@ Upload: scores and findings only</pre>
             <figcaption class="mock__caption"><span class="mock__tag">Preview</span>CI attestation check with sample data.</figcaption>
           </figure>
           <div class="preview__text">
-            <h3><span data-claim="ci_attestation">Review attested by your CI</span> <span class="cap cap--planned" data-cap="ci_attestation">Planned</span></h3>
+            <h3><span data-claim="ci_attestation">Review attested by your CI</span> <span class="state state--planned" data-cap="ci_attestation">Planned</span></h3>
             <p>Your CI can attest that each review ran, at the exact commit.</p>
           </div>
         </article>

@@ -236,6 +236,13 @@ code, pre { font-family: var(--mono); font-weight: 500; font-size: 0.88em; }
   font: 800 clamp(2.6rem, 6vw, 4rem)/1 var(--display); letter-spacing: -0.02em;
 }
 @media (min-width: 820px) { .proof__metrics { grid-template-columns: repeat(4, 1fr); gap: 3rem; } }
+.proof__sub { margin-top: 2.5rem; margin-bottom: 1.25rem; font: 600 1.0625rem/1.3 var(--text); color: var(--ink-2); }
+.proof__metrics--use { grid-template-columns: 1fr; gap: 1.5rem; }
+@media (min-width: 820px) { .proof__metrics--use { grid-template-columns: repeat(3, 1fr); gap: 3rem; } }
+.proof__stat { display: block; color: var(--ink-2); text-decoration: none; min-height: 44px; }
+.proof__stat:hover { color: var(--ink); }
+.proof__stat:hover .proof__figure { text-decoration: underline; text-underline-offset: 0.12em; }
+.proof__stat:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
 .proof__source, .proof__repo {
   margin-top: 1.25rem; font-size: 15px; color: var(--ink-2); max-width: 62ch;
 }
@@ -292,15 +299,15 @@ code, pre { font-family: var(--mono); font-weight: 500; font-size: 0.88em; }
 
 /* capability labels (#160): one per hosted capability, as static text.
    The words carry the state. The colour and the border style only help. */
-.cap {
+.state {
   display: inline-block; margin-left: 0.5rem; padding: 0 0.45rem;
   font: 600 12px/1.7 var(--text); letter-spacing: 0; vertical-align: middle;
   border: 1px solid currentColor; border-radius: 4px; background: transparent;
 }
-.cap--now { color: var(--pass-ink); background: var(--pass-bg); }
-.cap--hand { color: var(--brand-ink); }
-.cap--planned { color: var(--ink-2); border-style: dashed; }
-.cap--preview { color: var(--wait-ink); }
+.state--now { color: var(--pass-ink); background: var(--pass-bg); }
+.state--hand { color: var(--brand-ink); }
+.state--planned { color: var(--ink-2); border-style: dashed; }
+.state--preview { color: var(--wait-ink); }
 
 /* feature rows */
 .features { margin-top: clamp(2.5rem, 5vw, 4rem); display: grid; gap: clamp(3rem, 7vw, 5.5rem); }
@@ -606,6 +613,9 @@ code, pre { font-family: var(--mono); font-weight: 500; font-size: 0.88em; }
 .feature--text p { max-width: 64ch; }
 .plan__price a { color: var(--ink); }
 .app-access__control { margin-top: 1.25rem; color: var(--ink); }
+.app-access__checked { margin-top: 1.25rem; color: var(--ink); }
+.verified { display: block; margin-top: 0.5rem; font-size: 15px; color: var(--ink-2); }
+.verified strong { color: var(--ink); }
 
 /* ---------- staging review (#102) ---------- */
 

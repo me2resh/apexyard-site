@@ -40,7 +40,7 @@ for key, value in switches.items():
 for key in sorted(set(labels) - set(switches)):
     errors.append(f"claims.js: label {key} has no switch")
 
-CAP = re.compile(r'<span class="cap cap--(now|hand|planned|preview)" data-cap="([^"]+)">(.*?)</span>', re.S)
+CAP = re.compile(r'<span class="state state--(now|hand|planned|preview)" data-cap="([^"]+)">(.*?)</span>', re.S)
 # The "by hand" label is an overlay token (HAND_LABEL) with a plain fallback.
 # The text of the fallback is the label that claims.js holds.
 TOKEN = re.compile(r"<!--\{\{HAND_LABEL\}\}-->(.*?)<!--/\{\{HAND_LABEL\}\}-->", re.S)
@@ -72,7 +72,7 @@ for path in sorted(glob.glob(os.path.join(root, "*.html"))):
             errors.append(f"{rel}: label for {key} reads '{shown}', claims.js says '{want}'")
         want_kind = "now" if want == "Available now" else "preview" if want == "Preview" else "planned" if want.startswith("Planned") else "hand"
         if kind != want_kind:
-            errors.append(f"{rel}: label for {key} uses cap--{kind}, expected cap--{want_kind}")
+            errors.append(f"{rel}: label for {key} uses state--{kind}, expected state--{want_kind}")
     if text.count('data-cap="') != len(caps):
         errors.append(f"{rel}: a data-cap label does not match the label markup")
     for key in sorted(set(keys) - cap_keys):

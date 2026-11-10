@@ -71,7 +71,7 @@
 <header class="hdr">
   <div class="hdr__bar">
     <a href="/" class="brand" aria-label="ApexYard home"><img class="brand__mark" src="/brand/apexyard-mark.svg" width="36" height="36" alt=""><span class="brand__word">ApexYard</span></a>
-    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness">Readiness</a><a href="/pricing" aria-current="page">Pricing</a><a href="/docs">Docs</a><a href="https://app.apexyard.ai" class="nav__login">Log in</a></nav>
+    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness">Readiness</a><a href="/pricing" aria-current="page">Pricing</a><a href="/docs">Docs</a><a href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
     <div class="hdr__keys">
       <a class="key key--primary key--sm mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -121,14 +121,14 @@
               <td>For organisations with procurement and security reviews.</td>
             </tr>
             <tr>
-              <th scope="row" id="build">Build <span class="cap cap--now" data-cap="available-now">Available now</span></th>
+              <th scope="row" id="build">Build <span class="state state--now" data-cap="available-now">Available now</span></th>
               <td>Open source. MIT. Always free.</td>
               <td>Included</td>
               <td>Included</td>
               <td>Included</td>
             </tr>
             <tr>
-              <th scope="row" id="cockpit">Cockpit <span class="cap cap--preview" data-cap="cockpit_app">Preview</span></th>
+              <th scope="row" id="cockpit">Cockpit <span class="state state--preview" data-cap="cockpit_app">Preview</span></th>
               <td><span data-claim="cockpit_app">The desktop app for Build</span>. <a href="/cockpit">See the preview</a>.</td>
               <td>As in Free</td>
               <td>As in Free</td>
@@ -136,38 +136,38 @@
             </tr>
             <tr>
               <th scope="row" id="gate">Gate</th>
-              <td><span data-claim="free_checks">Free hosted checks on public repositories</span> <span class="cap cap--planned" data-cap="free_checks">Planned for 1 Feb 2027</span></td>
-              <td><!--{{STARTUP_SUMMARY}}-->More repositories and developers<!--/{{STARTUP_SUMMARY}}--> <span class="price-table__note"><!--{{STARTUP_BULLET_1}}-->Plan detail to follow<!--/{{STARTUP_BULLET_1}}--></span> <span class="cap cap--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
-              <td><span data-claim="evidence_export">Exportable proof of who approved each change</span> <span class="cap cap--planned" data-cap="evidence_export">Planned</span><br><span data-claim="org_dashboard">The organisation dashboard</span> <span class="cap cap--hand" data-cap="org_dashboard"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></td>
-              <td><!--{{ENTERPRISE_POINT_3}}-->Plan detail to follow<!--/{{ENTERPRISE_POINT_3}}--> <span class="cap cap--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
+              <td><span data-claim="free_checks">Free hosted checks on public repositories</span> <span class="state state--planned" data-cap="free_checks">Planned for 1 Feb 2027</span></td>
+              <td><!--{{STARTUP_SUMMARY}}-->More repositories and developers<!--/{{STARTUP_SUMMARY}}--> <span class="price-table__note"><!--{{STARTUP_BULLET_1}}-->Plan detail to follow<!--/{{STARTUP_BULLET_1}}--></span> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
+              <td><span data-claim="evidence_export">Exportable proof of who approved each change</span> <span class="state state--planned" data-cap="evidence_export">Planned</span><br><span data-claim="org_dashboard">The organisation dashboard</span> <span class="state state--hand" data-cap="org_dashboard"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></td>
+              <td><!--{{ENTERPRISE_POINT_3}}-->Plan detail to follow<!--/{{ENTERPRISE_POINT_3}}--> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
             </tr>
             <tr>
               <th scope="row" id="readiness">Readiness</th>
-              <td>Run the audits yourself with the framework skills <span class="cap cap--now" data-cap="available-now">Available now</span></td>
-              <td><span data-claim="readiness_weekly">Readiness on a schedule</span> <span class="cap cap--planned" data-cap="readiness_weekly">Planned for 1 Mar 2027</span></td>
-              <td><span data-claim="readiness_weekly">Readiness on a schedule</span> <span class="cap cap--planned" data-cap="readiness_weekly">Planned for 1 Mar 2027</span></td>
-              <td><span data-claim="readiness_weekly">Readiness on a schedule</span> <span class="cap cap--planned" data-cap="readiness_weekly">Planned for 1 Mar 2027</span></td>
+              <td>Run the audits yourself with the framework skills <span class="state state--now" data-cap="available-now">Available now</span></td>
+              <td><span data-claim="readiness_weekly">Readiness on a schedule</span> <span class="state state--planned" data-cap="readiness_weekly">Planned for 1 Mar 2027</span></td>
+              <td><span data-claim="readiness_weekly">Readiness on a schedule</span> <span class="state state--planned" data-cap="readiness_weekly">Planned for 1 Mar 2027</span></td>
+              <td><span data-claim="readiness_weekly">Readiness on a schedule</span> <span class="state state--planned" data-cap="readiness_weekly">Planned for 1 Mar 2027</span></td>
             </tr>
             <tr>
               <th scope="row">Shared Keel</th>
-              <td>Your rules as files on your machine <span class="cap cap--now" data-cap="available-now">Available now</span></td>
-              <td>Your rules as files in each repository <span class="cap cap--now" data-cap="available-now">Available now</span></td>
-              <td><span data-claim="kb_mcp">Keel shared across your organisation, with owners and versions</span> <span class="cap cap--planned" data-cap="kb_mcp">Planned for 18 Jan 2027</span></td>
+              <td>Your rules as files on your machine <span class="state state--now" data-cap="available-now">Available now</span></td>
+              <td>Your rules as files in each repository <span class="state state--now" data-cap="available-now">Available now</span></td>
+              <td><span data-claim="kb_mcp">Keel shared across your organisation, with owners and versions</span> <span class="state state--planned" data-cap="kb_mcp">Planned for 18 Jan 2027</span></td>
               <td>As in the Team plan</td>
             </tr>
             <tr>
               <th scope="row">Repositories and seats</th>
-              <td><!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}-->, one person <span class="cap cap--planned" data-cap="free_checks">Planned for 1 Feb 2027</span></td>
-              <td><!--{{STARTUP_LIMITS}}-->Up to N repositories<!--/{{STARTUP_LIMITS}}--> <span class="cap cap--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
-              <td><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->All repositories, up to N developers<!--/{{TEAM_REPO_LIMIT}}--></span> <span class="cap cap--hand" data-cap="gate_all_repos"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></td>
-              <td><!--{{ENTERPRISE_LIMITS}}-->Over N developers<!--/{{ENTERPRISE_LIMITS}}--> <span class="cap cap--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
+              <td><!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}-->, one person <span class="state state--planned" data-cap="free_checks">Planned for 1 Feb 2027</span></td>
+              <td><!--{{STARTUP_LIMITS}}-->Up to N repositories<!--/{{STARTUP_LIMITS}}--> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
+              <td><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->All repositories, up to N developers<!--/{{TEAM_REPO_LIMIT}}--></span> <span class="state state--hand" data-cap="gate_all_repos"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></td>
+              <td><!--{{ENTERPRISE_LIMITS}}-->Over N developers<!--/{{ENTERPRISE_LIMITS}}--> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
             </tr>
             <tr>
               <th scope="row">Evidence retention</th>
-              <td><!--{{FREE_RETENTION}}-->Retention to follow<!--/{{FREE_RETENTION}}--> <span class="cap cap--planned" data-cap="free_checks">Planned for 1 Feb 2027</span></td>
-              <td><!--{{STARTUP_RETENTION}}-->Retention to follow<!--/{{STARTUP_RETENTION}}--> <span class="cap cap--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
-              <td><!--{{TEAM_RETENTION}}-->Retention to follow<!--/{{TEAM_RETENTION}}--> <span class="cap cap--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
-              <td><!--{{ENTERPRISE_RETENTION}}-->Retention to follow<!--/{{ENTERPRISE_RETENTION}}--> <span class="cap cap--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
+              <td><!--{{FREE_RETENTION}}-->Retention to follow<!--/{{FREE_RETENTION}}--> <span class="state state--planned" data-cap="free_checks">Planned for 1 Feb 2027</span></td>
+              <td><!--{{STARTUP_RETENTION}}-->Retention to follow<!--/{{STARTUP_RETENTION}}--> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
+              <td><!--{{TEAM_RETENTION}}-->Retention to follow<!--/{{TEAM_RETENTION}}--> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
+              <td><!--{{ENTERPRISE_RETENTION}}-->Retention to follow<!--/{{ENTERPRISE_RETENTION}}--> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
             </tr>
             <tr>
               <th scope="row">Support</th>
@@ -186,7 +186,7 @@
           </tbody>
         </table>
       </div>
-      <p class="price-table__note plan-limits" id="plan-limits"><span data-claim="paid_plans">Plan limits are not set yet. We publish them when the plans open.</span> <span class="cap cap--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></p>
+      <p class="price-table__note plan-limits" id="plan-limits"><span data-claim="paid_plans">Plan limits are not set yet. We publish them when the plans open.</span> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></p>
     </div>
   </section>
   <section class="section price-group sec t-dark" id="assessments" aria-labelledby="assessments-title" data-side="r">
