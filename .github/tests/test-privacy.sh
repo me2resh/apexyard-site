@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+#
+# #154. Privacy page guards: the page and its owner-fact placeholders, the
+# footer and cookie-banner links to /privacy, the sitemap entry, and the
+# handler that shows the cookie banner again.
+
+set -uo pipefail
+
+root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
+page="$root/privacy.html"
+pass=0
+fail=0
+
+ok()  { pass=$((pass + 1)); printf '  ok    %s\n' "$1"; }
+bad() { fail=$((fail + 1)); printf '  FAIL  %s\n' "$1"; }
+assert() { local n="$1"; shift; if "$@"; then ok "$n"; else bad "$n"; fi; }
+
+file_has()   { grep -Fq -- "$2" "$1"; }
+file_lacks() { ! grep -Fq -- "$2" "$1"; }
+
+# Pages with a site footer. architecture.html is a redirect with no footer.
+footer_pages() {
+  local f
+  for f in "$root"/*.html; do
+    [ "$(basename "$f")" = "architecture.html" ] && continue
+    printf '%s\n' "$f"
+  done
+  printf '%s\n' "$root/apexdock/index.html" "$root/apexdock/onboarding/index.html" \
+    "$root/docs-site/src/components/Footer.astro"
+}
+
+# --- 1. The page ---
+assert "privacy.html exists" test -f "$page"
+assert "privacy.html holds canonical /privacy" \
+  file_has "$page" '<link rel="canonical" href="https://apexyard.ai/privacy">'
+assert "privacy.html holds og:url /privacy" \
+  file_has "$page" '<meta property="og:url" content="https://apexyard.ai/privacy">'
+assert "privacy.html holds the company-number placeholder" \
+  file_has "$page" 'data-owner-fact="company-number"'
+assert "privacy.html holds the registered-office placeholder" \
+  file_has "$page" 'data-owner-fact="registered-office"'
+assert "privacy.html names ApexScript Ltd" file_has "$page" 'ApexScript Ltd'
+assert "privacy.html uses the obfuscated mail link" \
+  file_has "$page" 'class="mailto-cta" data-u="hello" data-d="apexyard.ai"'
+assert "privacy.html links the ICO" file_has "$page" 'https://ico.org.uk'
+assert "privacy.html states 12 months retention" file_has "$page" '12 months after our last contact'
+assert "privacy.html has the reopen button" file_has "$page" 'data-consent-reopen'
+assert "privacy.html has the consent banner" file_has "$page" 'id="consent"'
+assert "privacy.html loads product.js" file_has "$page" '<script src="/product.js" defer></script>'
+assert "privacy.html has no inline consent script" file_lacks "$page" "localStorage.removeItem"
+assert "privacy.html does not name the booking company" file_lacks "$page" 'Cal.com'
+
+# --- 2. Footers ---
+footers_link_privacy() {
+  local f hits=""
+  while IFS= read -r f; do
+    grep -Fq 'href="/privacy"' "$f" || hits="$hits ${f#"$root"/}"
+  done < <(footer_pages)
+  [ -z "$hits" ] || { echo "    missing in:$hits"; return 1; }
+}
+assert "every footer links /privacy" footers_link_privacy
+
+footers_have_placeholder() {
+  local f hits=""
+  while IFS= read -r f; do
+    grep -Fq 'data-owner-fact="company-number"' "$f" || hits="$hits ${f#"$root"/}"
+  done < <(footer_pages)
+  [ -z "$hits" ] || { echo "    missing in:$hits"; return 1; }
+}
+assert "every footer marks the company number" footers_have_placeholder
+
+no_to_follow() {
+  local hits
+  hits=$(grep -rlF --include='*.html' --include='*.astro' 'Company number: to follow' \
+    "$root"/*.html "$root/apexdock" "$root/docs-site/src" 2>/dev/null || true)
+  [ -z "$hits" ] || { echo "    found in: $hits"; return 1; }
+}
+assert "no page says Company number: to follow" no_to_follow
+
+# --- 3. Cookie banners ---
+banners_link_privacy() {
+  local f hits="" n=0
+  for f in "$root"/*.html; do
+    grep -Fq 'id="consent"' "$f" || continue
+    n=$((n + 1))
+    awk '/id="consent"/,/consent__actions/' "$f" | grep -Fq '<a href="/privacy">Privacy</a>' \
+      || hits="$hits $(basename "$f")"
+  done
+  [ "$n" -gt 0 ] || { echo "    no consent banner found"; return 1; }
+  [ -z "$hits" ] || { echo "    missing in:$hits"; return 1; }
+}
+assert "every consent banner links /privacy" banners_link_privacy
+
+no_google_policy() {
+  local hits
+  hits=$(grep -lF 'policies.google.com' "$root"/*.html "$root"/apexdock/*.html \
+    "$root"/apexdock/onboarding/*.html 2>/dev/null || true)
+  [ -z "$hits" ] || { echo "    found in: $hits"; return 1; }
+}
+assert "no page links policies.google.com" no_google_policy
+
+# --- 4. Waitlist, sitemap, link check ---
+assert "waitlist.html links /privacy" file_has "$root/waitlist.html" 'href="/privacy"'
+assert "sitemap.xml holds /privacy" \
+  file_has "$root/sitemap.xml" '<loc>https://apexyard.ai/privacy</loc>'
+assert "link-check excludes the /privacy clean URL" \
+  grep -Eq -- '--exclude "/\([a-z|-]*privacy[a-z|-]*\)' "$root/.github/workflows/link-check.yml"
+
+# --- 5. Reopen handler ---
+assert "product.js binds data-consent-reopen" \
+  file_has "$root/product.js" "querySelectorAll('[data-consent-reopen]')"
+assert "product.js clears ay-consent on reopen" \
+  file_has "$root/product.js" 'localStorage.removeItem(KEY)'
+assert "product.js sets analytics_storage denied on reopen" \
+  file_has "$root/product.js" "analytics_storage: 'denied'"
+
+printf '\n%d passed, %d failed\n' "$pass" "$fail"
+[ "$fail" -eq 0 ]

@@ -37,3 +37,7 @@ Run `.github/tests/test-waitlist.sh` for JavaScript-only and CSS-only edits to t
 
 - `.github/workflows/shell-tests.yml`
 - `.github/tests/test-waitlist.sh`
+
+## Evolution
+
+- 2026-11-10 (#154): both trigger lists also name `docs-site/src/components/Footer.astro`, because `.github/tests/test-privacy.sh` reads the docs footer.

@@ -248,6 +248,7 @@
     letter-spacing:.05em;
   }
   .footer-btns{display:flex;gap:8px;align-items:center;flex:none;}
+  .hero-crew__tag{display:inline-block;padding:0 .4em;border:2px dashed currentColor;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
   .hint-btn{
     background:transparent;border:1px dashed var(--line);
     color:var(--dim);padding:6px 12px;border-radius:6px;
@@ -915,7 +916,7 @@
       <button class="hint-btn" id="skipBtn" style="visibility:hidden">SKIP</button>
       <button class="hint-btn" id="hintBtn" style="visibility:hidden">HINT</button>
     </div>
-    <div>ApexScript Ltd. Company number: to follow.</div>
+    <div>ApexScript Ltd. Company number: <span class="hero-crew__tag" data-owner-fact="company-number">Placeholder</span>. <a href="/privacy">Privacy</a></div>
   </footer>
 </div>
 
@@ -2819,7 +2820,7 @@ renderIntro();
   <div class="consent__inner">
     <p class="consent__msg">
       This site uses Google Analytics to count visits. No ads, no cross-site tracking.
-      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy</a>.
+      <a href="/privacy">Privacy</a>.
     </p>
     <div class="consent__actions">
       <button type="button" class="consent__btn" data-consent="denied">Decline</button>

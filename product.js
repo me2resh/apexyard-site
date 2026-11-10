@@ -187,6 +187,20 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !banner.hidden) record('denied');
     });
+    // Change your cookie choice (#154): withdrawing is as easy as giving consent.
+    // Clear the stored choice, turn analytics storage off, and show the banner again.
+    document.querySelectorAll('[data-consent-reopen]').forEach(function (btn) {
+      btn.hidden = false;
+      btn.addEventListener('click', function () {
+        try { localStorage.removeItem(KEY); } catch (e) {}
+        if (typeof window.gtag === 'function') {
+          window.gtag('consent', 'update', { analytics_storage: 'denied' });
+        }
+        banner.hidden = false;
+        var first = banner.querySelector('[data-consent]');
+        if (first) first.focus();
+      });
+    });
   }
 })();
 
