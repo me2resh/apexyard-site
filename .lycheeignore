@@ -40,3 +40,8 @@
 ^file://.*/pricing#cockpit$
 ^file://.*/docs/cockpit/overview$
 ^https://apexyard\.ai/cockpit$
+
+# GitHub compare pages, linked from the gate card's blocked-merge evidence
+# (#172). GitHub sometimes returns 500 to automated clients on these pages,
+# while a browser gets 200, so the check fails at random on unrelated PRs.
+^https://github\.com/me2resh/apexyard/compare/[0-9a-f]+\.\.\.[0-9a-f]+$
