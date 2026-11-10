@@ -33,3 +33,7 @@
 # second line after the switch-on deploy.
 ^file://.*/creators$
 ^https://apexyard\.ai/creators$
+
+# UK data protection regulator, linked from the privacy page (#154). Its
+# site returns 403 to automated clients, but 200 in a browser.
+^https://ico\.org\.uk/?$
