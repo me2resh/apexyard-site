@@ -6,7 +6,8 @@
 #   2. The two review name tokens are intact, with their public fallbacks.
 #   3. The sample report PDF exists and the Readiness and Pricing pages,
 #      and the report template docs page, link it.
-#   4. The pricing review section points to the refund promise.
+#   4. Review scope and time stay in the private overlay: no public
+#      review text states them.
 
 set -uo pipefail
 
@@ -112,10 +113,18 @@ assert "pricing.html links the report template" file_has "$pricing" 'href="/docs
 assert "readiness.html links the report template" file_has "$readiness" 'href="/docs/readiness/report-template"'
 
 # --- 4. Review section ---
-assert "pricing.html points to the refund promise in the statement of work" \
-  file_has "$pricing" 'The statement of work holds our refund promise.'
-assert "pricing.html states the short review time" file_has "$pricing" '5 working days, then a 30-minute call'
-assert "pricing.html states the full assessment time" file_has "$pricing" 'Two weeks. It ends with the gate on your repositories for 30 days.'
+# The owner keeps the review scope, time and terms in the private overlay.
+# The bracket forms keep the literal phrases out of this file too.
+private_detail='5 working[ ]days|30[-]minute|two[ ]weeks|30[ ]days|statement[ ]of[ ]work|refun[d]'
+no_private_detail() { # <file>
+  if grep -Eiq -- "$private_detail" "$1"; then
+    echo "    review scope or time in ${1#"$root"/}"
+    return 1
+  fi
+}
+assert "pricing.html states no review scope or time" no_private_detail "$pricing"
+assert "the docs content map states no review scope or time" no_private_detail "$root/docs-site/content-map.mjs"
+assert "pricing.html says what a review gives" file_has "$pricing" 'We run the readiness audit on your repository.'
 
 printf '\n%d passed, %d failed\n' "$pass" "$fail"
 [ "$fail" -eq 0 ]
