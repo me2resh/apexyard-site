@@ -124,5 +124,71 @@ assert "product.js clears ay-consent on reopen" \
 assert "product.js sets analytics_storage denied on reopen" \
   file_has "$root/product.js" "analytics_storage: 'denied'"
 
+# --- 6. Google tag only after Accept ---
+gtag_block() { awk '/<!-- begin: gtag/,/<!-- end: gtag -->/' "$1"; }
+
+loader_pages() {
+  local f
+  for f in "$root"/*.html; do
+    grep -Fq '<!-- begin: gtag' "$f" && printf '%s\n' "$f"
+  done
+}
+
+gtag_pages_have_loader() {
+  local f hits="" n=0
+  while IFS= read -r f; do
+    n=$((n + 1))
+    gtag_block "$f" | grep -Fq 'window.ayLoadAnalytics = function' || hits="$hits $(basename "$f")"
+  done < <(loader_pages)
+  [ "$n" -ge 13 ] || { echo "    only $n pages hold the gtag block"; return 1; }
+  [ -z "$hits" ] || { echo "    missing in:$hits"; return 1; }
+}
+assert "every gtag block defines ayLoadAnalytics" gtag_pages_have_loader
+
+no_static_gtag() {
+  local hits
+  hits=$(grep -lE '<script[^>]*src="https://www\.googletagmanager\.com' "$root"/*.html \
+    "$root"/apexdock/*.html "$root"/apexdock/onboarding/*.html 2>/dev/null || true)
+  [ -z "$hits" ] || { echo "    found in: $hits"; return 1; }
+}
+assert "no page loads gtag.js with a static script tag" no_static_gtag
+
+gtag_blocks_identical() {
+  local canon f hits=""
+  canon=$(gtag_block "$page")
+  [ -n "$canon" ] || { echo "    privacy.html has no gtag block"; return 1; }
+  while IFS= read -r f; do
+    [ "$(gtag_block "$f")" = "$canon" ] || hits="$hits $(basename "$f")"
+  done < <(loader_pages)
+  [ -z "$hits" ] || { echo "    differs in:$hits"; return 1; }
+}
+assert "the gtag block is identical on every page" gtag_blocks_identical
+
+loader_waits_for_consent() {
+  gtag_block "$page" | grep -Fq "if (localStorage.getItem('ay-consent') === 'granted') window.ayLoadAnalytics();"
+}
+assert "the gtag block loads the tag only for a stored Accept" loader_waits_for_consent
+
+assert "product.js Accept calls the loader" \
+  file_has "$root/product.js" 'window.ayLoadAnalytics();'
+assert "product.js track() waits for the loaded tag" \
+  file_has "$root/product.js" 'if (analyticsOn()) window.gtag('"'"'event'"'"', name);'
+assert "waitlist.js sends waitlist_signup only after the tag loaded" \
+  file_has "$root/waitlist.js" "if (window.ayAnalyticsLoaded === true && typeof window.gtag === 'function') window.gtag('event', 'waitlist_signup');"
+
+inline_consent_uses_loader() {
+  local f hits=""
+  for f in "$root"/*.html; do
+    grep -Fq "var KEY = 'ay-consent';" "$f" || continue
+    grep -Fq 'window.ayLoadAnalytics();' "$f" || hits="$hits $(basename "$f")"
+  done
+  [ -z "$hits" ] || { echo "    missing in:$hits"; return 1; }
+}
+assert "inline consent scripts call the loader on Accept" inline_consent_uses_loader
+
+assert "privacy.html says the site sends nothing to Google before Accept" \
+  file_has "$page" 'Before that, the site sends nothing to Google.'
+assert "privacy.html has no cookieless-signal text" file_lacks "$page" 'signal'
+
 printf '\n%d passed, %d failed\n' "$pass" "$fail"
 [ "$fail" -eq 0 ]

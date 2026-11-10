@@ -4,8 +4,13 @@
 (function () {
   'use strict';
 
+  // The Google tag loads only after Accept (#154). Before that, send nothing,
+  // so no event waits in dataLayer to be replayed after consent.
+  function analyticsOn() {
+    return window.ayAnalyticsLoaded === true && typeof window.gtag === 'function';
+  }
   function track(name) {
-    if (typeof window.gtag === 'function') window.gtag('event', name);
+    if (analyticsOn()) window.gtag('event', name);
   }
 
   // Old home-page anchors moved to /docs. Keep shared links working.
@@ -175,8 +180,11 @@
     var record = function (choice) {
       if (banner.hidden) return;
       try { localStorage.setItem(KEY, choice); } catch (e) {}
-      if (choice === 'granted' && typeof window.gtag === 'function') {
-        window.gtag('consent', 'update', { analytics_storage: 'granted' });
+      if (choice === 'granted' && typeof window.ayLoadAnalytics === 'function') {
+        window.ayLoadAnalytics();
+      } else if (choice === 'denied' && analyticsOn()) {
+        // A loaded tag cannot be unloaded. Turn analytics storage off.
+        window.gtag('consent', 'update', { analytics_storage: 'denied' });
       }
       banner.hidden = true;
     };
@@ -188,12 +196,13 @@
       if (e.key === 'Escape' && !banner.hidden) record('denied');
     });
     // Change your cookie choice (#154): withdrawing is as easy as giving consent.
-    // Clear the stored choice, turn analytics storage off, and show the banner again.
+    // Clear the stored choice, turn analytics storage off if the tag loaded,
+    // and show the banner again.
     document.querySelectorAll('[data-consent-reopen]').forEach(function (btn) {
       btn.hidden = false;
       btn.addEventListener('click', function () {
         try { localStorage.removeItem(KEY); } catch (e) {}
-        if (typeof window.gtag === 'function') {
+        if (analyticsOn()) {
           window.gtag('consent', 'update', { analytics_storage: 'denied' });
         }
         banner.hidden = false;

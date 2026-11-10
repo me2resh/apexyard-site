@@ -35,25 +35,30 @@
 <link rel="stylesheet" href="/site.css">
 
 <!-- begin: gtag  -  keep in sync across all site/*.html pages (#399) -->
-<!-- Google tag (gtag.js) with Consent Mode v2 - analytics_storage defaults to denied
-     until the consent banner below records an explicit choice. -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G3EMR3CB02"></script>
+<!-- Google tag (gtag.js) loads only after the visitor presses Accept (#154).
+     Before consent, the page sends no request to Google. -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-    'analytics_storage': 'denied'
-  });
+  window.ayLoadAnalytics = function () {
+    if (window.ayAnalyticsLoaded) return;
+    window.ayAnalyticsLoaded = true;
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'granted'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-G3EMR3CB02');
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-G3EMR3CB02';
+    document.head.appendChild(s);
+  };
   try {
-    if (localStorage.getItem('ay-consent') === 'granted') {
-      gtag('consent', 'update', { 'analytics_storage': 'granted' });
-    }
+    if (localStorage.getItem('ay-consent') === 'granted') window.ayLoadAnalytics();
   } catch (e) {}
-  gtag('js', new Date());
-  gtag('config', 'G-G3EMR3CB02');
 </script>
 <!-- end: gtag -->
 <script>document.documentElement.classList.add("js")</script>
@@ -100,9 +105,9 @@
       <p>We collect data in four ways. Each part below tells you what we collect, why, the lawful basis under UK GDPR, and how long we keep it.</p>
 
       <article class="legal__item" aria-labelledby="item-analytics">
-        <h3 id="item-analytics">Analytics: cookies only after you accept</h3>
+        <h3 id="item-analytics">Analytics, only after you accept</h3>
         <dl class="legal__rows">
-          <div><dt>What</dt><dd>We use Google Analytics 4 to count visits and the pages that people view. The Google tag loads on every page. Before you choose, analytics storage is off, so Google Analytics does not store its cookies on your device. In this state, the tag can still send Google a basic signal without cookies, for example that a page loaded. Like every web request, that signal includes your IP address. Analytics storage turns on only when you press Accept in the cookie banner.</dd></div>
+          <div><dt>What</dt><dd>We use Google Analytics 4 to count visits and the pages that people view. The Google tag and Google Analytics load only after you press Accept in the cookie banner. Before that, the site sends nothing to Google.</dd></div>
           <div><dt>Why</dt><dd>To learn which pages people use, so that we can make the site better.</dd></div>
           <div><dt>Lawful basis</dt><dd>Your consent. You can withdraw it at any time.</dd></div>
         </dl>
@@ -145,7 +150,7 @@
 
       <h2 id="recipients">Who receives your data</h2>
       <ul class="legal__list">
-        <li><strong>Our analytics provider</strong> (Google). On every page, it receives the basic signal without cookies. It sets analytics cookies only after you accept analytics.</li>
+        <li><strong>Our analytics provider</strong> (Google), only after you accept analytics.</li>
         <li><strong>Our hosting provider and content delivery network</strong>, which send the pages to your browser.</li>
         <li><strong>The image service that shows the GitHub star and fork counts</strong> on the home page. Your browser loads these images from that service on each visit to the home page, so it receives your IP address.</li>
         <li><strong>The booking service that we use</strong>, when you book a demo or a call.</li>

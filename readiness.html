@@ -35,25 +35,30 @@
 <link rel="stylesheet" href="/site.css">
 
 <!-- begin: gtag  -  keep in sync across all site/*.html pages (#399) -->
-<!-- Google tag (gtag.js) with Consent Mode v2 - analytics_storage defaults to denied
-     until the consent banner below records an explicit choice. -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G3EMR3CB02"></script>
+<!-- Google tag (gtag.js) loads only after the visitor presses Accept (#154).
+     Before consent, the page sends no request to Google. -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-    'analytics_storage': 'denied'
-  });
+  window.ayLoadAnalytics = function () {
+    if (window.ayAnalyticsLoaded) return;
+    window.ayAnalyticsLoaded = true;
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'granted'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-G3EMR3CB02');
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-G3EMR3CB02';
+    document.head.appendChild(s);
+  };
   try {
-    if (localStorage.getItem('ay-consent') === 'granted') {
-      gtag('consent', 'update', { 'analytics_storage': 'granted' });
-    }
+    if (localStorage.getItem('ay-consent') === 'granted') window.ayLoadAnalytics();
   } catch (e) {}
-  gtag('js', new Date());
-  gtag('config', 'G-G3EMR3CB02');
 </script>
 <!-- end: gtag -->
 <script>document.documentElement.classList.add("js")</script>

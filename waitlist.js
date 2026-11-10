@@ -297,7 +297,8 @@
             form.hidden = true;
             done.hidden = false;
             done.focus();
-            if (typeof window.gtag === 'function') window.gtag('event', 'waitlist_signup');
+            // Only after Accept has loaded the Google tag (#154); nothing is queued before.
+            if (window.ayAnalyticsLoaded === true && typeof window.gtag === 'function') window.gtag('event', 'waitlist_signup');
           },
           showFallback: showFallback,
           showError: function (status) {
