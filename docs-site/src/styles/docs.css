@@ -335,6 +335,13 @@ site-search button[data-open-modal]:hover {
 
 /* ------------------------------------------------------------ sidebar */
 
+/* Starlight 0.41 reserves a scrollbar gutter, which moves the sidebar
+   carets and counts on browsers with classic scrollbars. Keep the
+   previous layout. */
+.sidebar-pane {
+  scrollbar-gutter: auto;
+}
+
 .sidebar-content .sl-badge.sl-count {
   border: 0;
   background: none;

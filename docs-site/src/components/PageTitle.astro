@@ -27,14 +27,11 @@ const edit = route.editUrl?.href;
   isArticle && (
     <nav class="ay-crumbs" aria-label="Breadcrumb">
       <ol>
+        {/* One line per item: the Astro 7 compiler keeps the whitespace inside an li, which adds a space after each separator. */}
         {crumbs.map((c) => (
-          <li>
-            <a href={c.href}>{c.label}</a>
-          </li>
+          <li><a href={c.href}>{c.label}</a></li>
         ))}
-        <li>
-          <span aria-current="page">{title}</span>
-        </li>
+        <li><span aria-current="page">{title}</span></li>
       </ol>
     </nav>
   )

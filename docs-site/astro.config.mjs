@@ -11,6 +11,7 @@
 import fs from 'node:fs';
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import { unified } from '@astrojs/markdown-remark';
 
 const nav = JSON.parse(fs.readFileSync(new URL('./src/generated/nav.json', import.meta.url), 'utf8'));
 
@@ -43,6 +44,12 @@ export default defineConfig({
   base: '/docs',
   trailingSlash: 'never',
   build: { format: 'file' },
+  // Astro 7 defaults to 'jsx', which drops the whitespace between inline
+  // elements. Keep the Astro 5 behaviour so link text keeps its spaces.
+  compressHTML: true,
+  // Astro 7 defaults to the Satteri processor, which renders "--" as an en
+  // dash. The unified (remark) processor keeps the Astro 5 typography.
+  markdown: { processor: unified() },
   integrations: [
     starlight({
       title: 'ApexYard docs',
