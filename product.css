@@ -1238,3 +1238,14 @@ code, pre { font-family: var(--mono); font-weight: 500; font-size: 0.88em; }
   font-weight: 600;
   color: var(--ink);
 }
+
+/* ---------- paid review (#159) ---------- */
+.review-what { margin-top: 2rem; display: grid; gap: 1rem; }
+.review-what__title { font: 700 1.15rem/1.3 var(--display); }
+.review-what__steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 1rem; }
+.review-what__steps li { padding-top: 0.75rem; border-top: 2px solid var(--line); color: var(--ink-2); font-size: 15px; max-width: 46ch; }
+.review-what__steps b { display: block; margin-bottom: 0.2rem; color: var(--ink); font-weight: 700; }
+.review-what__links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.75rem; font-weight: 600; }
+@media (min-width: 820px) { .review-what__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; } }
+.report__sample { margin: 1rem 0 0.25rem; font-size: 15px; line-height: 1.5; color: var(--ink); }
+.report__sample a { font-weight: 600; }

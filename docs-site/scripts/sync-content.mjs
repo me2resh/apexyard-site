@@ -18,7 +18,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import GithubSlugger from 'github-slugger';
-import { SOURCE, SECTIONS, EXCLUDED_PREFIXES, DENY_TERMS, DENY_ALLOW } from '../content-map.mjs';
+import { SOURCE, SECTIONS, EXCLUDED_PREFIXES, DENY_TERMS, DENY_ALLOW, SITE_PATHS } from '../content-map.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CACHE = path.join(ROOT, '.cache', `apexyard-${SOURCE.tag}`);
@@ -493,6 +493,8 @@ function resolveLink(target, fromSource, page, bySource) {
   if (/^(https?:|mailto:|tel:|data:)/i.test(target) || target.startsWith('//')) return target;
   // Links that site-authored text writes to docs pages are already final.
   if (target === BASE || target.startsWith(`${BASE}/`) || target.startsWith(`${BASE}#`)) return target;
+  // Links to files of the main site (content-map SITE_PATHS) are also final.
+  if (SITE_PATHS.some((prefix) => target.startsWith(prefix))) return target;
   if (target.startsWith('#')) {
     const hash = target.slice(1);
     if (page.anchors.has(hash)) return target;
