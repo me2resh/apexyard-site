@@ -22,6 +22,11 @@ export const SOURCE = {
   editBranch: 'dev',
 };
 
+// Root paths of the main site that docs text can link to. The sync step
+// keeps a link under one of these prefixes as it is, so it points at the
+// site file, not at a file in the framework repository (#159).
+export const SITE_PATHS = ['/reports/'];
+
 // Source paths that never become a page. The sync step fails when a page in
 // this map, or a generated page, reads a file under one of these prefixes.
 export const EXCLUDED_PREFIXES = [

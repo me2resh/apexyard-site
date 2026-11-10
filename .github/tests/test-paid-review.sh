@@ -109,6 +109,25 @@ assert "the docs content map holds the report template page" \
   file_has "$root/docs-site/content-map.mjs" "slug: 'readiness/report-template'"
 assert "the report template page links the sample report" \
   file_has "$root/docs-site/content-map.mjs" '(/reports/sample-readiness-report.pdf)'
+# The docs sync rewrites root links that are not docs pages into GitHub
+# URLs. SITE_PATHS in the content map keeps /reports/ links as site paths.
+site_paths_keep_reports() {
+  (cd "$root/docs-site" && node --input-type=module -e "
+    import { SITE_PATHS } from './content-map.mjs';
+    if (!SITE_PATHS.some((p) => '/reports/sample-readiness-report.pdf'.startsWith(p))) process.exit(1);
+  ")
+}
+assert "the content map keeps /reports/ links as site paths" site_paths_keep_reports
+assert "the docs sync leaves SITE_PATHS links as they are" \
+  file_has "$root/docs-site/scripts/sync-content.mjs" 'if (SITE_PATHS.some((prefix) => target.startsWith(prefix))) return target;'
+# When a local docs build exists, check the built link itself.
+built_href_ok() {
+  local built="$root/docs-site/dist/readiness/report-template.html"
+  [ -f "$built" ] || return 0
+  grep -Fq "$pdf_href" "$built" || { echo "    built page does not link $pdf_href"; return 1; }
+  ! grep -q 'github.com/[^"]*/reports/sample-readiness-report.pdf' "$built" || { echo "    built page links a GitHub copy"; return 1; }
+}
+assert "the built docs page links the site PDF (when built)" built_href_ok
 assert "pricing.html links the report template" file_has "$pricing" 'href="/docs/readiness/report-template"'
 assert "readiness.html links the report template" file_has "$readiness" 'href="/docs/readiness/report-template"'
 
