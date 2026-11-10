@@ -1776,3 +1776,35 @@ main#main.nf { padding: 3rem var(--gutter); }
   .crew-intro { grid-template-columns: 72px minmax(0, 1fr); gap: .9rem; padding: .75rem; }
   .crew-intro img { width: 72px; height: 72px; }
 }
+
+/* Privacy notice (#154): read mode, plain headings, 2px rules. */
+.legal { padding-block: clamp(2.5rem, 6vw, 4.5rem) var(--pad); background: var(--panel); color: var(--graphite); }
+.legal__wrap > * { max-width: 48rem; }
+.legal h2 {
+  margin-top: 3rem; padding-top: 1rem; border-top: 2px solid var(--graphite);
+  font: 800 clamp(2rem, 3.6vw, 2.75rem)/1 var(--display); letter-spacing: -.01em;
+}
+.legal h2:first-child { margin-top: 0; }
+.legal h3 { font: 700 1.5rem/1.1 var(--display); }
+.legal p { margin-top: 1rem; max-width: 62ch; }
+.legal code { font-size: .9em; white-space: nowrap; }
+.legal a:not(.btn) { text-decoration: underline; }
+.legal__facts, .legal__rows { margin-top: 1.25rem; border: 2px solid var(--graphite); }
+.legal__facts > div, .legal__rows > div {
+  display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: .25rem 1.25rem;
+  padding: .75rem 1rem; border-top: 2px solid var(--graphite);
+}
+.legal__facts > div:first-child, .legal__rows > div:first-child { border-top: 0; }
+.legal dt { font: 700 .9375rem/1.5 var(--display); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.legal dd { margin: 0; min-width: 0; }
+.legal dd .hero-crew__tag, .ftr .hero-crew__tag { margin-right: 0; }
+.legal__item { margin-top: 2rem; }
+.legal__item .legal__rows { margin-top: .75rem; background: var(--panel-deep); }
+.legal__list { margin-top: 1rem; padding-left: 1.25rem; list-style: square; max-width: 62ch; }
+.legal__list li + li { margin-top: .4rem; }
+.legal__action { margin-top: 1.25rem; }
+.legal__action .btn { cursor: pointer; padding-inline: 1.25rem; }
+.legal .legal__updated { margin-top: 3rem; max-width: 48rem; padding-top: 1rem; border-top: 2px solid var(--graphite); font-size: .9375rem; color: var(--muted); }
+@media (max-width: 599px) {
+  .legal__facts > div, .legal__rows > div { grid-template-columns: minmax(0, 1fr); }
+}

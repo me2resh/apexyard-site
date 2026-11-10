@@ -259,6 +259,7 @@
     letter-spacing:.05em;
   }
   .footer-btns{display:flex;gap:8px;align-items:center;flex:none;}
+  .hero-crew__tag{display:inline-block;padding:0 .4em;border:2px dashed currentColor;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
   .hint-btn{
     background:transparent;border:1px dashed var(--line);
     color:var(--dim);padding:6px 12px;border-radius:6px;
@@ -886,26 +887,31 @@
 /* end: consent-css */
 </style>
 
-<!-- begin: gtag — keep in sync across all site/*.html pages (#399) -->
-<!-- Google tag (gtag.js) with Consent Mode v2 - analytics_storage defaults to denied
-     until the consent banner below records an explicit choice. -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G3EMR3CB02"></script>
+<!-- begin: gtag  -  keep in sync across all site/*.html pages (#399) -->
+<!-- Google tag (gtag.js) loads only after the visitor presses Accept (#154).
+     Before consent, the page sends no request to Google. -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-    'analytics_storage': 'denied'
-  });
+  window.ayLoadAnalytics = function () {
+    if (window.ayAnalyticsLoaded) return;
+    window.ayAnalyticsLoaded = true;
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'granted'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-G3EMR3CB02');
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-G3EMR3CB02';
+    document.head.appendChild(s);
+  };
   try {
-    if (localStorage.getItem('ay-consent') === 'granted') {
-      gtag('consent', 'update', { 'analytics_storage': 'granted' });
-    }
+    if (localStorage.getItem('ay-consent') === 'granted') window.ayLoadAnalytics();
   } catch (e) {}
-  gtag('js', new Date());
-  gtag('config', 'G-G3EMR3CB02');
 </script>
 <!-- end: gtag -->
 </head>
@@ -926,7 +932,7 @@
       <button class="hint-btn" id="skipBtn" style="visibility:hidden">SKIP</button>
       <button class="hint-btn" id="hintBtn" style="visibility:hidden">HINT</button>
     </div>
-    <div>ApexScript Ltd. Company number: to follow.</div>
+    <div>ApexScript Ltd. Company number: <span class="hero-crew__tag" data-owner-fact="company-number">Placeholder</span>. <a href="/privacy">Privacy</a></div>
   </footer>
 </div>
 
@@ -2823,14 +2829,14 @@ renderIntro();
 <!-- begin: consent — keep in sync across all site/*.html pages (#399) -->
 <!-- ============================================================
      COOKIE CONSENT BANNER
-     Hidden if a prior choice is stored. On Accept, updates gtag
-     Consent Mode to grant analytics_storage.
+     Hidden if a prior choice is stored. On Accept, loads the
+     Google tag (window.ayLoadAnalytics in the gtag block, #154).
      ============================================================ -->
 <div id="consent" class="consent" role="region" aria-label="Cookie consent" hidden>
   <div class="consent__inner">
     <p class="consent__msg">
       This site uses Google Analytics to count visits. No ads, no cross-site tracking.
-      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy</a>.
+      <a href="/privacy">Privacy</a>.
     </p>
     <div class="consent__actions">
       <button type="button" class="consent__btn" data-consent="denied">Decline</button>
@@ -2851,8 +2857,19 @@ renderIntro();
   function record(choice) {
     if (el.hidden) return;
     try { localStorage.setItem(KEY, choice); } catch (e) {}
-    if (choice === 'granted' && typeof gtag === 'function') {
-      gtag('consent', 'update', { 'analytics_storage': 'granted' });
+    // ga-disable stops a loaded tag from sending anything after Decline (#154).
+    if (choice === 'granted') {
+      window['ga-disable-G-G3EMR3CB02'] = false;
+      if (window.ayAnalyticsLoaded) {
+        gtag('consent', 'update', { 'analytics_storage': 'granted' });
+      } else if (typeof window.ayLoadAnalytics === 'function') {
+        window.ayLoadAnalytics();
+      }
+    } else if (choice === 'denied') {
+      window['ga-disable-G-G3EMR3CB02'] = true;
+      if (window.ayAnalyticsLoaded) {
+        gtag('consent', 'update', { 'analytics_storage': 'denied' });
+      }
     }
     el.hidden = true;
   }
@@ -2862,7 +2879,7 @@ renderIntro();
     record(btn.getAttribute('data-consent'));
   });
   // Escape dismisses the banner as "denied" - keyboard users without
-  // a mouse shouldn't be stuck with a fixed-bottom banner they can't
+  // a mouse shouldn't be stuck with a fixed-bottom banner they cannot
   // dismiss. "Denied" is the non-consenting default per Consent Mode v2.
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !el.hidden) {
