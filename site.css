@@ -15,7 +15,8 @@
   --ink-2: #4A5D70;
   --ink-3: #566879;            /* the prototype #6B7C8D is under 4.5:1 for text on the page */
   --line: #D9E1E9;
-  --line-2: #B9C6D3;           /* stronger line: field borders, hover */
+  --line-2: #B9C6D3;           /* stronger line: hover, decorative */
+  --field-line: #7A8B9E;       /* form control borders: 3:1 or more on the card and the page */
   --brand: #2F6DF6;
   --brand-ink: #1F5BD6;        /* blue text and links: 4.5:1 or more on every light tone */
   --brand-hover: #2259D8;
@@ -50,7 +51,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --page: #0C121A; --page-2: #111A24; --card: #141E29;
-    --ink: #E8EEF5; --ink-2: #A3B3C3; --ink-3: #8394A7; --line: #24323F; --line-2: #3A4D61;
+    --ink: #E8EEF5; --ink-2: #A3B3C3; --ink-3: #8394A7; --line: #24323F; --line-2: #3A4D61; --field-line: #5D7186;
     --brand-ink: #6D9BFF; --brand-hover: #2259D8; --focus: #6D9BFF;
     --pass: #3FCF86; --pass-ink: #3FCF86; --pass-bg: rgba(63, 207, 134, .12);
     --wait: #9B8FF0; --wait-ink: #B4AAF5; --block: #F27178; --block-ink: #FF8A80;
@@ -63,7 +64,7 @@
 }
 :root[data-theme="dark"] {
   --page: #0C121A; --page-2: #111A24; --card: #141E29;
-  --ink: #E8EEF5; --ink-2: #A3B3C3; --ink-3: #8394A7; --line: #24323F; --line-2: #3A4D61;
+  --ink: #E8EEF5; --ink-2: #A3B3C3; --ink-3: #8394A7; --line: #24323F; --line-2: #3A4D61; --field-line: #5D7186;
   --brand-ink: #6D9BFF; --brand-hover: #2259D8; --focus: #6D9BFF;
   --pass: #3FCF86; --pass-ink: #3FCF86; --pass-bg: rgba(63, 207, 134, .12);
   --wait: #9B8FF0; --wait-ink: #B4AAF5; --block: #F27178; --block-ink: #FF8A80;
@@ -76,7 +77,7 @@
 .t-dark {
   --page: var(--dk-page); --page-2: var(--dk-page-2); --card: var(--dk-card);
   --ink: var(--dk-ink); --ink-2: var(--dk-ink-2); --ink-3: var(--dk-ink-3);
-  --line: var(--dk-line); --line-2: var(--dk-rail); --rail: var(--dk-rail);
+  --line: var(--dk-line); --line-2: var(--dk-rail); --rail: var(--dk-rail); --field-line: #5D7186;
   --brand-ink: #6D9BFF; --brand-hover: #2259D8; --focus: #6D9BFF;
   --pass: #3FCF86; --pass-ink: #3FCF86; --pass-bg: rgba(63, 207, 134, .12);
   --wait: #9B8FF0; --wait-ink: #B4AAF5; --block: #F27178; --block-ink: #FF8A80;
@@ -984,7 +985,7 @@ main { position: relative; }
 .field__hint { font-size: .9375rem; color: var(--ink-2); margin-bottom: .4rem; }
 .field input[type="email"], .field select {
   width: 100%; min-height: 3rem; padding: .5rem .8rem; font: 400 1rem/1.3 var(--text); color: var(--ink);
-  background: var(--card); border: 1px solid var(--line-2); border-radius: var(--r-btn);
+  background: var(--card); border: 1px solid var(--field-line); border-radius: var(--r-btn);
 }
 .field input[type="email"]:hover, .field select:hover { border-color: var(--ink-3); }
 .field.has-err input[type="email"], .field.has-err select { border-color: var(--block); }
@@ -993,7 +994,7 @@ main { position: relative; }
 .choice { position: relative; display: inline-flex; }
 .choice input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
 .choice span { display: inline-flex; align-items: center; min-height: 2.75rem; padding: .35rem .85rem; font: 600 .9375rem/1.2 var(--text); color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: var(--r-btn); box-shadow: var(--shadow-sm); }
-.choice span::before { content: ""; width: .75rem; height: .75rem; border: 1px solid var(--line-2); border-radius: 50%; margin-right: .55rem; flex: none; }
+.choice span::before { content: ""; width: .75rem; height: .75rem; border: 1px solid var(--field-line); border-radius: 50%; margin-right: .55rem; flex: none; }
 .choice:hover span { border-color: var(--line-2); }
 .choice input:checked + span { border-color: var(--brand); box-shadow: inset 0 0 0 1px var(--brand); }
 .choice input:checked + span::before { background: var(--brand); border-color: var(--brand); }
@@ -1478,7 +1479,7 @@ pre { max-width: 100%; overflow-x: auto; }
   color: var(--ink);
 }
 .keel__step.is-active .keel__name {
-  color: var(--brand);
+  color: var(--brand-ink);
 }
 .keel__step.is-active .keel__name::before {
   content: "";
@@ -1492,7 +1493,7 @@ pre { max-width: 100%; overflow-x: auto; }
 .keel__step.is-home {
   background: color-mix(in srgb, var(--brand) 10%, var(--surface));
 }
-.keel__step.is-home .keel__name { color: var(--brand); }
+.keel__step.is-home .keel__name { color: var(--brand-ink); }
 .keel__rule {
   margin: 0.35rem 0 0;
   font: 600 15px/1.45 var(--text);
