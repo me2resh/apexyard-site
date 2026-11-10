@@ -18,7 +18,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import GithubSlugger from 'github-slugger';
-import { SOURCE, SECTIONS, EXCLUDED_PREFIXES, DENY_TERMS, DENY_ALLOW, SITE_PATHS } from '../content-map.mjs';
+import { SOURCE, SECTIONS, EXCLUDED_PREFIXES, DENY_TERMS, DENY_ALLOW, SITE_PATHS, RULE_TITLES } from '../content-map.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CACHE = path.join(ROOT, '.cache', `apexyard-${SOURCE.tag}`);
@@ -192,6 +192,12 @@ function wholeFile(text) {
 function firstH1(text) {
   const h = headings(stripFrontMatter(text).split('\n')).find((x) => x.level === 1);
   return h ? h.text : null;
+}
+
+// A heading before its first dash, with the markup characters removed.
+function plainTitle(text) {
+  if (!text) return null;
+  return text.split(/\s[\u2014\u2013-]\s/)[0].replace(/[*_`]/g, '').trim();
 }
 
 function firstSentence(lines) {
@@ -379,9 +385,10 @@ function generateRules() {
       const rel = `.claude/rules/${f}`;
       const raw = readSource(rel);
       const body = wholeFile(raw);
+      const name = f.replace(/\.md$/, '');
       return {
-        slug: `reference/rules/${f.replace(/\.md$/, '')}`,
-        title: firstH1(raw) || f.replace(/\.md$/, ''),
+        slug: `reference/rules/${name}`,
+        title: RULE_TITLES[name] || plainTitle(firstH1(raw)) || name,
         description: firstSentence(body),
         sources: [rel],
         body: convertAlerts(body).join('\n'),

@@ -71,7 +71,7 @@
 <header class="hdr">
   <div class="hdr__bar">
     <a href="/" class="brand" aria-label="ApexYard home"><img class="brand__mark" src="/brand/apexyard-mark.svg" width="36" height="36" alt=""><span class="brand__word">ApexYard</span></a>
-    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness" aria-current="page">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="https://app.apexyard.ai" class="nav__login">Log in</a></nav>
+    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness" aria-current="page">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
     <div class="hdr__keys">
       <a class="key key--primary key--sm mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -159,8 +159,8 @@
         </article>
         <article class="feature">
           <div class="feature__text">
-            <h3><span data-claim="readiness_score">A readiness score for every repository</span></h3>
-            <p>Each repository gets a score and a trend over time. <span data-claim="readiness_weekly">The audit runs on a schedule, every week.</span></p>
+            <h3><span data-claim="readiness_score">A readiness score for every repository</span> <span class="state state--planned" data-cap="readiness_score">Planned for 4 Dec 2026</span></h3>
+            <p>Each repository gets a score from its latest audit. <span data-claim="readiness_weekly">The audit runs on a schedule that you set.</span> <span class="state state--planned" data-cap="readiness_weekly">Planned for 1 Mar 2027</span></p>
           </div>
           <figure class="feature__media">
             <div class="mock" aria-hidden="true">
@@ -185,12 +185,12 @@
                 </ul>
               </div>
             </div>
-            <figcaption class="mock__caption"><span class="mock__tag">Example</span>A scheduled readiness score with sample data.<span class="visually-hidden"> The fictional repository example-co/payments-api scores a sample 70 out of 100. The score rose over eight weeks. Sample area scores: documentation 90, security 80, accessibility 60, monitoring 50.</span></figcaption>
+            <figcaption class="mock__caption"><span class="mock__tag">Example</span>A scheduled readiness score with sample data. The trend line is not built yet.<span class="visually-hidden"> The fictional repository example-co/payments-api scores a sample 70 out of 100. The score rose over eight weeks. Sample area scores: documentation 90, security 80, accessibility 60, monitoring 50.</span></figcaption>
           </figure>
         </article>
         <article class="feature">
           <div class="feature__text">
-            <h3><span data-claim="readiness_ci">Runs in your own CI</span></h3>
+            <h3><span data-claim="readiness_ci">Runs in your own CI</span> <span class="state state--planned" data-cap="readiness_ci">Planned for 1 Mar 2027</span></h3>
             <p>The audit runs in your CI with your own model key. Only scores and findings reach the dashboard.</p>
           </div>
           <figure class="feature__media">

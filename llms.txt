@@ -16,6 +16,7 @@ ApexYard has three products and a shared layer.
 - [Build](https://apexyard.ai/build): the open-source framework for your agents
 - [Gate](https://apexyard.ai/gate): the check on each pull request, and what the GitHub App can see
 - [Readiness](https://apexyard.ai/readiness): the audit of each repository
+- [Cockpit](https://apexyard.ai/cockpit): a preview of the desktop app for Build, what works today, the known limits and how to get it
 - [Pricing](https://apexyard.ai/pricing): the plans for each product
 - [Docs](https://apexyard.ai/docs): install guide, daily loop, gates, hooks and rules
 - [Architecture](https://apexyard.ai/docs/quickstart/architecture): what runs locally, what is hosted, the data flow and the GitHub App permissions

@@ -78,6 +78,17 @@ The ticket, the decision record and the review that your agents make in Build ar
 
 ---
 
+# Cockpit (https://apexyard.ai/cockpit)
+
+Cockpit is a preview of the desktop app for Build. It is not a fourth product. [Preview]
+
+- What works today: a setup panel, governed runs that stop at each gate, a run view, a needs-you panel, and an ORBIT planning view.
+- Known limit: sign-in with your ApexYard account is off. [Planned]
+- Known limit: a governed run can call gh with your GitHub login, and that login can merge pull requests.
+- How to get it: there is no download yet. Today you build it from source, and you need access to the source repository. Write to us to ask for access.
+
+---
+
 # Gate (https://apexyard.ai/gate)
 
 Gate checks each pull request against your process. Every merge leaves a record: what was checked, who approved it and the exact commit.
@@ -86,14 +97,16 @@ Gate is for engineering leads whose teams merge code that agents wrote.
 
 ## What Gate does
 
-- It puts the result in the checks of the pull request. The result shows what passed, what is missing and the next step.
+- It puts the result in the checks of the pull request. The result shows what passed, what is missing and the next step. [Early teams (by hand)]
 - It checks four things: a linked ticket, a decision record, a review and a named approval.
-- An agent never approves its own work. With named approval set up, the merge waits for a person that your team named.
-- You can export the record of each merge for an auditor.
-- It shows every open change on one screen. You see what each pull request is missing and who holds it up.
-- The organisation view shows which pull requests skipped a step, in every repository.
+- An agent never approves its own work. By default, reviewers run on a stronger model than builders (checked on 10 November 2026 in the agent files of the framework). With named approval set up, the merge waits for a person that your team named. [Early teams (by hand)]
+- You can export the record of each merge for an auditor. [Planned]
+- It shows every open change on one screen. You see what each pull request is missing and who holds it up. [Early teams (by hand)]
+- The organisation view shows which pull requests skipped a step, in every repository. [Early teams (by hand)]
 
 Gate blocks a merge only when you make the check required in GitHub.
+
+Each hosted part has one label: Available now, Early teams (by hand), or Planned with its date. The hosted Gate runs by hand for early teams today.
 
 ## What the GitHub App can see
 
@@ -102,6 +115,9 @@ Our servers never fetch your code. The App has no Contents permission. From each
 - Pull requests: read. Titles, descriptions, reviews and the list of changed files.
 - Checks: write. The App posts the ApexYard check on each pull request.
 - Metadata: read. Repository names, and who can write to each repository.
+- Members: read. Who belongs to your organisation.
+
+Checked on 10 November 2026 with the GitHub API: the App holds these four permissions and no others.
 
 You can remove the App at any time.
 
@@ -152,6 +168,7 @@ The rules that you write one time live in Keel. Build uses them to guide your ag
 
 Each product has its own plans: Build, Gate and Readiness. A fourth section lists assessments by people.
 Read the pricing page for the plans. This file gives no prices.
+Plan limits are not set yet. We publish them when the plans open. [Planned for 1 Mar 2027]
 
 ---
 

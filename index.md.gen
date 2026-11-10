@@ -26,6 +26,12 @@ Underneath: Keel, one evidence store and one dashboard.
 
 20 roles, 69 skills, 23 agents and 66 hooks.
 
+From ApexYard building itself, counted on 10 November 2026 in the public repository me2resh/apexyard:
+
+- 678 merged pull requests with an approving review: <https://github.com/me2resh/apexyard/pulls?q=is%3Apr+is%3Amerged+review%3Aapproved>
+- 283 decision records, one file each: <https://github.com/me2resh/apexyard/tree/dev/docs/agdr>
+- 322 merged pull requests with a comment that says CHANGES REQUESTED: <https://github.com/me2resh/apexyard/pulls?q=is%3Apr+is%3Amerged+%22CHANGES+REQUESTED%22+in%3Acomments>
+
 Our servers never fetch your code. The GitHub App sees pull request titles, descriptions and changed file names, not the files. See what the GitHub App can see: <https://apexyard.ai/gate#app-access>.
 
 ## Install Build
@@ -47,7 +53,7 @@ npx create-apexyard --org <your-org> --name <new-private-repo> --private
 
 Bring one of your repositories, and see what the Gate would have held. Book from <https://apexyard.ai/#book-a-demo>.
 
-Free for one person. Cockpit installs the Build framework for you. Pay when a team needs the hosted Gate, shared Keel and evidence. See plans: <https://apexyard.ai/pricing>.
+Free for one person. Pay when a team needs the hosted Gate, shared Keel and evidence. See plans: <https://apexyard.ai/pricing>.
 
 ## More
 

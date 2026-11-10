@@ -225,9 +225,32 @@ async function main() {
     }
   }
   console.log('PASS  Both flag states set the label and target');
+  const login = { href: '/waitlist?src=nav-login', 'data-login': 'https://app.apexyard.ai', 'data-waitlist': '/waitlist?src=nav-login' };
+  const loginLink = anchor(login);
+  loginLink.textContent = 'Log in';
+  for (const open of [false, true, false]) {
+    api.applyLogin([loginLink], open);
+    assert.strictEqual(login.href, open ? 'https://app.apexyard.ai' : '/waitlist?src=nav-login');
+    assert.strictEqual(loginLink.textContent, 'Log in');
+  }
+  console.log('PASS  The Log in link keeps its label and follows the flag');
   const configContext = { window: {} };
   vm.runInNewContext(read('site-config.js'), configContext);
   const open = configContext.window.APEXYARD_SITE.signinOpen;
+  let logins = 0;
+  for (const name of fs.readdirSync(root).filter(name => name.endsWith('.html'))) {
+    for (const m of read(name).matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)) {
+      const data = attrs(m[1]);
+      if (!(data.class || '').split(/\s+/).includes('nav__login')) continue;
+      logins++;
+      assert.strictEqual(data['data-login'], 'https://app.apexyard.ai', name);
+      assert(data['data-waitlist'].startsWith('/waitlist'), name);
+      assert.strictEqual(data.href, open ? data['data-login'] : data['data-waitlist'], name);
+      assert.strictEqual(m[2].replace(/<[^>]*>/g, '').trim(), 'Log in', name);
+    }
+  }
+  assert(logins >= 12, 'every page has a Log in link: ' + logins);
+  console.log('PASS  Every Log in link points at the waitlist while sign-in is closed');
   const expectedLabel = open ? 'Start free with GitHub' : 'Join the waitlist';
   const expectedHref = open ? 'https://app.apexyard.ai/signin' : '/waitlist';
   let count = 0;

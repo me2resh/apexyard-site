@@ -3,6 +3,9 @@
    Static HTML in index.html, pricing.html and gate.html shows the waitlist
    state before the script runs and for visitors without scripts.
    .github/tests/test-waitlist.sh reads signinOpen from this file.
+   The "Log in" link in the header of every page has data-login. waitlist.js
+   points it at the waitlist while signinOpen is false and at the app when it
+   is true. When signinOpen is true, edit its static href in every page too.
    When signinOpen is true, edit the three buttons with data-signin in
    index.html, pricing.html and gate.html so the static label matches.
    Change the label and href. data-waitlist keeps the waitlist target.
