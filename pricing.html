@@ -93,9 +93,11 @@
 <div class="join join--rl" aria-hidden="true"><i></i><i></i><i></i></div><div class="rail" aria-hidden="true"></div>
     <div class="wrap">
       <h2 class="section__title" id="plans-title"><span class="stn" aria-hidden="true"></span>Plans</h2>
+      <!-- Key (#181): one legend replaces the dated badge in each cell. The dates stay in the roadmap list below the table. -->
+      <p class="pt-key" id="pt-key"><span class="pt-key__item"><svg class="pt-tick" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg> Included</span><span class="pt-key__item"><span class="pt-planned" aria-hidden="true"></span> Planned features: see the <a href="#roadmap">roadmap</a></span></p>
       <div class="price-table__scroll" tabindex="0" role="region" aria-labelledby="plans-title">
         <table class="price-table__table">
-          <caption class="visually-hidden">What each plan includes</caption>
+          <caption class="visually-hidden">What each plan includes. A planned feature is marked "planned". The roadmap below the table gives the dates.</caption>
           <thead>
             <tr>
               <td></td>
@@ -106,68 +108,68 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr class="pt-row--price">
               <th scope="row">Price</th>
-              <td>No cost</td>
-              <td><!--{{STARTUP_PRICE}}-->Price to follow. <span class="price-flag">Placeholder price</span><!--/{{STARTUP_PRICE}}--></td>
-              <td><!--{{TEAM_PRICE}}-->Price to follow. <span class="price-flag">Placeholder price</span><!--/{{TEAM_PRICE}}--> <span class="price-table__note"><!--{{TEAM_PRICE_NOTE}}-->Details to follow.<!--/{{TEAM_PRICE_NOTE}}--></span></td>
-              <td>Custom</td>
+              <td><span class="pt-amount">No cost</span></td>
+              <td><span class="pt-amount"><!--{{STARTUP_PRICE}}-->Price to follow. <span class="price-flag">Placeholder price</span><!--/{{STARTUP_PRICE}}--></span></td>
+              <td><span class="pt-amount"><!--{{TEAM_PRICE}}-->Price to follow. <span class="price-flag">Placeholder price</span><!--/{{TEAM_PRICE}}--></span> <span class="pt-sub"><!--{{TEAM_PRICE_NOTE}}-->Details to follow.<!--/{{TEAM_PRICE_NOTE}}--></span></td>
+              <td><span class="pt-amount">Custom</span></td>
             </tr>
             <tr>
               <th scope="row">For</th>
-              <td>Free for one person. Pay when a team needs the hosted Gate, shared Keel and evidence.</td>
-              <td>For small teams that are getting started.</td>
-              <td>For engineering leads who must show who approved each change.</td>
-              <td>For organisations with procurement and security reviews.</td>
+              <td>One person<sup class="pt-fn"><a href="#pt-note-1" aria-label="Note 1">1</a></sup></td>
+              <td>Small teams that are getting started</td>
+              <td>Engineering leads who must show who approved each change</td>
+              <td>Organisations with procurement and security reviews</td>
             </tr>
             <tr>
               <th scope="row" id="build">Build <span class="state state--now" data-cap="available-now">Available now</span></th>
-              <td>Open source. MIT. Always free.</td>
-              <td>Included</td>
-              <td>Included</td>
-              <td>Included</td>
+              <td><svg class="pt-tick" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg> Open source. MIT. Always free.</td>
+              <td><svg class="pt-tick" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg><span class="visually-hidden">Included</span></td>
+              <td><svg class="pt-tick" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg><span class="visually-hidden">Included</span></td>
+              <td><svg class="pt-tick" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg><span class="visually-hidden">Included</span></td>
             </tr>
             <tr>
               <th scope="row" id="cockpit">Cockpit <span class="state state--preview" data-cap="cockpit_app">Preview</span></th>
-              <td><span data-claim="cockpit_app">The desktop app for Build</span>. <a href="/cockpit">See the preview</a>.</td>
-              <td>As in Free</td>
-              <td>As in Free</td>
-              <td>As in Free</td>
+              <td><svg class="pt-tick" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg> <span data-claim="cockpit_app">The desktop app for Build</span>. <a href="/cockpit">See the preview</a></td>
+              <td><svg class="pt-tick" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg><span class="visually-hidden">As in Free</span></td>
+              <td><svg class="pt-tick" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg><span class="visually-hidden">As in Free</span></td>
+              <td><svg class="pt-tick" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg><span class="visually-hidden">As in Free</span></td>
             </tr>
             <tr>
               <th scope="row" id="gate">Gate</th>
-              <td><span data-claim="free_checks">Free hosted checks on public repositories</span> <span class="state state--planned" data-cap="free_checks">Planned for 1 Feb 2027</span></td>
-              <td><!--{{STARTUP_SUMMARY}}-->More repositories and developers<!--/{{STARTUP_SUMMARY}}--> <span class="price-table__note"><!--{{STARTUP_BULLET_1}}-->Plan detail to follow<!--/{{STARTUP_BULLET_1}}--></span> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
-              <td><span data-claim="evidence_export">Exportable proof of who approved each change</span> <span class="state state--planned" data-cap="evidence_export">Planned</span><br><span data-claim="org_dashboard">The organisation dashboard</span> <span class="state state--hand" data-cap="org_dashboard"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></td>
-              <td><!--{{ENTERPRISE_POINT_3}}-->Plan detail to follow<!--/{{ENTERPRISE_POINT_3}}--> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
+              <td><span class="pt-planned" title="Planned: see the roadmap"></span><span class="visually-hidden">Planned:</span> <span data-claim="free_checks">Free hosted checks on public repositories</span></td>
+              <td><span class="pt-planned" title="Planned: see the roadmap"></span><span class="visually-hidden">Planned:</span> <!--{{STARTUP_SUMMARY}}-->More repositories and developers<!--/{{STARTUP_SUMMARY}}--> <span class="pt-sub"><!--{{STARTUP_BULLET_1}}-->Plan detail to follow<!--/{{STARTUP_BULLET_1}}--></span></td>
+              <td><span class="pt-line"><span class="pt-planned" title="Planned: see the roadmap"></span><span class="visually-hidden">Planned:</span> <span data-claim="evidence_export">Exportable proof of who approved each change</span></span><span class="pt-line"><svg class="pt-tick" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg> <span data-claim="org_dashboard">The organisation dashboard</span> <span class="state state--hand" data-cap="org_dashboard"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></span></td>
+              <td><span class="pt-planned" title="Planned: see the roadmap"></span><span class="visually-hidden">Planned:</span> <!--{{ENTERPRISE_POINT_3}}-->Plan detail to follow<!--/{{ENTERPRISE_POINT_3}}--></td>
             </tr>
             <tr>
               <th scope="row" id="readiness">Readiness</th>
-              <td>Run the audits yourself with the framework skills <span class="state state--now" data-cap="available-now">Available now</span></td>
-              <td><span data-claim="readiness_weekly">Readiness on a schedule</span> <span class="state state--planned" data-cap="readiness_weekly">Planned for 1 Mar 2027</span></td>
-              <td><span data-claim="readiness_weekly">Readiness on a schedule</span> <span class="state state--planned" data-cap="readiness_weekly">Planned for 1 Mar 2027</span></td>
-              <td><span data-claim="readiness_weekly">Readiness on a schedule</span> <span class="state state--planned" data-cap="readiness_weekly">Planned for 1 Mar 2027</span></td>
+              <td>Run the audits yourself<sup class="pt-fn"><a href="#pt-note-2" aria-label="Note 2">2</a></sup> <span class="state state--now" data-cap="available-now">Available now</span></td>
+              <td><span class="pt-planned" title="Planned: see the roadmap"></span><span class="visually-hidden">Planned:</span> <span data-claim="readiness_weekly">Readiness on a schedule</span></td>
+              <td><span class="pt-planned" title="Planned: see the roadmap"></span><span class="visually-hidden">Planned:</span> <span data-claim="readiness_weekly">Readiness on a schedule</span></td>
+              <td><span class="pt-planned" title="Planned: see the roadmap"></span><span class="visually-hidden">Planned:</span> <span data-claim="readiness_weekly">Readiness on a schedule</span></td>
             </tr>
             <tr>
               <th scope="row">Shared Keel</th>
               <td>Your rules as files on your machine <span class="state state--now" data-cap="available-now">Available now</span></td>
               <td>Your rules as files in each repository <span class="state state--now" data-cap="available-now">Available now</span></td>
-              <td><span data-claim="kb_mcp">Keel shared across your organisation, with owners and versions</span> <span class="state state--planned" data-cap="kb_mcp">Planned for 18 Jan 2027</span></td>
+              <td><span class="pt-planned" title="Planned: see the roadmap"></span><span class="visually-hidden">Planned:</span> <span data-claim="kb_mcp">Keel shared across your organisation, with owners and versions</span></td>
               <td>As in the Team plan</td>
             </tr>
             <tr>
               <th scope="row">Repositories and seats</th>
-              <td><!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}-->, one person <span class="state state--planned" data-cap="free_checks">Planned for 1 Feb 2027</span></td>
-              <td><!--{{STARTUP_LIMITS}}-->Up to N repositories<!--/{{STARTUP_LIMITS}}--> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
+              <td><span class="pt-planned" title="Planned: see the roadmap"></span><span class="visually-hidden">Planned:</span> <!--{{FREE_REPO_LIMIT}}-->N repositories<!--/{{FREE_REPO_LIMIT}}-->, one person</td>
+              <td><span class="pt-planned" title="Planned: see the roadmap"></span><span class="visually-hidden">Planned:</span> <!--{{STARTUP_LIMITS}}-->Up to N repositories<!--/{{STARTUP_LIMITS}}--></td>
               <td><span data-claim="gate_all_repos"><!--{{TEAM_REPO_LIMIT}}-->All repositories, up to N developers<!--/{{TEAM_REPO_LIMIT}}--></span> <span class="state state--hand" data-cap="gate_all_repos"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></td>
-              <td><!--{{ENTERPRISE_LIMITS}}-->Over N developers<!--/{{ENTERPRISE_LIMITS}}--> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
+              <td><span class="pt-planned" title="Planned: see the roadmap"></span><span class="visually-hidden">Planned:</span> <!--{{ENTERPRISE_LIMITS}}-->Over N developers<!--/{{ENTERPRISE_LIMITS}}--></td>
             </tr>
             <tr>
               <th scope="row">Evidence retention</th>
-              <td><!--{{FREE_RETENTION}}-->Retention to follow<!--/{{FREE_RETENTION}}--> <span class="state state--planned" data-cap="free_checks">Planned for 1 Feb 2027</span></td>
-              <td><!--{{STARTUP_RETENTION}}-->Retention to follow<!--/{{STARTUP_RETENTION}}--> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
-              <td><!--{{TEAM_RETENTION}}-->Retention to follow<!--/{{TEAM_RETENTION}}--> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
-              <td><!--{{ENTERPRISE_RETENTION}}-->Retention to follow<!--/{{ENTERPRISE_RETENTION}}--> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></td>
+              <td><span class="pt-planned" title="Planned: see the roadmap"></span><span class="visually-hidden">Planned:</span> <!--{{FREE_RETENTION}}-->Retention to follow<!--/{{FREE_RETENTION}}--></td>
+              <td><span class="pt-planned" title="Planned: see the roadmap"></span><span class="visually-hidden">Planned:</span> <!--{{STARTUP_RETENTION}}-->Retention to follow<!--/{{STARTUP_RETENTION}}--></td>
+              <td><span class="pt-planned" title="Planned: see the roadmap"></span><span class="visually-hidden">Planned:</span> <!--{{TEAM_RETENTION}}-->Retention to follow<!--/{{TEAM_RETENTION}}--></td>
+              <td><span class="pt-planned" title="Planned: see the roadmap"></span><span class="visually-hidden">Planned:</span> <!--{{ENTERPRISE_RETENTION}}-->Retention to follow<!--/{{ENTERPRISE_RETENTION}}--></td>
             </tr>
             <tr>
               <th scope="row">Support</th>
@@ -176,7 +178,7 @@
               <td><!--{{TEAM_SUPPORT}}-->Team support<!--/{{TEAM_SUPPORT}}--></td>
               <td><!--{{ENTERPRISE_SUMMARY}}-->Terms that fit your procurement<!--/{{ENTERPRISE_SUMMARY}}--></td>
             </tr>
-            <tr>
+            <tr class="pt-row--start">
               <th scope="row"><span class="visually-hidden">Start</span></th>
               <td><a class="btn btn--quiet" href="/waitlist?src=pricing-free" data-signin="https://app.apexyard.ai/signin?src=pricing-free" data-waitlist="/waitlist?src=pricing-free">Join the waitlist</a></td>
               <td><a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a call: Startup plan">Book a call to start</a></td>
@@ -186,7 +188,78 @@
           </tbody>
         </table>
       </div>
-      <p class="price-table__note plan-limits" id="plan-limits"><span data-claim="paid_plans">Plan limits are not set yet. We publish them when the plans open.</span> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></p>
+      <script>
+      /* #181: on a phone, show each plan as a card. The cards are built from the
+         table, so the table stays the one source. This runs before site.js and
+         product.js (both deferred), so they also wire the links in the cards.
+         Without scripts, the table scrolls inside its own box. */
+      (function () {
+        var sec = document.getElementById('plans');
+        var table = sec && sec.querySelector('.price-table__table');
+        if (!table || !document.createElement('div').append) return;
+        var heads = table.querySelectorAll('thead th[scope="col"]');
+        var rows = table.querySelectorAll('tbody tr');
+        var wrap = document.createElement('div');
+        wrap.className = 'pt-cards';
+        function strip(node) {
+          node.removeAttribute && node.removeAttribute('id');
+          node.querySelectorAll && node.querySelectorAll('[id]').forEach(function (n) { n.removeAttribute('id'); });
+          return node;
+        }
+        heads.forEach(function (th, i) {
+          var card = document.createElement('section');
+          card.className = 'pt-card' + (th.classList.contains('price-table__team') ? ' pt-card--team' : '');
+          card.setAttribute('aria-labelledby', 'pt-card-' + th.id);
+          var flag = th.querySelector('.plan__flag');
+          if (flag) card.append(strip(flag.cloneNode(true)));
+          var h = document.createElement('h3');
+          h.className = 'pt-card__name';
+          h.id = 'pt-card-' + th.id;
+          h.textContent = th.textContent.replace(flag ? flag.textContent : '', '').trim();
+          card.append(h);
+          var dl = document.createElement('dl');
+          dl.className = 'pt-card__rows';
+          rows.forEach(function (tr) {
+            var label = tr.querySelector('th[scope="row"]');
+            var cell = tr.children[i + 1];
+            if (!cell) return;
+            var box = document.createElement('div');
+            box.className = 'pt-card__row ' + tr.className;
+            var dt = document.createElement('dt');
+            dt.append.apply(dt, Array.prototype.map.call(label.childNodes, function (n) { return strip(n.cloneNode(true)); }));
+            if (label.querySelector('.visually-hidden') && !label.textContent.trim().replace(label.querySelector('.visually-hidden').textContent, '').trim()) dt.className = 'visually-hidden';
+            var dd = document.createElement('dd');
+            dd.append.apply(dd, Array.prototype.map.call(cell.childNodes, function (n) { return strip(n.cloneNode(true)); }));
+            box.append(dt, dd);
+            dl.append(box);
+          });
+          card.append(dl);
+          wrap.append(card);
+        });
+        table.parentNode.after(wrap);
+        sec.classList.add('has-cards');
+      })();
+      </script>
+      <p class="price-table__note plan-limits" id="plan-limits"><span data-claim="paid_plans">Plan limits are not set yet. We publish them when the plans open.</span></p>
+      <div class="pt-after">
+        <div class="pt-roadmap" id="roadmap">
+          <h3 class="pt-after__title"><span class="pt-planned" aria-hidden="true"></span> Roadmap</h3>
+          <ul class="pt-roadmap__list">
+            <li><span class="pt-roadmap__what">Keel shared across the organisation (Team)</span> <span class="state state--planned" data-cap="kb_mcp">Planned for 18 Jan 2027</span></li>
+            <li><span class="pt-roadmap__what">Free hosted checks, with the Free limits and retention</span> <span class="state state--planned" data-cap="free_checks">Planned for 1 Feb 2027</span></li>
+            <li><span class="pt-roadmap__what">Paid plans, with their limits and evidence retention</span> <span class="state state--planned" data-cap="paid_plans">Planned for 1 Mar 2027</span></li>
+            <li><span class="pt-roadmap__what">Readiness on a schedule</span> <span class="state state--planned" data-cap="readiness_weekly">Planned for 1 Mar 2027</span></li>
+            <li><span class="pt-roadmap__what">Exportable proof of who approved each change</span> <span class="state state--planned" data-cap="evidence_export">Planned</span></li>
+          </ul>
+        </div>
+        <div class="pt-notes">
+          <h3 class="pt-after__title">Notes</h3>
+          <ol class="pt-notes__list">
+            <li id="pt-note-1">Free for one person. Pay when a team needs the hosted Gate, shared Keel and evidence.</li>
+            <li id="pt-note-2">Run the audits yourself with the framework skills.</li>
+          </ol>
+        </div>
+      </div>
     </div>
   </section>
   <section class="section price-group sec t-dark" id="assessments" aria-labelledby="assessments-title" data-side="r">
