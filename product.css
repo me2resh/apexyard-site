@@ -820,6 +820,57 @@ code, pre { font-family: var(--mono); font-weight: 500; font-size: 0.88em; }
 .price-table__table .btn { width: 100%; text-align: center; font-size: 15px; padding: 0.55rem 0.75rem; }
 .price-table__table .plan__note { margin: 0.75rem 0 0; color: var(--ink); font-weight: 600; font-size: 15px; }
 
+/* ---------- pricing table, scannable form (#181) ---------- */
+/* Key above the table: the tick and the planned marker. */
+.pt-key { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-size: 15px; color: var(--ink-2); }
+.pt-key__item { display: inline-flex; align-items: center; gap: 0.4rem; }
+.pt-tick { width: 16px; height: 16px; flex: none; vertical-align: -3px; fill: none; stroke: var(--pass-ink); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+/* The planned marker: a small dashed ring, the same dashed language as the old badge. */
+.pt-planned { display: inline-block; width: 12px; height: 12px; flex: none; margin-right: 0.15rem; vertical-align: -1px; border: 1.5px dashed var(--ink-2); border-radius: 50%; }
+.pt-amount { display: block; font: 800 1.2rem/1.3 var(--display); color: var(--ink); }
+.pt-amount .price-flag { margin-left: 0; font-family: var(--text); }
+.pt-sub { display: block; margin-top: 0.25rem; font-size: 14px; color: var(--ink-2); }
+.pt-line { display: block; }
+.pt-line + .pt-line { margin-top: 0.4rem; }
+.pt-fn { font-size: 12px; line-height: 0; margin-left: 1px; }
+.pt-fn a { font-weight: 600; display: inline; min-height: 0; }
+.price-table__table td { line-height: 1.5; }
+.price-table__table .state { margin-left: 0.35rem; }
+
+/* Roadmap and notes below the table. The dated labels live here once. */
+.pt-after { margin-top: 1.75rem; display: grid; gap: 1.5rem 3rem; }
+.pt-after__title { display: flex; align-items: center; gap: 0.5rem; font: 700 1rem/1.3 var(--display); color: var(--ink); }
+.pt-roadmap__list, .pt-notes__list { margin: 0.6rem 0 0; padding: 0; font-size: 15px; color: var(--ink-2); }
+.pt-roadmap__list { list-style: none; }
+.pt-roadmap__list li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 1rem; padding: 0.5rem 0; border-bottom: 1px solid var(--line); }
+.pt-roadmap__list .state { margin-left: 0; border: 0; padding: 0; font-size: 14px; color: var(--ink); background: none; }
+.pt-notes__list { padding-left: 1.25rem; }
+.pt-notes__list li { padding: 0.25rem 0; }
+.pt-notes__list li:target { color: var(--ink); }
+@media (min-width: 900px) { .pt-after { grid-template-columns: 3fr 2fr; } }
+
+/* Phone: one card per plan, built from the table by the page script. */
+.pt-cards { display: none; }
+@media (max-width: 719px) {
+  .has-cards .price-table__scroll { display: none; }
+  .has-cards .pt-cards { display: grid; gap: 1rem; margin-top: 1.25rem; }
+  .pt-card { position: relative; padding: 1.25rem 1rem 1rem; background: var(--card); border: 1px solid var(--line); border-radius: var(--r-card); box-shadow: var(--shadow); min-width: 0; }
+  .pt-card--team { border-color: var(--brand); box-shadow: inset 0 3px 0 var(--brand), var(--shadow); }
+  .pt-card .plan__flag { position: static; display: block; margin: 0 0 0.25rem; }
+  .pt-card__name { font: 800 1.3rem/1.3 var(--display); color: var(--ink); }
+  .pt-card__rows { margin: 0.75rem 0 0; }
+  .pt-card__row { display: grid; grid-template-columns: minmax(0, 7rem) minmax(0, 1fr); gap: 0.75rem; padding: 0.6rem 0; border-top: 1px solid var(--line); font-size: 15px; }
+  .pt-card__row dt { font-weight: 600; color: var(--ink); min-width: 0; overflow-wrap: anywhere; }
+  .pt-card__row dt .state { display: table; margin: 0.25rem 0 0; }
+  .pt-card__row dd { margin: 0; color: var(--ink-2); min-width: 0; overflow-wrap: anywhere; }
+  .pt-card__row dd .state { margin-left: 0; }
+  .pt-card__row.pt-row--price { grid-template-columns: minmax(0, 1fr); border-top: 0; padding-top: 0; }
+  .pt-card__row.pt-row--price dt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .pt-card__row.pt-row--start { grid-template-columns: minmax(0, 1fr); }
+  .pt-card__row.pt-row--start .btn { width: 100%; }
+  .pt-card__row.pt-row--start .plan__note { margin: 0.6rem 0 0; color: var(--ink); font-weight: 600; }
+}
+
 /* ---------- Build feature lists and mocks ---------- */
 .sizes {
   list-style: none;
