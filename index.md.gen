@@ -52,7 +52,7 @@ Step 2. Create your private ops repository. The command asks for the name and th
 apexyard init
 ```
 
-For scripts, use the flag form in the [command line reference](/docs/reference/cli).
+For scripts, use the flag form in the [docs](/docs).
 
 ```sh
 npx create-apexyard --org <your-org> --name <new-private-repo> --private
