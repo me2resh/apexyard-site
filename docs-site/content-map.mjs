@@ -190,12 +190,13 @@ const learn = [
         description: 'Install the command line tool. Create your private repository. Run /setup.',
         parts: [{
           text: [
-            'Install the command line tool with Homebrew. Then create your `<new-private-repo>` repository:',
+            'Install the command line tool, then create your private ops repository. The command asks for the name and the account:',
             '',
             '```bash',
-            'brew install me2resh/tap/apexyard',
-            'apexyard init --org <your-org> --name <new-private-repo> --private',
+            'brew install me2resh/tap/apexyard && apexyard init',
             '```',
+            '',
+            'For scripts, use the flag form: see the [command line reference](/docs/reference/cli).',
             '',
             'Or use npx. It installs the command line tool if it is not there. Then it creates your `<new-private-repo>` repository:',
             '',

@@ -370,9 +370,9 @@
             <button type="button" class="tabs__tab" id="tab-npx" role="tab" aria-selected="false" aria-controls="panel-npx" tabindex="-1">npx</button>
           </div>
           <div class="tabs__panel" id="panel-brew" role="tabpanel" aria-labelledby="tab-brew" tabindex="0">
-            <p>Install the command line tool with Homebrew. Then create your &lt;new-private-repo&gt; repository.</p>
-            <div class="cmd"><pre tabindex="0"><code id="cmd-brew">brew install me2resh/tap/apexyard
-apexyard init --org &lt;your-org&gt; --name &lt;new-private-repo&gt; --private</code></pre><button type="button" class="tabs__copy" data-copy-target="cmd-brew" aria-label="Copy the Homebrew commands">Copy commands</button></div>
+            <p>Install the command line tool, then create your private ops repository. The command asks for the name and the account.</p>
+            <div class="cmd"><pre tabindex="0"><code id="cmd-brew">brew install me2resh/tap/apexyard &amp;&amp; apexyard init</code></pre><button type="button" class="tabs__copy" data-copy-target="cmd-brew" aria-label="Copy the Homebrew install and init command">Copy command</button></div>
+            <p class="tabs__note">For scripts, use the flag form in the <a href="/docs">docs</a>.</p>
           </div>
           <div class="tabs__panel" id="panel-npx" role="tabpanel" aria-labelledby="tab-npx" tabindex="0">
             <p>This installs the command line tool if it is not there, then creates your &lt;new-private-repo&gt; repository.</p>
