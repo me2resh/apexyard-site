@@ -634,12 +634,8 @@ main { position: relative; }
 .cmd pre { margin: 0; width: 100%; overflow-x: auto; font-size: .875rem; line-height: 1.7; color: var(--ink); scrollbar-color: var(--line-2) transparent; scrollbar-width: thin; }
 .cmd code { font-size: inherit; }
 .pr { display: inline-block; width: .5rem; height: .5rem; border-radius: 50%; background: var(--clear); margin-right: .7rem; vertical-align: .08em; }
-.steps2 { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.1rem; counter-reset: s2; }
-.steps2 > li { counter-increment: s2; display: grid; gap: .1rem; }
-.steps2 > li > p { margin: 0; font-size: .9375rem; color: var(--ink-2); }
-.steps2 > li > p::before { content: counter(s2) ". "; font-weight: 700; color: var(--ink); }
-.tabs__panel > p.steps2__note { margin-top: 1rem; font-size: .875rem; }
-.steps2__note a { display: inline; min-height: 0; padding: 0; color: inherit; text-decoration: underline; }
+.tabs__panel > p.tabs__panel > p.tabs__note { margin-top: 1rem; font-size: .875rem; }
+.tabs__note a { color: inherit; text-decoration: underline; }
 .tabs__status { padding: 0 1.1rem; min-height: 1.4rem; font-size: .875rem; color: var(--ink-2); }
 
 /* Close */
