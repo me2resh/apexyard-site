@@ -246,6 +246,9 @@ code, pre { font-family: var(--mono); font-weight: 500; font-size: 0.88em; }
 .proof__source, .proof__repo {
   margin-top: 1.25rem; font-size: 15px; color: var(--ink-2); max-width: 62ch;
 }
+/* #178: the live badges load late. A fixed height keeps the section height the
+   same before and after they load, so the track below does not move. */
+.proof__repo img { height: 20px; width: auto; }
 .quote-slot {
   margin: 1.5rem 0 0; padding: 1.25rem;
   border: 1px solid var(--line); border-radius: var(--radius);
