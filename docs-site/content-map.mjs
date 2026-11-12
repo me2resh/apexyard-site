@@ -137,7 +137,7 @@ const learn = [
             '',
             '- The framework runs on your machine. Your code stays in your repository.',
             '- The hooks are shell scripts. They run inside your coding agent.',
-            '- Skills, rules, agents, handbooks and templates are files in your `<new-private-repo>` repository.',
+            '- Skills, rules, agents, handbooks and templates are files in your private ops repository.',
             '- Your managed repositories are clones in the `workspace/<name>/` folder. Git ignores that folder.',
             '- Approval markers are local session files. Git does not track them.',
             '- The framework uses two outside services: your forge and the model provider of your coding agent. The forge is GitHub through `gh`, or GitLab through `glab`.',
@@ -198,10 +198,10 @@ const learn = [
             '',
             'For scripts, use the flag form: see the [command line reference](/docs/reference/cli).',
             '',
-            'Or use npx. It installs the command line tool if it is not there. Then it creates your `<new-private-repo>` repository:',
+            'Or use npx. It installs the command line tool if it is not there. Then it creates your private ops repository. The command asks for the name and the account:',
             '',
             '```bash',
-            'npx create-apexyard --org <your-org> --name <new-private-repo> --private',
+            'npx create-apexyard',
             '```',
             '',
             'Do not run `apexyard init` after the npx command. The new folder is not empty.',
@@ -608,7 +608,7 @@ const learn = [
     id: 'portfolio',
     title: 'Portfolio',
     icon: 'list-format',
-    summary: 'Run many projects from one `<new-private-repo>` repository, in one shared or split layout.',
+    summary: 'Run many projects from one private ops repository, in one shared or split layout.',
     pages: [
       {
         slug: 'portfolio/multi-project',
@@ -867,7 +867,7 @@ const learn = [
           {
             text: [
               'Today the audit skills run where your coding agent runs, with your own model access.',
-              'The skill saves each `/launch-check` run in your projects folder. By default that is `projects/<name>/audits/` in your `<new-private-repo>` repository.',
+              'The skill saves each `/launch-check` run in your projects folder. By default that is `projects/<name>/audits/` in your private ops repository.',
             ].join('\n'),
           },
         ],

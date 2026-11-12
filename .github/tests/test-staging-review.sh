@@ -68,7 +68,7 @@ assert "quickstart omits works-with list" \
 assert "quickstart holds brew install me2resh/tap/apexyard" \
   holds "$qs" 'brew install me2resh/tap/apexyard'
 assert "quickstart holds npx create-apexyard command" \
-  holds "$qs" 'npx create-apexyard --org &lt;your-org&gt; --name &lt;new-private-repo&gt; --private'
+  holds "$qs" 'npx create-apexyard'
 assert "quickstart omits You need git." \
   lacks "$qs" 'You need git.'
 assert "quickstart holds no git clone" lacks "$qs" 'git clone'
@@ -79,13 +79,13 @@ assert "index.md.gen omits install details" \
 assert "index.md.gen holds brew install me2resh/tap/apexyard" \
   grep -Fq 'brew install me2resh/tap/apexyard' "$root/index.md.gen"
 assert "index.md.gen holds npx create-apexyard command" \
-  grep -Fq 'npx create-apexyard --org <your-org> --name <new-private-repo> --private' "$root/index.md.gen"
+  grep -Fq 'npx create-apexyard' "$root/index.md.gen"
 assert "index.md.gen holds no git clone" file_lacks "$root/index.md.gen" 'git clone'
 
 assert "content-map holds brew install me2resh/tap/apexyard" \
   grep -Fq 'brew install me2resh/tap/apexyard' "$root/docs-site/content-map.mjs"
 assert "content-map holds npx create-apexyard command" \
-  grep -Fq 'npx create-apexyard --org <your-org> --name <new-private-repo> --private' "$root/docs-site/content-map.mjs"
+  grep -Fq 'npx create-apexyard' "$root/docs-site/content-map.mjs"
 
 # --- 4. Keel component ---
 keel_pages=(index.html build.html gate.html readiness.html creators.html)
