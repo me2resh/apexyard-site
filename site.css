@@ -317,7 +317,7 @@ main { position: relative; }
 .sec[data-side="r"] .stn { right: calc(var(--rail-x) + var(--t) / 2 - 11px); }
 .stn.is-past { background: var(--clear); border-color: var(--clear); }
 
-/* The marker: pull request 214, one berth tag travelling the track. */
+/* The marker: a sample pull request number (not a real one), one berth tag travelling the track. */
 .lit { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; overflow: visible; }
 .lit path { fill: none; stroke: var(--clear); stroke-width: 6; stroke-linejoin: miter; }
 .marker { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 40; pointer-events: none; will-change: transform; }
@@ -1120,8 +1120,10 @@ main { position: relative; }
   .sec[data-side="r"] > .rail { right: auto; left: var(--rail-x); }
   .sec[data-side="l"] .stn { left: auto; right: calc(var(--rail-x) + var(--t) / 2 - 8px); }
   .sec[data-side="r"] .stn { right: auto; left: calc(var(--rail-x) + var(--t) / 2 - 8px); }
+  /* The rails swap sides here, so each join turns the other way (#178).
+     The pages mark a right-to-left join as .join--rl and a left-to-right join as a plain .join. */
   .join--rl { transform: none; }
-  .join--lr { transform: scaleX(-1); }
+  .join:not(.join--rl) { transform: scaleX(-1); }
   .panel { --gy: 44px; --b0: 90deg; --b1: 135deg; --b2: 132.6deg; }
   .panel__head { padding: 1rem 16px .85rem calc(var(--rail-x) + 26px); }
   .panel__pr { flex-wrap: wrap; gap: .3rem .6rem; }
@@ -1560,7 +1562,6 @@ pre { max-width: 100%; overflow-x: auto; }
   .section.sec > .wrap { padding-inline: 42px 24px; }
   .sec[data-side="r"] > .rail { left: var(--rail-x); right: auto; }
   .sec[data-side="r"] .stn { left: calc(var(--rail-x) + var(--t) / 2 - 8px); right: auto; }
-  .join { display: none; }
   .hero .panel__pr { flex-wrap: wrap; }
 }
 

@@ -195,9 +195,12 @@
       var bot = rr.bottom + window.scrollY;
       var join = $(':scope > .join', s);
       if (join && pts.length) {
-        var k = join.getBoundingClientRect().height / 64;
+        var jr = join.getBoundingClientRect();
+        var k = jr.height / 64;
         var px = pts[pts.length - 1][0];
         var dir = x > px ? 1 : -1;
+        /* #178: a section with a top border puts its join below the section edge. Follow the join. */
+        if (jr.height) top = jr.top + window.scrollY;
         push(px, top);
         push(px, top + 8 * k);
         push(px + dir * 24 * k, top + 32 * k);
@@ -347,12 +350,21 @@
     marker = document.createElement('div');
     marker.className = 'marker';
     marker.setAttribute('aria-hidden', 'true');
-    marker.innerHTML = '<b>#214</b>';
+    marker.innerHTML = '<b>#4242</b>';
     document.body.appendChild(marker);
     window.addEventListener('scroll', retarget, { passive: true });
     window.addEventListener('resize', layoutTrack);
     window.addEventListener('load', layoutTrack);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutTrack);
+    /* #178: content can change height after load (late images, live text).
+       Measure the track again when it does, so the lit line stays on the rail. */
+    if ('ResizeObserver' in window) {
+      var relay = 0;
+      new ResizeObserver(function () {
+        if (relay) return;
+        relay = requestAnimationFrame(function () { relay = 0; layoutTrack(); });
+      }).observe(secs[0].parentNode);
+    }
   }
 
   /* Home: the interlock. */
