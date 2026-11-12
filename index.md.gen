@@ -40,10 +40,19 @@ Open source. MIT. Always free.
 
 The hosted parts are paid. Every rule, hook and review agent is a plain file you can read, change or remove.
 
+Step 1. Install the command line tool with Homebrew:
+
 ```sh
 brew install me2resh/tap/apexyard
-apexyard init --org <your-org> --name <new-private-repo> --private
 ```
+
+Step 2. Create your private ops repository. The command asks for the name and the account:
+
+```sh
+apexyard init
+```
+
+For scripts, use the flag form in the [command line reference](/docs/reference/cli).
 
 ```sh
 npx create-apexyard --org <your-org> --name <new-private-repo> --private
