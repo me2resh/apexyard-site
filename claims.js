@@ -7,7 +7,7 @@
    scripts sees it too. .github/tests/test-claims.sh fails when a page label
    differs from the text here. A 'live' claim reads 'Available now' or
    'Early teams (by hand)'. A 'coming' claim reads 'Planned', with its
-   date when the cloud plan (revision 10, 10 Nov 2026) holds one, or
+   date when the cloud plan (revision 14, 12 Nov 2026) holds one, or
    'Preview'. Never write a date that the plan does not hold.
 
    Switch-on checks:
@@ -36,7 +36,7 @@ window.APEXYARD_LABELS = {
   org_dashboard: 'Early teams (by hand)',
   kb_mcp: 'Planned for 18 Jan 2027',
   readiness_score: 'Planned for 4 Dec 2026',
-  readiness_ci: 'Planned for 1 Mar 2027',
+  readiness_ci: 'Planned',
   team_trends: 'Planned',
   ci_attestation: 'Planned',
   readiness_weekly: 'Planned for 1 Mar 2027',
