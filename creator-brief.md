@@ -25,7 +25,7 @@ ApexYard gives your agents a team's process. Then it checks every pull request a
 
 You write a rule one time. Build guides your agents with it. Gate checks each pull request against it. Readiness measures the whole repository. A miss becomes a new rule.
 
-Example rule: "Every API endpoint checks who is calling." Your team adds it to the knowledge base, marked blocking.
+Example rule: "Every API endpoint checks who is calling." Your team adds it to its handbook, marked blocking.
 
 ## Facts you can state
 

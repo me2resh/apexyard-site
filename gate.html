@@ -84,7 +84,7 @@
   <section class="product-head" aria-labelledby="product-title">
     <div class="wrap">
       <p class="product-head__name">Gate</p>
-      <h1 id="product-title">Every merge leaves a record: what was checked, who approved it, and the exact commit.</h1>
+      <h1 id="product-title">Each merge needs a passing check and the approval of a person your team names.</h1>
       <p class="product-head__who">For engineering leads whose teams merge code that agents wrote.</p>
       <p class="product-head__cta"><a class="btn btn--primary" href="/waitlist?src=gate-head" data-signin="https://app.apexyard.ai/signin?src=gate-head" data-waitlist="/waitlist?src=gate-head">Join the waitlist</a></p>
       <p class="product-head__free">The hosted Gate runs by hand for early teams today. <span class="state state--hand" data-cap="gate_all_repos"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></p>
@@ -111,12 +111,12 @@
         </article>
 <div class="crew-intro">
         <picture><source type="image/avif" srcset="/img/crew/pt-founder-160.avif 160w, /img/crew/pt-founder-320.avif 320w" sizes="96px"><source type="image/webp" srcset="/img/crew/pt-founder-160.webp 160w, /img/crew/pt-founder-320.webp 320w" sizes="96px"><img src="/img/crew/pt-founder-320.png" srcset="/img/crew/pt-founder-160.png 160w, /img/crew/pt-founder-320.png 320w" sizes="96px" width="96" height="96" alt="The Founder, the person who approves each merge." loading="lazy" decoding="async"></picture>
-        <div class="crew-intro__text"><p class="crew-intro__role">Approval</p><p class="crew-intro__name">The Founder</p><p class="crew-intro__line">A person your team names approves each merge. An agent never gives that approval.</p></div>
+        <div class="crew-intro__text"><p class="crew-intro__role">Approval</p><p class="crew-intro__name">The Founder</p><p class="crew-intro__line">The gate needs a person's approval for each merge. An agent cannot approve its own work.</p></div>
       </div>
         <article class="feature">
           <div class="feature__text">
             <h3>An agent never approves its own work</h3>
-            <p>The agent that wrote a change does not review it. A separate review agent with its own persona reviews it, and it can run on a different model. By default, reviewers run on a stronger model than builders. <span data-claim="named_approval">A person your team names approves the merge.</span> <span class="state state--hand" data-cap="named_approval"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span> An agent never gives the final sign-off. <span class="verified"><strong>Checked on 10 November 2026:</strong> Rex and Hakim run on the top model tier. The builder agents run on the tier below. <a href="https://github.com/me2resh/apexyard/tree/v5.10.1/.claude/agents" target="_blank" rel="noopener">Read the agent files</a>.</span></p>
+            <p>The agent that wrote a change does not review it. A separate review agent with its own persona reviews it, and it can run on a different model. By default, reviewers run on a stronger model than builders. <span data-claim="named_approval">A person your team names approves the merge.</span> <span class="state state--hand" data-cap="named_approval"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span> The gate needs that approval before the merge. <span class="verified"><strong>Checked on 10 November 2026:</strong> Rex and Hakim run on the top model tier. The builder agents run on the tier below. <a href="https://github.com/me2resh/apexyard/tree/v5.10.1/.claude/agents" target="_blank" rel="noopener">Read the agent files</a>.</span></p>
           </div>
           <figure class="feature__media">
             <img src="/img/placeholder-evidence.svg" width="1200" height="800" loading="lazy" alt="Example evidence record for a merged pull request in a fictional repository. It shows the check result, the review attested by a CI run, the named approver and the merge time, with an Export button.">
@@ -213,7 +213,7 @@
           </svg>
         </div>
         <ol class="keel__steps">
-          <li class="keel__step keel__step--rule" data-step="rule"><p class="keel__name">Keel</p><p class="keel__rule">Every API endpoint checks who is calling.</p><p class="keel__text">A rule your team adds to the knowledge base, marked blocking.</p></li>
+          <li class="keel__step keel__step--rule" data-step="rule"><p class="keel__name">Keel</p><p class="keel__rule">Every API endpoint checks who is calling.</p><p class="keel__text">A rule your team adds to its handbook, marked blocking.</p></li>
           <li class="keel__step" data-step="build"><p class="keel__name">Build</p><p class="keel__text">Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.</p></li>
           <li class="keel__step" data-step="gate"><p class="keel__name">Gate</p><p class="keel__text">Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.</p></li>
           <li class="keel__step" data-step="readiness"><p class="keel__name">Readiness</p><p class="keel__text">The readiness audit fails when a user-facing app has no authentication. On me2resh/ddd-sam-example, the top action was: add authentication to all patient appointment APIs.</p></li>

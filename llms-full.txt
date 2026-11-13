@@ -32,7 +32,7 @@ You write a rule one time. Then the rule works in three places:
 
 A miss becomes a new rule. Then the loop starts again.
 
-Example: the rule says "Every API endpoint checks who is calling." Your team adds it to the knowledge base and marks it blocking.
+Example: the rule says "Every API endpoint checks who is calling." Your team adds it to its handbook and marks it blocking.
 Build: before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.
 Gate: Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.
 Readiness: the readiness audit fails when a user-facing app has no authentication.
@@ -91,7 +91,7 @@ Cockpit is a preview of the desktop app for Build. It is not a fourth product. [
 
 # Gate (https://apexyard.ai/gate)
 
-Gate checks each pull request against your process. Every merge leaves a record: what was checked, who approved it and the exact commit.
+Gate checks each pull request against your process. Each merge needs a passing check and the approval of a person your team names.
 
 Gate is for engineering leads whose teams merge code that agents wrote.
 

@@ -12,7 +12,7 @@ Agent agnostic. Works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.
 
 Keel is your team's rules and context. Build, the Gate and Readiness all work from it. A miss comes back as a new rule.
 
-1. **Keel**: Every API endpoint checks who is calling. A rule your team adds to the knowledge base, marked blocking.
+1. **Keel**: Every API endpoint checks who is calling. A rule your team adds to its handbook, marked blocking.
 2. **Build**: Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.
 3. **Gate**: Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.
 4. **Readiness**: The readiness audit fails when a user-facing app has no authentication. On me2resh/ddd-sam-example, the top action was: add authentication to all patient appointment APIs.
@@ -56,7 +56,7 @@ npx create-apexyard --org <your-org> --name <new-private-repo> --private
 
 Bring one of your repositories, and see what the Gate would have held. Book from <https://apexyard.ai/#book-a-demo>.
 
-Free for one person. Pay when a team needs the hosted Gate, shared Keel and evidence. See plans: <https://apexyard.ai/pricing>.
+Build is free and open source. Pay when a team needs the hosted Gate, shared Keel and evidence. See plans: <https://apexyard.ai/pricing>.
 
 ## More
 

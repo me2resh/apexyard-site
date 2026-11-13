@@ -183,7 +183,7 @@ assert "evidence links stay above the row's click area" bash -c "sed -n '/^\.gc-
 
 # ---- #160: the buyer's question ----
 assert "the buyer's question leads the hero" bash -c "sed -n '/<div class=\"hero-crew__copy\">/,/<h1/p' '$home' | grep -Fq 'An agent wrote it. Who approved it?'"
-assert "the supporting lines stay as they were" bash -c "grep -Fq 'Use AI coding agents with a controlled engineering process.' '$home' && grep -Fq 'Every merge leaves a record: what was checked, who approved it, and the exact commit.' '$home'"
+assert "the supporting lines stay as they were" bash -c "grep -Fq 'Use AI coding agents with a controlled engineering process.' '$home' && grep -Fq 'Each merge needs a passing check and the approval of a person your team names.' '$home'"
 hero_html() { sed -n '/id="hero"/,/<\/section>/p' "$home"; }
 no_price() { ! hero_html | grep -Eq '(\$|\xC2\xA3|\xE2\x82\xAC)[0-9]'; }
 assert "no price in the hero" no_price
