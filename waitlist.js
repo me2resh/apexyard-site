@@ -248,15 +248,24 @@
       team_size: size.options[size.selectedIndex].textContent.trim(),
       tools: chosenLabels('tools')
     });
+    // #194: an empty endpoint means online sign-up is not open (see
+    // site-config.js). A live endpoint that fails gets its own text.
+    var notOpen = !cfg.waitlistEndpoint;
     var p = document.createElement('p');
+    p.className = 'waitlist__done-title';
+    p.textContent = notOpen
+      ? 'Online sign-up is not open yet. Your answers were not sent.'
+      : 'We could not send your answers. Your answers are still in the form.';
+    var p2 = document.createElement('p');
     var link = document.createElement('a');
     link.href = href;
     link.textContent = address.user + '@' + address.domain;
-    p.appendChild(document.createTextNode('Our waitlist is not open yet. Email '));
-    p.appendChild(link);
-    p.appendChild(document.createTextNode(' and we will add you.'));
+    p2.appendChild(document.createTextNode('To join the waitlist, email '));
+    p2.appendChild(link);
+    p2.appendChild(document.createTextNode('. The link opens your email app with your answers filled in. We will add you and reply.'));
     fallback.textContent = '';
     fallback.appendChild(p);
+    fallback.appendChild(p2);
     fallback.hidden = false;
     fallback.focus();
   }

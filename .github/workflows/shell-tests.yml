@@ -57,6 +57,10 @@ on:
       - "docs-site/astro.config.mjs"
       # #154: test-privacy.sh reads the docs footer.
       - "docs-site/src/components/Footer.astro"
+      # #194: test-no-placeholder.sh reads the images and the docs sources.
+      - "img/**"
+      - "docs-site/src/**"
+      - "docs-site/public/**"
       - "product.css"
       - "apexdock/**"
       - "docs-site/scripts/lint-docs.mjs"
@@ -93,6 +97,10 @@ on:
       - "docs-site/astro.config.mjs"
       # #154: test-privacy.sh reads the docs footer.
       - "docs-site/src/components/Footer.astro"
+      # #194: test-no-placeholder.sh reads the images and the docs sources.
+      - "img/**"
+      - "docs-site/src/**"
+      - "docs-site/public/**"
       - "product.css"
       - "apexdock/**"
       - "docs-site/scripts/lint-docs.mjs"

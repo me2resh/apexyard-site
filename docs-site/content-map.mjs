@@ -581,14 +581,12 @@ const learn = [
         title: 'The check',
         description: 'Read the status check that the gate adds to each pull request.',
         coming: { text: 'User guides for the hosted gate are coming. This page gets its content when we publish the guide.' },
-        figure: { src: 'img/placeholder-check.svg', alt: 'Placeholder for a screenshot of the gate check on a pull request', width: 1200, height: 675 },
       },
       {
         slug: 'hosted-gate/dashboard',
         title: 'The dashboard',
         description: 'See open pull requests and the approvals they wait for.',
         coming: { text: 'User guides for the hosted gate are coming. This page gets its content when we publish the guide.' },
-        figure: { src: 'img/placeholder-dashboard.svg', alt: 'Placeholder for a screenshot of the hosted dashboard', width: 1200, height: 675 },
       },
       {
         slug: 'hosted-gate/evidence-record',
