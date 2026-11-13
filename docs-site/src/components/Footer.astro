@@ -13,12 +13,6 @@ const { source } = nav;
     <a href={`${source.url}/tree/${source.tag}`}>{source.repo} at {source.tag}</a>.
     <a href="/docs/llms.txt">Page list for agents (llms.txt)</a>.
   </p>
-  <p>ApexScript Ltd. Company number: <span class="ay-footer__tag" data-owner-fact="company-number">Placeholder</span>. <a href="/privacy">Privacy</a>. The ApexYard framework is open source under the MIT licence.</p>
+  <p>ApexScript Ltd.<span data-owner-fact="company-number" hidden> Company number: <span data-owner-value></span>.</span> <a href="/privacy">Privacy</a>. The ApexYard framework is open source under the MIT licence.</p>
 </footer>
 
-<style>
-  .ay-footer__tag {
-    display: inline-block; padding: 0 .4em; border: 2px dashed currentColor;
-    font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
-  }
-</style>

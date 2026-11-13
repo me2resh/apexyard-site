@@ -8,7 +8,8 @@
 #      the staging bucket, and never uploads or summarises the overlaid site.
 #   3. The production jobs read no secret and deploy the plain checkout.
 #   4. Public files hold placeholder tokens only, each wrapped around a
-#      visible fallback, and no price-shaped text.
+#      visible fallback, and no price-shaped text. A listed few tokens may
+#      have an empty fallback (#194). No fallback reads as a placeholder.
 
 set -uo pipefail
 
@@ -152,6 +153,13 @@ DOCUMENTED = {
 }
 LABELLED = {"STARTUP_PRICE", "TEAM_PRICE", "REVIEW_LITE_PRICE", "REVIEW_PRICE",
             "READINESS_REPORT_PRICE"}
+# #194: these tokens show nothing until the overlay supplies a value. Their
+# element hides when it is empty (product.css). Every other fallback is
+# visible text.
+MAY_BE_EMPTY = {"PLAN_HINT", "TEAM_PRICE_NOTE", "STARTUP_BULLET_1",
+                "READINESS_REPORT_POINT_3", "ASSESS_SHORT_POINT_2", "ASSESS_SHORT_POINT_3",
+                "REVIEW_LITE_OFFER", "REVIEW_OFFER", "REVIEW_TIERS"}
+PRICE_FALLBACK = "Price on request"
 WRAPPED = re.compile(r"<!--\{\{([A-Z][A-Z0-9_]*)\}\}-->(.*?)<!--/\{\{\1\}\}-->", re.S)
 ANY =re.compile(r"\{\{([A-Z][A-Z0-9_]*)\}\}")
 # A currency amount is price-shaped when its number holds a digit from 1 to 9.
@@ -205,8 +213,10 @@ for path in sorted(set(files)):
     stripped = text
     for m in WRAPPED.finditer(text):
         seen.add(m.group(1))
-        if not m.group(2).strip():
+        if not m.group(2).strip() and m.group(1) not in MAY_BE_EMPTY:
             errors.append(f"{rel}: token {m.group(1)} has an empty fallback")
+        if re.search(r"\bN\b|to follow|placeholder", m.group(2), re.I):
+            errors.append(f"{rel}: token {m.group(1)} fallback reads as a placeholder")
     stripped = WRAPPED.sub("", text)
     for m in ANY.finditer(stripped):
         errors.append(f"{rel}: token {m.group(1)} is not in the wrapped form")
@@ -218,11 +228,11 @@ for path in sorted(set(files)):
             line = stripped.count("\n", 0, start) + 1
             errors.append(f"{rel}:{line}: price-shaped text")
     # Fallbacks may hold the all-zero dummy forms only, and each headline
-    # price fallback carries the visible "Placeholder price" label.
+    # price fallback reads "Price on request" (#194).
     for m in WRAPPED.finditer(text):
-        if m.group(1) in LABELLED and "Placeholder price" not in m.group(2):
+        if m.group(1) in LABELLED and m.group(2).strip() != PRICE_FALLBACK:
             line = text.count("\n", 0, m.start()) + 1
-            errors.append(f"{rel}:{line}: token {m.group(1)} fallback has no Placeholder price label")
+            errors.append(f"{rel}:{line}: token {m.group(1)} fallback is not '{PRICE_FALLBACK}'")
         if price_spans(m.group(2)):
             line = text.count("\n", 0, m.start()) + 1
             errors.append(f"{rel}:{line}: token {m.group(1)} fallback holds a real price")
