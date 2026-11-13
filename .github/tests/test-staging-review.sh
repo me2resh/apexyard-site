@@ -91,7 +91,7 @@ assert "content-map holds npx create-apexyard command" \
 keel_pages=(index.html build.html gate.html readiness.html creators.html)
 keel_sentences=(
   'Every API endpoint checks who is calling.'
-  'A rule your team adds to the knowledge base, marked blocking.'
+  'A rule your team adds to its handbook, marked blocking.'
   'Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.'
   'Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.'
   'When a person finds a miss in review, /codify-rule turns the comment into a draft rule. You approve it before it is saved.'
@@ -240,8 +240,8 @@ assert "architecture text lists the four App permissions and the check date" arc
 # --- 9. Copy checks ---
 assert "gate.html holds agent does not review it" \
   grep -Fq 'The agent that wrote a change does not review it.' "$root/gate.html"
-assert "gate.html holds agent never gives final sign-off" \
-  grep -Fq 'An agent never gives the final sign-off.' "$root/gate.html"
+assert "gate.html says the gate needs the approval" \
+  grep -Fq 'The gate needs that approval before the merge.' "$root/gate.html"
 
 plans_line='Build is free and open source. Every paid plan includes Build, Gate and Readiness. Plans differ by repositories, seats and evidence retention.'
 for page in build.html gate.html readiness.html; do
