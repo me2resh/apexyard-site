@@ -49,7 +49,7 @@ brew install me2resh/tap/apexyard && apexyard init
 For scripts, use the flag form in the [docs](/docs).
 
 ```sh
-npx create-apexyard --org <your-org> --name <new-private-repo> --private
+npx create-apexyard
 ```
 
 ## Book a demo
