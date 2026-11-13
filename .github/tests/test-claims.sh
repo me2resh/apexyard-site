@@ -6,13 +6,15 @@
 # Each claim carries one label (APEXYARD_LABELS in claims.js). A live claim
 # reads Available now or Early teams (by hand). A coming claim reads
 # Planned, Planned for <date>, or Preview. Each page label equals that text.
+# #192: a tied sentence is true only while its claim is live. The TIED list
+# below fails the test when a public text holds such a sentence too early.
 
 set -uo pipefail
 
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 
 python3 - "$root" <<'PY'
-import glob, os, re, sys
+import glob, html, os, re, sys
 
 root = sys.argv[1]
 cfg = open(os.path.join(root, "claims.js"), encoding="utf-8").read()
@@ -85,6 +87,50 @@ for path in sorted(glob.glob(os.path.join(root, "*.html"))):
 
 for key in sorted(set(switches) - used):
     errors.append(f"claims.js: switch {key} matches no claim on any page")
+
+# #192: tied sentences. Each sentence is true only while its claim in
+# claims.js is live. The test fails when a public text holds a tied
+# sentence and its claim is not live. A key of None means that no claim
+# makes the sentence true, so the sentence fails on every page.
+TIED = [
+    ("An agent never gives that approval", None),
+    ("An agent never gives the final sign-off", None),
+    ("Every merge leaves a record", "evidence_export"),
+    ("Free for one person", "free_checks"),
+    ("to the knowledge base", "kb_mcp"),
+]
+for sentence, key in TIED:
+    if key is not None and key not in switches:
+        errors.append(f"test-claims.sh: tied sentence '{sentence}' names unknown claim {key}")
+
+def public_texts():
+    names = sorted(glob.glob(os.path.join(root, "*.html")))
+    names += sorted(glob.glob(os.path.join(root, "*.md.gen")))
+    names += sorted(glob.glob(os.path.join(root, "apexdock", "**", "*.html"), recursive=True))
+    names += [os.path.join(root, n) for n in ("llms.txt", "llms-full.txt", "skill.md",
+                                             "creator-brief.md", "docs-site/content-map.mjs")]
+    for path in names:
+        if os.path.basename(path) == "game.html" or not os.path.isfile(path):
+            continue
+        yield path
+
+def plain(text):
+    text = re.sub(r"<[^>]*>", " ", text)
+    return re.sub(r"\s+", " ", html.unescape(text)).casefold()
+
+tied_seen = 0
+for path in public_texts():
+    rel = os.path.relpath(path, root)
+    text = plain(open(path, encoding="utf-8").read())
+    for sentence, key in TIED:
+        if key is not None and switches.get(key) == "live":
+            continue
+        if sentence.casefold() in text:
+            state = "no claim" if key is None else f"{key} is {switches.get(key)}"
+            errors.append(f"{rel}: tied sentence '{sentence}' appears, but {state}")
+    tied_seen += 1
+if tied_seen == 0:
+    errors.append("tied sentences: no public text found")
 
 for e in errors:
     print("  FAIL  " + e)
