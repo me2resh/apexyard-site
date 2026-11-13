@@ -1916,10 +1916,49 @@ html.js .gate-card > .gc-run:not(.is-active) { display: block; visibility: hidde
     gc-lh-5 .7s cubic-bezier(.45, 0, .2, 1) calc(var(--gc-human) + .3s) forwards,
     gc-lh-z calc(var(--gc-human) + 1s) step-end 0s;
 }
+/* THE FINALE (#190). When the last story element ends (crew-hero.js sees its animationend and adds .is-finale),
+   Hadi rolls in from off-screen right, settles, and its eyes glow. Only transform and opacity animate.
+   Hadi's box is absolute, so the space is reserved and nothing shifts. It runs once: .finale-done turns it off
+   and the first story goes back to its walk home. .has-finale is added by the script, so the page works without it. */
+.hero-crew__hadi::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background:
+    radial-gradient(circle at 48% 19%, rgba(255, 160, 50, .8), rgba(255, 160, 50, 0) 12%),
+    radial-gradient(circle at 66% 19%, rgba(255, 160, 50, .8), rgba(255, 160, 50, 0) 12%);
+}
+@keyframes gc-lh-gone { to { opacity: 0; } }
+@keyframes gc-finale-roll {
+  0% { opacity: 0; transform: translateX(260%) rotate(0); animation-timing-function: cubic-bezier(.3, .6, .3, 1); }
+  10% { opacity: 1; }
+  62% { opacity: 1; transform: translateX(-4%) rotate(-5deg); animation-timing-function: ease-in-out; }
+  80% { transform: translateX(1.5%) rotate(2deg); animation-timing-function: ease-in-out; }
+  92% { transform: translateX(-.4%) rotate(-.6deg); animation-timing-function: ease-out; }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes gc-finale-glow { 0%, 60% { opacity: 0; } 85% { opacity: 1; } 100% { opacity: 0; } }
+/* Until the finale, Hadi walks and leaves at the Founder's side instead of going home. */
+.has-finale:not(.finale-done).is-playing .hero-crew__hadi {
+  animation:
+    gc-lh-0 calc(var(--gc-r0) - .1s) cubic-bezier(.45, 0, .2, 1) 0s both,
+    gc-lh-1 var(--gc-hop) cubic-bezier(.45, 0, .2, 1) calc(var(--gc-r1) - .1s - var(--gc-hop)) forwards,
+    gc-lh-2 var(--gc-hop) cubic-bezier(.45, 0, .2, 1) calc(var(--gc-r2) - .1s - var(--gc-hop)) forwards,
+    gc-lh-3 var(--gc-hop) cubic-bezier(.45, 0, .2, 1) calc(var(--gc-r3) - .1s - var(--gc-hop)) forwards,
+    gc-lh-4 var(--gc-hop) cubic-bezier(.45, 0, .2, 1) calc(var(--gc-r4) - .1s - var(--gc-hop)) forwards,
+    gc-lh-gone .3s ease-in calc(var(--gc-human) + .3s) forwards,
+    gc-lh-z calc(var(--gc-human) + 1s) step-end 0s;
+}
+.has-finale:not(.finale-done).is-playing .hero-crew__floor i.idle { animation: none; opacity: 0; }
+.has-finale:not(.finale-done).is-playing.is-finale .hero-crew__hadi {
+  z-index: 2; will-change: transform, opacity;
+  animation: gc-finale-roll 1.3s linear both;
+}
+.has-finale:not(.finale-done).is-playing.is-finale .hero-crew__hadi::after { animation: gc-finale-glow 1.3s linear both; }
+.has-finale:not(.finale-done).is-playing.is-finale .hero-crew__floor i.idle { animation: gc-fade-in .5s ease-out .6s both; }
 /* The story waits until the card scrolls into view (crew-hero.js). */
 .gc-hold.is-playing *, .gc-hold.is-playing *::before, .gc-hold.is-playing *::after { animation-play-state: paused !important; }
 @media (prefers-reduced-motion: reduce) {
   .is-playing *, .is-playing *::before, .is-playing *::after { animation: none !important; }
+  .has-finale .hero-crew__hadi, .has-finale .hero-crew__floor i.idle { opacity: 1 !important; transform: none !important; }
   .gc-replay { display: none; }
   .gc-chev { transition: none; }
 }
@@ -1934,6 +1973,7 @@ html.js .gate-card > .gc-run:not(.is-active) { display: block; visibility: hidde
   .gate-card { margin-top: 0; }
   /* The picture stacks above the card here, so large Hadi stays at home. */
   .is-playing .hero-crew__hadi, .is-playing .hero-crew__floor i.idle { animation: none; }
+  .has-finale:not(.finale-done):not(.is-finale) .hero-crew__hadi { animation: none; opacity: 0; }
 }
 @media (max-width: 719px) {
   .gc-head { padding: .7rem .85rem .6rem; }

@@ -220,6 +220,13 @@ new_tab_hint() {
 }
 assert "every link in the gate card tells screen readers it opens in a new tab" new_tab_hint
 
+# The finale (#190): Hadi rolls in from the right when the story's last element ends.
+assert "the finale starts on the animationend of the last story element, not a timer" bash -c "grep -q \"addEventListener('animationend'\" '$root/crew-hero.js' && grep -q \"'gc-merged'\" '$root/crew-hero.js' && ! grep -Eq 'setTimeout|setInterval' '$root/crew-hero.js'"
+assert "the finale is skipped when the visitor prefers reduced motion" grep -q "prefers-reduced-motion: reduce" "$root/crew-hero.js"
+assert "the finale animates only transform and opacity" bash -c "! sed -n '/@keyframes gc-finale-roll/,/^}/p;/@keyframes gc-finale-glow/p' '$root/site.css' | grep -Eq '(left|right|top|bottom|width|height|margin|filter):'"
+assert "the finale runs once: it ends with finale-done and never repeats" bash -c "grep -q 'finale-done' '$root/crew-hero.js' && ! grep -Eq 'infinite' <(sed -n '/THE FINALE (#190)/,/The story waits until/p' '$root/site.css')"
+assert "the reduced-motion block shows Hadi at rest" grep -q "has-finale .hero-crew__hadi, .has-finale .hero-crew__floor i.idle { opacity: 1 !important" "$root/site.css"
+
 echo
 echo "passed $pass, failed $fail"
 [ "$fail" -eq 0 ]

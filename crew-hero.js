@@ -12,7 +12,20 @@
   var tabs = card.querySelectorAll('.gc-tab');
   var replays = card.querySelectorAll('[data-replay]');
 
+  // The finale (#190): Hadi rolls in from the right when the story's last element ends.
+  // It runs once. A replay uses up the finale and the story goes back to Hadi walking home.
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) {
+    hero.classList.add('has-finale');
+    hero.addEventListener('animationend', function (e) {
+      if (hero.classList.contains('is-finale') || hero.classList.contains('finale-done')) return;
+      if (e.target.classList && e.target.classList.contains('gc-merged')) hero.classList.add('is-finale');
+    });
+  }
+
   function play() {
+    if (hero.classList.contains('is-finale')) hero.classList.add('finale-done');
+    hero.classList.remove('is-finale');
     hero.classList.remove('gc-hold');
     hero.classList.remove('is-playing');
     void hero.offsetWidth;
