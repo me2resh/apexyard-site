@@ -1,0 +1,23 @@
+# Evidence for the "From ApexYard building itself" figures in the proof
+# block of index.html and index.md.gen (#70).
+#
+# Each figure row gives the figure, the label that the page prints after it,
+# and the recipe that returns the figure. Each recipe is pinned to the cutoff
+# or to one commit, so a person can run it again later and get the same value.
+# The links on the page go to the same lists without the cutoff, so a visitor
+# sees the lists grow. A search result can change by a small number after the
+# cutoff, for example when a review is added to an old pull request.
+#
+# .github/tests/test-claims.sh reads this file. It fails when the page and this
+# file do not agree. To refresh: run each recipe with a new cutoff and a new
+# dev_commit, then change this file and both pages in one commit.
+#
+# counted_on is the day of the count. cutoff is the end of the counted
+# period. dev_commit is the last commit on the dev branch of me2resh/apexyard
+# before the cutoff. Columns are separated by one tab.
+counted_on	2026-11-14
+cutoff	2026-11-14T00:00:00Z
+dev_commit	2812c1557380129639248dfc462b0bbe620dbc6a
+figure	699	merged pull requests with an approving review	gh api -X GET search/issues -f q='repo:me2resh/apexyard is:pr is:merged review:approved merged:<2026-11-14T00:00:00Z' --jq .total_count
+figure	289	decision records, one file each	git -C "$REPO" ls-tree --name-only 2812c1557380129639248dfc462b0bbe620dbc6a -- docs/agdr/ | grep -c '/AgDR-[0-9].*\.md$'
+figure	334	merged pull requests with a comment that says CHANGES REQUESTED	gh api -X GET search/issues -f q='repo:me2resh/apexyard is:pr is:merged "CHANGES REQUESTED" in:comments merged:<2026-11-14T00:00:00Z' --jq .total_count

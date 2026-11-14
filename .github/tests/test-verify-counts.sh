@@ -107,6 +107,23 @@ case "$out" in
   *) bad "names the new surface" "$out" ;;
 esac
 
+# --- case 3b: a proof figure in its own element is checked (#70) ------------
+# The home proof block prints "<strong class="proof__figure">N</strong> skills".
+# The scan must see the number through the closing tag.
+site=$(new_site site-proof)
+printf '<li><strong class="proof__figure">2</strong> skills</li>\n<li><strong class="proof__figure">7</strong> hooks</li>\n' > "$site/index.html"
+commit_site "$site"
+res=$(run_case "$site"); rc="${res%%|*}"; out="${res#*|}"
+if [ "$rc" = 1 ]; then ok "a stale proof figure exits 1"; else bad "a stale proof figure exits 1" "got $rc: $out"; fi
+case "$out" in
+  *"index.html"*"says 7 hooks"*) ok "names the stale proof figure" ;;
+  *) bad "names the stale proof figure" "$out" ;;
+esac
+case "$out" in
+  *"says 2 skills"*) bad "a correct proof figure passes" "$out" ;;
+  *) ok "a correct proof figure passes" ;;
+esac
+
 # --- case 4: the documented not-a-count lines are left alone ----------------
 site=$(new_site site-excluded)
 {

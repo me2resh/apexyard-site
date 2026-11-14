@@ -210,8 +210,11 @@ scan_primitive() {
   # one field — reporting a line number as the filename. The real site always
   # has many matches so it never showed there; the test suite's one-file case
   # is what caught it.
+  # The home proof block sets each figure in its own element:
+  # "<strong class="proof__figure">69</strong> skills" (#70). The optional
+  # closing tag lets the scan see those figures too.
   hits=$(git ls-files -z \
-    | xargs -0 grep -HIniE "\b[0-9]+ (${nouns})\b" 2>/dev/null \
+    | xargs -0 grep -HIniE "\b[0-9]+(</strong>)? (${nouns})\b" 2>/dev/null \
     | grep -vE '^(\.github/|og/README\.md)' || true)
 
   while IFS= read -r hit; do
@@ -230,7 +233,7 @@ scan_primitive() {
           "[$what]" "$file" "$lineno" "$num" "$what" "$want" >&2
         drift=$((drift + 1))
       fi
-    done < <(printf '%s\n' "$line" | grep -oiE "\b[0-9]+ (${nouns})\b" | grep -oE '^[0-9]+')
+    done < <(printf '%s\n' "$line" | grep -oiE "\b[0-9]+(</strong>)? (${nouns})\b" | grep -oE '^[0-9]+')
   done <<< "$hits"
 }
 
