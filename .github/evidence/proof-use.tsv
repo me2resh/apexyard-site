@@ -5,7 +5,8 @@
 # and the recipe that returns the figure. Each recipe is pinned to the cutoff
 # or to one commit, so a person can run it again later and get the same value.
 # The links on the page go to the same lists without the cutoff, so a visitor
-# sees the lists grow.
+# sees the lists grow. A search result can change by a small number after the
+# cutoff, for example when a review is added to an old pull request.
 #
 # .github/tests/test-claims.sh reads this file. It fails when the page and this
 # file do not agree. To refresh: run each recipe with a new cutoff and a new

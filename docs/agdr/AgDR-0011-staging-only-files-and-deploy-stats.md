@@ -61,4 +61,4 @@ Chosen: **A**.
 
 ## Evolution
 
-- 2026-11-10 (#151): `_redirects` is deleted. S3 and CloudFront serve the site, so the Netlify 404 rules (item 4) never ran. The production sync excludes (item 2) are the one guard. They still keep `previews.html` and `staging-only.js` off production, and `.github/tests/test-staging-only.sh` and `.github/tests/test-staging-review.sh` check them. `shell-tests.yml` no longer lists `_redirects` (item 7).
+- 2026-11-10 (#151): `_redirects` is deleted. S3 and CloudFront serve the site, so the Netlify rules that return 404 (item 4) never ran. The production sync excludes (item 2) are the one guard. They still keep `previews.html` and `staging-only.js` off production, and `.github/tests/test-staging-only.sh` and `.github/tests/test-staging-review.sh` check them. `shell-tests.yml` no longer lists `_redirects` (item 7).
