@@ -271,50 +271,49 @@
     <div class="wrap" id="how-it-works">
       <h2 class="section__title" id="one-rule-title"><span class="stn" aria-hidden="true"></span>One process, three places</h2>
       <p class="section__lede">Keel is your team's rules and context. Build, the Gate and Readiness all work from it. A miss comes back as a new rule.</p>
-      <figure class="keel" data-keel aria-labelledby="home-keel-cap">
-        <div class="keel__board">
-          <svg class="keel__svg" viewBox="0 0 400 320" aria-hidden="true" focusable="false">
-            <defs>
-              <marker id="home-keel-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
-              </marker>
-            </defs>
-            <path class="keel__link" data-path="feed-build" d="M 155 145 L 100 76"/>
-            <path class="keel__link" data-path="feed-gate" d="M 245 145 L 300 76"/>
-            <path class="keel__link" data-path="measure" d="M 200 195 L 200 250"/>
-            <path class="keel__flow" data-path="change" d="M 134 52 L 266 52" marker-end="url(#home-keel-arrow)"/>
-            <path class="keel__flow keel__flow--miss" data-path="miss" d="M 321 76 C 355 130, 300 195, 240 170" marker-end="url(#home-keel-arrow)"/>
-            <g class="keel__node keel__node--keel" data-node="keel">
-              <rect x="120" y="125" width="160" height="70" rx="8" ry="8"/>
-              <text class="keel__label" x="200" y="155" text-anchor="middle">Keel</text>
-              <text class="keel__sub" x="200" y="175" text-anchor="middle">your rules</text>
-            </g>
-            <g class="keel__node" data-node="build">
-              <rect x="24" y="28" width="110" height="48" rx="6" ry="6"/>
-              <text class="keel__label" x="79" y="58" text-anchor="middle">Build</text>
-            </g>
-            <g class="keel__node" data-node="gate">
-              <rect x="266" y="28" width="110" height="48" rx="6" ry="6"/>
-              <text class="keel__label" x="321" y="58" text-anchor="middle">Gate</text>
-              <text class="keel__flag keel__flag--block" x="360" y="42" text-anchor="middle">X</text>
-              <text class="keel__flag keel__flag--pass" x="360" y="42" text-anchor="middle">OK</text>
-            </g>
-            <g class="keel__node" data-node="readiness">
-              <rect x="130" y="250" width="140" height="48" rx="6" ry="6"/>
-              <text class="keel__label" x="200" y="280" text-anchor="middle">Readiness</text>
-            </g>
-            <circle class="keel__dot" r="7" cx="79" cy="52"/>
-          </svg>
+      <figure class="keel keel--flow" data-keel="flow" aria-labelledby="home-keel-cap">
+        <div class="kf" aria-hidden="true">
+          <div class="kf__node kf__node--build" data-node="build">
+            <span class="kf__av"><picture><source type="image/avif" srcset="/img/crew/av-hadi-48.avif 48w, /img/crew/av-hadi-96.avif 96w" sizes="44px"><source type="image/webp" srcset="/img/crew/av-hadi-48.webp 48w, /img/crew/av-hadi-96.webp 96w" sizes="44px"><img src="/img/crew/av-hadi-96.png" srcset="/img/crew/av-hadi-48.png 48w, /img/crew/av-hadi-96.png 96w" sizes="44px" width="44" height="44" alt="" loading="lazy" decoding="async"></picture></span>
+            <span class="kf__txt"><span class="kf__name">Build</span><span class="kf__sub">loads your rules</span></span>
+          </div>
+          <span class="kf__wire kf__wire--change" data-wire="change"><svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false"><path d="M0 50 L100 50"/></svg></span>
+          <div class="kf__node kf__node--gate" data-node="gate">
+            <span class="kf__av"><picture><source type="image/avif" srcset="/img/crew/av-rex-48.avif 48w, /img/crew/av-rex-96.avif 96w" sizes="44px"><source type="image/webp" srcset="/img/crew/av-rex-48.webp 48w, /img/crew/av-rex-96.webp 96w" sizes="44px"><img src="/img/crew/av-rex-96.png" srcset="/img/crew/av-rex-48.png 48w, /img/crew/av-rex-96.png 96w" sizes="44px" width="44" height="44" alt="" loading="lazy" decoding="async"></picture></span>
+            <span class="kf__txt"><span class="kf__name">Gate</span><span class="kf__sub">Rex, the review agent</span></span>
+            <span class="kf__badge kf__badge--block">Blocked</span><span class="kf__badge kf__badge--pass">Passed</span>
+          </div>
+          <span class="kf__wire kf__wire--ready" data-wire="ready"><svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false"><path d="M0 50 L100 50"/></svg></span>
+          <div class="kf__node kf__node--ready" data-node="readiness">
+            <span class="kf__av kf__tick"><svg viewBox="0 0 24 24" focusable="false"><path d="M6.5 12.5l3.75 3.75L17.5 8.5"/></svg></span>
+            <span class="kf__txt"><span class="kf__name">Readiness</span><span class="kf__sub">the readiness audit</span></span>
+          </div>
+          <span class="kf__wire kf__wire--miss" data-wire="miss"><svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false"><path d="M50 0 L50 100"/></svg></span>
+          <span class="kf__label kf__label--miss">Review feedback</span>
+          <span class="kf__wire kf__wire--rules" data-wire="rules"><svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false"><path d="M100 100 C45 100 0 80 0 0"/></svg></span>
+          <span class="kf__label kf__label--rules">Approved rules for next build</span>
+          <div class="kf__node kf__node--keel" data-node="keel">
+            <span class="kf__av"><picture><source type="image/avif" srcset="/img/crew/av-founder-48.avif 48w, /img/crew/av-founder-96.avif 96w" sizes="44px"><source type="image/webp" srcset="/img/crew/av-founder-48.webp 48w, /img/crew/av-founder-96.webp 96w" sizes="44px"><img src="/img/crew/av-founder-96.png" srcset="/img/crew/av-founder-48.png 48w, /img/crew/av-founder-96.png 96w" sizes="44px" width="44" height="44" alt="" loading="lazy" decoding="async"></picture></span>
+            <span class="kf__txt"><span class="kf__name">Keel</span><span class="kf__sub">your rules</span></span>
+            <span class="kf__ribs"><i></i><i></i><i></i><i class="kf__rib-new"></i></span>
+          </div>
         </div>
-        <ol class="keel__steps">
-          <li class="keel__step keel__step--rule" data-step="rule"><p class="keel__name">Keel</p><p class="keel__rule">Every API endpoint checks who is calling.</p><p class="keel__text">A rule your team adds to its handbook, marked blocking.</p></li>
-          <li class="keel__step" data-step="build"><p class="keel__name">Build</p><p class="keel__text">Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.</p></li>
-          <li class="keel__step" data-step="gate"><p class="keel__name">Gate</p><p class="keel__text">Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.</p></li>
-          <li class="keel__step" data-step="readiness"><p class="keel__name">Readiness</p><p class="keel__text">The readiness audit fails when a user-facing app has no authentication. On me2resh/ddd-sam-example, the top action was: add authentication to all patient appointment APIs.</p></li>
-          <li class="keel__step" data-step="miss"><p class="keel__name">A miss becomes a rule</p><p class="keel__text">When a person finds a miss in review, /codify-rule turns the comment into a draft rule. You approve it before it is saved.</p></li>
-        </ol>
-        <p class="keel__tools"><button type="button" class="keel__pause" aria-pressed="false" hidden>Pause animation</button></p>
-        <figcaption class="visually-hidden" id="home-keel-cap">Keel is in the centre, with Build, Gate and Readiness around it. A change goes from Build to the Gate. The Gate stops it. The miss becomes a new rule in Keel. The next change passes the Gate. Readiness measures each repository against the same rules.</figcaption>
+        <div class="kf__bar">
+          <ol class="keel__steps">
+            <li class="keel__step" data-step="build" data-n="01"><p class="keel__name">Build</p><p class="keel__text">Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.</p></li>
+            <li class="keel__step" data-step="gate" data-n="02"><p class="keel__name">Gate</p><p class="keel__text">Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.</p></li>
+            <li class="keel__step" data-step="miss" data-n="03"><p class="keel__name">A miss becomes a rule</p><p class="keel__text">When a person finds a miss in review, /codify-rule turns the comment into a draft rule. You approve it before it is saved.</p></li>
+            <li class="keel__step keel__step--rule" data-step="rule" data-n="04"><p class="keel__name">Keel</p><p class="keel__rule">Every API endpoint checks who is calling.</p><p class="keel__text">A rule your team adds to its handbook, marked blocking.</p></li>
+            <li class="keel__step" data-step="pass" data-n="05"><p class="keel__name">Gate</p><p class="keel__text">The next change passes the Gate.</p></li>
+            <li class="keel__step" data-step="readiness" data-n="06"><p class="keel__name">Readiness</p><p class="keel__text">The readiness audit fails when a user-facing app has no authentication. On me2resh/ddd-sam-example, the top action was: add authentication to all patient appointment APIs.</p></li>
+          </ol>
+          <div class="kf__controls">
+            <div class="kf__dots" role="group" aria-label="Pick a step" hidden></div>
+            <p class="keel__tools"><button type="button" class="keel__pause" aria-pressed="false" hidden>Pause animation</button></p>
+          </div>
+        </div>
+        <p class="visually-hidden" aria-live="polite" data-kf-live></p>
+        <figcaption class="visually-hidden" id="home-keel-cap">Build, the Gate and Readiness sit in one row, joined by arrows. Keel sits below the Gate. A change goes from Build to the Gate. The Gate stops it. Review feedback goes down to Keel. The miss becomes a new rule in Keel after human approval. Approved rules go back to Build for the next change. The next change passes the Gate. Readiness measures each repository against the same rules.</figcaption>
       </figure>
       <p class="one-rule__links"><a href="/build">About Build</a> <a href="/gate">About Gate</a> <a href="/readiness">About Readiness</a></p>
       <p class="one-rule__base">Underneath: Keel, one evidence store and one dashboard.</p>
