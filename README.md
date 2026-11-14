@@ -112,20 +112,27 @@ diff /tmp/tag-skills.txt /tmp/site-skills.txt && echo "names match"
 
 `verify-counts.sh` checks totals, not names — a rename keeps the total right, so this diff is still a separate step.
 
-### The proof block is NOT covered by any of the above
+### The proof block
 
-The four figures in the `03 / PROOF` section of `index.html` are a different family from the primitive counts, and nothing verifies them:
+The `03 / PROOF` section of `index.html` has two lists of figures. Each figure has a checked-in source (#70). `index.md.gen` gives the same figures.
 
-| Figure | On the page | Basis |
-|---|---|---|
-| PRs reviewed & merged, last 90 days | 343 | undocumented; a **rolling window**, so it is wrong again a week after any fix |
-| Production releases shipped | 40 | published GitHub Releases — the one that *is* documented, and current |
-| Technical decisions on record | 72 | undocumented; reads as `docs/agdr/` on the framework's `main` |
-| Bugs caught and fixed before users hit them | 52 | undocumented — no query is known to reproduce it |
+| List | Figures | Source | Check |
+|---|---|---|---|
+| Framework counts | roles, skills, agents, hooks | `derive-counts.sh`, from a framework release tag | `verify-counts.sh` |
+| From ApexYard building itself | merged pull requests with an approving review; decision records; merged pull requests with a comment that says CHANGES REQUESTED | `.github/evidence/proof-use.tsv` | `test-claims.sh` |
 
-Three of the four were written at **v2.0.0** and have not been touched since; the framework is now at v5.10.0. They are excluded from `verify-counts.sh` on purpose rather than by oversight: a verifier that asserts a number whose definition nobody recorded would be encoding a guess as a check.
+The evidence file gives the count date, the cutoff, the `dev` commit and one recipe for each figure. Each recipe is pinned to the cutoff or to that commit, so it returns the same value when you run it again. The page links go to the same lists without the cutoff. A visitor sees the lists grow.
 
-Do not refresh these by picking a plausible query. Two need a decision first — what counts as a "bug caught before users hit them", and whether a rolling 90-day window belongs on a hand-maintained static page at all. Tracked in [#70](https://github.com/me2resh/apexyard-site/issues/70).
+`test-claims.sh` fails in these conditions:
+
+- A figure, its label or the "Counted on" date differs between the page, `index.md.gen` and the evidence file.
+- A figure in the framework list does not name a primitive that `verify-counts.sh` derives.
+- A figure is outside the two lists.
+- A recipe is not pinned.
+
+To refresh the second list, run each recipe with a new cutoff and a new `dev` commit. Then change the evidence file, `index.html` and `index.md.gen` in one commit. Do not change a figure without its recipe.
+
+Before #171, the block showed a rolling 90-day pull request count and a count of bugs caught before users hit them. No recipe could reproduce them. #171 removed them.
 
 ## CI
 
