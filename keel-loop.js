@@ -20,8 +20,239 @@
     ? window.matchMedia('(prefers-reduced-motion: reduce)')
     : null;
 
+  /* Flow mode (#196): the home page figure, [data-keel="flow"]. Six steps in a
+     caption bar. Build, Gate and Readiness sit in one row, Keel below the Gate.
+     The live region speaks only after a user action, never on the auto-advance. */
+  var FLOW_MS = 4200;
+  var TRAVEL_MS = 1400;
+  var WELD_MS = 900;
+  var FLOW = [
+    { step: 'build', nodes: { build: 'is-active' }, wires: { rules: 'brand' }, travel: 'rules' },
+    { step: 'gate', nodes: { gate: 'is-block' }, wires: { change: 'block' }, travel: 'change' },
+    { step: 'miss', nodes: { gate: 'is-block', keel: 'is-active' }, wires: { miss: 'light' }, travel: 'miss' },
+    { step: 'rule', nodes: { keel: 'is-active' }, wires: { rules: 'brand' }, rib: 'new' },
+    { step: 'pass', nodes: { gate: 'is-pass' }, wires: { change: 'pass' }, rib: 'pass', ready: 'pass', travel: 'change' },
+    { step: 'readiness', nodes: { gate: 'is-pass', readiness: 'is-pass' }, wires: { ready: 'pass' }, rib: 'pass', ready: 'pass', travel: 'ready' }
+  ];
+
+  function enhanceFlow(figure) {
+    var pauseBtn = figure.querySelector('.keel__pause');
+    var dotsBox = figure.querySelector('.kf__dots');
+    var live = figure.querySelector('[data-kf-live]');
+    var steps = figure.querySelectorAll('.keel__step');
+    var nodes = figure.querySelectorAll('[data-node]');
+    var wires = figure.querySelectorAll('[data-wire]');
+    if (!pauseBtn || !dotsBox || !live || steps.length !== FLOW.length) return;
+
+    var dot = document.createElement('span');
+    dot.className = 'kf__dot';
+    var dotBtns = [];
+    var index = 0;
+    var userPaused = false;
+    var inView = true;
+    var pageHidden = !!document.hidden;
+    var running = false;
+    var timer = 0;
+    var rafId = 0;
+    var weldTimer = 0;
+
+    function reduced() { return !!(reduceMq && reduceMq.matches); }
+    function canRun() { return !reduced() && inView && !pageHidden && !userPaused; }
+
+    function stepName(i) {
+      var n = steps[i].querySelector('.keel__name');
+      return n ? n.textContent : '';
+    }
+
+    function placeDot(wire, t) {
+      var path = wire && wire.querySelector('path');
+      if (!path || typeof path.getTotalLength !== 'function') return;
+      try {
+        var len = path.getTotalLength();
+        var pt = path.getPointAtLength(Math.max(0, Math.min(1, t)) * len);
+        dot.style.left = pt.x + '%';
+        dot.style.top = pt.y + '%';
+      } catch (e) { /* path not rendered: leave the dot where it is */ }
+    }
+
+    function stopTravel() {
+      if (rafId) { window.cancelAnimationFrame(rafId); rafId = 0; }
+    }
+
+    function travel(wire, animate) {
+      stopTravel();
+      if (!wire) { if (dot.parentNode) dot.parentNode.removeChild(dot); return; }
+      wire.appendChild(dot);
+      if (!animate) { placeDot(wire, 1); return; }
+      var start = performance.now();
+      placeDot(wire, 0);
+      function frame(now) {
+        var t = Math.min(1, (now - start) / TRAVEL_MS);
+        placeDot(wire, 1 - (1 - t) * (1 - t));
+        rafId = t < 1 ? window.requestAnimationFrame(frame) : 0;
+      }
+      rafId = window.requestAnimationFrame(frame);
+    }
+
+    /* The weld burst: one short burst when the new rib is approved. Decorative only. */
+    function weld(on) {
+      if (weldTimer) { window.clearTimeout(weldTimer); weldTimer = 0; }
+      figure.removeAttribute('data-weld');
+      if (!on) return;
+      void figure.offsetWidth;
+      figure.setAttribute('data-weld', '');
+      weldTimer = window.setTimeout(function () {
+        weldTimer = 0;
+        figure.removeAttribute('data-weld');
+      }, WELD_MS);
+    }
+
+    function render(i, animate) {
+      var cfg = FLOW[i];
+      var k;
+      index = i;
+      figure.setAttribute('data-phase', cfg.step);
+      weld(cfg.rib === 'new' && !reduced());
+      if (cfg.rib) figure.setAttribute('data-rib', cfg.rib); else figure.removeAttribute('data-rib');
+      if (cfg.ready) figure.setAttribute('data-ready', cfg.ready); else figure.removeAttribute('data-ready');
+      for (k = 0; k < steps.length; k++) steps[k].classList.toggle('is-active', k === i);
+      for (k = 0; k < dotBtns.length; k++) {
+        if (k === i) dotBtns[k].setAttribute('aria-current', 'step');
+        else dotBtns[k].removeAttribute('aria-current');
+      }
+      for (k = 0; k < nodes.length; k++) {
+        var nodeName = nodes[k].getAttribute('data-node');
+        nodes[k].classList.remove('is-active', 'is-block', 'is-pass');
+        if (cfg.nodes[nodeName]) nodes[k].classList.add(cfg.nodes[nodeName]);
+      }
+      var travelWire = null;
+      for (k = 0; k < wires.length; k++) {
+        var wireName = wires[k].getAttribute('data-wire');
+        if (cfg.wires[wireName]) wires[k].setAttribute('data-tone', cfg.wires[wireName]);
+        else wires[k].removeAttribute('data-tone');
+        if (cfg.travel === wireName) travelWire = wires[k];
+      }
+      travel(travelWire, animate && !reduced());
+    }
+
+    function announce(i) {
+      var parts = steps[i].querySelectorAll('p');
+      var text = [];
+      for (var k = 0; k < parts.length; k++) text.push(parts[k].textContent.trim());
+      live.textContent = 'Step ' + (i + 1) + ' of ' + FLOW.length + ': ' + text.join('. ').replace(/\.\./g, '.');
+    }
+
+    function stopTimer() {
+      if (timer) { window.clearTimeout(timer); timer = 0; }
+    }
+
+    function schedule() {
+      stopTimer();
+      if (!canRun()) { running = false; return; }
+      running = true;
+      timer = window.setTimeout(function () {
+        timer = 0;
+        if (!canRun()) { running = false; return; }
+        render((index + 1) % FLOW.length, true);
+        schedule();
+      }, FLOW_MS);
+    }
+
+    function halt() {
+      stopTimer();
+      stopTravel();
+      running = false;
+      placeDot(dot.parentNode, 1);
+    }
+
+    function resume() {
+      if (!canRun() || running) return;
+      schedule();
+    }
+
+    function setMode() {
+      if (reduced()) {
+        halt();
+        pauseBtn.textContent = 'Next step';
+        pauseBtn.removeAttribute('aria-pressed');
+      } else {
+        pauseBtn.textContent = 'Pause animation';
+        pauseBtn.setAttribute('aria-pressed', userPaused ? 'true' : 'false');
+      }
+    }
+
+    for (var d = 0; d < FLOW.length; d++) {
+      (function (i) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'kf__dot-btn';
+        b.setAttribute('aria-label', 'Step ' + (i + 1) + ': ' + stepName(i));
+        b.addEventListener('click', function () {
+          if (!reduced()) {
+            userPaused = true;
+            pauseBtn.setAttribute('aria-pressed', 'true');
+          }
+          halt();
+          render(i, false);
+          announce(i);
+        });
+        dotsBox.appendChild(b);
+        dotBtns.push(b);
+      })(d);
+    }
+
+    pauseBtn.addEventListener('click', function () {
+      if (reduced()) {
+        render((index + 1) % FLOW.length, false);
+        announce(index);
+        return;
+      }
+      userPaused = !userPaused;
+      pauseBtn.setAttribute('aria-pressed', userPaused ? 'true' : 'false');
+      if (userPaused) halt();
+      else resume();
+    });
+
+    document.addEventListener('visibilitychange', function () {
+      pageHidden = !!document.hidden;
+      if (pageHidden) halt();
+      else resume();
+    });
+
+    if (typeof IntersectionObserver === 'function') {
+      var io = new IntersectionObserver(function (entries) {
+        var entry = entries[0];
+        inView = !!(entry && entry.isIntersecting);
+        if (!inView) halt();
+        else resume();
+      }, { threshold: 0.2 });
+      io.observe(figure);
+    }
+
+    function onReduceChange() {
+      setMode();
+      if (reduced()) render(FLOW.length - 1, false);
+      else { userPaused = false; setMode(); render(0, true); resume(); }
+    }
+    if (reduceMq) {
+      if (typeof reduceMq.addEventListener === 'function') reduceMq.addEventListener('change', onReduceChange);
+      else if (typeof reduceMq.addListener === 'function') reduceMq.addListener(onReduceChange);
+    }
+
+    figure.classList.add('is-on');
+    dotsBox.hidden = false;
+    pauseBtn.hidden = false;
+    setMode();
+    if (reduced()) render(FLOW.length - 1, false);
+    else { render(0, true); resume(); }
+  }
+
   function enhance(root) {
     var figure = root;
+    if (figure.getAttribute('data-keel') === 'flow') {
+      enhanceFlow(figure);
+      return;
+    }
     var svg = figure.querySelector('.keel__svg');
     var pauseBtn = figure.querySelector('.keel__pause');
     var steps = figure.querySelectorAll('.keel__step');

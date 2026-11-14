@@ -2058,3 +2058,199 @@ html.js .gate-card > .gc-run:not(.is-active) { display: block; visibility: hidde
 @media (max-width: 599px) {
   .legal__facts > div, .legal__rows > div { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Home page Keel flow (#196): Build, Gate and Readiness in one row, Keel below the Gate.
+   Colours: blue is --brand, the draft-rule orange is --light (status), pass is --pass, a blocked Gate is --block.
+   keel-loop.js sets the state. Without the script the cards and the step list still read. */
+.keel--flow { display: block; }
+.kf { display: grid; grid-template-columns: minmax(0, 1fr); position: relative; }
+.kf__node {
+  position: relative; display: flex; align-items: center; gap: .75rem; min-width: 0; min-height: 84px;
+  padding: .75rem 1rem; background: var(--card); border: 1px solid var(--line); border-radius: var(--r-card);
+  box-shadow: var(--shadow-sm); transition: border-color .25s, box-shadow .25s;
+}
+.kf__av {
+  flex: none; width: 44px; height: 44px; border-radius: 50%; overflow: hidden;
+  background: var(--av-bg); display: grid; place-items: center;
+}
+.kf__av img { width: 44px; height: 44px; }
+.kf__txt { min-width: 0; display: flex; flex-direction: column; gap: .125rem; }
+.kf__name { font: 800 1.125rem/1.2 var(--display); letter-spacing: -.01em; color: var(--ink); }
+.kf__sub { font: 400 .875rem/1.35 var(--text); color: var(--ink-2); }
+.kf__tick { background: var(--page-2); box-shadow: inset 0 0 0 2px var(--line-2); transition: box-shadow .25s, background .25s; }
+.kf__tick svg { width: 24px; height: 24px; fill: none; stroke: var(--pass); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.kf__tick path { stroke-dasharray: 18; stroke-dashoffset: 18; transition: stroke-dashoffset .4s var(--ease); }
+.keel--flow[data-ready="pass"] .kf__tick { background: var(--pass-bg); box-shadow: inset 0 0 0 2px var(--pass); }
+.keel--flow[data-ready="pass"] .kf__tick path { stroke-dashoffset: 0; }
+.kf__badge {
+  display: none; position: absolute; top: -.7rem; right: .75rem;
+  font: 600 .8125rem/1 var(--text); border-radius: 999px; padding: .3rem .6rem;
+}
+.kf__badge--block { color: var(--block-ink); background: color-mix(in srgb, var(--block) 13%, var(--card)); }
+.kf__badge--pass { color: var(--pass-ink); background: var(--pass-bg); }
+.kf__node.is-block .kf__badge--block, .kf__node.is-pass .kf__badge--pass { display: block; }
+.kf__node.is-active { border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand); }
+.kf__node.is-block { border-color: var(--block); box-shadow: 0 0 0 1px var(--block); }
+.kf__node.is-pass { border-color: var(--pass); box-shadow: 0 0 0 1px var(--pass); }
+.kf__ribs { margin-left: auto; display: flex; align-items: flex-end; gap: 5px; height: 36px; flex: none; }
+.kf__ribs i { display: block; width: 7px; border-radius: 4px; background: var(--line-2); transition: background .3s, opacity .3s; }
+.kf__ribs i:nth-child(1) { height: 26px; }
+.kf__ribs i:nth-child(2) { height: 32px; }
+.kf__ribs i:nth-child(3) { height: 29px; }
+.kf__ribs .kf__rib-new { height: 36px; opacity: 0; background: var(--light); }
+.keel--flow[data-rib="new"] .kf__rib-new { opacity: 1; background: var(--light); }
+.keel--flow[data-rib="pass"] .kf__rib-new { opacity: 1; background: var(--pass); }
+/* Weld burst (#196): when the new rib is approved, one burst under 1 s welds it in. Orange to amber, drawn in CSS. */
+.kf__ribs { position: relative; }
+.kf__burst { display: none; position: absolute; right: 3.5px; bottom: 0; width: 0; height: 0; pointer-events: none; }
+.kf__burst::before {
+  content: ""; position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%; opacity: 0;
+  background: radial-gradient(circle, color-mix(in srgb, var(--light) 45%, var(--white)) 0 30%, color-mix(in srgb, var(--light) 60%, transparent) 55%, transparent 72%);
+}
+.kf__burst b {
+  position: absolute; left: -1.5px; top: -10px; width: 3px; height: 10px; border-radius: 2px; opacity: 0;
+  background: var(--light); transform-origin: 1.5px 10px;
+}
+.kf__burst b:nth-child(even) { background: color-mix(in srgb, var(--light) 75%, var(--white)); }
+.kf__burst b:nth-child(1) { --a: -84deg; }
+.kf__burst b:nth-child(2) { --a: -56deg; animation-delay: 30ms; }
+.kf__burst b:nth-child(3) { --a: -28deg; animation-delay: 10ms; }
+.kf__burst b:nth-child(4) { --a: 0deg; }
+.kf__burst b:nth-child(5) { --a: 28deg; animation-delay: 20ms; }
+.kf__burst b:nth-child(6) { --a: 56deg; animation-delay: 40ms; }
+.kf__burst b:nth-child(7) { --a: 84deg; animation-delay: 10ms; }
+@keyframes kf-burst {
+  0% { opacity: 1; transform: rotate(var(--a)) translateY(0) scaleY(.3); }
+  35% { opacity: 1; transform: rotate(var(--a)) translateY(-12px) scaleY(1.3); }
+  100% { opacity: 0; transform: rotate(var(--a)) translateY(-26px) scaleY(.4); }
+}
+@keyframes kf-flash { 0% { opacity: 0; transform: scale(.3); } 25% { opacity: .85; transform: scale(1.1); } 100% { opacity: 0; transform: scale(1.8); } }
+@keyframes kf-weld {
+  0% { transform: scaleY(.15); background: color-mix(in srgb, var(--light) 65%, var(--white)); }
+  40% { transform: scaleY(1); box-shadow: 0 0 8px color-mix(in srgb, var(--light) 70%, transparent); }
+  100% { transform: scaleY(1); background: var(--light); box-shadow: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .keel--flow[data-weld] .kf__burst { display: block; }
+  .keel--flow[data-weld] .kf__burst::before { animation: kf-flash .5s ease-out .1s both; }
+  .keel--flow[data-weld] .kf__burst b { animation-name: kf-burst; animation-duration: .6s; animation-timing-function: cubic-bezier(.2, .7, .3, 1); animation-fill-mode: both; }
+  .keel--flow[data-weld] .kf__rib-new { transform-origin: 50% 100%; animation: kf-weld .8s ease-out both; }
+}
+
+/* Wires: an SVG path in a 0 to 100 box, stretched to the grid cell. The arrow head is a CSS chevron. */
+.kf__wire { position: relative; display: block; min-width: 0; color: var(--line-2); }
+.kf__wire svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.kf__wire path { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.kf__wire--miss path, .kf__wire--rules path { stroke-dasharray: 4 6; }
+.kf__wire::after {
+  content: ""; position: absolute; width: 9px; height: 9px;
+  border-top: 2px solid currentColor; border-right: 2px solid currentColor;
+}
+.kf__wire[data-tone="brand"] { color: var(--brand); }
+.kf__wire[data-tone="block"] { color: var(--block); }
+.kf__wire[data-tone="light"] { color: var(--light); }
+.kf__wire[data-tone="pass"] { color: var(--pass); }
+.kf__wire[data-tone] path { stroke-width: 2.5; stroke-dasharray: 7 6; }
+@keyframes kf-flow { to { stroke-dashoffset: -26; } }
+@media (prefers-reduced-motion: no-preference) {
+  .kf__wire[data-tone] path { animation: kf-flow .9s linear infinite; }
+}
+.kf__dot {
+  position: absolute; width: 13px; height: 13px; margin: -6.5px 0 0 -6.5px; border-radius: 50%;
+  background: currentColor; border: 2px solid var(--card); pointer-events: none;
+}
+.kf__label { font: 600 .8125rem/1.3 var(--text); color: var(--ink-2); }
+
+/* Caption bar. Without the script it is an ordered list of all six steps. */
+.kf__bar {
+  margin-top: 1.25rem; display: flex; align-items: flex-start; gap: 1rem 1.25rem; flex-wrap: wrap;
+  padding: 1rem 1.125rem; background: var(--card); border: 1px solid var(--line); border-radius: var(--r-card); box-shadow: var(--shadow-sm);
+}
+.keel--flow .keel__steps { flex: 1 1 22rem; min-width: 0; }
+.keel--flow .keel__step {
+  display: grid; grid-template-columns: 42px minmax(0, 1fr); column-gap: .875rem;
+  padding: .75rem 0; border-radius: 0;
+}
+.keel--flow .keel__step::before {
+  content: attr(data-n); grid-row: 1 / span 3;
+  display: grid; place-items: center; width: 42px; height: 42px; border-radius: var(--r-btn);
+  font: 800 .875rem/1 var(--display); color: var(--brand-ink); background: color-mix(in srgb, var(--brand) 12%, var(--card));
+}
+.keel--flow .keel__step > * { grid-column: 2; }
+.keel--flow .keel__name { font: 800 1.0625rem/1.3 var(--display); }
+.keel--flow .keel__step.is-active .keel__name { color: var(--ink); }
+.keel--flow .keel__step.is-active .keel__name::before { content: none; }
+.keel--flow .keel__step--rule .keel__rule { color: var(--ink); }
+.keel--flow.is-on .keel__step { display: none; padding: 0; border-top: 0; }
+.keel--flow.is-on .keel__step.is-active { display: grid; }
+.kf__controls { display: flex; align-items: center; gap: .75rem; flex: none; margin-left: auto; }
+.keel--flow .keel__tools { display: block; margin: 0; }
+.keel--flow .keel__pause { white-space: nowrap; }
+.kf__dots { display: flex; align-items: center; }
+.kf__dot-btn {
+  display: grid; place-items: center; width: 24px; height: 24px; min-height: 24px; padding: 0;
+  border: 0; background: transparent; cursor: pointer; border-radius: 6px; box-shadow: none;
+}
+.kf__dot-btn::before {
+  content: ""; display: block; width: 8px; height: 8px; border-radius: 99px;
+  background: var(--line-2); transition: width .2s, background .2s;
+}
+.kf__dot-btn:hover::before { background: var(--ink-3); }
+.kf__dot-btn[aria-current="step"] { width: 32px; }
+.kf__dot-btn[aria-current="step"]::before { width: 22px; background: var(--brand); }
+.kf__dot-btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+
+@media (min-width: 700px) {
+  .kf {
+    grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1fr) 44px minmax(0, 1fr);
+    grid-template-rows: auto 64px auto;
+  }
+  .kf__node--build { grid-area: 1 / 1; }
+  .kf__wire--change { grid-area: 1 / 2; }
+  .kf__node--gate { grid-area: 1 / 3; }
+  .kf__wire--ready { grid-area: 1 / 4; }
+  .kf__node--ready { grid-area: 1 / 5; }
+  .kf__wire--miss { grid-area: 2 / 3; justify-self: center; width: 20px; margin-bottom: 4px; }
+  .kf__label--miss { grid-area: 2 / 3; align-self: center; margin-left: calc(50% + 18px); }
+  .kf__node--keel { grid-area: 3 / 3; }
+  .kf__wire--rules {
+    grid-column: 1 / 3; grid-row: 2 / 4; align-self: start;
+    height: calc(64px + 42px); margin-left: calc((100% - 44px) / 2); margin-right: 4px;
+  }
+  .kf__label--rules {
+    grid-area: 3 / 1; align-self: start; justify-self: end; text-align: right;
+    margin: 58px 0 0; max-width: 100%;
+  }
+  .kf__wire--change::after, .kf__wire--ready::after { right: 3px; top: 50%; margin-top: -5.5px; transform: rotate(45deg); }
+  .kf__wire--change, .kf__wire--ready { margin-inline: 6px; }
+  .kf__wire--miss::after { left: 50%; bottom: 1px; margin-left: -5.5px; transform: rotate(135deg); }
+  .kf__wire--rules::after { left: -5.5px; top: 2px; transform: rotate(-45deg); }
+}
+@media (max-width: 699px) {
+  .kf__node--build { grid-row: 1; }
+  .kf__wire--change { grid-row: 2; }
+  .kf__node--gate { grid-row: 3; }
+  .kf__wire--ready { grid-row: 4; }
+  .kf__node--ready { grid-row: 5; }
+  .kf__label--miss { grid-row: 6; }
+  .kf__node--keel { grid-row: 7; }
+  .kf__label--rules { grid-row: 8; }
+  .kf__wire--miss, .kf__wire--rules, .kf__dot { display: none; }
+  .kf__wire--change, .kf__wire--ready { height: 30px; }
+  .kf__wire svg { display: none; }
+  .kf__wire::before { content: ""; position: absolute; left: 50%; top: 3px; bottom: 3px; width: 2px; margin-left: -1px; background: currentColor; }
+  .kf__wire::after { left: 50%; bottom: 3px; margin-left: -5.5px; transform: rotate(135deg); }
+  .kf__label { display: flex; align-items: center; gap: .625rem; justify-content: center; text-align: center; }
+  .kf__label--miss { margin: 1rem 0 .75rem; }
+  .kf__label--miss::before, .kf__label--miss::after { content: ""; flex: 1; border-top: 2px dashed var(--line-2); }
+  .kf__label--rules { margin-top: .75rem; }
+  .kf__node { padding-inline: .875rem; }
+  .kf__badge { top: 50%; right: .875rem; transform: translateY(-50%); position: absolute; }
+  .kf__bar { padding: .875rem; }
+  .keel--flow .keel__steps { flex-basis: 100%; }
+  .kf__controls { width: 100%; flex-wrap: wrap; justify-content: space-between; margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .keel--flow *, .keel--flow *::before, .keel--flow *::after { animation: none; transition: none; }
+  .kf__dot, .kf__burst { display: none; }
+}
