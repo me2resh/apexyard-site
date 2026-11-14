@@ -2100,6 +2100,42 @@ html.js .gate-card > .gc-run:not(.is-active) { display: block; visibility: hidde
 .kf__ribs .kf__rib-new { height: 36px; opacity: 0; background: var(--light); }
 .keel--flow[data-rib="new"] .kf__rib-new { opacity: 1; background: var(--light); }
 .keel--flow[data-rib="pass"] .kf__rib-new { opacity: 1; background: var(--pass); }
+/* Weld burst (#196): when the new rib is approved, one burst under 1 s welds it in. Orange to amber, drawn in CSS. */
+.kf__ribs { position: relative; }
+.kf__burst { display: none; position: absolute; right: 3.5px; bottom: 0; width: 0; height: 0; pointer-events: none; }
+.kf__burst::before {
+  content: ""; position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%; opacity: 0;
+  background: radial-gradient(circle, color-mix(in srgb, var(--light) 45%, var(--white)) 0 30%, color-mix(in srgb, var(--light) 60%, transparent) 55%, transparent 72%);
+}
+.kf__burst b {
+  position: absolute; left: -1.5px; top: -10px; width: 3px; height: 10px; border-radius: 2px; opacity: 0;
+  background: var(--light); transform-origin: 1.5px 10px;
+}
+.kf__burst b:nth-child(even) { background: color-mix(in srgb, var(--light) 75%, var(--white)); }
+.kf__burst b:nth-child(1) { --a: -84deg; }
+.kf__burst b:nth-child(2) { --a: -56deg; animation-delay: 30ms; }
+.kf__burst b:nth-child(3) { --a: -28deg; animation-delay: 10ms; }
+.kf__burst b:nth-child(4) { --a: 0deg; }
+.kf__burst b:nth-child(5) { --a: 28deg; animation-delay: 20ms; }
+.kf__burst b:nth-child(6) { --a: 56deg; animation-delay: 40ms; }
+.kf__burst b:nth-child(7) { --a: 84deg; animation-delay: 10ms; }
+@keyframes kf-burst {
+  0% { opacity: 1; transform: rotate(var(--a)) translateY(0) scaleY(.3); }
+  35% { opacity: 1; transform: rotate(var(--a)) translateY(-12px) scaleY(1.3); }
+  100% { opacity: 0; transform: rotate(var(--a)) translateY(-26px) scaleY(.4); }
+}
+@keyframes kf-flash { 0% { opacity: 0; transform: scale(.3); } 25% { opacity: .85; transform: scale(1.1); } 100% { opacity: 0; transform: scale(1.8); } }
+@keyframes kf-weld {
+  0% { transform: scaleY(.15); background: color-mix(in srgb, var(--light) 65%, var(--white)); }
+  40% { transform: scaleY(1); box-shadow: 0 0 8px color-mix(in srgb, var(--light) 70%, transparent); }
+  100% { transform: scaleY(1); background: var(--light); box-shadow: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .keel--flow[data-weld] .kf__burst { display: block; }
+  .keel--flow[data-weld] .kf__burst::before { animation: kf-flash .5s ease-out .1s both; }
+  .keel--flow[data-weld] .kf__burst b { animation-name: kf-burst; animation-duration: .6s; animation-timing-function: cubic-bezier(.2, .7, .3, 1); animation-fill-mode: both; }
+  .keel--flow[data-weld] .kf__rib-new { transform-origin: 50% 100%; animation: kf-weld .8s ease-out both; }
+}
 
 /* Wires: an SVG path in a 0 to 100 box, stretched to the grid cell. The arrow head is a CSS chevron. */
 .kf__wire { position: relative; display: block; min-width: 0; color: var(--line-2); }
@@ -2216,5 +2252,5 @@ html.js .gate-card > .gc-run:not(.is-active) { display: block; visibility: hidde
 }
 @media (prefers-reduced-motion: reduce) {
   .keel--flow *, .keel--flow *::before, .keel--flow *::after { animation: none; transition: none; }
-  .kf__dot { display: none; }
+  .kf__dot, .kf__burst { display: none; }
 }

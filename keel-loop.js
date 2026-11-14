@@ -25,6 +25,7 @@
      The live region speaks only after a user action, never on the auto-advance. */
   var FLOW_MS = 4200;
   var TRAVEL_MS = 1400;
+  var WELD_MS = 900;
   var FLOW = [
     { step: 'build', nodes: { build: 'is-active' }, wires: { rules: 'brand' }, travel: 'rules' },
     { step: 'gate', nodes: { gate: 'is-block' }, wires: { change: 'block' }, travel: 'change' },
@@ -53,6 +54,7 @@
     var running = false;
     var timer = 0;
     var rafId = 0;
+    var weldTimer = 0;
 
     function reduced() { return !!(reduceMq && reduceMq.matches); }
     function canRun() { return !reduced() && inView && !pageHidden && !userPaused; }
@@ -92,11 +94,25 @@
       rafId = window.requestAnimationFrame(frame);
     }
 
+    /* The weld burst: one short burst when the new rib is approved. Decorative only. */
+    function weld(on) {
+      if (weldTimer) { window.clearTimeout(weldTimer); weldTimer = 0; }
+      figure.removeAttribute('data-weld');
+      if (!on) return;
+      void figure.offsetWidth;
+      figure.setAttribute('data-weld', '');
+      weldTimer = window.setTimeout(function () {
+        weldTimer = 0;
+        figure.removeAttribute('data-weld');
+      }, WELD_MS);
+    }
+
     function render(i, animate) {
       var cfg = FLOW[i];
       var k;
       index = i;
       figure.setAttribute('data-phase', cfg.step);
+      weld(cfg.rib === 'new' && !reduced());
       if (cfg.rib) figure.setAttribute('data-rib', cfg.rib); else figure.removeAttribute('data-rib');
       if (cfg.ready) figure.setAttribute('data-ready', cfg.ready); else figure.removeAttribute('data-ready');
       for (k = 0; k < steps.length; k++) steps[k].classList.toggle('is-active', k === i);
