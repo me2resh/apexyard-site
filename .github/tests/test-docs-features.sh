@@ -35,6 +35,34 @@ for feature, group in areas.items():
         if not present:
             assert '/docs/' + group + '/' not in text, (feature, page.name, 'link to a removed docs page')
             assert not re.search(r'(?:href="|\]\()(?:https://(?:staging\.)?apexyard\.ai)?/' + feature + r'(?:\.html|\.md)?["#?)]', text), (feature, page.name, 'link to a removed site page')
+# Pages marked Coming sit behind `upcoming`. The GitHub App guide sits behind `gate`.
+singles = {'upcoming': ['your-rules/knowledge-base', 'updating/drift-safe-updates'], 'gate': ['how-to/reviewer-github-app']}
+slugs = {pg['slug'] for sec in nav['sections'] for g in sec['groups'] for pg in g['pages']}
+for feature, items in singles.items():
+    for slug in items:
+        present = feature in enabled
+        assert (slug in slugs) == present, (slug, 'nav page')
+        assert (dist / (slug + '.html')).exists() == present, (slug, 'built page')
+        assert (dist / (slug + '.md')).exists() == present, (slug, 'markdown copy')
+        assert ('/docs/' + slug + '"' in home) == present, (slug, 'home card link')
+        if not present:
+            for page in pages:
+                assert not re.search('/docs/' + slug + r'["#?) ]', page.read_text()), (slug, page.name, 'link to a removed page')
+assert ('how-to' in group_ids) == ('gate' in enabled), 'how-to group'
+# No page marked Coming stays without the upcoming flag.
+if 'upcoming' not in enabled:
+    for sec in nav['sections']:
+        for g in sec['groups']:
+            for pg in g['pages']:
+                assert not pg['coming'] or g['id'] in ('hosted-gate',) and 'gate' in enabled or g['id'] == 'readiness', (pg['slug'], 'Coming page without the flag')
+# The group counts on the docs home match nav.json.
+for sec in nav['sections']:
+    for g in sec['groups']:
+        n = len(g['pages'])
+        assert re.search(re.escape(g['title']) + r'.{0,2000}?' + str(n) + ' page' + ('' if n == 1 else 's'), home, re.S), (g['id'], 'count on home')
+# The header link: /#product needs Gate, /build otherwise.
+want = '/#product' if 'gate' in enabled else '/build'
+assert ('href="' + want + '">Product<') in home, ('header link', want)
 # The sidebar group labels and the group counts.
 labels = {'cockpit': 'Cockpit (Preview)', 'gate': 'The hosted gate', 'readiness': 'Readiness'}
 for feature, label in labels.items():
@@ -45,7 +73,7 @@ print('PASS docs features: ' + (sys.argv[2] or 'none'))
 PY
 }
 
-for flags in 'build' 'build,gate,readiness,pricing,cockpit'; do
+for flags in 'build' 'build,gate' 'build,upcoming' 'build,gate,readiness,pricing,cockpit,upcoming'; do
   (cd "$root/docs-site" && SITE_FEATURES="$flags" npm run build >/dev/null)
   check "$flags"
   # Pagefind stores the indexed text in compressed fragments, so assert on

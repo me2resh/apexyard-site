@@ -38,6 +38,7 @@ const ENABLED = new Set(
 );
 for (const f of ENABLED) if (!FEATURE_NAMES.includes(f)) { console.error(`sync-content: unknown feature name: ${f}`); process.exit(1); }
 const groupOn = (group) => !group.feature || ENABLED.has(group.feature);
+const pageOn = (page) => !page.feature || ENABLED.has(page.feature);
 
 // ---------------------------------------------------------------- source
 
@@ -616,17 +617,18 @@ function main() {
   for (const section of SECTIONS) {
     const navSection = { id: section.id, title: section.title, summary: section.summary, groups: [] };
     for (const group of section.groups) {
-      if (!groupOn(group)) {
+      if (!groupOn(group) || (group.pages && group.pages.length && !group.pages.some(pageOn))) {
         for (const pg of group.pages || []) removedSlugs.push(pg.slug);
         removedGroups.push(group.id);
         continue;
       }
+      for (const pg of group.pages || []) if (!pageOn(pg)) removedSlugs.push(pg.slug);
       let pages;
       if (group.generate === 'skills') pages = generateSkills();
       else if (group.generate === 'rules') pages = generateRules();
       else if (group.generate === 'roles') pages = generateRoles();
       else if (group.generate === 'changelog') pages = generateChangelog(group);
-      else pages = group.pages.map((p) => (p.generate === 'hook-index' ? hookIndex(p) : mapPage(p)));
+      else pages = group.pages.filter(pageOn).map((p) => (p.generate === 'hook-index' ? hookIndex(p) : mapPage(p)));
 
       const kept = [];
       for (const p of pages) {
