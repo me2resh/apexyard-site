@@ -147,7 +147,7 @@ It still does **not** run on a PR that only edits page content. Counts are there
 Add an area name to `SITE_FEATURES` in the staging environment, or to the
 repository variable `SITE_FEATURES_PRODUCTION` for live, then run the deploy
 again. Initial values: production `build`; staging
-`build,gate,readiness,pricing,cockpit`. Set these variables before the first deploy.
+`build,gate,readiness,pricing,cockpit`. Both variables must be set BEFORE this PR merges: merging into `staging` starts the staging deploy.
 An empty or missing value turns every area off.
 
 The deploy copies and filters the site before upload. Disabled pages and
@@ -155,3 +155,20 @@ The deploy copies and filters the site before upload. Disabled pages and
 `<!-- /feature:pricing -->` regions in text and XML. Space-separated names use
 ANY: `data-feature="build pricing"` stays when either area is on. A removed
 parent removes its children too. Unknown names fail the build.
+
+The v2 staging deploy reads `SITE_FEATURES` from the `staging` environment.
+The main-branch staging job in `deploy-aws.yml` has no environment and reads
+repository `SITE_FEATURES_PRODUCTION`, mirroring live. Set both variables BEFORE
+this PR merges, because merging into `staging` immediately starts its deploy.
+Preview builds read repository `SITE_FEATURES`, falling back to all five; they
+cannot read the staging environment variable.
+
+ANY tags are for containers with individually tagged children. Split prose by
+area; never use ANY to retain a sentence naming disabled products. The filtered
+tree excludes source-only `docs/`, `docs-site/`, `handbooks/`, OG templates and
+repository README/AGENTS files. The build-only text scan has no word allowlist.
+Bare/empty feature attributes, tagged non-void self-closing HTML and malformed
+feature region names fail the filter.
+
+Disabled Gate output also omits its check screenshot and dashboard/evidence SVGs.
+The architecture OG card is omitted unless Gate and Readiness are both enabled.

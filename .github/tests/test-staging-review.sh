@@ -243,7 +243,7 @@ assert "gate.html holds agent does not review it" \
 assert "gate.html says the gate needs the approval" \
   grep -Fq 'The gate needs that approval before the merge.' "$root/gate.html"
 
-plans_line='Build is free and open source. Every paid plan includes Build, Gate and Readiness. Plans differ by repositories, seats and evidence retention.'
+plans_line='Plans differ by repositories, seats and evidence retention.'
 for page in build.html gate.html readiness.html; do
   assert "$page holds Build is free plans line" grep -Fq "$plans_line" "$root/$page"
   assert "$page links /pricing" grep -Fq 'href="/pricing"' "$root/$page"

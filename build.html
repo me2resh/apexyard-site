@@ -211,7 +211,7 @@ $ cd &lt;new-private-repo&gt;
               </marker>
             </defs>
             <path class="keel__link" data-path="feed-build" d="M 155 145 L 100 76"/>
-            <path class="keel__link" data-path="feed-gate" d="M 245 145 L 300 76"/>
+            <path data-feature="gate" class="keel__link" data-path="feed-gate" d="M 245 145 L 300 76"/>
             <path class="keel__link" data-path="measure" d="M 200 195 L 200 250"/>
             <path class="keel__flow" data-path="change" d="M 134 52 L 266 52" marker-end="url(#build-keel-arrow)"/>
             <path class="keel__flow keel__flow--miss" data-path="miss" d="M 321 76 C 355 130, 300 195, 240 170" marker-end="url(#build-keel-arrow)"/>
@@ -245,7 +245,7 @@ $ cd &lt;new-private-repo&gt;
           <li class="keel__step" data-step="miss"><p class="keel__name">A miss becomes a rule</p><p class="keel__text">When a person finds a miss in review, /codify-rule turns the comment into a draft rule. You approve it before it is saved.</p></li>
         </ol>
         <p class="keel__tools"><button type="button" class="keel__pause" aria-pressed="false" hidden>Pause animation</button></p>
-        <figcaption class="visually-hidden" id="build-keel-cap">Keel is in the centre, with Build, Gate and Readiness around it. A change goes from Build to the Gate. The Gate stops it. The miss becomes a new rule in Keel. The next change passes the Gate. Readiness measures each repository against the same rules.</figcaption>
+        <figcaption class="visually-hidden" id="build-keel-cap">Keel holds the rules. <span data-feature="build">Build guides your agents.</span> <span data-feature="gate">Gate checks pull requests.</span> <span data-feature="readiness">Readiness measures repositories.</span></figcaption>
       </figure>
     </div>
   </section>
@@ -254,7 +254,7 @@ $ cd &lt;new-private-repo&gt;
 <div class="join join--rl" aria-hidden="true"><i></i><i></i><i></i></div><div class="rail" aria-hidden="true"></div>
     <div class="wrap plans-pointer">
       <h2 data-feature="pricing" class="section__title" id="plans-title"><span class="stn" aria-hidden="true"></span>Plans</h2>
-      <p class="section__lede" data-feature="gate readiness">Build is free and open source. Every paid plan includes Build, Gate and Readiness. Plans differ by repositories, seats and evidence retention.</p>
+      <p class="section__lede" data-feature="pricing">Plans differ by repositories, seats and evidence retention.</p>
       <p class="plans__cta"><a data-feature="pricing" class="plans__link" href="/pricing">See plans and pricing</a></p>
     </div>
   </section>

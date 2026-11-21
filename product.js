@@ -21,7 +21,8 @@
   if (document.body.hasAttribute('data-home') && hash && moved.indexOf(hash) !== -1 &&
       !document.getElementById(hash)) {
     var toPricing = hash === 'paths' || hash === 'commercial' || hash === 'demo';
-    location.replace(toPricing ? '/pricing' : '/docs#' + hash);
+    var pricingOn = document.querySelector('a[href="/pricing"]');
+    location.replace(toPricing && pricingOn ? '/pricing' : '/docs#' + hash);
     return;
   }
 

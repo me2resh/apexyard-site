@@ -31,7 +31,9 @@ class Filter(HTMLParser):
         line, col = self.getpos()
         return self.lines[line-1] + col
     def handle_starttag(self, tag, attrs):
-        value = dict(attrs).get('data-feature')
+        values = [value for key, value in attrs if key == 'data-feature']
+        if values and (len(values) != 1 or values[0] is None): fail('data-feature requires one value')
+        value = values[0] if values else None
         remove = value is not None and not (names(value) & self.enabled)
         start = self.pos()
         if tag in self.void:
@@ -39,7 +41,10 @@ class Filter(HTMLParser):
         else:
             self.stack.append((tag, start, remove))
     def handle_startendtag(self, tag, attrs):
-        value = dict(attrs).get('data-feature')
+        if tag not in self.void | {'path', 'circle', 'line', 'polyline', 'polygon', 'rect', 'ellipse', 'use'} and any(key == 'data-feature' for key, _ in attrs): fail('tagged non-void self-closing element: '+tag)
+        values = [value for key, value in attrs if key == 'data-feature']
+        if values and (len(values) != 1 or values[0] is None): fail('data-feature requires one value')
+        value = values[0] if values else None
         if value is not None and not names(value) & self.enabled:
             self.cuts.append((self.pos(), self.pos()+len(self.get_starttag_text())))
     def handle_endtag(self, tag):
@@ -63,7 +68,7 @@ class Filter(HTMLParser):
 
 def regions(text, enabled):
     stack=[]; output=[]; last=0
-    for m in re.finditer(r'<!--\s*(/?)feature:([a-z ]+)\s*-->',text):
+    for m in re.finditer(r'<!--\s*(/?)feature:([^>]*?)\s*-->',text):
         if all(keep for _,keep in stack): output.append(text[last:m.start()])
         value=m[2].strip(); active=bool(names(value)&enabled)
         if m[1]:
@@ -82,12 +87,22 @@ try:
     if src==out or src in out.parents: fail('out-dir must be outside src-dir')
     if out.exists(): fail('out-dir already exists; use a fresh directory')
     shutil.copytree(src,out,ignore=shutil.ignore_patterns('.git','node_modules'),symlinks=True)
+    # Source and tooling are not public site assets.
+    for directory in ('docs', 'docs-site', 'handbooks', 'og/templates'):
+        shutil.rmtree(out/directory, ignore_errors=True)
+    for filename in ('README.md', 'AGENTS.md', 'og/README.md'):
+        (out/filename).unlink(missing_ok=True)
     # Never follow source symlinks into files outside the deploy tree.
     for p in list(out.rglob('*')):
         if p.is_symlink(): p.unlink()
     for feature in KNOWN - enabled:
         for suffix in ('.html', '.md.gen', '.md'):
             (out / (feature + suffix)).unlink(missing_ok=True)
+    if 'gate' not in enabled:
+        for asset in ('check-pr9.webp', 'placeholder-dashboard.svg', 'placeholder-evidence.svg', 'placeholder-org-dashboard.svg'):
+            (out/'img'/asset).unlink(missing_ok=True)
+    if not {'gate', 'readiness'} <= enabled:
+        (out/'og/architecture.png').unlink(missing_ok=True)
     for p in list(out.rglob('*')):
         if not p.is_file() or any(part.startswith('.') for part in p.relative_to(out).parts): continue
         if p.suffix not in {'.html','.txt','.xml','.md'} and not p.name.endswith('.md.gen'): continue
@@ -97,6 +112,7 @@ try:
             if body and not names(body[1])&enabled: p.unlink(); continue
         text=regions(text,enabled)
         if p.suffix=='.html': text=Filter(text,enabled).result()
+        if p.suffix=='.txt': text=re.sub(r'\n(?:[ \t]*\n){2,}', '\n\n', text)
         p.write_text(text)
     print('apply-features: enabled '+(','.join(sorted(enabled)) or '(none)'))
 except (ValueError,OSError) as error:

@@ -17,13 +17,13 @@ ApexYard gives your agents a team's process. Then it checks every pull request a
 | Name | Say this |
 |------|----------|
 | Build | The open-source framework. It guides your agents. |
-| Gate | Checks each pull request against your process. |
-| Readiness | Measures each repository. |
+<!-- feature:gate -->| Gate | Checks each pull request against your process. |<!-- /feature:gate -->
+<!-- feature:readiness -->| Readiness | Measures each repository. |<!-- /feature:readiness -->
 | Keel | Your team's rules and context, read by every agent. |
 
 ## The idea to explain
 
-You write a rule one time. Build guides your agents with it. Gate checks each pull request against it. Readiness measures the whole repository. A miss becomes a new rule.
+Build guides your agents with the rules in Keel.
 
 Example rule: "Every API endpoint checks who is calling." Your team adds it to its handbook, marked blocking.
 
@@ -33,16 +33,16 @@ Example rule: "Every API endpoint checks who is calling." Your team adds it to i
 - Build needs no account and no dashboard.
 - Build works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.
 - Build runs on the developer's machine.
-- Gate checks each pull request on GitHub.
-- Gate checks for a ticket, a decision record, a review and a named approval.
-- Our servers never fetch your code. The Gate GitHub App has no Contents permission. It sees pull request titles, descriptions and changed file names, not the files.
-- Gate blocks a merge only when the team makes the check required in GitHub.
-- Readiness gives a go or no-go for a repository, the gaps in each area and the top actions.
-- Readiness covers ten areas, from security to documentation.
+<!-- feature:gate -->- Gate checks each pull request on GitHub.<!-- /feature:gate -->
+<!-- feature:gate -->- Gate checks for a ticket, a decision record, a review and a named approval.<!-- /feature:gate -->
+<!-- feature:gate -->- Our servers never fetch your code. The Gate GitHub App has no Contents permission. It sees pull request titles, descriptions and changed file names, not the files.<!-- /feature:gate -->
+<!-- feature:gate -->- Gate blocks a merge only when the team makes the check required in GitHub.<!-- /feature:gate -->
+<!-- feature:readiness -->- Readiness gives a go or no-go for a repository, the gaps in each area and the top actions.<!-- /feature:readiness -->
+<!-- feature:readiness -->- Readiness covers ten areas, from security to documentation.<!-- /feature:readiness -->
 
 ## Facts you must not state
 
-- Do not state a price, a discount or an offer. Send people to https://apexyard.ai/pricing.
+<!-- feature:pricing -->- Do not state a price, a discount or an offer. Send people to https://apexyard.ai/pricing.<!-- /feature:pricing -->
 - Do not describe plan limits or plan details.
 - Do not say that a feature exists if the product pages do not say so.
 - Do not say that ApexYard replaces human review. A person approves each merge.
@@ -51,16 +51,16 @@ Example rule: "Every API endpoint checks who is calling." Your team adds it to i
 ## Who it is for
 
 - Founders and engineering leads who want agent speed and a real process (Build).
-- Engineering leads whose teams merge code that agents wrote (Gate).
-- CTOs and engineering leads who answer for what ships (Readiness).
+<!-- feature:gate -->- Engineering leads whose teams merge code that agents wrote (Gate).<!-- /feature:gate -->
+<!-- feature:readiness -->- CTOs and engineering leads who answer for what ships (Readiness).<!-- /feature:readiness -->
 
 ## Links
 
 - Home: https://apexyard.ai/
-- Build: https://apexyard.ai/build
-- Gate: https://apexyard.ai/gate
-- Readiness: https://apexyard.ai/readiness
-- Pricing: https://apexyard.ai/pricing
+<!-- feature:build -->- Build: https://apexyard.ai/build<!-- /feature:build -->
+<!-- feature:gate -->- Gate: https://apexyard.ai/gate<!-- /feature:gate -->
+<!-- feature:readiness -->- Readiness: https://apexyard.ai/readiness<!-- /feature:readiness -->
+<!-- feature:pricing -->- Pricing: https://apexyard.ai/pricing<!-- /feature:pricing -->
 - Docs: https://apexyard.ai/docs
 - Source: https://github.com/me2resh/apexyard
 - Site summary for agents: https://apexyard.ai/llms.txt
@@ -68,5 +68,5 @@ Example rule: "Every API endpoint checks who is calling." Your team adds it to i
 ## Wording rules
 
 - Use short sentences.
-- Name the product: Build, Gate, Readiness or Keel.
+- Name only the products shown on the site.
 - Say "pull request", not "PR", on first use.

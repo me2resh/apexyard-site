@@ -14,6 +14,16 @@ from urllib.parse import urlsplit
 import re, sys
 root=Path(sys.argv[1]); enabled=set(sys.argv[2].split(',')); features=set('build gate readiness pricing cockpit'.split())
 removed=features-enabled
+# Regression: Markdown, autolinks and href delimiters all end the product path.
+def link_pattern(feature):
+    return r'(?:https://(?:staging\.)?apexyard\.ai)?/'+feature+r'(?:\.html|\.md)?(?![a-z0-9-])'
+for end in ('>', ')', '"', "'", '#details', '?source=test'):
+    assert re.search(link_pattern('pricing'), 'https://apexyard.ai/pricing'+end)
+assert not re.search(link_pattern('gate'), '/gatekeeper')
+if 'gate' not in enabled:
+    assert not (root/'img/check-pr9.webp').exists()
+if not {'gate','readiness'} <= enabled:
+    assert not (root/'og/architecture.png').exists()
 for f in features:
     assert (root/(f+'.html')).exists() == (f in enabled), f
 class Scan(HTMLParser):
@@ -30,10 +40,16 @@ class Scan(HTMLParser):
 for page in root.rglob('*.html'):
     if any(p.startswith('.') for p in page.relative_to(root).parts) or 'docs-site' in page.parts or 'og' in page.parts or 'docs' in page.parts: continue
     Scan().feed(page.read_text())
-for page in [root/'llms.txt',root/'llms-full.txt',root/'sitemap.xml',*root.glob('*.md.gen')]:
+# Every non-hidden text asset in the deploy tree, including Markdown alternates.
+for page in root.rglob('*'):
+    if not page.is_file() or any(p.startswith('.') for p in page.relative_to(root).parts): continue
+    if page.suffix not in {'.html','.md','.txt','.xml','.json'} and not page.name.endswith('.md.gen'): continue
     text=page.read_text()
     for f in removed:
-        assert not re.search(r'https://apexyard.ai/'+f+r'(?:[\s/#<)]|$)',text), (page,f)
+        assert not re.search(link_pattern(f),text,re.I), (page,f,'disabled link')
+    if sys.argv[2]=='build':
+        # No generic-word exceptions: all disabled product names are forbidden.
+        assert not re.search(r'\b(?:gate|readiness|pricing|cockpit)\b',text,re.I), (page,'disabled product name')
 print('PASS feature output: '+(sys.argv[2] or 'all off'))
 PY
 done
@@ -66,3 +82,23 @@ printf '%s' 'start<!-- feature:gate -->secret<!-- feature:build -->nested<!-- /f
 "$root/.github/scripts/apply-features.sh" "$tmp/fixture" "$tmp/missing"
 [ "$(cat "$tmp/missing/llms.txt")" = startend ]
 echo 'PASS nested text regions and missing list'
+
+# Authoring typos must fail closed, including malformed region values.
+for markup in '<div data-feature>secret</div>' '<div data-feature="">secret</div>' '<div data-feature="gate"/>secret' '<!-- feature:Gate -->secret<!-- /feature:Gate -->'; do
+  printf '%s' "$markup" > "$tmp/fixture/index.html"
+  rm -rf "$tmp/malformed"
+  if "$root/.github/scripts/apply-features.sh" "$tmp/fixture" "$tmp/malformed" build >"$tmp/error" 2>&1; then
+    echo "FAIL malformed feature markup accepted: $markup"; exit 1
+  fi
+done
+echo 'PASS bare/empty attributes, self-closing HTML and malformed region guards'
+
+# Both no-environment jobs rehearse/use the repository live list.
+python3 -I - "$root/.github/workflows/deploy-aws.yml" <<'PYCODE'
+from pathlib import Path
+import sys
+text=Path(sys.argv[1]).read_text()
+assert text.count('SITE_FEATURES: ${{ vars.SITE_FEATURES_PRODUCTION }}') == 2
+assert 'SITE_FEATURES: ${{ vars.SITE_FEATURES }}' not in text
+print('PASS main staging and production read the live feature list')
+PYCODE

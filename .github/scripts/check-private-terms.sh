@@ -6,7 +6,7 @@
 #        check-private-terms.sh --text-dir <dir>
 #
 # Text mode (--text-dir): check every file in <dir> instead of the tracked
-# files. Each file is one field of a pull request (title, body, commit-<sha>).
+# files. Inputs may be PR fields or a filtered static site; binary files are skipped.
 # A hit prints the field name and the term's index number only. The PR text
 # job and the local git hooks use this mode, so they share the term loading
 # and the masking below.
@@ -141,8 +141,11 @@ if mode == "text":
         path = os.path.join(repo, name)
         if not os.path.isfile(path):
             continue
+        data = open(path, "rb").read()
+        if b"\0" in data[:8192]:
+            continue
         checked += 1
-        text = open(path, "rb").read().decode("utf-8", "replace").lower()
+        text = data.decode("utf-8", "replace").lower()
         for label, variants in forms:
             if any(v in text for v in variants):
                 print(f"HIT    {name} ({label})")

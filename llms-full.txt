@@ -12,7 +12,7 @@ It is written in plain words. It gives no prices.
 
 ApexYard gives your agents a team's process. Then it checks every pull request against that process.
 
-<!-- feature:build gate readiness -->ApexYard has three products: Build, Gate and Readiness.<!-- /feature:build gate readiness -->
+ApexYard gives your agents a shared set of rules.
 Keel is the shared layer under them.
 
 | Name | What it does |
@@ -73,9 +73,9 @@ The hooks are Bash scripts. On macOS and Linux, Bash is there already. On Window
 
 The install guide is at https://apexyard.ai/docs.
 
-<!-- feature:build gate -->## How Build connects to Gate<!-- /feature:build gate -->
+<!-- feature:gate -->## How Build connects to Gate<!-- /feature:gate -->
 
-<!-- feature:build gate -->The ticket, the decision record and the review that your agents make in Build are what Gate checks on GitHub.<!-- /feature:build gate -->
+<!-- feature:gate -->The ticket, the decision record and the review that your agents make in Build are what Gate checks on GitHub.<!-- /feature:gate -->
 
 ---
 
@@ -84,7 +84,7 @@ The install guide is at https://apexyard.ai/docs.
 <!-- feature:cockpit -->
 <!-- feature:cockpit --># Cockpit (https://apexyard.ai/cockpit)<!-- /feature:cockpit -->
 
-<!-- feature:build cockpit -->Cockpit is a preview of the desktop app for Build. It is not a fourth product. [Preview]<!-- /feature:build cockpit -->
+<!-- feature:cockpit -->Cockpit is a preview of the desktop app for Build. It is not a fourth product. [Preview]<!-- /feature:cockpit -->
 
 <!-- feature:gate -->- What works today: a setup panel, governed runs that stop at each gate, a run view, a needs-you panel, and an ORBIT planning view.<!-- /feature:gate -->
 - Known limit: sign-in with your ApexYard account is off. [Planned]
@@ -128,9 +128,9 @@ Checked on 10 November 2026 with the GitHub API: the App holds these four permis
 
 You can remove the App at any time.
 
-<!-- feature:build gate -->## How Gate connects to Build<!-- /feature:build gate -->
+<!-- feature:gate -->## How Gate connects to Build<!-- /feature:gate -->
 
-<!-- feature:build gate -->Gate checks the ticket, the decision record and the review that your agents make in Build.<!-- /feature:build gate -->
+<!-- feature:gate -->Gate checks the ticket, the decision record and the review that your agents make in Build.<!-- /feature:gate -->
 
 ---
 
@@ -160,7 +160,7 @@ You can remove the App at any time.
 
 You get a go or no-go, the gaps in each area and the top actions.
 
-<!-- feature:build readiness -->## How Readiness connects to Build<!-- /feature:build readiness -->
+<!-- feature:readiness -->## How Readiness connects to Build<!-- /feature:readiness -->
 
 <!-- feature:build -->Turn a finding into a rule. Your agents pick up the rule on their next ticket in Build.<!-- /feature:build -->
 
@@ -172,14 +172,17 @@ You get a go or no-go, the gaps in each area and the top actions.
 
 Keel is the name for your team's rules and context. Every agent reads it.
 
-<!-- feature:build gate readiness -->The rules that you write one time live in Keel. Build uses them to guide your agents. Gate uses them to check pull requests. Readiness uses them to measure repositories.<!-- /feature:build gate readiness -->
+The rules that you write one time live in Keel.
+<!-- feature:build -->Build uses them to guide your agents.<!-- /feature:build -->
+<!-- feature:gate -->Gate uses them to check pull requests.<!-- /feature:gate -->
+<!-- feature:readiness -->Readiness uses them to measure repositories.<!-- /feature:readiness -->
 
 ---
 
 <!-- feature:pricing -->
 <!-- feature:pricing --># Pricing (https://apexyard.ai/pricing)<!-- /feature:pricing -->
 
-<!-- feature:build gate readiness -->Each product has its own plans: Build, Gate and Readiness. A fourth section lists assessments by people.<!-- /feature:build gate readiness -->
+<!-- feature:gate readiness -->Each product has its own plans: Build, Gate and Readiness. A fourth section lists assessments by people.<!-- /feature:gate readiness -->
 <!-- feature:pricing -->Read the pricing page for the plans. This file gives no prices.<!-- /feature:pricing -->
 Plan limits are not set yet. We publish them when the plans open. [Planned for 1 Mar 2027]
 

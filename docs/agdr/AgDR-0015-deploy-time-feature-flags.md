@@ -32,7 +32,7 @@ Chosen: **remove disabled areas at deploy time**.
 
 - Elements carry `data-feature="<name>"`. Text and XML files use `<!-- feature:<name> -->` regions.
 - `.github/scripts/apply-features.sh` copies the site and removes disabled pages, elements and regions. An unknown name fails the deploy. An empty list turns every area off.
-- Staging reads `SITE_FEATURES` from the `staging` environment. Live reads the repository variable `SITE_FEATURES_PRODUCTION`.
+- V2 staging reads `SITE_FEATURES` from the `staging` environment. The main-branch staging rehearsal and live jobs both read repository `SITE_FEATURES_PRODUCTION`, with no environment.
 - The staging deploy runs the private-terms check on the filtered output. The live deploy reads no secret, as before.
 
 ## Consequences
@@ -43,3 +43,17 @@ Chosen: **remove disabled areas at deploy time**.
 ## Artifacts
 
 - Ticket: #200
+
+The v2 staging deploy reads `SITE_FEATURES` from the `staging` environment.
+The main-branch staging job in `deploy-aws.yml` has no environment and reads
+repository `SITE_FEATURES_PRODUCTION`, mirroring live. Set both variables BEFORE
+this PR merges, because merging into `staging` immediately starts its deploy.
+Preview builds read repository `SITE_FEATURES`, falling back to all five; they
+cannot read the staging environment variable.
+
+ANY tags are for containers with individually tagged children. Split prose by
+area; never use ANY to retain a sentence naming disabled products. The filtered
+tree excludes source-only `docs/`, `docs-site/`, `handbooks/`, OG templates and
+repository README/AGENTS files. The build-only text scan has no word allowlist.
+Bare/empty feature attributes, tagged non-void self-closing HTML and malformed
+feature region names fail the filter.

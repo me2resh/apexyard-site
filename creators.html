@@ -115,7 +115,7 @@
           <dl class="kit__facts">
             <div><dt>What it is</dt><dd>ApexYard gives your agents a team's process, then checks every pull request against it.</dd></div>
             <div><dt>Keel</dt><dd>Your team's rules and context, read by every agent.</dd></div>
-            <div><dt>Three products</dt><dd><a data-feature="build" href="/build">Build</a> guides the agent. <a data-feature="gate" href="/gate">Gate</a> checks each pull request. <a data-feature="readiness" href="/readiness">Readiness</a> measures a whole repository.</dd></div>
+            <div><dt>Products</dt><dd><span data-feature="build"><a data-feature="build" href="/build">Build</a> guides the agent.</span> <span data-feature="gate"><a data-feature="gate" href="/gate">Gate</a> checks each pull request.</span> <span data-feature="readiness"><a data-feature="readiness" href="/readiness">Readiness</a> measures a whole repository.</span></dd></div>
             <div><dt>Works with</dt><dd>Claude Code, Codex, Cursor, OpenCode, Pi and omp.</dd></div>
             <div><dt>Skills</dt><dd>69 slash commands. See the <a href="/skills">skills page</a>.</dd></div>
             <div><dt>Licence</dt><dd>The framework is open source under the MIT licence.</dd></div>
@@ -153,7 +153,7 @@
           </div>
         </section>
 
-        <section class="kit__row" aria-labelledby="kit-shot">
+        <section data-feature="gate" class="kit__row" aria-labelledby="kit-shot">
           <h3 class="kit__name" id="kit-shot">Product screenshot</h3>
           <figure class="kit__shot">
             <img src="/img/check-pr9.webp" width="2800" height="1130" loading="lazy" alt="The ApexYard check on a GitHub pull request. It lists a linked ticket as passed, a decision record as failed with a warning, and a review as pending, each with the next step.">
@@ -164,7 +164,7 @@
         <section class="kit__row kit__row--diagram one-rule" aria-labelledby="kit-diagram">
           <h3 class="kit__name" id="kit-diagram">The rule diagram</h3>
           <div class="kit__diagram">
-            <p class="kit__note" data-feature="build gate readiness">Keel holds the rule. Build guides your agents with it. The Gate checks each pull request against it. Readiness measures the whole repository. A miss comes back as a new rule.</p>
+            <p class="kit__note" >Keel holds the rule. <span data-feature="build">Build guides your agents with it.</span> <span data-feature="gate">Gate checks each pull request against it.</span> <span data-feature="readiness">Readiness measures the whole repository.</span> A miss comes back as a new rule.</p>
             <figure class="keel" data-keel aria-labelledby="creators-keel-cap">
               <div class="keel__board">
                 <svg class="keel__svg" viewBox="0 0 400 320" aria-hidden="true" focusable="false">
@@ -174,7 +174,7 @@
                     </marker>
                   </defs>
                   <path class="keel__link" data-path="feed-build" d="M 155 145 L 100 76"/>
-                  <path class="keel__link" data-path="feed-gate" d="M 245 145 L 300 76"/>
+                  <path data-feature="gate" class="keel__link" data-path="feed-gate" d="M 245 145 L 300 76"/>
                   <path class="keel__link" data-path="measure" d="M 200 195 L 200 250"/>
                   <path class="keel__flow" data-path="change" d="M 134 52 L 266 52" marker-end="url(#creators-keel-arrow)"/>
                   <path class="keel__flow keel__flow--miss" data-path="miss" d="M 321 76 C 355 130, 300 195, 240 170" marker-end="url(#creators-keel-arrow)"/>
@@ -208,7 +208,7 @@
                 <li class="keel__step" data-step="miss"><p class="keel__name">A miss becomes a rule</p><p class="keel__text">When a person finds a miss in review, /codify-rule turns the comment into a draft rule. You approve it before it is saved.</p></li>
               </ol>
               <p class="keel__tools"><button type="button" class="keel__pause" aria-pressed="false" hidden>Pause animation</button></p>
-              <figcaption class="visually-hidden" id="creators-keel-cap">Keel is in the centre, with Build, Gate and Readiness around it. A change goes from Build to the Gate. The Gate stops it. The miss becomes a new rule in Keel. The next change passes the Gate. Readiness measures each repository against the same rules.</figcaption>
+              <figcaption class="visually-hidden" id="creators-keel-cap">Keel holds the rules. <span data-feature="build">Build guides your agents.</span> <span data-feature="gate">Gate checks pull requests.</span> <span data-feature="readiness">Readiness measures repositories.</span></figcaption>
             </figure>
           </div>
         </section>

@@ -3,7 +3,7 @@
 > Your agents write the code. Your process decides what merges.
 > ApexYard gives your agents a team's process. Then it checks every pull request against that process.
 
-ApexYard has three products and a shared layer.
+ApexYard gives your agents a shared set of rules.
 
 <!-- feature:build -->- Build is the open-source framework. It runs on your machine.<!-- /feature:build -->
 <!-- feature:gate -->- Gate checks each pull request against your process.<!-- /feature:gate -->
@@ -12,7 +12,7 @@ ApexYard has three products and a shared layer.
 
 ## Pages
 
-<!-- feature:build gate readiness -->- [Home](https://apexyard.ai/): what ApexYard does and how one rule moves through Build, Gate and Readiness<!-- /feature:build gate readiness -->
+- [Home](https://apexyard.ai/): what ApexYard does and how your agents use your rules
 <!-- feature:build -->- [Build](https://apexyard.ai/build): the open-source framework for your agents<!-- /feature:build -->
 <!-- feature:gate -->- [Gate](https://apexyard.ai/gate): the check on each pull request, and what the GitHub App can see<!-- /feature:gate -->
 <!-- feature:readiness -->- [Readiness](https://apexyard.ai/readiness): the audit of each repository<!-- /feature:readiness -->

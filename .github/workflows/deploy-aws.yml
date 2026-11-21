@@ -44,7 +44,7 @@ jobs:
 
       - name: Apply feature flags
         env:
-          SITE_FEATURES: ${{ vars.SITE_FEATURES }}
+          SITE_FEATURES: ${{ vars.SITE_FEATURES_PRODUCTION }}
         run: .github/scripts/apply-features.sh . "$RUNNER_TEMP/published" "$SITE_FEATURES"
 
       - name: Configure AWS credentials (OIDC)
