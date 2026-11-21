@@ -37,10 +37,11 @@ const ENABLED = new Set(
     : FEATURE_NAMES,
 );
 for (const f of ENABLED) if (!FEATURE_NAMES.includes(f)) { console.error(`sync-content: unknown feature name: ${f}`); process.exit(1); }
-const groupOn = (group) => !group.feature || ENABLED.has(group.feature);
+const anyOn = (names) => names.split(/\s+/).some((f) => ENABLED.has(f));
+const groupOn = (group) => !group.feature || anyOn(group.feature);
 // A page with a `coming` marker needs `upcoming` as well as its own feature,
 // so a new Coming page is hidden by default.
-const pageOn = (page) => (!page.feature || ENABLED.has(page.feature)) && (!page.coming || ENABLED.has('upcoming'));
+const pageOn = (page) => (!page.feature || anyOn(page.feature)) && (!page.featureOff || !anyOn(page.featureOff)) && (!page.coming || ENABLED.has('upcoming'));
 
 // ---------------------------------------------------------------- source
 
@@ -362,7 +363,7 @@ function mapPage(page) {
   }
   const parts = page.parts.map(buildPart);
   const lines = [];
-  for (const c of page.callouts || []) lines.push(callout(c.type, fillTag(c.text)), '');
+  for (const c of (page.callouts || []).filter((x) => !x.feature || anyOn(x.feature))) lines.push(callout(c.type, fillTag(c.text)), '');
   for (const p of parts) lines.push(...p.lines, '');
   out.sources = [...new Set(parts.flatMap((p) => p.sources || (p.source ? [p.source] : [])))];
   out.body = convertAlerts(lines).join('\n');
@@ -570,7 +571,7 @@ function dropOffLinks(body, removedGroups, removedSlugs) {
     const path = t.replace(/^https:\/\/(?:staging\.)?apexyard\.ai/, '').split(/[#?]/)[0].replace(/\.(html|md)$/, '');
     if (removedSlugs.some((s) => path === `${BASE}/${s}`)) return true;
     if (removedGroups.some((g) => path === `${BASE}/${g}` || path === `${BASE}#${g}`)) return true;
-    return offSite.some((f) => path === `/${f}`) || (!ENABLED.has('gate') && path === '/waitlist');
+    return offSite.some((f) => path === (f === 'buildpage' ? '/build' : `/${f}`)) || (!ENABLED.has('gate') && path === '/waitlist');
   };
   const link = /\[([^\]]*)\]\(\s*<?([^)\s>]+)>?(?:\s+"[^"]*")?\s*\)/g;
   const lines = body.split('\n');

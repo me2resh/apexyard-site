@@ -114,14 +114,13 @@ diff /tmp/tag-skills.txt /tmp/site-skills.txt && echo "names match"
 
 ### The proof block
 
-The `03 / PROOF` section of `index.html` has two lists of figures. Each figure has a checked-in source (#70). `index.md.gen` gives the same figures.
+The `03 / PROOF` section of `index.html` has one list of figures. Each figure has a checked-in source (#70). `index.md.gen` gives the same figures.
 
 | List | Figures | Source | Check |
 |---|---|---|---|
 | Framework counts | roles, skills, agents, hooks | `derive-counts.sh`, from a framework release tag | `verify-counts.sh` |
-| From ApexYard building itself | merged pull requests with an approving review; decision records; merged pull requests with a comment that says CHANGES REQUESTED | `.github/evidence/proof-use.tsv` | `test-claims.sh` |
 
-The evidence file gives the count date, the cutoff, the `dev` commit and one recipe for each figure. Each recipe is pinned to the cutoff or to that commit, so it returns the same value when you run it again. The page links go to the same lists without the cutoff. A visitor sees the lists grow.
+The home page holds no figures from ApexYard building itself (#204).
 
 `test-claims.sh` fails in these conditions:
 

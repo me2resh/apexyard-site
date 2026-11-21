@@ -4,7 +4,7 @@ set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
-for flags in 'build,gate,readiness,pricing,cockpit' '' build gate readiness pricing cockpit; do
+for flags in 'build,buildpage,gate,readiness,pricing,cockpit' '' build gate readiness pricing cockpit; do
   out="$tmp/out-${flags:-none}"
   "$root/.github/scripts/apply-features.sh" "$root" "$out" "$flags"
   python3 -I - "$out" "$flags" "$root" <<'PY'
@@ -12,8 +12,10 @@ from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit
 import re, sys
-root=Path(sys.argv[1]); enabled=set(sys.argv[2].split(',')); features=set('build gate readiness pricing cockpit'.split())
-removed=features-enabled
+root=Path(sys.argv[1]); enabled=set(sys.argv[2].split(',')); features=set('build buildpage gate readiness pricing cockpit'.split())
+# #204: buildpage owns the /build page. Product names follow the other flags.
+removed=features-enabled-{'buildpage'}
+removed_links=removed|({'build'} if 'buildpage' not in enabled else set())
 # Regression: Markdown, autolinks and href delimiters all end the product path.
 def link_pattern(feature):
     return r'(?:https://(?:staging\.)?apexyard\.ai)?/'+feature+r'(?:\.html|\.md)?(?![a-z0-9-])'
@@ -25,7 +27,9 @@ if 'gate' not in enabled:
 if not {'gate','readiness'} <= enabled:
     assert not (root/'og/architecture.png').exists()
 for f in features:
-    assert (root/(f+'.html')).exists() == (f in enabled), f
+    if f == 'build': continue
+    name = 'build' if f == 'buildpage' else f
+    assert (root/(name+'.html')).exists() == (f in enabled), f
 class Scan(HTMLParser):
     def handle_starttag(self,tag,attrs):
         a=dict(attrs)
@@ -35,7 +39,7 @@ class Scan(HTMLParser):
             url=urlsplit(a.get(key,''))
             if url.netloc and url.netloc not in ('apexyard.ai','staging.apexyard.ai'): continue
             target=url.path.strip('/').removesuffix('.html').removesuffix('.md')
-            assert target not in removed, (page,target)
+            assert target not in removed_links, (page,target)
             assert target!='waitlist' or 'gate' in enabled, page
 for page in root.rglob('*.html'):
     if any(p.startswith('.') for p in page.relative_to(root).parts) or 'docs-site' in page.parts or 'og' in page.parts or 'docs' in page.parts: continue
@@ -66,10 +70,10 @@ for page in root.rglob('*'):
     # Internal docs source is excluded by site sync; built docs are tested below.
     if page.relative_to(root).parts[0] == 'docs': continue
     if page.suffix not in {'.html','.md','.txt','.xml','.json'} and not page.name.endswith('.md.gen'): continue
-    for f in removed:
+    for f in removed_links:
         assert not re.search(r'(?<![a-z0-9])'+f+r'(?![a-z0-9])',page.relative_to(root).as_posix(),re.I), (page,f,'disabled filename')
     text=page.read_text()
-    for f in removed:
+    for f in removed_links:
         assert not re.search(link_pattern(f),text,re.I), (page,f,'disabled link')
     # Names are visible/script text and metadata, not HTML attribute identifiers
     # such as data-feature or data-path. Links are checked above on raw text.
@@ -148,7 +152,7 @@ mkdir -p "$tmp/docs-fixture/docs/pagefind"
 printf '%s' '<body>Docs</body>' > "$tmp/docs-fixture/docs.html"
 printf '%s' 'search index' > "$tmp/docs-fixture/docs/pagefind/pagefind.js"
 printf '%s' '<body><p data-feature="gate">Hosted check</p><p>Docs</p></body>' > "$tmp/docs-fixture/docs/guide.html"
-for flags in build,gate,readiness,pricing,cockpit build; do
+for flags in build,buildpage,gate,readiness,pricing,cockpit build; do
   out="$tmp/docs-$flags"
   "$root/.github/scripts/apply-features.sh" "$tmp/docs-fixture" "$out" "$flags"
   cmp "$tmp/docs-fixture/docs/pagefind/pagefind.js" "$out/docs/pagefind/pagefind.js"

@@ -55,7 +55,7 @@ assert not failed, 'all-on content changed: '+', '.join(failed)
 print(f'PASS all-on visible text: {count} published text files')
 PY
 }
-"$src/.github/scripts/apply-features.sh" "$src" "$tmp/out" build,gate,readiness,pricing,cockpit
+"$src/.github/scripts/apply-features.sh" "$src" "$tmp/out" build,buildpage,gate,readiness,pricing,cockpit
 check_content "$src" "$tmp/out"
 
 # A broken all-on filter that drops visible source text must be detected.
@@ -65,7 +65,7 @@ cat >> "$tmp/fixture/.github/scripts/apply-features.sh" <<'SH'
 printf '%s\n' '<p>Kept</p>' > "$2/index.html"
 SH
 printf '%s\n' '<p>Kept</p><p data-feature="build">Must survive</p>' > "$tmp/fixture/index.html"
-"$tmp/fixture/.github/scripts/apply-features.sh" "$tmp/fixture" "$tmp/broken-out" build,gate,readiness,pricing,cockpit
+"$tmp/fixture/.github/scripts/apply-features.sh" "$tmp/fixture" "$tmp/broken-out" build,buildpage,gate,readiness,pricing,cockpit
 if check_content "$tmp/fixture" "$tmp/broken-out" > "$tmp/negative.log" 2>&1; then
   echo 'FAIL negative self-test: visible text loss was accepted' >&2
   exit 1

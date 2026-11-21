@@ -154,8 +154,9 @@ no_sample() {
 }
 assert "index.html holds no sample metrics" no_sample "$root/index.html"
 assert "index.md.gen holds no sample metrics" no_sample "$root/index.md.gen"
-assert "index.html holds data-staging-only hidden" \
-  grep -Fq 'data-staging-only hidden' "$root/index.html"
+# #204: the customer story slots are public and empty, each marked Preview. No quote is invented.
+slots_preview() { [ "$(grep -c 'class="quote-slot"' "$root/index.html")" -ge 3 ] && ! grep -Fq 'blockquote' "$root/index.html"; }
+assert "index.html holds several empty customer story slots marked Preview" slots_preview
 
 # --- 6. Review page ---
 assert "previews.html exists" test -f "$root/previews.html"
@@ -220,7 +221,7 @@ arch_text_clean() {
 import re, sys
 text = open(sys.argv[1], encoding="utf-8").read()
 m = re.search(
-    r"slug:\s*'quickstart/architecture',[\s\S]*?text:\s*\[([\s\S]*?)\],",
+    r"slug:\s*'quickstart/architecture',\s*title: 'Architecture',\s*description: 'What runs[\s\S]*?text:\s*\[([\s\S]*?)\],",
     text,
 )
 if not m:

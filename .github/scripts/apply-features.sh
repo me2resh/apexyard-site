@@ -12,7 +12,7 @@ import re
 import shutil
 import sys
 
-KNOWN = set('build gate readiness pricing cockpit upcoming'.split())
+KNOWN = set('build buildpage gate readiness pricing cockpit upcoming'.split())
 def fail(message):
     raise ValueError(message)
 def names(value):

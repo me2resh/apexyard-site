@@ -112,14 +112,15 @@ assert "large Hadi never carries text, a tick or a state" sprite_is_plain
 for k in 0 1 2 3 4; do
   assert "large Hadi has a stop $k beside a crew member" grep -Eq -- "--lh-s$k: [0-9.]+;" "$css"
 done
-hop_block() { sed -n '/^\.is-playing \.hero-crew__hadi {/,/^}/p' "$css"; }
-hops_use_timeline() {
-  local v
-  for v in r0 r1 r2 r3 r4 human; do
-    hop_block | grep -Fq "var(--gc-$v)" || { echo "    no var(--gc-$v) in the large Hadi hops"; return 1; }
-  done
-}
-assert "large Hadi hops use the card timeline, not their own clock" hops_use_timeline
+# #204: large Hadi never walks the crew. He enters last, from the right edge, and parks at home.
+no_walk() { ! grep -Eq '^[[:space:]]+gc-lh-[0-5] ' "$css"; }
+assert "large Hadi has no walk animation: never from the left, never in the middle of the crew" no_walk
+hidden_until_finale() { grep -Eq '^\.has-finale\.is-playing \.hero-crew__hadi \{ opacity: 0; \}' "$css"; }
+assert "large Hadi is hidden until the finale" hidden_until_finale
+from_right() { sed -n '/@keyframes gc-finale-roll/,/^}/p' "$css" | grep -Eq '0% \{ opacity: 0; transform: translateX\(2[0-9]+%\)'; }
+assert "the finale enters from the right edge" from_right
+home_is_right() { sed -n '/^\.hero-crew__hadi {/,/^}/p' "$css" | grep -Fq -- '--lh-home: 88.5'; }
+assert "large Hadi parks at the bottom right, next to the Founder" home_is_right
 one_clock() { [ "$(grep -c -- '--gc-t0: 1s;' "$css")" -eq 1 ] && grep -Fq '.is-playing[data-run="blocked"] {' "$css"; }
 assert "the timeline variables are set in one place for both examples" one_clock
 stack_block() { sed -n '/^@media (max-width: 899px)/,/^}/p' "$css"; }
@@ -227,7 +228,11 @@ assert "every link in the gate card tells screen readers it opens in a new tab" 
 assert "the finale starts on the animationend of the last story element, not a timer" bash -c "grep -q \"addEventListener('animationend'\" '$root/crew-hero.js' && grep -q \"'gc-merged'\" '$root/crew-hero.js' && ! grep -Eq 'setTimeout|setInterval' '$root/crew-hero.js'"
 assert "the finale is skipped when the visitor prefers reduced motion" grep -q "prefers-reduced-motion: reduce" "$root/crew-hero.js"
 assert "the finale animates only transform and opacity" bash -c "! sed -n '/@keyframes gc-finale-roll/,/^}/p;/@keyframes gc-finale-glow/p' '$root/site.css' | grep -Eq '(left|right|top|bottom|width|height|margin|filter):'"
-assert "the finale runs once: it ends with finale-done and never repeats" bash -c "grep -q 'finale-done' '$root/crew-hero.js' && ! grep -Eq 'infinite' <(sed -n '/THE FINALE (#190)/,/The story waits until/p' '$root/site.css')"
+assert "the finale never loops and leaves no finale-done state" bash -c "! grep -q 'finale-done' '$root/crew-hero.js' && ! grep -Eq 'infinite' <(sed -n '/THE FINALE (#190)/,/The story waits until/p' '$root/site.css')"
+card_ends_at_merged() { ! grep -Fq 'visibility: hidden' <(grep -F 'html.js .gate-card > .gc-run' "$css"); }
+assert "the gate card holds only the active run, so nothing sits below Merged (#204)" card_ends_at_merged
+no_hint_in_hero() { grep -Fq '<p class="hero__hint" data-feature="pricing">' "$home"; }
+assert "the free-checks hint sits behind a paid flag (#204)" no_hint_in_hero
 assert "the reduced-motion block shows Hadi at rest" grep -q "has-finale .hero-crew__hadi, .has-finale .hero-crew__floor i.idle { opacity: 1 !important" "$root/site.css"
 
 echo

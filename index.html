@@ -85,7 +85,7 @@
 <header class="hdr">
   <div class="hdr__bar">
     <a href="/" class="brand" aria-label="ApexYard home"><img class="brand__mark" src="/brand/apexyard-mark.svg" width="36" height="36" alt=""><span class="brand__word">ApexYard</span></a>
-    <nav class="nav" id="site-nav" aria-label="Primary"><a data-feature="build" href="/build">Build</a><a data-feature="gate" href="/gate">Gate</a><a data-feature="readiness" href="/readiness">Readiness</a><a data-feature="pricing" href="/pricing">Pricing</a><a href="/docs">Docs</a><a data-feature="gate" href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
+    <nav class="nav" id="site-nav" aria-label="Primary"><a data-feature="buildpage" href="/build">Build</a><a data-feature="gate" href="/gate">Gate</a><a data-feature="readiness" href="/readiness">Readiness</a><a data-feature="pricing" href="/pricing">Pricing</a><a href="/docs">Docs</a><a data-feature="gate" href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
     <div class="hdr__keys">
       <a class="key key--primary key--sm mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -103,7 +103,7 @@
         <p class="hero__sub hero-crew__lede">Use AI coding agents with a controlled engineering process.</p>
         <p class="hero-crew__record">Each merge needs a passing check and the approval of a person your team names.</p>
         <div class="hero__actions">
-          <a data-feature="build" class="btn btn--primary" href="#install">Install Build</a>
+          <a data-feature="build" class="btn btn--primary" href="#install">Install ApexYard</a>
           <a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo">Book a demo</a>
           <a data-feature="gate" class="btn btn--quiet" href="/waitlist?src=home-hero" data-signin="https://app.apexyard.ai/signin?src=home-hero" data-waitlist="/waitlist?src=home-hero">Join the waitlist</a>
         </div>
@@ -260,7 +260,7 @@
       </section>
     </div>
     <div class="wrap hero-crew__fine">
-      <p class="hero__hint"><!--{{PLAN_HINT}}--><!--/{{PLAN_HINT}}--></p>
+      <p class="hero__hint" data-feature="pricing"><!--{{PLAN_HINT}}--><!--/{{PLAN_HINT}}--></p>
       <p class="hero__works">Agent agnostic. Works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.</p>
     </div>
   </section>
@@ -315,7 +315,7 @@
         <p class="visually-hidden" aria-live="polite" data-kf-live></p>
 <!-- feature-all:build gate readiness -->        <figcaption class="visually-hidden" id="home-keel-cap">Build, the Gate and Readiness sit in one row, joined by arrows. Keel sits below the Gate. A change goes from Build to the Gate. The Gate stops it. Review feedback goes down to Keel. The miss becomes a new rule in Keel after human approval. Approved rules go back to Build for the next change. The next change passes the Gate. Readiness measures each repository against the same rules.</figcaption><!-- /feature-all:build gate readiness -->
       </figure>
-      <p class="one-rule__links" data-feature="build gate readiness"><a data-feature="build" href="/build">About Build</a> <a data-feature="gate" href="/gate">About Gate</a> <a data-feature="readiness" href="/readiness">About Readiness</a></p>
+      <p class="one-rule__links" data-feature="build gate readiness"><a data-feature="buildpage" href="/build">About Build</a> <a data-feature="gate" href="/gate">About Gate</a> <a data-feature="readiness" href="/readiness">About Readiness</a></p>
       <p class="one-rule__base">Underneath: Keel, one evidence store and one dashboard.</p>
     </div>
   </section>
@@ -330,21 +330,15 @@
         <li><strong class="proof__figure">23</strong> agents</li>
         <li><strong class="proof__figure">66</strong> hooks</li>
       </ul>
-      <h3 class="proof__sub" id="proof-use-title">From ApexYard building itself</h3>
-      <ul class="proof__metrics proof__metrics--use" aria-labelledby="proof-use-title">
-        <li><a class="proof__stat" href="https://github.com/me2resh/apexyard/pulls?q=is%3Apr+is%3Amerged+review%3Aapproved" target="_blank" rel="noopener"><strong class="proof__figure">699</strong> merged pull requests with an approving review</a></li>
-        <li><a class="proof__stat" href="https://github.com/me2resh/apexyard/tree/dev/docs/agdr" target="_blank" rel="noopener"><strong class="proof__figure">289</strong> decision records, one file each</a></li>
-        <li><a class="proof__stat" href="https://github.com/me2resh/apexyard/pulls?q=is%3Apr+is%3Amerged+%22CHANGES+REQUESTED%22+in%3Acomments" target="_blank" rel="noopener"><strong class="proof__figure">334</strong> merged pull requests with a comment that says CHANGES REQUESTED</a></li>
-      </ul>
-      <p class="proof__source">Counted on 14 November 2026 in the public repository me2resh/apexyard. Each number links to the list that it counts. The lists keep growing.</p>
       <div class="proof__repo">
         <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener"><img src="https://img.shields.io/github/stars/me2resh/apexyard?style=flat-square&amp;logo=github&amp;label=stars&amp;color=2F6DF6" alt="GitHub stars, live count" width="104" height="20" loading="lazy"></a>
         <a href="https://github.com/me2resh/apexyard" target="_blank" rel="noopener"><img src="https://img.shields.io/github/forks/me2resh/apexyard?style=flat-square&amp;logo=github&amp;label=forks&amp;color=2F6DF6" alt="GitHub forks, live count" width="102" height="20" loading="lazy"></a>
       </div>
-      <figure class="quote-slot" data-staging-only hidden aria-label="Customer story slot">
-        <div class="quote-slot__body" aria-hidden="true"><span></span><span></span><span></span></div>
-        <figcaption class="quote-slot__note"><span class="mock__tag">Preview</span> A slot for a customer story. It shows no quote until a customer approves one.</figcaption>
-      </figure>
+      <div class="quotes" role="group" aria-label="Customer stories">
+        <figure class="quote-slot"><div class="quote-slot__body" aria-hidden="true"><span></span><span></span><span></span></div><figcaption class="quote-slot__note"><span class="mock__tag">Preview</span> A slot for a customer story. It shows no quote until a customer approves one.</figcaption></figure>
+        <figure class="quote-slot"><div class="quote-slot__body" aria-hidden="true"><span></span><span></span><span></span></div><figcaption class="quote-slot__note"><span class="mock__tag">Preview</span> A slot for a customer story. It shows no quote until a customer approves one.</figcaption></figure>
+        <figure class="quote-slot"><div class="quote-slot__body" aria-hidden="true"><span></span><span></span><span></span></div><figcaption class="quote-slot__note"><span class="mock__tag">Preview</span> A slot for a customer story. It shows no quote until a customer approves one.</figcaption></figure>
+      </div>
       <p data-feature="gate" class="proof__access">Our servers never fetch your code. The GitHub App sees pull request titles, descriptions and changed file names, not the files. <a data-feature="gate" href="/gate#app-access">See what the GitHub App can see</a>.</p>
     </div>
   </section>
@@ -359,9 +353,9 @@
     </div>
     <div class="wrap oss" id="install">
       <div class="oss__text">
-        <h2 class="section__title" id="oss-title" data-feature="build"><span class="stn" aria-hidden="true"></span>Install Build</h2>
-        <p class="section__lede">Open source. MIT. Always free.</p>
-        <p class="oss__paid">The hosted parts are paid. Every rule, hook and review agent is a plain file you can read, change or remove.</p>
+        <h2 class="section__title" id="oss-title" data-feature="build"><span class="stn" aria-hidden="true"></span>Install ApexYard</h2>
+        <p class="section__lede">Open source. MIT. Free to use.</p>
+        <p class="oss__paid" data-feature="gate readiness pricing">The hosted parts are paid. Every rule, hook and review agent is a plain file you can read, change or remove.</p>
       </div>
       <div id="quickstart" class="install">
         <div class="tabs" data-tabs>
@@ -405,7 +399,7 @@
 <footer class="site-footer ftr t-dark">
   <div class="wrap site-footer__inner ftr__in">
     <nav class="ftr__nav" aria-label="Footer">
-      <a data-feature="build" href="/build">Build</a>
+      <a data-feature="buildpage" href="/build">Build</a>
       <a data-feature="gate" href="/gate">Gate</a>
       <a data-feature="readiness" href="/readiness">Readiness</a>
       <a data-feature="pricing" href="/pricing">Pricing</a>

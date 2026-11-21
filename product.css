@@ -236,9 +236,6 @@ code, pre { font-family: var(--mono); font-weight: 500; font-size: 0.88em; }
   font: 800 clamp(2.6rem, 6vw, 4rem)/1 var(--display); letter-spacing: -0.02em;
 }
 @media (min-width: 820px) { .proof__metrics { grid-template-columns: repeat(4, 1fr); gap: 3rem; } }
-.proof__sub { margin-top: 2.5rem; margin-bottom: 1.25rem; font: 600 1.0625rem/1.3 var(--text); color: var(--ink-2); }
-.proof__metrics--use { grid-template-columns: 1fr; gap: 1.5rem; }
-@media (min-width: 820px) { .proof__metrics--use { grid-template-columns: repeat(3, 1fr); gap: 3rem; } }
 .proof__stat { display: block; color: var(--ink-2); text-decoration: none; min-height: 44px; }
 .proof__stat:hover { color: var(--ink); }
 .proof__stat:hover .proof__figure { text-decoration: underline; text-underline-offset: 0.12em; }
@@ -249,6 +246,10 @@ code, pre { font-family: var(--mono); font-weight: 500; font-size: 0.88em; }
 /* #178: the live badges load late. A fixed height keeps the section height the
    same before and after they load, so the track below does not move. */
 .proof__repo img { height: 20px; width: auto; }
+.proof__repo { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; padding: 0.25rem 0; }
+.quotes { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1.5rem; }
+@media (min-width: 820px) { .quotes { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; } }
+.quotes .quote-slot { margin: 0; }
 .quote-slot {
   margin: 1.5rem 0 0; padding: 1.25rem;
   border: 1px solid var(--line); border-radius: var(--radius);

@@ -5,11 +5,11 @@
     <lastmod>2026-10-22</lastmod>
     <priority>1.0</priority>
   </url>
-  <!-- feature:build --><url>
+  <!-- feature:buildpage --><url>
     <loc>https://apexyard.ai/build</loc>
     <lastmod>2026-10-25</lastmod>
     <priority>0.9</priority>
-  </url><!-- /feature:build -->
+  </url><!-- /feature:buildpage -->
   <!-- feature:gate --><url>
     <loc>https://apexyard.ai/gate</loc>
     <lastmod>2026-10-25</lastmod>

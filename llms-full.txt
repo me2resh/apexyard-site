@@ -16,14 +16,14 @@ ApexYard gives your agents a team's process. Then it checks every pull request a
 <!-- /feature-all:gate readiness -->
 <!-- feature-off:gate readiness --><!-- feature:build -->Build guides your agents with shared rules.<!-- /feature:build -->
 <!-- /feature-off:gate readiness -->
-Keel is the shared layer under them.
+<!-- feature:gate readiness pricing -->Keel is the shared layer under them.<!-- /feature:gate readiness pricing -->
 
 | Name | What it does |
 |------|--------------|
 <!-- feature:build -->| Build | The open-source framework. It guides your agents. |<!-- /feature:build -->
 <!-- feature:gate -->| Gate | Checks each pull request against your process. |<!-- /feature:gate -->
 <!-- feature:readiness -->| Readiness | Measures each repository. |<!-- /feature:readiness -->
-| Keel | Your team's rules and context, read by every agent. |
+<!-- feature:gate readiness pricing -->| Keel | Your team's rules and context, read by every agent. |<!-- /feature:gate readiness pricing -->
 
 ## One process, three places
 
@@ -47,7 +47,7 @@ Example: the rule says "Every API endpoint checks who is calling." Your team add
 ---
 
 <!-- feature:build -->
-<!-- feature:build --># Build (https://apexyard.ai/build)<!-- /feature:build -->
+<!-- feature:buildpage --># Build (https://apexyard.ai/build)<!-- /feature:buildpage -->
 
 <!-- feature:build -->Build is the open-source framework. Your agents plan before they code. Every change meets a reviewer before it leaves your machine.<!-- /feature:build -->
 
@@ -171,7 +171,7 @@ You get a go or no-go, the gaps in each area and the top actions.
 
 <!-- /feature:readiness -->
 
-# Keel
+<!-- feature:gate readiness pricing --># Keel
 
 Keel is the name for your team's rules and context. Every agent reads it.
 
@@ -181,7 +181,7 @@ Keel is the name for your team's rules and context. Every agent reads it.
 <!-- feature:build -->Build uses them to guide your agents.<!-- /feature:build -->
 <!-- feature:gate -->Gate uses them to check pull requests.<!-- /feature:gate -->
 <!-- feature:readiness -->Readiness uses them to measure repositories.<!-- /feature:readiness -->
-<!-- /feature-off:gate readiness -->
+<!-- /feature-off:gate readiness --><!-- /feature:gate readiness pricing -->
 
 ---
 
