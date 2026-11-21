@@ -33,7 +33,7 @@ Chosen: **remove disabled areas at deploy time**.
 - Elements carry `data-feature="<name>"`. Text and XML files use `<!-- feature:<name> -->` regions.
 - `.github/scripts/apply-features.sh` copies the site and removes disabled pages, elements and regions. An unknown name fails the deploy. An empty list turns every area off.
 - Staging reads `SITE_FEATURES` from the `staging` environment. Live reads the repository variable `SITE_FEATURES_PRODUCTION`.
-- The private-terms check runs on the filtered output.
+- The staging deploy runs the private-terms check on the filtered output. The live deploy reads no secret, as before.
 
 ## Consequences
 
