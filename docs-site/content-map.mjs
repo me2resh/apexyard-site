@@ -27,6 +27,12 @@ export const SOURCE = {
 // site file, not at a file in the framework repository (#159).
 export const SITE_PATHS = ['/reports/', '/cockpit'];
 
+// A group with a `feature` field is part of a paid area of the site. The
+// build leaves the group out when SITE_FEATURES does not list that feature
+// (#202). Docs of the free Build framework carry no feature.
+// `upcoming` holds every page that is marked Coming. A page can carry `feature` too.
+export const FEATURE_NAMES = ['build', 'gate', 'readiness', 'pricing', 'cockpit', 'upcoming'];
+
 // Plain titles for the generated rule pages (#160). The first heading of a
 // rule file reads as a slogan or holds markup. A rule that is not listed here
 // keeps the text of its first heading before the first dash.
@@ -409,6 +415,7 @@ const learn = [
       },
       {
         slug: 'your-rules/knowledge-base',
+        feature: 'upcoming',
         title: 'The knowledge base',
         description: 'Rule indexes that the framework makes from your handbooks. You can search them.',
         coming: {
@@ -524,6 +531,7 @@ const learn = [
   },
   {
     id: 'cockpit',
+    feature: 'cockpit',
     title: 'Cockpit (Preview)',
     icon: 'laptop',
     summary: 'The desktop app for Build. A preview: what works, the known limits and how to get it.',
@@ -566,6 +574,7 @@ const learn = [
   },
   {
     id: 'hosted-gate',
+    feature: 'gate',
     title: 'The hosted gate',
     icon: 'github',
     summary: 'Install the GitHub App. Read the check. Find the approval record for each merge.',
@@ -651,6 +660,7 @@ const learn = [
       },
       {
         slug: 'updating/drift-safe-updates',
+        feature: 'upcoming',
         title: 'Drift-safe updates',
         description: 'An ownership manifest that shows which files are framework files and which are your files.',
         coming: {
@@ -673,6 +683,7 @@ const learn = [
     pages: [
       {
         slug: 'how-to/reviewer-github-app',
+        feature: 'gate',
         title: 'Use a GitHub App for agent reviews',
         description: 'Post agent reviews as an app, not as your own account.',
         parts: [{ source: 'docs/how-to/reviewer-github-app.md' }],
@@ -716,6 +727,7 @@ const learn = [
   },
   {
     id: 'readiness',
+    feature: 'readiness',
     title: 'Readiness',
     icon: 'information',
     summary: 'Check that a project is ready for production. Fix the gaps first.',

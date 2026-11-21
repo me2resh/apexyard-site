@@ -18,7 +18,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import GithubSlugger from 'github-slugger';
-import { SOURCE, SECTIONS, EXCLUDED_PREFIXES, DENY_TERMS, DENY_ALLOW, SITE_PATHS, RULE_TITLES } from '../content-map.mjs';
+import { SOURCE, SECTIONS, EXCLUDED_PREFIXES, DENY_TERMS, DENY_ALLOW, SITE_PATHS, RULE_TITLES, FEATURE_NAMES } from '../content-map.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CACHE = path.join(ROOT, '.cache', `apexyard-${SOURCE.tag}`);
@@ -26,6 +26,21 @@ const OUT_CONTENT = path.join(ROOT, 'src', 'content', 'docs');
 const OUT_PUBLIC = path.join(ROOT, 'public');
 const OUT_GEN = path.join(ROOT, 'src', 'generated');
 const BASE = '/docs';
+
+// Feature flags (#202). SITE_FEATURES is the same comma list that the deploy
+// gives to apply-features.sh. When it is not set at all, every feature is on,
+// so a local build and the docs check cover every page. An empty value means
+// every paid feature is off, as it does for the main site.
+const ENABLED = new Set(
+  'SITE_FEATURES' in process.env
+    ? process.env.SITE_FEATURES.split(',').map((x) => x.trim()).filter(Boolean)
+    : FEATURE_NAMES,
+);
+for (const f of ENABLED) if (!FEATURE_NAMES.includes(f)) { console.error(`sync-content: unknown feature name: ${f}`); process.exit(1); }
+const groupOn = (group) => !group.feature || ENABLED.has(group.feature);
+// A page with a `coming` marker needs `upcoming` as well as its own feature,
+// so a new Coming page is hidden by default.
+const pageOn = (page) => (!page.feature || ENABLED.has(page.feature)) && (!page.coming || ENABLED.has('upcoming'));
 
 // ---------------------------------------------------------------- source
 
@@ -545,6 +560,32 @@ function rewriteLinks(page, bySource) {
     .join('\n');
 }
 
+// A page that is off leaves no link behind (#202). A table row or a list item
+// that holds such a link is removed. In running text the link keeps its words
+// and loses its target.
+function dropOffLinks(body, removedGroups, removedSlugs) {
+  const offSite = FEATURE_NAMES.filter((f) => f !== 'build' && !ENABLED.has(f));
+  if (!removedGroups.length && !offSite.length) return body;
+  const isOff = (t) => {
+    const path = t.replace(/^https:\/\/(?:staging\.)?apexyard\.ai/, '').split(/[#?]/)[0].replace(/\.(html|md)$/, '');
+    if (removedSlugs.some((s) => path === `${BASE}/${s}`)) return true;
+    if (removedGroups.some((g) => path === `${BASE}/${g}` || path === `${BASE}#${g}`)) return true;
+    return offSite.some((f) => path === `/${f}`) || (!ENABLED.has('gate') && path === '/waitlist');
+  };
+  const link = /\[([^\]]*)\]\(\s*<?([^)\s>]+)>?(?:\s+"[^"]*")?\s*\)/g;
+  const lines = body.split('\n');
+  const mask = fenceMask(lines);
+  const out = [];
+  lines.forEach((line, i) => {
+    if (mask[i]) return out.push(line);
+    const hits = [...line.matchAll(link)].filter((m) => isOff(m[2]));
+    if (!hits.length) return out.push(line);
+    if (/^\s*(\||[-*]\s|\d+\.\s)/.test(line)) return;
+    out.push(line.replace(link, (all, text, t) => (isOff(t) ? text : all)));
+  });
+  return out.join('\n');
+}
+
 // ---------------------------------------------------------------- write
 
 function yaml(obj) {
@@ -572,16 +613,24 @@ function main() {
   for (const s of SECTIONS) for (const g of s.groups) fs.rmSync(path.join(OUT_PUBLIC, g.id), { recursive: true, force: true });
 
   const all = [];
+  const removedSlugs = [];
+  const removedGroups = [];
   const nav = { source: SOURCE, sections: [] };
   for (const section of SECTIONS) {
     const navSection = { id: section.id, title: section.title, summary: section.summary, groups: [] };
     for (const group of section.groups) {
+      if (!groupOn(group) || (group.pages && group.pages.length && !group.pages.some(pageOn))) {
+        for (const pg of group.pages || []) removedSlugs.push(pg.slug);
+        removedGroups.push(group.id);
+        continue;
+      }
+      for (const pg of group.pages || []) if (!pageOn(pg)) removedSlugs.push(pg.slug);
       let pages;
       if (group.generate === 'skills') pages = generateSkills();
       else if (group.generate === 'rules') pages = generateRules();
       else if (group.generate === 'roles') pages = generateRoles();
       else if (group.generate === 'changelog') pages = generateChangelog(group);
-      else pages = group.pages.map((p) => (p.generate === 'hook-index' ? hookIndex(p) : mapPage(p)));
+      else pages = group.pages.filter(pageOn).map((p) => (p.generate === 'hook-index' ? hookIndex(p) : mapPage(p)));
 
       const kept = [];
       for (const p of pages) {
@@ -611,6 +660,7 @@ function main() {
 
   const bySource = buildLinkIndex(all);
   for (const p of all) rewriteLinks(p, bySource);
+  for (const p of all) p.body = dropOffLinks(p.body, removedGroups, removedSlugs);
 
   const llms = [`# ApexYard docs`, '', `> Generated from ${SOURCE.repo} at ${SOURCE.tag}. Each page has a Markdown copy at the same path with a .md suffix.`, ''];
   for (const s of nav.sections) {

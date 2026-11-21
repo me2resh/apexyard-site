@@ -7,7 +7,7 @@ trap 'rm -rf "$tmp"' EXIT
 for flags in 'build,gate,readiness,pricing,cockpit' '' build gate readiness pricing cockpit; do
   out="$tmp/out-${flags:-none}"
   "$root/.github/scripts/apply-features.sh" "$root" "$out" "$flags"
-  python3 -I - "$out" "$flags" <<'PY'
+  python3 -I - "$out" "$flags" "$root" <<'PY'
 from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit
@@ -40,6 +40,26 @@ class Scan(HTMLParser):
 for page in root.rglob('*.html'):
     if any(p.startswith('.') for p in page.relative_to(root).parts) or 'docs-site' in page.parts or 'og' in page.parts or 'docs' in page.parts: continue
     Scan().feed(page.read_text())
+# #202: the hero animation stays in every flag state.
+index = (root/'index.html').read_text()
+assert 'class="gate-card"' in index, 'hero animation missing'
+assert re.search(r'<section class="gate-card"', index), 'hero animation must carry no feature flag'
+assert 'data-run="clean"' in index and 'data-run="blocked"' in index
+# #202: the moving line alternates sides with a matching join in every state,
+# and the first section keeps the side the source page gives it.
+section = re.compile(r'<section\b(?=[^>]*\bclass="[^"]*\bsec\b[^"]*")(?=[^>]*\bdata-side="([lr])")[^>]*>(\s*<div class="(join(?: join--rl)?)")?')
+source_root = Path(sys.argv[3])
+for page in root.glob('*.html'):
+    found = list(section.finditer(page.read_text()))
+    if not found: continue
+    original = list(section.finditer((source_root/page.name).read_text()))
+    assert found[0][1] == original[0][1], (page.name, 'first side changed')
+    for i, m in enumerate(found):
+        if i == 0:
+            assert not m[3], (page.name, 'first section has a join')
+            continue
+        assert m[1] != found[i-1][1], (page.name, i, 'sides do not alternate')
+        assert m[3] == ('join join--rl' if m[1] == 'l' else 'join'), (page.name, i, 'join does not match sides')
 # Every non-hidden text asset in the deploy tree, including Markdown alternates.
 for page in root.rglob('*'):
     if not page.is_file() or any(p.startswith('.') for p in page.relative_to(root).parts): continue

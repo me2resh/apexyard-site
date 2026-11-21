@@ -1,10 +1,13 @@
 ---
 // Product-site navigation, shared by the header and the mobile menu.
 // The items match the product site nav. Offer links stay off the docs pages.
+const features = 'SITE_FEATURES' in process.env ? process.env.SITE_FEATURES.split(',').map((x) => x.trim()) : ['gate'];
+// The Product section of the home page exists only with Gate on (#202).
+const product = features.includes('gate') ? '/#product' : '/build';
 ---
 
 <nav class="ay-sitenav" aria-label="Site">
-  <a href="/#product">Product</a>
+  <a href={product}>Product</a>
   <a href="/docs" aria-current="page">Docs</a>
   <a href="https://github.com/me2resh/apexyard" rel="noopener">GitHub</a>
 </nav>
