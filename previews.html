@@ -59,7 +59,7 @@
 <header class="hdr">
   <div class="hdr__bar">
     <a href="/" class="brand" aria-label="ApexYard home"><img class="brand__mark" src="/brand/apexyard-mark.svg" width="36" height="36" alt=""><span class="brand__word">ApexYard</span></a>
-    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
+    <nav class="nav" id="site-nav" aria-label="Primary"><a data-feature="build" href="/build">Build</a><a data-feature="gate" href="/gate">Gate</a><a data-feature="readiness" href="/readiness">Readiness</a><a data-feature="pricing" href="/pricing">Pricing</a><a href="/docs">Docs</a><a data-feature="gate" href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
     <div class="hdr__keys">
       <a class="key key--primary key--sm mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -83,13 +83,13 @@
       <h2 class="visually-hidden" id="previews-title">Previews</h2>
       <div class="previews">
 
-        <article class="preview" id="gate-dashboard">
+        <article data-feature="gate" class="preview" id="gate-dashboard">
           <figure class="preview__media">
             <img src="/img/placeholder-dashboard.svg" width="1600" height="1000" loading="lazy" alt="Preview of the hosted Gate dashboard for one pull request, with sample data">
             <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Hosted Gate dashboard with sample data.</figcaption>
           </figure>
           <div class="preview__text">
-            <h3>The hosted Gate dashboard</h3>
+            <h3 data-feature="gate">The hosted Gate dashboard</h3>
             <p>See each open pull request, what it is missing, and who it waits for.</p>
           </div>
         </article>
@@ -134,8 +134,8 @@
           </div>
         </article>
 
-        <article class="preview" id="team-cockpit">
-          <figure class="preview__media">
+        <article data-feature="cockpit" class="preview" id="team-cockpit">
+          <figure data-feature="cockpit" class="preview__media">
             <div class="mock" aria-hidden="true">
               <div class="mock__bar"><span class="mock-window__dots"><span></span><span></span><span></span></span><span class="mock__title">Cockpit</span><span class="mock__meta">example-co</span></div>
               <div class="mock-cockpit">
@@ -176,7 +176,7 @@
           </div>
         </article>
 
-        <article class="preview" id="readiness-score">
+        <article data-feature="readiness" class="preview" id="readiness-score">
           <figure class="preview__media">
             <div class="mock" aria-hidden="true">
               <div class="mock__bar"><span class="mock__title">Readiness</span><span class="mock__meta">example-co/payments-api</span></div>
@@ -201,12 +201,12 @@
             <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Readiness score and trend with sample data.</figcaption>
           </figure>
           <div class="preview__text">
-            <h3><span data-claim="readiness_score">Readiness score</span> <span class="state state--planned" data-cap="readiness_score">Planned for 4 Dec 2026</span></h3>
+            <h3 data-feature="readiness"><span data-claim="readiness_score">Readiness score</span> <span class="state state--planned" data-cap="readiness_score">Planned for 4 Dec 2026</span></h3>
             <p>See a score for each repository and how it moves over time.</p>
           </div>
         </article>
 
-        <article class="preview" id="readiness-ci">
+        <article data-feature="readiness" class="preview" id="readiness-ci">
           <figure class="preview__media">
             <div class="mock mock--term" aria-hidden="true">
               <div class="mock__bar"><span class="mock__title">CI log</span><span class="mock__meta">example-co/payments-api</span></div>
@@ -218,12 +218,12 @@ Upload: scores and findings only</pre>
             <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Readiness audit in CI with sample output.</figcaption>
           </figure>
           <div class="preview__text">
-            <h3><span data-claim="readiness_ci">Readiness in your own CI</span> <span class="state state--planned" data-cap="readiness_ci">Planned</span></h3>
+            <h3 data-feature="readiness"><span data-claim="readiness_ci">Readiness in your own CI</span> <span class="state state--planned" data-cap="readiness_ci">Planned</span></h3>
             <p>Run the audit in your CI with your own model key. Only the scores and findings go to the dashboard.</p>
           </div>
         </article>
 
-        <article class="preview" id="readiness-schedule">
+        <article data-feature="readiness" class="preview" id="readiness-schedule">
           <figure class="preview__media">
             <div class="mock" aria-hidden="true">
               <div class="mock__bar"><span class="mock__title">Readiness</span><span class="mock__meta">weekly</span></div>
@@ -238,7 +238,7 @@ Upload: scores and findings only</pre>
             <figcaption class="mock__caption"><span class="mock__tag">Preview</span>Weekly readiness across sample repositories.</figcaption>
           </figure>
           <div class="preview__text">
-            <h3><span data-claim="readiness_weekly">Readiness on a schedule</span> <span class="state state--planned" data-cap="readiness_weekly">Planned for 1 Mar 2027</span></h3>
+            <h3 data-feature="readiness"><span data-claim="readiness_weekly">Readiness on a schedule</span> <span class="state state--planned" data-cap="readiness_weekly">Planned for 1 Mar 2027</span></h3>
             <p>Audit every repository every week, and see the trend.</p>
           </div>
         </article>
@@ -273,7 +273,7 @@ Keel: 12 entries loaded</pre>
           </figure>
           <div class="preview__text">
             <h3>Agent sign-in over MCP</h3>
-            <p>Connect a coding agent to the hosted Gate with your own sign-in.</p>
+            <p data-feature="gate">Connect a coding agent to the hosted Gate with your own sign-in.</p>
           </div>
         </article>
 
@@ -286,10 +286,10 @@ Keel: 12 entries loaded</pre>
 <footer class="site-footer ftr t-dark">
   <div class="wrap site-footer__inner ftr__in">
     <nav class="ftr__nav" aria-label="Footer">
-      <a href="/build">Build</a>
-      <a href="/gate">Gate</a>
-      <a href="/readiness">Readiness</a>
-      <a href="/pricing">Pricing</a>
+      <a data-feature="build" href="/build">Build</a>
+      <a data-feature="gate" href="/gate">Gate</a>
+      <a data-feature="readiness" href="/readiness">Readiness</a>
+      <a data-feature="pricing" href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
       <a href="/docs/quickstart/architecture">Architecture</a>
       <a href="/skills">Skills</a>

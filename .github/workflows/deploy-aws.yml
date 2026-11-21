@@ -42,6 +42,11 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
+      - name: Apply feature flags
+        env:
+          SITE_FEATURES: ${{ vars.SITE_FEATURES_PRODUCTION }}
+        run: .github/scripts/apply-features.sh . "$RUNNER_TEMP/published" "$SITE_FEATURES"
+
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
         with:
@@ -50,11 +55,12 @@ jobs:
 
       - name: Sync static site to staging S3
         run: |
-          aws s3 sync . "s3://${BUCKET_STAGING}" \
+          aws s3 sync "$RUNNER_TEMP/published" "s3://${BUCKET_STAGING}" \
             --delete \
             --exclude ".git/*" \
             --exclude ".github/*" \
             --exclude "og/node_modules/*" \
+            --exclude "docs/*" \
             --exclude "og/templates/*" \
             --exclude "og/render*" \
             --exclude "og/package*.json" \
@@ -70,8 +76,8 @@ jobs:
       - name: Publish markdown alternates to staging
         run: |
           shopt -s nullglob
-          for f in *.md.gen; do
-            key="${f%.gen}"
+          for f in "$RUNNER_TEMP"/published/*.md.gen; do
+            key="$(basename "${f%.gen}")"
             echo "publish $f -> s3://${BUCKET_STAGING}/${key}"
             aws s3 cp "$f" "s3://${BUCKET_STAGING}/${key}" \
               --content-type "text/markdown; charset=utf-8"
@@ -116,6 +122,11 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
+      - name: Apply feature flags
+        env:
+          SITE_FEATURES: ${{ vars.SITE_FEATURES_PRODUCTION }}
+        run: .github/scripts/apply-features.sh . "$RUNNER_TEMP/published" "$SITE_FEATURES"
+
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
         with:
@@ -125,11 +136,12 @@ jobs:
       # #137: previews.html and staging-only.js are staging-only (AgDR-0011).
       - name: Sync static site to production S3
         run: |
-          aws s3 sync . "s3://${BUCKET_PROD}" \
+          aws s3 sync "$RUNNER_TEMP/published" "s3://${BUCKET_PROD}" \
             --delete \
             --exclude ".git/*" \
             --exclude ".github/*" \
             --exclude "og/node_modules/*" \
+            --exclude "docs/*" \
             --exclude "og/templates/*" \
             --exclude "og/render*" \
             --exclude "og/package*.json" \
@@ -147,8 +159,8 @@ jobs:
       - name: Publish markdown alternates to production
         run: |
           shopt -s nullglob
-          for f in *.md.gen; do
-            key="${f%.gen}"
+          for f in "$RUNNER_TEMP"/published/*.md.gen; do
+            key="$(basename "${f%.gen}")"
             echo "publish $f -> s3://${BUCKET_PROD}/${key}"
             aws s3 cp "$f" "s3://${BUCKET_PROD}/${key}" \
               --content-type "text/markdown; charset=utf-8"

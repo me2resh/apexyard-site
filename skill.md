@@ -17,7 +17,7 @@ organisation. Three load-bearing outcomes:
 
 1. **Automatic code review.** Every change gets reviewed by a
    senior-engineering-level AI reviewer before it ships.
-2. **Launch-readiness checks.** Production-readiness audits across security,
+<!-- feature:readiness -->2. **Launch-readiness checks.** Production-readiness audits across security,<!-- /feature:readiness -->
    accessibility, compliance, analytics, SEO, performance, monitoring, docs.
 3. **One inbox across all products.** PRs, issues, comments, blockers
    surfaced from every registered project in one prompt.
@@ -50,7 +50,7 @@ The release line also adds `/approve-architecture`, `/challenge`, `/design-revie
 `/tutorial`, and `/walking-skeleton`.
 
 66 shell hooks enforce SDLC rules mechanically — ticket-first, migration
-gate, two-marker merge gate, red-CI block, secrets scanning, branch / PR
+<!-- feature:gate -->gate, two-marker merge gate, red-CI block, secrets scanning, branch / PR<!-- /feature:gate -->
 title validation, decision-record-required-for-architecture, upstream-drift
 banner, leak protection. 20 role definitions activate on triggers (label,
 diff path, prompt). Plain markdown + shell; open source; no SaaS; no vendor lock-in.
@@ -92,7 +92,7 @@ diff path, prompt). Plain markdown + shell; open source; no SaaS; no vendor lock
 - **`/handover <repo>`** — adopt an external project into the portfolio.
   Generates a handover-assessment, scores harnessability across 5
   codebase dimensions, optionally clones into `workspace/<name>/`.
-- **`/launch-check`** — production-readiness audit. 9-dimension go/no-go
+<!-- feature:readiness -->- **`/launch-check`** — production-readiness audit. 9-dimension go/no-go<!-- /feature:readiness -->
   sweep at milestone boundaries; each dimension fans out to a dedicated
   audit skill.
 - **`/decide`** — make a technical decision and record it permanently.
@@ -101,7 +101,7 @@ diff path, prompt). Plain markdown + shell; open source; no SaaS; no vendor lock
 - **`/feature`, `/bug`, `/task`** — file structured tickets via 3-question
   micro-interviews; output conforms to the schema by construction.
 - **`/code-review <pr>`** — invoke Rex (code-reviewer agent) on a PR.
-  Writes a SHA-bound approval marker; required by the merge gate.
+<!-- feature:gate -->  Writes a SHA-bound approval marker; required by the merge gate.<!-- /feature:gate -->
 
 ## Constraints
 
@@ -110,7 +110,7 @@ diff path, prompt). Plain markdown + shell; open source; no SaaS; no vendor lock
   no nested installs. Upgrades flow via `git fetch upstream` + the
   `/update` skill.
 - **Claude Code is the canonical hook runtime** — framework adapters extend the
-  gate checks to Codex, OpenCode, Pi, omp and Cursor. The rules, templates, and
+<!-- feature:gate -->  gate checks to Codex, OpenCode, Pi, omp and Cursor. The rules, templates, and<!-- /feature:gate -->
   roles remain framework-agnostic; harness-specific limitations are documented
   in the harness guides.
 - **Open source** — plain markdown + shell. No SaaS, no vendor lock-in, no

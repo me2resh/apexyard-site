@@ -96,16 +96,22 @@ jobs:
             exit 1
           fi
 
+      - name: Apply feature flags
+        env:
+          SITE_FEATURES: ${{ vars.SITE_FEATURES }}
+        run: .github/scripts/apply-features.sh . "$RUNNER_TEMP/featured" "$SITE_FEATURES"
+
       - name: Check tracked files for overlay values
         env:
           OVERLAY_JSON: ${{ secrets.STAGING_OVERLAY }}
           REQUIRE_PRIVATE_TERMS: "true"
-        run: .github/scripts/check-private-terms.sh .
+        run: .github/scripts/check-private-terms.sh --text-dir "$RUNNER_TEMP/featured"
 
       - name: Apply the private overlay
         env:
+          FEATURE_SOURCE: ${{ github.workspace }}
           OVERLAY_JSON: ${{ secrets.STAGING_OVERLAY }}
-        run: .github/scripts/apply-overlay.sh . "$RUNNER_TEMP/site"
+        run: .github/scripts/apply-overlay.sh "$RUNNER_TEMP/featured" "$RUNNER_TEMP/site"
 
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
@@ -141,6 +147,14 @@ jobs:
         with:
           name: docs-site
           path: ${{ runner.temp }}/docs-out
+
+      - name: Apply docs feature flags
+        env:
+          SITE_FEATURES: ${{ vars.SITE_FEATURES }}
+        run: |
+          .github/scripts/apply-features.sh "$RUNNER_TEMP/docs-out" "$RUNNER_TEMP/docs-featured" "$SITE_FEATURES"
+          rm -rf "$RUNNER_TEMP/docs-out"
+          mv "$RUNNER_TEMP/docs-featured" "$RUNNER_TEMP/docs-out"
 
       - name: Publish the docs sub-build to staging
         # build-docs.sh writes docs.html (the /docs home) and docs/ (every

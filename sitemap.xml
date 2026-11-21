@@ -5,26 +5,26 @@
     <lastmod>2026-10-22</lastmod>
     <priority>1.0</priority>
   </url>
-  <url>
+  <!-- feature:build --><url>
     <loc>https://apexyard.ai/build</loc>
     <lastmod>2026-10-25</lastmod>
     <priority>0.9</priority>
-  </url>
-  <url>
+  </url><!-- /feature:build -->
+  <!-- feature:gate --><url>
     <loc>https://apexyard.ai/gate</loc>
     <lastmod>2026-10-25</lastmod>
     <priority>0.9</priority>
-  </url>
-  <url>
+  </url><!-- /feature:gate -->
+  <!-- feature:readiness --><url>
     <loc>https://apexyard.ai/readiness</loc>
     <lastmod>2026-10-25</lastmod>
     <priority>0.9</priority>
-  </url>
-  <url>
+  </url><!-- /feature:readiness -->
+  <!-- feature:cockpit --><url>
     <loc>https://apexyard.ai/cockpit</loc>
     <lastmod>2026-11-10</lastmod>
     <priority>0.6</priority>
-  </url>
+  </url><!-- /feature:cockpit -->
   <url>
     <loc>https://apexyard.ai/skills</loc>
     <lastmod>2026-10-22</lastmod>
@@ -35,11 +35,11 @@
     <lastmod>2026-10-25</lastmod>
     <priority>0.8</priority>
   </url>
-  <url>
+  <!-- feature:pricing --><url>
     <loc>https://apexyard.ai/pricing</loc>
     <lastmod>2026-10-25</lastmod>
     <priority>0.8</priority>
-  </url>
+  </url><!-- /feature:pricing -->
   <url>
     <loc>https://apexyard.ai/creators</loc>
     <lastmod>2026-10-26</lastmod>

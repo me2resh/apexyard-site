@@ -245,7 +245,13 @@ assert "gate.html says the gate needs the approval" \
 
 plans_line='Build is free and open source. Every paid plan includes Build, Gate and Readiness. Plans differ by repositories, seats and evidence retention.'
 for page in build.html gate.html readiness.html; do
-  assert "$page holds Build is free plans line" grep -Fq "$plans_line" "$root/$page"
+  assert "$page holds Build is free plans line" python3 -I -c '
+import re, sys
+text = open(sys.argv[1]).read()
+text = re.sub(r"<!--.*?-->", "", text, flags=re.S)
+text = re.sub(r"<[^>]*>", "", text)
+assert sys.argv[2] in " ".join(text.split())
+' "$root/$page" "$plans_line"
   assert "$page links /pricing" grep -Fq 'href="/pricing"' "$root/$page"
 done
 

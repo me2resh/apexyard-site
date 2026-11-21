@@ -35,7 +35,10 @@ crew_refs_exist() {
 assert "every crew image named in a page exists" crew_refs_exist
 
 # The headline is one h1 with one span per sentence (#176). The tags go, the text stays exact.
-headline_text() { grep -o '<h1 id="hero-title">.*</h1>' "$root/index.html" | sed -e 's/<[^>]*>//g'; }
+hero_tmp=$(mktemp -d)
+trap 'rm -rf "$hero_tmp"' EXIT
+"$root/.github/scripts/apply-features.sh" "$root" "$hero_tmp/all-on" build,gate,readiness,pricing,cockpit
+headline_text() { grep -o '<h1 id="hero-title">.*</h1>' "$hero_tmp/all-on/index.html" | sed -e 's/<[^>]*>//g'; }
 assert "home headline" test "$(headline_text)" = 'Your agents build. The gate decides what ships.'
 assert "home headline is two sentence lines" test "$(grep -o 'class="hero-crew__line"' "$root/index.html" | wc -l | tr -d ' ')" = 2
 assert "hero image is preloaded as AVIF" grep -Eq '<link rel="preload" as="image" type="image/avif"[^>]*crew-base-1152\.avif' "$root/index.html"

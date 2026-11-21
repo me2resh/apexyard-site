@@ -146,7 +146,18 @@ problems = False
 for key, rel in sorted(unresolved):
     print(f"apply-overlay: token {key} has no value (in {rel})", file=sys.stderr)
     problems = True
-for key in sorted(k for k, n in counts.items() if n == 0):
+# A filtered deploy may remove all occurrences of an otherwise valid token.
+# Validate unused keys against the original source; keep the default strict.
+source_tokens = set()
+source = os.environ.get("FEATURE_SOURCE")
+if source:
+    for base, dirs, files in os.walk(source):
+        dirs[:] = [d for d in dirs if not d.startswith(".") and d != "node_modules"]
+        for name in files:
+            if name.endswith(TEXT_SUFFIXES):
+                with open(os.path.join(base, name), encoding="utf-8") as fh:
+                    source_tokens.update(ANY_TOKEN.findall(fh.read()))
+for key in sorted(k for k, n in counts.items() if n == 0 and k not in source_tokens):
     print(f"apply-overlay: overlay key {key} matches no token in the site", file=sys.stderr)
     problems = True
 if problems:

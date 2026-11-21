@@ -10,7 +10,7 @@
 <title>Gate: every merge checked and approved by a person | ApexYard</title>
 <meta name="author" content="me2resh">
 <meta name="description" content="The ApexYard Gate checks each pull request on GitHub for a ticket, a decision record, a review and a named approval.">
-<link rel="canonical" href="https://apexyard.ai/gate">
+<link data-feature="gate" rel="canonical" href="https://apexyard.ai/gate">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -64,14 +64,14 @@
 <script>document.documentElement.classList.add("js")</script>
 <script src="/site.js" defer></script>
 </head>
-<body>
+<body data-feature="gate">
 
 <a href="#main" class="skip">Skip to content</a>
 
 <header class="hdr">
   <div class="hdr__bar">
     <a href="/" class="brand" aria-label="ApexYard home"><img class="brand__mark" src="/brand/apexyard-mark.svg" width="36" height="36" alt=""><span class="brand__word">ApexYard</span></a>
-    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate" aria-current="page">Gate</a><a href="/readiness">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
+    <nav class="nav" id="site-nav" aria-label="Primary"><a data-feature="build" href="/build">Build</a><a data-feature="gate" href="/gate" aria-current="page">Gate</a><a data-feature="readiness" href="/readiness">Readiness</a><a data-feature="pricing" href="/pricing">Pricing</a><a href="/docs">Docs</a><a data-feature="gate" href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
     <div class="hdr__keys">
       <a class="key key--primary key--sm mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -86,7 +86,7 @@
       <p class="product-head__name">Gate</p>
       <h1 id="product-title">Each merge needs a passing check and the approval of a person your team names.</h1>
       <p class="product-head__who">For engineering leads whose teams merge code that agents wrote.</p>
-      <p class="product-head__cta"><a class="btn btn--primary" href="/waitlist?src=gate-head" data-signin="https://app.apexyard.ai/signin?src=gate-head" data-waitlist="/waitlist?src=gate-head">Join the waitlist</a></p>
+      <p class="product-head__cta"><a data-feature="gate" class="btn btn--primary" href="/waitlist?src=gate-head" data-signin="https://app.apexyard.ai/signin?src=gate-head" data-waitlist="/waitlist?src=gate-head">Join the waitlist</a></p>
       <p class="product-head__free">The hosted Gate runs by hand for early teams today. <span class="state state--hand" data-cap="gate_all_repos"><!--{{HAND_LABEL}}-->Early teams (by hand)<!--/{{HAND_LABEL}}--></span></p>
     </div>
   </section>
@@ -176,7 +176,7 @@
     <div class="wrap connects">
       <h2 class="section__title" id="connects-title"><span class="stn" aria-hidden="true"></span>How it connects</h2>
       <p class="section__lede">Checks each pull request against the rules in <a href="/#product">Keel</a>.</p>
-      <p class="section__lede">The Gate checks the ticket, decision record and review that your agents produce in <a href="/build">Build</a>.</p>
+      <p class="section__lede" data-feature="build">The Gate checks the ticket, decision record and review that your agents produce in <a data-feature="build" href="/build">Build</a>.</p>
       <figure class="keel" data-keel data-keel-highlight="gate" aria-labelledby="gate-keel-cap">
         <div class="keel__board">
           <svg class="keel__svg" viewBox="0 0 400 320" aria-hidden="true" focusable="false">
@@ -195,42 +195,42 @@
               <text class="keel__label" x="200" y="155" text-anchor="middle">Keel</text>
               <text class="keel__sub" x="200" y="175" text-anchor="middle">your rules</text>
             </g>
-            <g class="keel__node" data-node="build">
+            <g data-feature="build" class="keel__node" data-node="build">
               <rect x="24" y="28" width="110" height="48" rx="6" ry="6"/>
-              <text class="keel__label" x="79" y="58" text-anchor="middle">Build</text>
+              <text data-feature="build" class="keel__label" x="79" y="58" text-anchor="middle">Build</text>
             </g>
-            <g class="keel__node" data-node="gate">
+            <g data-feature="gate" class="keel__node" data-node="gate">
               <rect x="266" y="28" width="110" height="48" rx="6" ry="6"/>
-              <text class="keel__label" x="321" y="58" text-anchor="middle">Gate</text>
+              <text data-feature="gate" class="keel__label" x="321" y="58" text-anchor="middle">Gate</text>
               <text class="keel__flag keel__flag--block" x="360" y="42" text-anchor="middle">X</text>
               <text class="keel__flag keel__flag--pass" x="360" y="42" text-anchor="middle">OK</text>
             </g>
-            <g class="keel__node" data-node="readiness">
+            <g data-feature="readiness" class="keel__node" data-node="readiness">
               <rect x="130" y="250" width="140" height="48" rx="6" ry="6"/>
-              <text class="keel__label" x="200" y="280" text-anchor="middle">Readiness</text>
+              <text data-feature="readiness" class="keel__label" x="200" y="280" text-anchor="middle">Readiness</text>
             </g>
             <circle class="keel__dot" r="7" cx="79" cy="52"/>
           </svg>
         </div>
         <ol class="keel__steps">
           <li class="keel__step keel__step--rule" data-step="rule"><p class="keel__name">Keel</p><p class="keel__rule">Every API endpoint checks who is calling.</p><p class="keel__text">A rule your team adds to its handbook, marked blocking.</p></li>
-          <li class="keel__step" data-step="build"><p class="keel__name">Build</p><p class="keel__text">Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.</p></li>
-          <li class="keel__step" data-step="gate"><p class="keel__name">Gate</p><p class="keel__text">Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.</p></li>
-          <li class="keel__step" data-step="readiness"><p class="keel__name">Readiness</p><p class="keel__text">The readiness audit fails when a user-facing app has no authentication. On me2resh/ddd-sam-example, the top action was: add authentication to all patient appointment APIs.</p></li>
+          <li data-feature="build" class="keel__step" data-step="build"><p class="keel__name">Build</p><p class="keel__text">Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.</p></li>
+          <li data-feature="gate" class="keel__step" data-step="gate"><p class="keel__name">Gate</p><p class="keel__text">Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.</p></li>
+          <li data-feature="readiness" class="keel__step" data-step="readiness"><p class="keel__name">Readiness</p><p class="keel__text">The readiness audit fails when a user-facing app has no authentication. On me2resh/ddd-sam-example, the top action was: add authentication to all patient appointment APIs.</p></li>
           <li class="keel__step" data-step="miss"><p class="keel__name">A miss becomes a rule</p><p class="keel__text">When a person finds a miss in review, /codify-rule turns the comment into a draft rule. You approve it before it is saved.</p></li>
         </ol>
         <p class="keel__tools"><button type="button" class="keel__pause" aria-pressed="false" hidden>Pause animation</button></p>
-        <figcaption class="visually-hidden" id="gate-keel-cap">Keel is in the centre, with Build, Gate and Readiness around it. A change goes from Build to the Gate. The Gate stops it. The miss becomes a new rule in Keel. The next change passes the Gate. Readiness measures each repository against the same rules.</figcaption>
+<!-- feature-all:build gate readiness -->        <figcaption class="visually-hidden" id="gate-keel-cap">Keel is in the centre, with Build, Gate and Readiness around it. A change goes from Build to the Gate. The Gate stops it. The miss becomes a new rule in Keel. The next change passes the Gate. Readiness measures each repository against the same rules.</figcaption><!-- /feature-all:build gate readiness -->
       </figure>
     </div>
   </section>
 
-  <section class="section sec t-deep" aria-labelledby="plans-title" data-side="r">
+  <section data-feature="pricing" class="section sec t-deep" aria-labelledby="plans-title" data-side="r">
 <div class="join" aria-hidden="true"><i></i><i></i><i></i></div><div class="rail" aria-hidden="true"></div>
     <div class="wrap plans-pointer">
-      <h2 class="section__title" id="plans-title"><span class="stn" aria-hidden="true"></span>Plans</h2>
-      <p class="section__lede">Build is free and open source. Every paid plan includes Build, Gate and Readiness. Plans differ by repositories, seats and evidence retention.</p>
-      <p class="plans__cta"><a class="plans__link" href="/pricing">See plans and pricing</a></p>
+      <h2 data-feature="pricing" class="section__title" id="plans-title"><span class="stn" aria-hidden="true"></span>Plans</h2>
+      <p class="section__lede" data-feature="build readiness">Build is free and open source. Every paid plan includes Build, Gate and Readiness. Plans differ by repositories, seats and evidence retention.</p>
+      <p class="plans__cta"><a data-feature="pricing" class="plans__link" href="/pricing">See plans and pricing</a></p>
     </div>
   </section>
 
@@ -239,10 +239,10 @@
 <footer class="site-footer ftr t-dark">
   <div class="wrap site-footer__inner ftr__in">
     <nav class="ftr__nav" aria-label="Footer">
-      <a href="/build">Build</a>
-      <a href="/gate">Gate</a>
-      <a href="/readiness">Readiness</a>
-      <a href="/pricing">Pricing</a>
+      <a data-feature="build" href="/build">Build</a>
+      <a data-feature="gate" href="/gate">Gate</a>
+      <a data-feature="readiness" href="/readiness">Readiness</a>
+      <a data-feature="pricing" href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
       <a href="/docs/quickstart/architecture">Architecture</a>
       <a href="/skills">Skills</a>

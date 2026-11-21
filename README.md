@@ -141,3 +141,54 @@ Before #171, the block showed a rolling 90-day pull request count and a count of
 `.github/workflows/shell-tests.yml` shellchecks the shell scripts and runs every `.github/tests/test-*.sh` — currently the CloudFront invalidation guard (#48), the count verifier (#69), and the derive library plus its README-sync assertion (#72). It also triggers on `README.md` and `og/render.sh`, because both are now bound to `derive-counts.sh`: a README edit that desyncs the definition block, or a `render.sh` edit that breaks the source, has to fail somewhere.
 
 It still does **not** run on a PR that only edits page content. Counts are therefore verified by running `verify-counts.sh` yourself, not by CI; wiring that to run per-PR needs a decision about cloning the framework repo in CI and pinning the ref.
+
+## Feature flags
+
+Add an area name to `SITE_FEATURES` in the staging environment, or to the
+repository variable `SITE_FEATURES_PRODUCTION` for live, then run the deploy
+again. Initial values: production `build`; staging
+`build,gate,readiness,pricing,cockpit`. Both variables must be set BEFORE this PR merges: merging into `staging` starts the staging deploy.
+An empty or missing value turns every area off.
+
+The deploy copies and filters the site before upload. Disabled pages and
+`data-feature` elements are removed, along with `<!-- feature:pricing -->` …
+`<!-- /feature:pricing -->` regions in text and XML. Space-separated names use
+ANY: `data-feature="build pricing"` stays when either area is on. A removed
+parent removes its children too. Unknown names fail the build.
+
+The v2 staging deploy reads `SITE_FEATURES` from the `staging` environment.
+The main-branch staging job in `deploy-aws.yml` has no environment and reads
+repository `SITE_FEATURES_PRODUCTION`, mirroring live. Set both variables BEFORE
+this PR merges, because merging into `staging` immediately starts its deploy.
+Preview builds read repository `SITE_FEATURES`, falling back to all five; they
+cannot read the staging environment variable.
+
+ANY tags are for containers with individually tagged children. Split prose by
+area; never use ANY to retain a sentence naming disabled products.
+`data-feature="build pricing"` and `<!-- feature:build pricing -->` use ANY:
+they show when at least one listed area is on. `<!-- feature-all:build pricing -->`
+shows only when every listed area is on. `<!-- feature-off:build pricing -->`
+shows when at least one listed area is off, including the all-off state.
+Close regions with the same mode and names: `<!-- /feature-all:build pricing -->`
+or `<!-- /feature-off:build pricing -->`. Nest tags to require another area.
+For example, `<!-- feature-off:gate readiness --><!-- feature:build -->Build guides your agents.<!-- /feature:build --><!-- /feature-off:gate readiness -->`
+shows only when Build is on and Gate or Readiness is off. The only HTML feature
+attribute is `data-feature`; ALL and off modes use comment regions.
+Keep these markers outside inline scripts. The game reads tagged HTML copy.
+
+The filter keeps `docs/`, including built docs and their search index. Each site
+sync excludes `docs/*`; the v2 deploy uploads built docs separately. The filter
+excludes `docs-site/`, `handbooks/`, OG templates and repository README/AGENTS files.
+The empty and single-area tests scan published text, metadata, links and filenames.
+HTML attribute identifiers are not product mentions. Lowercase `build` is a verb
+or compilation noun. Exact generic exceptions are “Build the loop”, “Build a
+level header”, “Build a working prompt”, “Build-only verify”, “Build, under
+governance” and “Apple's gate”. No other capitalised Build or case-insensitive
+Gate, Readiness, Pricing or Cockpit word is exempt.
+The all-on content test detects filtering loss against the current source,
+excluding feature-off alternatives; it does not guard against source edits.
+Bare/empty feature attributes, tagged non-void self-closing HTML and malformed
+feature region names fail the filter.
+
+Disabled Gate output also omits its check screenshot and dashboard/evidence SVGs.
+The architecture OG card is omitted unless Gate and Readiness are both enabled.
