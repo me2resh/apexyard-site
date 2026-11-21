@@ -38,7 +38,9 @@ const ENABLED = new Set(
 );
 for (const f of ENABLED) if (!FEATURE_NAMES.includes(f)) { console.error(`sync-content: unknown feature name: ${f}`); process.exit(1); }
 const groupOn = (group) => !group.feature || ENABLED.has(group.feature);
-const pageOn = (page) => !page.feature || ENABLED.has(page.feature);
+// A page with a `coming` marker needs `upcoming` as well as its own feature,
+// so a new Coming page is hidden by default.
+const pageOn = (page) => (!page.feature || ENABLED.has(page.feature)) && (!page.coming || ENABLED.has('upcoming'));
 
 // ---------------------------------------------------------------- source
 

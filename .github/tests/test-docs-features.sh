@@ -25,7 +25,7 @@ group_ids = {g['id'] for s in nav['sections'] for g in s['groups']}
 home = (dist / 'index.html').read_text()
 pages = list(dist.rglob('*.html')) + list(dist.rglob('*.md')) + [dist / 'llms.txt']
 for feature, group in areas.items():
-    present = feature in enabled
+    present = feature in enabled and (feature != 'gate' or 'upcoming' in enabled)  # every hosted gate page is Coming
     assert (group in group_ids) == present, (feature, 'nav group')
     assert (dist / group).is_dir() == present, (feature, 'built pages')
     assert (len(re.findall(r'href="/docs/' + group + '/', home)) > 0) == present, (feature, 'sidebar links')
@@ -54,7 +54,9 @@ if 'upcoming' not in enabled:
     for sec in nav['sections']:
         for g in sec['groups']:
             for pg in g['pages']:
-                assert not pg['coming'] or g['id'] in ('hosted-gate',) and 'gate' in enabled or g['id'] == 'readiness', (pg['slug'], 'Coming page without the flag')
+                assert not pg['coming'], (pg['slug'], 'Coming page without the upcoming flag')
+else:
+    assert any(pg['coming'] for sec in nav['sections'] for g in sec['groups'] for pg in g['pages']) or 'gate' not in enabled, 'Coming gate pages missing with upcoming'
 # The group counts on the docs home match nav.json.
 for sec in nav['sections']:
     for g in sec['groups']:
@@ -66,14 +68,14 @@ assert ('href="' + want + '">Product<') in home, ('header link', want)
 # The sidebar group labels and the group counts.
 labels = {'cockpit': 'Cockpit (Preview)', 'gate': 'The hosted gate', 'readiness': 'Readiness'}
 for feature, label in labels.items():
-    assert ((label in home) == (feature in enabled)), (feature, label, 'sidebar label')
+    assert ((label in home) == (feature in enabled and (feature != 'gate' or 'upcoming' in enabled))), (feature, label, 'sidebar label')
 # The search index only lists built pages: Pagefind reads the same HTML.
 assert (dist / 'pagefind/pagefind.js').exists()
 print('PASS docs features: ' + (sys.argv[2] or 'none'))
 PY
 }
 
-for flags in 'build' 'build,gate' 'build,upcoming' 'build,gate,readiness,pricing,cockpit,upcoming'; do
+for flags in 'build' 'build,gate' 'build,upcoming' 'build,gate,upcoming' 'build,gate,readiness,pricing,cockpit,upcoming'; do
   (cd "$root/docs-site" && SITE_FEATURES="$flags" npm run build >/dev/null)
   check "$flags"
   # Pagefind stores the indexed text in compressed fragments, so assert on
