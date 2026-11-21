@@ -71,7 +71,7 @@
 <header class="hdr">
   <div class="hdr__bar">
     <a href="/" class="brand" aria-label="ApexYard home"><img class="brand__mark" src="/brand/apexyard-mark.svg" width="36" height="36" alt=""><span class="brand__word">ApexYard</span></a>
-    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
+    <nav class="nav" id="site-nav" aria-label="Primary"><a data-feature="build" href="/build">Build</a><a data-feature="gate" href="/gate">Gate</a><a data-feature="readiness" href="/readiness">Readiness</a><a data-feature="pricing" href="/pricing">Pricing</a><a href="/docs">Docs</a><a data-feature="gate" href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
     <div class="hdr__keys">
       <a class="key key--primary key--sm mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -115,7 +115,7 @@
           <dl class="kit__facts">
             <div><dt>What it is</dt><dd>ApexYard gives your agents a team's process, then checks every pull request against it.</dd></div>
             <div><dt>Keel</dt><dd>Your team's rules and context, read by every agent.</dd></div>
-            <div><dt>Three products</dt><dd><a href="/build">Build</a> guides the agent. <a href="/gate">Gate</a> checks each pull request. <a href="/readiness">Readiness</a> measures a whole repository.</dd></div>
+            <div><dt>Three products</dt><dd><a data-feature="build" href="/build">Build</a> guides the agent. <a data-feature="gate" href="/gate">Gate</a> checks each pull request. <a data-feature="readiness" href="/readiness">Readiness</a> measures a whole repository.</dd></div>
             <div><dt>Works with</dt><dd>Claude Code, Codex, Cursor, OpenCode, Pi and omp.</dd></div>
             <div><dt>Skills</dt><dd>69 slash commands. See the <a href="/skills">skills page</a>.</dd></div>
             <div><dt>Licence</dt><dd>The framework is open source under the MIT licence.</dd></div>
@@ -164,7 +164,7 @@
         <section class="kit__row kit__row--diagram one-rule" aria-labelledby="kit-diagram">
           <h3 class="kit__name" id="kit-diagram">The rule diagram</h3>
           <div class="kit__diagram">
-            <p class="kit__note">Keel holds the rule. Build guides your agents with it. The Gate checks each pull request against it. Readiness measures the whole repository. A miss comes back as a new rule.</p>
+            <p class="kit__note" data-feature="build gate readiness">Keel holds the rule. Build guides your agents with it. The Gate checks each pull request against it. Readiness measures the whole repository. A miss comes back as a new rule.</p>
             <figure class="keel" data-keel aria-labelledby="creators-keel-cap">
               <div class="keel__board">
                 <svg class="keel__svg" viewBox="0 0 400 320" aria-hidden="true" focusable="false">
@@ -183,28 +183,28 @@
                     <text class="keel__label" x="200" y="155" text-anchor="middle">Keel</text>
                     <text class="keel__sub" x="200" y="175" text-anchor="middle">your rules</text>
                   </g>
-                  <g class="keel__node" data-node="build">
+                  <g data-feature="build" class="keel__node" data-node="build">
                     <rect x="24" y="28" width="110" height="48" rx="6" ry="6"/>
-                    <text class="keel__label" x="79" y="58" text-anchor="middle">Build</text>
+                    <text data-feature="build" class="keel__label" x="79" y="58" text-anchor="middle">Build</text>
                   </g>
-                  <g class="keel__node" data-node="gate">
+                  <g data-feature="gate" class="keel__node" data-node="gate">
                     <rect x="266" y="28" width="110" height="48" rx="6" ry="6"/>
-                    <text class="keel__label" x="321" y="58" text-anchor="middle">Gate</text>
+                    <text data-feature="gate" class="keel__label" x="321" y="58" text-anchor="middle">Gate</text>
                     <text class="keel__flag keel__flag--block" x="360" y="42" text-anchor="middle">X</text>
                     <text class="keel__flag keel__flag--pass" x="360" y="42" text-anchor="middle">OK</text>
                   </g>
-                  <g class="keel__node" data-node="readiness">
+                  <g data-feature="readiness" class="keel__node" data-node="readiness">
                     <rect x="130" y="250" width="140" height="48" rx="6" ry="6"/>
-                    <text class="keel__label" x="200" y="280" text-anchor="middle">Readiness</text>
+                    <text data-feature="readiness" class="keel__label" x="200" y="280" text-anchor="middle">Readiness</text>
                   </g>
                   <circle class="keel__dot" r="7" cx="79" cy="52"/>
                 </svg>
               </div>
               <ol class="keel__steps">
                 <li class="keel__step keel__step--rule" data-step="rule"><p class="keel__name">Keel</p><p class="keel__rule">Every API endpoint checks who is calling.</p><p class="keel__text">A rule your team adds to its handbook, marked blocking.</p></li>
-                <li class="keel__step" data-step="build"><p class="keel__name">Build</p><p class="keel__text">Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.</p></li>
-                <li class="keel__step" data-step="gate"><p class="keel__name">Gate</p><p class="keel__text">Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.</p></li>
-                <li class="keel__step" data-step="readiness"><p class="keel__name">Readiness</p><p class="keel__text">The readiness audit fails when a user-facing app has no authentication. On me2resh/ddd-sam-example, the top action was: add authentication to all patient appointment APIs.</p></li>
+                <li data-feature="build" class="keel__step" data-step="build"><p class="keel__name">Build</p><p class="keel__text">Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.</p></li>
+                <li data-feature="gate" class="keel__step" data-step="gate"><p class="keel__name">Gate</p><p class="keel__text">Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.</p></li>
+                <li data-feature="readiness" class="keel__step" data-step="readiness"><p class="keel__name">Readiness</p><p class="keel__text">The readiness audit fails when a user-facing app has no authentication. On me2resh/ddd-sam-example, the top action was: add authentication to all patient appointment APIs.</p></li>
                 <li class="keel__step" data-step="miss"><p class="keel__name">A miss becomes a rule</p><p class="keel__text">When a person finds a miss in review, /codify-rule turns the comment into a draft rule. You approve it before it is saved.</p></li>
               </ol>
               <p class="keel__tools"><button type="button" class="keel__pause" aria-pressed="false" hidden>Pause animation</button></p>
@@ -242,10 +242,10 @@
 <footer class="site-footer ftr t-dark">
   <div class="wrap site-footer__inner ftr__in">
     <nav class="ftr__nav" aria-label="Footer">
-      <a href="/build">Build</a>
-      <a href="/gate">Gate</a>
-      <a href="/readiness">Readiness</a>
-      <a href="/pricing">Pricing</a>
+      <a data-feature="build" href="/build">Build</a>
+      <a data-feature="gate" href="/gate">Gate</a>
+      <a data-feature="readiness" href="/readiness">Readiness</a>
+      <a data-feature="pricing" href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
       <a href="/docs/quickstart/architecture">Architecture</a>
       <a href="/skills">Skills</a>

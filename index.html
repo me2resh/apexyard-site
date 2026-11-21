@@ -85,7 +85,7 @@
 <header class="hdr">
   <div class="hdr__bar">
     <a href="/" class="brand" aria-label="ApexYard home"><img class="brand__mark" src="/brand/apexyard-mark.svg" width="36" height="36" alt=""><span class="brand__word">ApexYard</span></a>
-    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
+    <nav class="nav" id="site-nav" aria-label="Primary"><a data-feature="build" href="/build">Build</a><a data-feature="gate" href="/gate">Gate</a><a data-feature="readiness" href="/readiness">Readiness</a><a data-feature="pricing" href="/pricing">Pricing</a><a href="/docs">Docs</a><a data-feature="gate" href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
     <div class="hdr__keys">
       <a class="key key--primary key--sm mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -105,7 +105,7 @@
         <div class="hero__actions">
           <a class="btn btn--primary" href="#install">Install Build</a>
           <a class="btn btn--quiet mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo">Book a demo</a>
-          <a class="btn btn--quiet" href="/waitlist?src=home-hero" data-signin="https://app.apexyard.ai/signin?src=home-hero" data-waitlist="/waitlist?src=home-hero">Join the waitlist</a>
+          <a data-feature="gate" class="btn btn--quiet" href="/waitlist?src=home-hero" data-signin="https://app.apexyard.ai/signin?src=home-hero" data-waitlist="/waitlist?src=home-hero">Join the waitlist</a>
         </div>
       </div>
 
@@ -266,25 +266,25 @@
   </section>
 
 
-  <section class="section one-rule sec t-deep" id="product" aria-labelledby="one-rule-title" data-side="l">
+  <section data-feature="gate readiness" class="section one-rule sec t-deep" id="product" aria-labelledby="one-rule-title" data-side="l">
 <div class="rail" aria-hidden="true"></div>
     <div class="wrap" id="how-it-works">
       <h2 class="section__title" id="one-rule-title"><span class="stn" aria-hidden="true"></span>One process, three places</h2>
-      <p class="section__lede">Keel is your team's rules and context. Build, the Gate and Readiness all work from it. A miss comes back as a new rule.</p>
+      <p class="section__lede" data-feature="build gate readiness">Keel is your team's rules and context. Build, the Gate and Readiness all work from it. A miss comes back as a new rule.</p>
       <figure class="keel keel--flow" data-keel="flow" aria-labelledby="home-keel-cap">
         <div class="kf" aria-hidden="true">
-          <div class="kf__node kf__node--build" data-node="build">
+          <div data-feature="build" class="kf__node kf__node--build" data-node="build">
             <span class="kf__av"><picture><source type="image/avif" srcset="/img/crew/av-hadi-48.avif 48w, /img/crew/av-hadi-96.avif 96w" sizes="44px"><source type="image/webp" srcset="/img/crew/av-hadi-48.webp 48w, /img/crew/av-hadi-96.webp 96w" sizes="44px"><img src="/img/crew/av-hadi-96.png" srcset="/img/crew/av-hadi-48.png 48w, /img/crew/av-hadi-96.png 96w" sizes="44px" width="44" height="44" alt="" loading="lazy" decoding="async"></picture></span>
             <span class="kf__txt"><span class="kf__name">Build</span><span class="kf__sub">loads your rules</span></span>
           </div>
           <span class="kf__wire kf__wire--change" data-wire="change"><svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false"><path d="M0 50 L100 50"/></svg></span>
-          <div class="kf__node kf__node--gate" data-node="gate">
+          <div data-feature="gate" class="kf__node kf__node--gate" data-node="gate">
             <span class="kf__av"><picture><source type="image/avif" srcset="/img/crew/av-rex-48.avif 48w, /img/crew/av-rex-96.avif 96w" sizes="44px"><source type="image/webp" srcset="/img/crew/av-rex-48.webp 48w, /img/crew/av-rex-96.webp 96w" sizes="44px"><img src="/img/crew/av-rex-96.png" srcset="/img/crew/av-rex-48.png 48w, /img/crew/av-rex-96.png 96w" sizes="44px" width="44" height="44" alt="" loading="lazy" decoding="async"></picture></span>
             <span class="kf__txt"><span class="kf__name">Gate</span><span class="kf__sub">Rex, the review agent</span></span>
             <span class="kf__badge kf__badge--block">Blocked</span><span class="kf__badge kf__badge--pass">Passed</span>
           </div>
           <span class="kf__wire kf__wire--ready" data-wire="ready"><svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false"><path d="M0 50 L100 50"/></svg></span>
-          <div class="kf__node kf__node--ready" data-node="readiness">
+          <div data-feature="readiness" class="kf__node kf__node--ready" data-node="readiness">
             <span class="kf__av kf__tick"><svg viewBox="0 0 24 24" focusable="false"><path d="M6.5 12.5l3.75 3.75L17.5 8.5"/></svg></span>
             <span class="kf__txt"><span class="kf__name">Readiness</span><span class="kf__sub">the readiness audit</span></span>
           </div>
@@ -300,12 +300,12 @@
         </div>
         <div class="kf__bar">
           <ol class="keel__steps">
-            <li class="keel__step" data-step="build" data-n="01"><p class="keel__name">Build</p><p class="keel__text">Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.</p></li>
-            <li class="keel__step" data-step="gate" data-n="02"><p class="keel__name">Gate</p><p class="keel__text">Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.</p></li>
+            <li data-feature="build" class="keel__step" data-step="build" data-n="01"><p class="keel__name">Build</p><p class="keel__text">Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.</p></li>
+            <li data-feature="gate" class="keel__step" data-step="gate" data-n="02"><p class="keel__name">Gate</p><p class="keel__text">Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.</p></li>
             <li class="keel__step" data-step="miss" data-n="03"><p class="keel__name">A miss becomes a rule</p><p class="keel__text">When a person finds a miss in review, /codify-rule turns the comment into a draft rule. You approve it before it is saved.</p></li>
             <li class="keel__step keel__step--rule" data-step="rule" data-n="04"><p class="keel__name">Keel</p><p class="keel__rule">Every API endpoint checks who is calling.</p><p class="keel__text">A rule your team adds to its handbook, marked blocking.</p></li>
-            <li class="keel__step" data-step="pass" data-n="05"><p class="keel__name">Gate</p><p class="keel__text">The next change passes the Gate.</p></li>
-            <li class="keel__step" data-step="readiness" data-n="06"><p class="keel__name">Readiness</p><p class="keel__text">The readiness audit fails when a user-facing app has no authentication. On me2resh/ddd-sam-example, the top action was: add authentication to all patient appointment APIs.</p></li>
+            <li class="keel__step" data-step="pass" data-n="05" data-feature="gate"><p class="keel__name">Gate</p><p class="keel__text">The next change passes the Gate.</p></li>
+            <li data-feature="readiness" class="keel__step" data-step="readiness" data-n="06"><p class="keel__name">Readiness</p><p class="keel__text">The readiness audit fails when a user-facing app has no authentication. On me2resh/ddd-sam-example, the top action was: add authentication to all patient appointment APIs.</p></li>
           </ol>
           <div class="kf__controls">
             <div class="kf__dots" role="group" aria-label="Pick a step" hidden></div>
@@ -315,7 +315,7 @@
         <p class="visually-hidden" aria-live="polite" data-kf-live></p>
         <figcaption class="visually-hidden" id="home-keel-cap">Build, the Gate and Readiness sit in one row, joined by arrows. Keel sits below the Gate. A change goes from Build to the Gate. The Gate stops it. Review feedback goes down to Keel. The miss becomes a new rule in Keel after human approval. Approved rules go back to Build for the next change. The next change passes the Gate. Readiness measures each repository against the same rules.</figcaption>
       </figure>
-      <p class="one-rule__links"><a href="/build">About Build</a> <a href="/gate">About Gate</a> <a href="/readiness">About Readiness</a></p>
+      <p class="one-rule__links" data-feature="build gate readiness"><a data-feature="build" href="/build">About Build</a> <a data-feature="gate" href="/gate">About Gate</a> <a data-feature="readiness" href="/readiness">About Readiness</a></p>
       <p class="one-rule__base">Underneath: Keel, one evidence store and one dashboard.</p>
     </div>
   </section>
@@ -345,11 +345,11 @@
         <div class="quote-slot__body" aria-hidden="true"><span></span><span></span><span></span></div>
         <figcaption class="quote-slot__note"><span class="mock__tag">Preview</span> A slot for a customer story. It shows no quote until a customer approves one.</figcaption>
       </figure>
-      <p class="proof__access">Our servers never fetch your code. The GitHub App sees pull request titles, descriptions and changed file names, not the files. <a href="/gate#app-access">See what the GitHub App can see</a>.</p>
+      <p data-feature="gate" class="proof__access">Our servers never fetch your code. The GitHub App sees pull request titles, descriptions and changed file names, not the files. <a data-feature="gate" href="/gate#app-access">See what the GitHub App can see</a>.</p>
     </div>
   </section>
 
-  <section class="section sec t-panel" id="open-source" aria-labelledby="oss-title" data-side="l">
+  <section data-feature="build" class="section sec t-panel" id="open-source" aria-labelledby="oss-title" data-side="l">
 <div class="join join--rl" aria-hidden="true"><i></i><i></i><i></i></div><div class="rail" aria-hidden="true"></div>
 <div class="wrap crew-intro-wrap">
       <div class="crew-intro">
@@ -359,7 +359,7 @@
     </div>
     <div class="wrap oss" id="install">
       <div class="oss__text">
-        <h2 class="section__title" id="oss-title"><span class="stn" aria-hidden="true"></span>Install Build</h2>
+        <h2 class="section__title" id="oss-title" data-feature="build"><span class="stn" aria-hidden="true"></span>Install Build</h2>
         <p class="section__lede">Open source. MIT. Always free.</p>
         <p class="oss__paid">The hosted parts are paid. Every rule, hook and review agent is a plain file you can read, change or remove.</p>
       </div>
@@ -384,18 +384,18 @@
     </div>
   </section>
 
-  <section class="section section--tint sec t-deep" id="book-a-demo" aria-labelledby="book-title" data-side="r">
+  <section data-feature="gate" class="section section--tint sec t-deep" id="book-a-demo" aria-labelledby="book-title" data-side="r">
 <div class="join" aria-hidden="true"><i></i><i></i><i></i></div><div class="rail" aria-hidden="true"></div>
     <div class="wrap teaser" id="team">
       <div>
         <h2 class="section__title" id="book-title"><span class="stn" aria-hidden="true"></span>Book a demo</h2>
-        <p class="section__lede">Bring one of your repositories, and see what the Gate would have held.</p>
+        <p class="section__lede" data-feature="gate">Bring one of your repositories, and see what the Gate would have held.</p>
       </div>
       <div>
         <!-- Booking: an email to us (#159) until the booking page link replaces it. -->
         <p><a class="btn btn--primary mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo">Book a 20-minute demo</a></p>
         <p class="book__mail">Prefer email? <a href="#" class="mailto-cta" data-u="hello" data-d="apexyard.ai">Write to us</a>.</p>
-        <p class="book__plans" id="compare">Build is free and open source. Pay when a team needs the hosted Gate, shared Keel and evidence. <a href="/pricing">See plans</a></p>
+        <p class="book__plans" id="compare" data-feature="build gate">Build is free and open source. Pay when a team needs the hosted Gate, shared Keel and evidence. <a data-feature="pricing" href="/pricing">See plans</a></p>
       </div>
     </div>
   </section>
@@ -405,10 +405,10 @@
 <footer class="site-footer ftr t-dark">
   <div class="wrap site-footer__inner ftr__in">
     <nav class="ftr__nav" aria-label="Footer">
-      <a href="/build">Build</a>
-      <a href="/gate">Gate</a>
-      <a href="/readiness">Readiness</a>
-      <a href="/pricing">Pricing</a>
+      <a data-feature="build" href="/build">Build</a>
+      <a data-feature="gate" href="/gate">Gate</a>
+      <a data-feature="readiness" href="/readiness">Readiness</a>
+      <a data-feature="pricing" href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
       <a href="/docs/quickstart/architecture">Architecture</a>
       <a href="/skills">Skills</a>

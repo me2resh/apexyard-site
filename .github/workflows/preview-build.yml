@@ -32,6 +32,7 @@ on:
       - "product.js"
       - "claims.js"
       - "img/**"
+      - ".github/scripts/apply-features.sh"
       - ".github/workflows/preview-build.yml"
       - ".github/workflows/preview-deploy.yml"
 
@@ -71,6 +72,14 @@ jobs:
             --exclude ".gitignore" \
             --exclude ".lycheeignore" \
             ./ site/
+
+      - name: Apply preview feature flags
+        env:
+          SITE_FEATURES: ${{ vars.SITE_FEATURES || 'build,gate,readiness,pricing,cockpit' }}
+        run: |
+          .github/scripts/apply-features.sh site "$RUNNER_TEMP/preview-featured" "$SITE_FEATURES"
+          rm -rf site
+          mv "$RUNNER_TEMP/preview-featured" site
 
       - name: Upload preview artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

@@ -4,7 +4,7 @@
 
 This file holds the page content of https://apexyard.ai/ in one file.
 It is written in plain words. It gives no prices.
-For prices and plan details, read https://apexyard.ai/pricing.
+<!-- feature:pricing -->For prices and plan details, read https://apexyard.ai/pricing.<!-- /feature:pricing -->
 
 ---
 
@@ -12,44 +12,45 @@ For prices and plan details, read https://apexyard.ai/pricing.
 
 ApexYard gives your agents a team's process. Then it checks every pull request against that process.
 
-ApexYard has three products: Build, Gate and Readiness.
+<!-- feature:build gate readiness -->ApexYard has three products: Build, Gate and Readiness.<!-- /feature:build gate readiness -->
 Keel is the shared layer under them.
 
 | Name | What it does |
 |------|--------------|
-| Build | The open-source framework. It guides your agents. |
-| Gate | Checks each pull request against your process. |
-| Readiness | Measures each repository. |
+<!-- feature:build -->| Build | The open-source framework. It guides your agents. |<!-- /feature:build -->
+<!-- feature:gate -->| Gate | Checks each pull request against your process. |<!-- /feature:gate -->
+<!-- feature:readiness -->| Readiness | Measures each repository. |<!-- /feature:readiness -->
 | Keel | Your team's rules and context, read by every agent. |
 
 ## One process, three places
 
 You write a rule one time. Then the rule works in three places:
 
-1. Build guides your agent with the rule.
-2. Gate checks each pull request against the rule.
-3. Readiness measures the whole repository against the rule.
+<!-- feature:build -->1. Build guides your agent with the rule.<!-- /feature:build -->
+<!-- feature:gate -->2. Gate checks each pull request against the rule.<!-- /feature:gate -->
+<!-- feature:readiness -->3. Readiness measures the whole repository against the rule.<!-- /feature:readiness -->
 
 A miss becomes a new rule. Then the loop starts again.
 
 Example: the rule says "Every API endpoint checks who is calling." Your team adds it to its handbook and marks it blocking.
-Build: before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.
-Gate: Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.
-Readiness: the readiness audit fails when a user-facing app has no authentication.
+<!-- feature:build -->Build: before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.<!-- /feature:build -->
+<!-- feature:gate -->Gate: Rex, the review agent, checks each pull request against the rule. A blocking rule that fails stops the merge.<!-- /feature:gate -->
+<!-- feature:readiness -->Readiness: the readiness audit fails when a user-facing app has no authentication.<!-- /feature:readiness -->
 
 ## Works with
 
-Build works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.
+<!-- feature:build -->Build works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.<!-- /feature:build -->
 
 ---
 
-# Build (https://apexyard.ai/build)
+<!-- feature:build -->
+<!-- feature:build --># Build (https://apexyard.ai/build)<!-- /feature:build -->
 
-Build is the open-source framework. Your agents plan before they code. Every change meets a reviewer before it leaves your machine.
+<!-- feature:build -->Build is the open-source framework. Your agents plan before they code. Every change meets a reviewer before it leaves your machine.<!-- /feature:build -->
 
-Build is for founders and engineering leads who want agent speed and a real process.
+<!-- feature:build -->Build is for founders and engineering leads who want agent speed and a real process.<!-- /feature:build -->
 
-## What Build does
+<!-- feature:build -->## What Build does<!-- /feature:build -->
 
 - It turns an idea into a spec, a plan and small tickets. A person signs off each step.
 - It adds reviewer roles. Code, security, architecture and QA reviewers each check what they know best. They say what to fix.
@@ -58,9 +59,9 @@ Build is for founders and engineering leads who want agent speed and a real proc
 
 ## Licence and cost
 
-- Build is open source under the MIT licence.
+<!-- feature:build -->- Build is open source under the MIT licence.<!-- /feature:build -->
 - Rules, roles, handbooks and hooks are plain files. You can read them, change them or remove them.
-- Build needs no account and no dashboard.
+<!-- feature:build -->- Build needs no account and no dashboard.<!-- /feature:build -->
 
 ## Install
 
@@ -72,30 +73,36 @@ The hooks are Bash scripts. On macOS and Linux, Bash is there already. On Window
 
 The install guide is at https://apexyard.ai/docs.
 
-## How Build connects to Gate
+<!-- feature:build gate -->## How Build connects to Gate<!-- /feature:build gate -->
 
-The ticket, the decision record and the review that your agents make in Build are what Gate checks on GitHub.
+<!-- feature:build gate -->The ticket, the decision record and the review that your agents make in Build are what Gate checks on GitHub.<!-- /feature:build gate -->
 
 ---
 
-# Cockpit (https://apexyard.ai/cockpit)
+<!-- /feature:build -->
 
-Cockpit is a preview of the desktop app for Build. It is not a fourth product. [Preview]
+<!-- feature:cockpit -->
+<!-- feature:cockpit --># Cockpit (https://apexyard.ai/cockpit)<!-- /feature:cockpit -->
 
-- What works today: a setup panel, governed runs that stop at each gate, a run view, a needs-you panel, and an ORBIT planning view.
+<!-- feature:build cockpit -->Cockpit is a preview of the desktop app for Build. It is not a fourth product. [Preview]<!-- /feature:build cockpit -->
+
+<!-- feature:gate -->- What works today: a setup panel, governed runs that stop at each gate, a run view, a needs-you panel, and an ORBIT planning view.<!-- /feature:gate -->
 - Known limit: sign-in with your ApexYard account is off. [Planned]
 - Known limit: a governed run can call gh with your GitHub login, and that login can merge pull requests.
-- How to get it: there is no download yet. Today you build it from source, and you need access to the source repository. Write to us to ask for access.
+<!-- feature:build -->- How to get it: there is no download yet. Today you build it from source, and you need access to the source repository. Write to us to ask for access.<!-- /feature:build -->
 
 ---
 
-# Gate (https://apexyard.ai/gate)
+<!-- /feature:cockpit -->
 
-Gate checks each pull request against your process. Each merge needs a passing check and the approval of a person your team names.
+<!-- feature:gate -->
+<!-- feature:gate --># Gate (https://apexyard.ai/gate)<!-- /feature:gate -->
 
-Gate is for engineering leads whose teams merge code that agents wrote.
+<!-- feature:gate -->Gate checks each pull request against your process. Each merge needs a passing check and the approval of a person your team names.<!-- /feature:gate -->
 
-## What Gate does
+<!-- feature:gate -->Gate is for engineering leads whose teams merge code that agents wrote.<!-- /feature:gate -->
+
+<!-- feature:gate -->## What Gate does<!-- /feature:gate -->
 
 - It puts the result in the checks of the pull request. The result shows what passed, what is missing and the next step. [Early teams (by hand)]
 - It checks four things: a linked ticket, a decision record, a review and a named approval.
@@ -104,9 +111,9 @@ Gate is for engineering leads whose teams merge code that agents wrote.
 - It shows every open change on one screen. You see what each pull request is missing and who holds it up. [Early teams (by hand)]
 - The organisation view shows which pull requests skipped a step, in every repository. [Early teams (by hand)]
 
-Gate blocks a merge only when you make the check required in GitHub.
+<!-- feature:gate -->Gate blocks a merge only when you make the check required in GitHub.<!-- /feature:gate -->
 
-Each hosted part has one label: Available now, Early teams (by hand), or Planned with its date. The hosted Gate runs by hand for early teams today.
+<!-- feature:gate -->Each hosted part has one label: Available now, Early teams (by hand), or Planned with its date. The hosted Gate runs by hand for early teams today.<!-- /feature:gate -->
 
 ## What the GitHub App can see
 
@@ -121,21 +128,24 @@ Checked on 10 November 2026 with the GitHub API: the App holds these four permis
 
 You can remove the App at any time.
 
-## How Gate connects to Build
+<!-- feature:build gate -->## How Gate connects to Build<!-- /feature:build gate -->
 
-Gate checks the ticket, the decision record and the review that your agents make in Build.
+<!-- feature:build gate -->Gate checks the ticket, the decision record and the review that your agents make in Build.<!-- /feature:build gate -->
 
 ---
 
-# Readiness (https://apexyard.ai/readiness)
+<!-- /feature:gate -->
 
-Readiness measures each repository. It tells you if the repository is ready for production, area by area.
+<!-- feature:readiness -->
+<!-- feature:readiness --># Readiness (https://apexyard.ai/readiness)<!-- /feature:readiness -->
 
-Readiness is for CTOs and engineering leads who answer for what ships.
+<!-- feature:readiness -->Readiness measures each repository. It tells you if the repository is ready for production, area by area.<!-- /feature:readiness -->
 
-## What Readiness does
+<!-- feature:readiness -->Readiness is for CTOs and engineering leads who answer for what ships.<!-- /feature:readiness -->
 
-Readiness runs one audit on a repository. The audit has ten areas:
+<!-- feature:readiness -->## What Readiness does<!-- /feature:readiness -->
+
+<!-- feature:readiness -->Readiness runs one audit on a repository. The audit has ten areas:<!-- /feature:readiness -->
 
 - security
 - accessibility
@@ -150,27 +160,32 @@ Readiness runs one audit on a repository. The audit has ten areas:
 
 You get a go or no-go, the gaps in each area and the top actions.
 
-## How Readiness connects to Build
+<!-- feature:build readiness -->## How Readiness connects to Build<!-- /feature:build readiness -->
 
-Turn a finding into a rule. Your agents pick up the rule on their next ticket in Build.
+<!-- feature:build -->Turn a finding into a rule. Your agents pick up the rule on their next ticket in Build.<!-- /feature:build -->
 
 ---
+
+<!-- /feature:readiness -->
 
 # Keel
 
 Keel is the name for your team's rules and context. Every agent reads it.
 
-The rules that you write one time live in Keel. Build uses them to guide your agents. Gate uses them to check pull requests. Readiness uses them to measure repositories.
+<!-- feature:build gate readiness -->The rules that you write one time live in Keel. Build uses them to guide your agents. Gate uses them to check pull requests. Readiness uses them to measure repositories.<!-- /feature:build gate readiness -->
 
 ---
 
-# Pricing (https://apexyard.ai/pricing)
+<!-- feature:pricing -->
+<!-- feature:pricing --># Pricing (https://apexyard.ai/pricing)<!-- /feature:pricing -->
 
-Each product has its own plans: Build, Gate and Readiness. A fourth section lists assessments by people.
-Read the pricing page for the plans. This file gives no prices.
+<!-- feature:build gate readiness -->Each product has its own plans: Build, Gate and Readiness. A fourth section lists assessments by people.<!-- /feature:build gate readiness -->
+<!-- feature:pricing -->Read the pricing page for the plans. This file gives no prices.<!-- /feature:pricing -->
 Plan limits are not set yet. We publish them when the plans open. [Planned for 1 Mar 2027]
 
 ---
+
+<!-- /feature:pricing -->
 
 # Docs, architecture and skills
 

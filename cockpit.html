@@ -10,7 +10,7 @@
 <title>Cockpit preview: the desktop app for Build | ApexYard</title>
 <meta name="author" content="me2resh">
 <meta name="description" content="Cockpit is a preview of the desktop app for ApexYard Build. See what works today, the known limits and how to get it.">
-<link rel="canonical" href="https://apexyard.ai/cockpit">
+<link data-feature="cockpit" rel="canonical" href="https://apexyard.ai/cockpit">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -64,14 +64,14 @@
 <script>document.documentElement.classList.add("js")</script>
 <script src="/site.js" defer></script>
 </head>
-<body>
+<body data-feature="cockpit">
 
 <a href="#main" class="skip">Skip to content</a>
 
 <header class="hdr">
   <div class="hdr__bar">
     <a href="/" class="brand" aria-label="ApexYard home"><img class="brand__mark" src="/brand/apexyard-mark.svg" width="36" height="36" alt=""><span class="brand__word">ApexYard</span></a>
-    <nav class="nav" id="site-nav" aria-label="Primary"><a href="/build">Build</a><a href="/gate">Gate</a><a href="/readiness">Readiness</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
+    <nav class="nav" id="site-nav" aria-label="Primary"><a data-feature="build" href="/build">Build</a><a data-feature="gate" href="/gate">Gate</a><a data-feature="readiness" href="/readiness">Readiness</a><a data-feature="pricing" href="/pricing">Pricing</a><a href="/docs">Docs</a><a data-feature="gate" href="/waitlist?src=nav-login" class="nav__login" data-login="https://app.apexyard.ai" data-waitlist="/waitlist?src=nav-login">Log in</a></nav>
     <div class="hdr__keys">
       <a class="key key--primary key--sm mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Book a demo"><span class="lamp lamp--white" aria-hidden="true"></span><span>Book a demo</span></a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -83,8 +83,8 @@
   <section class="product-head" aria-labelledby="product-title">
     <div class="wrap">
       <p class="product-head__name">Cockpit <span class="state state--preview" data-cap="cockpit_app">Preview</span></p>
-      <h1 id="product-title"><span data-claim="cockpit_app">The desktop app for Build, for people who prefer a window to a terminal.</span></h1>
-      <p class="product-head__who">Cockpit is not a fourth product. It runs the steps of <a href="/build">Build</a> on your machine. The Gate and Readiness stay as they are.</p>
+      <h1 id="product-title" data-feature="build"><span data-claim="cockpit_app">The desktop app for Build, for people who prefer a window to a terminal.</span></h1>
+      <p class="product-head__who" data-feature="build gate readiness">Cockpit is not a fourth product. It runs the steps of <a data-feature="build" href="/build">Build</a> on your machine. The Gate and Readiness stay as they are.</p>
       <p class="product-head__cta"><a class="btn btn--primary mailto-cta" href="#" data-u="hello" data-d="apexyard.ai" data-s="Ask for Cockpit access">Ask for access</a></p>
       <p class="product-head__free">This is a preview. You cannot download it yet.</p>
     </div>
@@ -134,7 +134,7 @@
             <h2 class="section__title" id="get-title"><span class="stn" aria-hidden="true"></span>How to get it</h2>
             <p>There is no download yet. Today you build Cockpit from its source code. You need access to the source repository first. Write to us to ask for access.</p>
             <p>Cockpit is not part of a plan yet. Until it has a download, the plans do not charge for it. We will say here when you can download it.</p>
-            <p><a href="/docs/cockpit/overview">Read the Cockpit docs</a>. <a href="/pricing#cockpit">See Cockpit on the pricing page</a>.</p>
+            <p><a href="/docs/cockpit/overview">Read the Cockpit docs</a>. <a data-feature="pricing" href="/pricing#cockpit">See Cockpit on the pricing page</a>.</p>
           </div>
         </article>
       </div>
@@ -146,10 +146,10 @@
 <footer class="site-footer ftr t-dark">
   <div class="wrap site-footer__inner ftr__in">
     <nav class="ftr__nav" aria-label="Footer">
-      <a href="/build">Build</a>
-      <a href="/gate">Gate</a>
-      <a href="/readiness">Readiness</a>
-      <a href="/pricing">Pricing</a>
+      <a data-feature="build" href="/build">Build</a>
+      <a data-feature="gate" href="/gate">Gate</a>
+      <a data-feature="readiness" href="/readiness">Readiness</a>
+      <a data-feature="pricing" href="/pricing">Pricing</a>
       <a href="/docs">Docs</a>
       <a href="/docs/quickstart/architecture">Architecture</a>
       <a href="/skills">Skills</a>

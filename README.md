@@ -141,3 +141,17 @@ Before #171, the block showed a rolling 90-day pull request count and a count of
 `.github/workflows/shell-tests.yml` shellchecks the shell scripts and runs every `.github/tests/test-*.sh` — currently the CloudFront invalidation guard (#48), the count verifier (#69), and the derive library plus its README-sync assertion (#72). It also triggers on `README.md` and `og/render.sh`, because both are now bound to `derive-counts.sh`: a README edit that desyncs the definition block, or a `render.sh` edit that breaks the source, has to fail somewhere.
 
 It still does **not** run on a PR that only edits page content. Counts are therefore verified by running `verify-counts.sh` yourself, not by CI; wiring that to run per-PR needs a decision about cloning the framework repo in CI and pinning the ref.
+
+## Feature flags
+
+Add an area name to `SITE_FEATURES` in the staging environment, or to the
+repository variable `SITE_FEATURES_PRODUCTION` for live, then run the deploy
+again. Initial values: production `build`; staging
+`build,gate,readiness,pricing,cockpit`. Set these variables before the first deploy.
+An empty or missing value turns every area off.
+
+The deploy copies and filters the site before upload. Disabled pages and
+`data-feature` elements are removed, along with `<!-- feature:pricing -->` …
+`<!-- /feature:pricing -->` regions in text and XML. Space-separated names use
+ANY: `data-feature="build pricing"` stays when either area is on. A removed
+parent removes its children too. Unknown names fail the build.

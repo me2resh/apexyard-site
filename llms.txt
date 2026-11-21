@@ -5,19 +5,19 @@
 
 ApexYard has three products and a shared layer.
 
-- Build is the open-source framework. It runs on your machine.
-- Gate checks each pull request against your process.
-- Readiness measures each repository.
+<!-- feature:build -->- Build is the open-source framework. It runs on your machine.<!-- /feature:build -->
+<!-- feature:gate -->- Gate checks each pull request against your process.<!-- /feature:gate -->
+<!-- feature:readiness -->- Readiness measures each repository.<!-- /feature:readiness -->
 - Keel holds your team's rules and context. Every agent reads it.
 
 ## Pages
 
-- [Home](https://apexyard.ai/): what ApexYard does and how one rule moves through Build, Gate and Readiness
-- [Build](https://apexyard.ai/build): the open-source framework for your agents
-- [Gate](https://apexyard.ai/gate): the check on each pull request, and what the GitHub App can see
-- [Readiness](https://apexyard.ai/readiness): the audit of each repository
-- [Cockpit](https://apexyard.ai/cockpit): a preview of the desktop app for Build, what works today, the known limits and how to get it
-- [Pricing](https://apexyard.ai/pricing): the plans for each product
+<!-- feature:build gate readiness -->- [Home](https://apexyard.ai/): what ApexYard does and how one rule moves through Build, Gate and Readiness<!-- /feature:build gate readiness -->
+<!-- feature:build -->- [Build](https://apexyard.ai/build): the open-source framework for your agents<!-- /feature:build -->
+<!-- feature:gate -->- [Gate](https://apexyard.ai/gate): the check on each pull request, and what the GitHub App can see<!-- /feature:gate -->
+<!-- feature:readiness -->- [Readiness](https://apexyard.ai/readiness): the audit of each repository<!-- /feature:readiness -->
+<!-- feature:cockpit -->- [Cockpit](https://apexyard.ai/cockpit): a preview of the desktop app for Build, what works today, the known limits and how to get it<!-- /feature:cockpit -->
+<!-- feature:pricing -->- [Pricing](https://apexyard.ai/pricing): the plans for each product<!-- /feature:pricing -->
 - [Docs](https://apexyard.ai/docs): install guide, daily loop, gates, hooks and rules
 - [Architecture](https://apexyard.ai/docs/quickstart/architecture): what runs locally, what is hosted, the data flow and the GitHub App permissions
 - [Skills](https://apexyard.ai/skills): the slash commands, grouped by outcome
@@ -29,13 +29,13 @@ ApexYard has three products and a shared layer.
 
 ## Facts to use
 
-- Build is open source under the MIT licence. It needs no account and no dashboard.
-- Build works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.
-- Gate reads pull requests on GitHub. Our servers never fetch your code.
-- Gate shows if a pull request has a ticket, a decision record, a review and a named approval.
-- Readiness gives a go or no-go for a repository, the gaps in each area and the top actions.
+<!-- feature:build -->- Build is open source under the MIT licence. It needs no account and no dashboard.<!-- /feature:build -->
+<!-- feature:build -->- Build works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.<!-- /feature:build -->
+<!-- feature:gate -->- Gate reads pull requests on GitHub. Our servers never fetch your code.<!-- /feature:gate -->
+<!-- feature:gate -->- Gate shows if a pull request has a ticket, a decision record, a review and a named approval.<!-- /feature:gate -->
+<!-- feature:readiness -->- Readiness gives a go or no-go for a repository, the gaps in each area and the top actions.<!-- /feature:readiness -->
 - Keel is the name for your team's rules and context. Every agent reads it.
-- Each product has its own plans. See the pricing page. This file gives no prices.
+<!-- feature:pricing -->- Each product has its own plans. See the pricing page. This file gives no prices.<!-- /feature:pricing -->
 
 ## Source
 

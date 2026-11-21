@@ -78,15 +78,18 @@ fi
 
 # deploy-production must need approve-production and have no if: that can bypass it.
 prod_needs_approval() {
-  python3 - "$wf/deploy-aws.yml" <<'PY'
-import sys, yaml
-job = yaml.safe_load(open(sys.argv[1]))["jobs"]["deploy-production"]
-needs = job.get("needs")
-needs = [needs] if isinstance(needs, str) else (needs or [])
-cond = str(job.get("if", ""))
-if "approve-production" not in needs or "always()" in cond or "cancelled()" in cond:
+  python3 -I - "$wf/deploy-aws.yml" <<'PYTEST'
+import re, sys
+text = open(sys.argv[1]).read()
+match = re.search(r"^  deploy-production:\n(.*?)(?=^  [a-z][a-z0-9_-]*:|\Z)", text, re.M | re.S)
+if not match:
     sys.exit(1)
-PY
+job = match[1]
+if not re.search(r"^    needs: (?:approve-production|\[approve-production\])$", job, re.M):
+    sys.exit(1)
+if re.search(r"^    if:.*(?:always\(\)|cancelled\(\))", job, re.M):
+    sys.exit(1)
+PYTEST
 }
 
 assert "staging dispatch is manual only"            bash -c "! grep -qE '^\s*push:' '$wf/deploy-aws-staging.yml'"

@@ -12,7 +12,7 @@ ApexYard ships 69 slash commands grouped under outcome headings — Keep quality
 
 ## What ApexYard does
 
-Each `/<name>` is a structured workflow with safety rails. Checks run at the point where they matter. For example, `/approve-merge` writes a record that the merge gate verifies before the merge runs. Every skill is defined in `.claude/skills/<name>/SKILL.md`.
+<!-- feature:gate -->Each `/<name>` is a structured workflow with safety rails. Checks run at the point where they matter. For example, `/approve-merge` writes a record that the merge gate verifies before the merge runs. Every skill is defined in `.claude/skills/<name>/SKILL.md`.<!-- /feature:gate -->
 
 ## What you need to start
 
@@ -26,11 +26,11 @@ The skills that catch mistakes before they reach customers — reviews, audits, 
 
 - `/code-review <pr>` — ask Rex to review a pull request against the repository rules.
 - `/security-review <pr>` — invoke the Security Reviewer agent (Hakim) on a PR.
-- `/design-review <pr>` — review a technical design / migration decision-record / feature spec for architectural soundness before Build; invokes the Solution Architect agent (Tariq), the non-code analog of `/code-review`.
-- `/challenge <idea | feature | decision | plan>` — invoke The Contrarian (Naqid) to steelman then challenge a premise; advisory only, never blocks a gate.
+<!-- feature:build -->- `/design-review <pr>` — review a technical design / migration decision-record / feature spec for architectural soundness before Build; invokes the Solution Architect agent (Tariq), the non-code analog of `/code-review`.<!-- /feature:build -->
+<!-- feature:gate -->- `/challenge <idea | feature | decision | plan>` — invoke The Contrarian (Naqid) to steelman then challenge a premise; advisory only, never blocks a gate.<!-- /feature:gate -->
 - `/eval-agents <rex | hakim | tariq>` — score a review agent against a labelled PR corpus; headline metric is approve-precision, not a prose rubric.
 - `/audit-deps` — audit dependencies for vulnerabilities, outdated packages, licences.
-- `/launch-check` — production readiness audit across the dimensions that matter at a release boundary.
+<!-- feature:readiness -->- `/launch-check` — production readiness audit across the dimensions that matter at a release boundary.<!-- /feature:readiness -->
 - `/threat-model` — threat modelling across 6 attack categories (spoofing, tampering, repudiation, disclosure, denial of service, elevation of privilege).
 - `/accessibility-audit` — WCAG 2.1 AA audit.
 - `/compliance-check` — GDPR + ePrivacy audit (consent, privacy policy, data handling, right to deletion, DPAs).
@@ -49,10 +49,10 @@ Capture an idea, file a ticket, record a decision, approve a merge — everythin
 - `/start-ticket <N> | <owner>/<repo>#<N>` — Declare an active ticket for this session so the ticket-first hook lets code edits through.
 - `/approve-merge <pr>` — Record per-PR CEO approval and merge in one turn. Only on an explicit per-PR "approved" — never on umbrella "go".
 - `/approve-design <pr>` — Record per-PR design-review approval for UI PRs.
-- `/approve-architecture <pr>` — Record per-PR architecture-review approval so a design-artifact PR clears the architecture merge gate.
+<!-- feature:gate -->- `/approve-architecture <pr>` — Record per-PR architecture-review approval so a design-artifact PR clears the architecture merge gate.<!-- /feature:gate -->
 - `/decide` — Make a technical decision and record it permanently — what you considered, what you picked, why. Required before architecture changes.
 - `/idea` — Capture a new product idea / feature concept / internal tool proposal to the shared backlog.
-- `/validate-idea` — Lightweight 5-question pre-spec gate between `/idea` and `/write-spec`.
+<!-- feature:gate -->- `/validate-idea` — Lightweight 5-question pre-spec gate between `/idea` and `/write-spec`.<!-- /feature:gate -->
 - `/write-spec` — Generate a PRD or feature spec from a problem statement.
 - `/plan-initiative` — Initiative → milestones → tasks with dependency-aware sequencing.
 - `/orbit <plan | snapshot | reconcile | slice | validate | lint | status | handoff> --project <name>` — Run the opt-in ORBIT planning lifecycle for one managed project. The ORBIT CLI writes and validates the records under the project's `docs/orbit/` directory. ApexYard governance does not change.
@@ -62,11 +62,11 @@ Capture an idea, file a ticket, record a decision, approve a merge — everythin
 - `/report-apexyard-bug` — Report a bug in the apexyard framework *itself* (hook misfire, skill gap, rule bug), filed upstream. Distinct from `/bug`, which files into your own project.
 - `/task` — Create a structured technical task ticket (driver, scope, ACs) for tech debt, infra, refactoring.
 - `/spike` — Create a hypothesis-driven, time-boxed spike ticket. Exempt from decision-record + coverage gates.
-- `/spike-close --promote | --discard` — Disposition gate for spikes — promote files a fresh `[Feature]`; discard writes a memo.
+<!-- feature:gate -->- `/spike-close --promote | --discard` — Disposition gate for spikes — promote files a fresh `[Feature]`; discard writes a memo.<!-- /feature:gate -->
 - `/prototype` — Create a throwaway UX/demo prototype ticket — the "what should it look and feel like?" sibling of `/spike`. Same exemptions.
-- `/prototype-close --promote | --discard` — Disposition gate for prototypes — the mirror of `/spike-close`.
+<!-- feature:gate -->- `/prototype-close --promote | --discard` — Disposition gate for prototypes — the mirror of `/spike-close`.<!-- /feature:gate -->
 - `/walking-skeleton` — Scaffold a `[Feature]` for the thinnest end-to-end slice through every layer. Unlike a spike it is *kept* and grown — full SDLC, no exemptions.
-- `/migration` — Create a labelled migration ticket + matching decision record (rollback, downtime, consumers, observability). Required by the migration gate.
+<!-- feature:gate -->- `/migration` — Create a labelled migration ticket + matching decision record (rollback, downtime, consumers, observability). Required by the migration gate.<!-- /feature:gate -->
 - `/investigation` — Create an investigation ticket + live-doc for sustained root-cause work.
 - `/tickets-batch` — Bulk-file 5–20 structured tickets in one flow (shared-context Qs once, 3-Q micro-interview per ticket).
 

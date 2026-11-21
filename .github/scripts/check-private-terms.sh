@@ -136,7 +136,8 @@ sys.stdout.flush()
 if mode == "text":
     hits = 0
     checked = 0
-    for name in sorted(os.listdir(repo)):
+    for name in sorted(os.path.relpath(os.path.join(base, name), repo)
+                       for base, _, files in os.walk(repo) for name in files):
         path = os.path.join(repo, name)
         if not os.path.isfile(path):
             continue

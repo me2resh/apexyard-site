@@ -4,7 +4,7 @@
 
 ## What ApexYard is
 
-ApexYard supports a daily workflow. You review work, respond to findings, check release readiness, and record the result.
+<!-- feature:readiness -->ApexYard supports a daily workflow. You review work, respond to findings, check release readiness, and record the result.<!-- /feature:readiness -->
 
 ## What ApexYard does
 
@@ -58,7 +58,7 @@ The review runs again against the new commit. When the findings are resolved, yo
 
 ## Afternoon — getting ready to launch
 
-The billing change is ready for release. Before customers see it, you run a launch-readiness check.
+<!-- feature:readiness -->The billing change is ready for release. Before customers see it, you run a launch-readiness check.<!-- /feature:readiness -->
 
 The check produces a structured report for security, accessibility, performance, privacy, monitoring, documentation, and other configured dimensions.
 
@@ -94,7 +94,7 @@ That is the point. You get the engineering rigor without becoming an engineer. Y
 
 Install the CLI. Run `/setup` in your project. Start your first day.
 
-Start free with the open-source framework. Add the Gate when your team needs proof of each approval.
+<!-- feature:gate -->Start free with the open-source framework. Add the Gate when your team needs proof of each approval.<!-- /feature:gate -->
 
 ## Links
 
