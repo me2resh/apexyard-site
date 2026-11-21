@@ -361,6 +361,10 @@ code, pre { font-family: var(--mono); font-weight: 500; font-size: 0.88em; }
 .oss { display: grid; gap: 2.5rem; }
 .oss > * { min-width: 0; }
 @media (min-width: 900px) { .oss { grid-template-columns: 5fr 7fr; gap: 4rem; align-items: start; } }
+/* #206: Hadi's avatar sits left of the install heading, sized a little above its cap height. */
+.oss__title { display: flex; align-items: center; gap: .5rem; }
+.oss__avatar { flex: none; display: block; }
+.oss__avatar img { display: block; width: 1.75rem; height: 1.75rem; border-radius: 50%; background: var(--crew-av); }
 .oss__text p + p { margin-top: 1rem; }
 .oss__text p { color: var(--ink-2); max-width: 48ch; }
 .oss__text p.oss__paid { margin-top: 0.75rem; color: var(--ink-2); max-width: 48ch; }
