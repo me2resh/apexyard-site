@@ -16,7 +16,7 @@ ApexYard gives your agents a team's process. Then it checks every pull request a
 
 | Name | Say this |
 |------|----------|
-| Build | The open-source framework. It guides your agents. |
+<!-- feature:build -->| Build | The open-source framework. It guides your agents. |<!-- /feature:build -->
 <!-- feature:gate -->| Gate | Checks each pull request against your process. |<!-- /feature:gate -->
 <!-- feature:readiness -->| Readiness | Measures each repository. |<!-- /feature:readiness -->
 | Keel | Your team's rules and context, read by every agent. |
@@ -29,10 +29,10 @@ Example rule: "Every API endpoint checks who is calling." Your team adds it to i
 
 ## Facts you can state
 
-- Build is open source under the MIT licence.
-- Build needs no account and no dashboard.
-- Build works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.
-- Build runs on the developer's machine.
+<!-- feature:build -->- Build is open source under the MIT licence.<!-- /feature:build -->
+<!-- feature:build -->- Build needs no account and no dashboard.<!-- /feature:build -->
+<!-- feature:build -->- Build works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.<!-- /feature:build -->
+<!-- feature:build -->- Build runs on the developer's machine.<!-- /feature:build -->
 <!-- feature:gate -->- Gate checks each pull request on GitHub.<!-- /feature:gate -->
 <!-- feature:gate -->- Gate checks for a ticket, a decision record, a review and a named approval.<!-- /feature:gate -->
 <!-- feature:gate -->- Our servers never fetch your code. The Gate GitHub App has no Contents permission. It sees pull request titles, descriptions and changed file names, not the files.<!-- /feature:gate -->
@@ -50,7 +50,7 @@ Example rule: "Every API endpoint checks who is calling." Your team adds it to i
 
 ## Who it is for
 
-- Founders and engineering leads who want agent speed and a real process (Build).
+<!-- feature:build -->- Founders and engineering leads who want agent speed and a real process (Build).<!-- /feature:build -->
 <!-- feature:gate -->- Engineering leads whose teams merge code that agents wrote (Gate).<!-- /feature:gate -->
 <!-- feature:readiness -->- CTOs and engineering leads who answer for what ships (Readiness).<!-- /feature:readiness -->
 

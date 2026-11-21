@@ -14,7 +14,7 @@ ApexYard gives your agents a team's process. Then it checks every pull request a
 
 <!-- feature-all:gate readiness -->ApexYard has three products: Build, Gate and Readiness.
 <!-- /feature-all:gate readiness -->
-<!-- feature-off:gate readiness -->Build guides your agents with shared rules.
+<!-- feature-off:gate readiness --><!-- feature:build -->Build guides your agents with shared rules.<!-- /feature:build -->
 <!-- /feature-off:gate readiness -->
 Keel is the shared layer under them.
 
@@ -78,7 +78,7 @@ The install guide is at https://apexyard.ai/docs.
 
 <!-- feature:gate -->## How Build connects to Gate<!-- /feature:gate -->
 
-<!-- feature:gate -->The ticket, the decision record and the review that your agents make in Build are what Gate checks on GitHub.<!-- /feature:gate -->
+<!-- feature:build --><!-- feature:gate -->The ticket, the decision record and the review that your agents make in Build are what Gate checks on GitHub.<!-- /feature:gate --><!-- /feature:build -->
 
 ---
 
@@ -87,7 +87,7 @@ The install guide is at https://apexyard.ai/docs.
 <!-- feature:cockpit -->
 <!-- feature:cockpit --># Cockpit (https://apexyard.ai/cockpit)<!-- /feature:cockpit -->
 
-<!-- feature:cockpit -->Cockpit is a preview of the desktop app for Build. It is not a fourth product. [Preview]<!-- /feature:cockpit -->
+<!-- feature:build --><!-- feature:cockpit -->Cockpit is a preview of the desktop app for Build. It is not a fourth product. [Preview]<!-- /feature:cockpit --><!-- /feature:build -->
 
 <!-- feature:gate -->- What works today: a setup panel, governed runs that stop at each gate, a run view, a needs-you panel, and an ORBIT planning view.<!-- /feature:gate -->
 - Known limit: sign-in with your ApexYard account is off. [Planned]
@@ -131,9 +131,9 @@ Checked on 10 November 2026 with the GitHub API: the App holds these four permis
 
 You can remove the App at any time.
 
-<!-- feature:gate -->## How Gate connects to Build<!-- /feature:gate -->
+<!-- feature:build --><!-- feature:gate -->## How Gate connects to Build<!-- /feature:gate --><!-- /feature:build -->
 
-<!-- feature:gate -->Gate checks the ticket, the decision record and the review that your agents make in Build.<!-- /feature:gate -->
+<!-- feature:build --><!-- feature:gate -->Gate checks the ticket, the decision record and the review that your agents make in Build.<!-- /feature:gate --><!-- /feature:build -->
 
 ---
 
@@ -163,7 +163,7 @@ You can remove the App at any time.
 
 You get a go or no-go, the gaps in each area and the top actions.
 
-<!-- feature:readiness -->## How Readiness connects to Build<!-- /feature:readiness -->
+<!-- feature:build --><!-- feature:readiness -->## How Readiness connects to Build<!-- /feature:readiness --><!-- /feature:build -->
 
 <!-- feature:build -->Turn a finding into a rule. Your agents pick up the rule on their next ticket in Build.<!-- /feature:build -->
 

@@ -5,7 +5,7 @@
 
 <!-- feature-all:gate readiness -->ApexYard has three products and a shared layer.
 <!-- /feature-all:gate readiness -->
-<!-- feature-off:gate readiness -->Build guides your agents with shared rules.
+<!-- feature-off:gate readiness --><!-- feature:build -->Build guides your agents with shared rules.<!-- /feature:build -->
 <!-- /feature-off:gate readiness -->
 
 <!-- feature:build -->- Build is the open-source framework. It runs on your machine.<!-- /feature:build -->
@@ -22,7 +22,7 @@
 <!-- feature:build -->- [Build](https://apexyard.ai/build): the open-source framework for your agents<!-- /feature:build -->
 <!-- feature:gate -->- [Gate](https://apexyard.ai/gate): the check on each pull request, and what the GitHub App can see<!-- /feature:gate -->
 <!-- feature:readiness -->- [Readiness](https://apexyard.ai/readiness): the audit of each repository<!-- /feature:readiness -->
-<!-- feature:cockpit -->- [Cockpit](https://apexyard.ai/cockpit): a preview of the desktop app for Build, what works today, the known limits and how to get it<!-- /feature:cockpit -->
+<!-- feature:build --><!-- feature:cockpit -->- [Cockpit](https://apexyard.ai/cockpit): a preview of the desktop app for Build, what works today, the known limits and how to get it<!-- /feature:cockpit --><!-- /feature:build -->
 <!-- feature:pricing -->- [Pricing](https://apexyard.ai/pricing): the plans for each product<!-- /feature:pricing -->
 - [Docs](https://apexyard.ai/docs): install guide, daily loop, gates, hooks and rules
 - [Architecture](https://apexyard.ai/docs/quickstart/architecture): what runs locally, what is hosted, the data flow and the GitHub App permissions

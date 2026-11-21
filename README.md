@@ -164,9 +164,29 @@ Preview builds read repository `SITE_FEATURES`, falling back to all five; they
 cannot read the staging environment variable.
 
 ANY tags are for containers with individually tagged children. Split prose by
-area; never use ANY to retain a sentence naming disabled products. The filtered
-tree excludes source-only `docs/`, `docs-site/`, `handbooks/`, OG templates and
-repository README/AGENTS files. The build-only text scan has no word allowlist.
+area; never use ANY to retain a sentence naming disabled products.
+`data-feature="build pricing"` and `<!-- feature:build pricing -->` use ANY:
+they show when at least one listed area is on. `<!-- feature-all:build pricing -->`
+shows only when every listed area is on. `<!-- feature-off:build pricing -->`
+shows when at least one listed area is off, including the all-off state.
+Close regions with the same mode and names: `<!-- /feature-all:build pricing -->`
+or `<!-- /feature-off:build pricing -->`. Nest tags to require another area.
+For example, `<!-- feature-off:gate readiness --><!-- feature:build -->Build guides your agents.<!-- /feature:build --><!-- /feature-off:gate readiness -->`
+shows only when Build is on and Gate or Readiness is off. The only HTML feature
+attribute is `data-feature`; ALL and off modes use comment regions.
+Keep these markers outside inline scripts. The game reads tagged HTML copy.
+
+The filter keeps `docs/`, including built docs and their search index. Each site
+sync excludes `docs/*`; the v2 deploy uploads built docs separately. The filter
+excludes `docs-site/`, `handbooks/`, OG templates and repository README/AGENTS files.
+The empty and single-area tests scan published text, metadata, links and filenames.
+HTML attribute identifiers are not product mentions. Lowercase `build` is a verb
+or compilation noun. Exact generic exceptions are “Build the loop”, “Build a
+level header”, “Build a working prompt”, “Build-only verify”, “Build, under
+governance” and “Apple's gate”. No other capitalised Build or case-insensitive
+Gate, Readiness, Pricing or Cockpit word is exempt.
+The all-on content test detects filtering loss against the current source,
+excluding feature-off alternatives; it does not guard against source edits.
 Bare/empty feature attributes, tagged non-void self-closing HTML and malformed
 feature region names fail the filter.
 

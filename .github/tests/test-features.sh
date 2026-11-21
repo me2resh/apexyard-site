@@ -4,7 +4,7 @@ set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
-for flags in 'build,gate,readiness,pricing,cockpit' '' build; do
+for flags in 'build,gate,readiness,pricing,cockpit' '' build gate readiness pricing cockpit; do
   out="$tmp/out-${flags:-none}"
   "$root/.github/scripts/apply-features.sh" "$root" "$out" "$flags"
   python3 -I - "$out" "$flags" <<'PY'
@@ -46,12 +46,30 @@ for page in root.rglob('*'):
     # Internal docs source is excluded by site sync; built docs are tested below.
     if page.relative_to(root).parts[0] == 'docs': continue
     if page.suffix not in {'.html','.md','.txt','.xml','.json'} and not page.name.endswith('.md.gen'): continue
+    for f in removed:
+        assert not re.search(r'(?<![a-z0-9])'+f+r'(?![a-z0-9])',page.relative_to(root).as_posix(),re.I), (page,f,'disabled filename')
     text=page.read_text()
     for f in removed:
         assert not re.search(link_pattern(f),text,re.I), (page,f,'disabled link')
-    if sys.argv[2]=='build':
-        # No generic-word exceptions: all disabled product names are forbidden.
-        assert not re.search(r'\b(?:gate|readiness|pricing|cockpit)\b',text,re.I), (page,'disabled product name')
+    # Names are visible/script text and metadata, not HTML attribute identifiers
+    # such as data-feature or data-path. Links are checked above on raw text.
+    class Words(HTMLParser):
+        def __init__(self): super().__init__(); self.parts=[]
+        def handle_data(self,data): self.parts.append(data)
+        def handle_starttag(self,tag,attrs):
+            if tag == 'meta': self.parts.append(dict(attrs).get('content',''))
+    words=Words(); words.feed(text)
+    copy=' '.join(words.parts)
+    # Exact generic phrases only: imperative construction, compilation-only
+    # verification, and Apple's approval checkpoint. Never a product allowlist.
+    for phrase in ('Build the loop', 'Build a level header', 'Build a working prompt',
+                   'Build-only verify', 'Build, under governance', "Apple's gate"):
+        copy=copy.replace(phrase,'')
+    for f in removed:
+        # Build: capitalised product name only; lowercase build is a verb or
+        # compilation noun. Other names have no generic-word exceptions.
+        pattern = r'\bBuild\b' if f == 'build' else r'\b'+f+r'\b'
+        assert not re.search(pattern,copy,0 if f == 'build' else re.I), (page,f,'disabled product name')
 print('PASS feature output: '+(sys.argv[2] or 'all off'))
 PY
 done
