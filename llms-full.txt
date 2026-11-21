@@ -12,7 +12,10 @@ It is written in plain words. It gives no prices.
 
 ApexYard gives your agents a team's process. Then it checks every pull request against that process.
 
-ApexYard gives your agents a shared set of rules.
+<!-- feature-all:gate readiness -->ApexYard has three products: Build, Gate and Readiness.
+<!-- /feature-all:gate readiness -->
+<!-- feature-off:gate readiness -->Build guides your agents with shared rules.
+<!-- /feature-off:gate readiness -->
 Keel is the shared layer under them.
 
 | Name | What it does |
@@ -172,10 +175,13 @@ You get a go or no-go, the gaps in each area and the top actions.
 
 Keel is the name for your team's rules and context. Every agent reads it.
 
-The rules that you write one time live in Keel.
+<!-- feature-all:gate readiness -->The rules that you write one time live in Keel. Build uses them to guide your agents. Gate uses them to check pull requests. Readiness uses them to measure repositories.
+<!-- /feature-all:gate readiness -->
+<!-- feature-off:gate readiness -->The rules that you write one time live in Keel.
 <!-- feature:build -->Build uses them to guide your agents.<!-- /feature:build -->
 <!-- feature:gate -->Gate uses them to check pull requests.<!-- /feature:gate -->
 <!-- feature:readiness -->Readiness uses them to measure repositories.<!-- /feature:readiness -->
+<!-- /feature-off:gate readiness -->
 
 ---
 

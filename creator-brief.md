@@ -23,7 +23,7 @@ ApexYard gives your agents a team's process. Then it checks every pull request a
 
 ## The idea to explain
 
-Build guides your agents with the rules in Keel.
+You write a rule one time. <!-- feature:build -->Build guides your agents with it.<!-- /feature:build --> <!-- feature:gate -->Gate checks each pull request against it.<!-- /feature:gate --> <!-- feature:readiness -->Readiness measures the whole repository.<!-- /feature:readiness --> A miss becomes a new rule.
 
 Example rule: "Every API endpoint checks who is calling." Your team adds it to its handbook, marked blocking.
 
@@ -68,5 +68,8 @@ Example rule: "Every API endpoint checks who is calling." Your team adds it to i
 ## Wording rules
 
 - Use short sentences.
-- Name only the products shown on the site.
+<!-- feature-all:gate readiness -->- Name the product: Build, Gate, Readiness or Keel.
+<!-- /feature-all:gate readiness -->
+<!-- feature-off:gate readiness -->- Name only the products shown on the site.
+<!-- /feature-off:gate readiness -->
 - Say "pull request", not "PR", on first use.

@@ -2,6 +2,7 @@
 # Copy and filter the deploy tree. Empty/missing list means all off.
 # data-feature="build pricing" and feature:build pricing regions use ANY:
 # keep the element/region if at least one named feature is enabled.
+# feature-all requires every listed area; feature-off is its inverse.
 # Nested regions/elements also require every ancestor to be kept.
 set -euo pipefail
 python3 -I - "${1:?usage: apply-features.sh <src-dir> <out-dir> [comma-list]}" "${2:?out-dir required}" "${3:-}" <<'PY'
@@ -68,9 +69,11 @@ class Filter(HTMLParser):
 
 def regions(text, enabled):
     stack=[]; output=[]; last=0
-    for m in re.finditer(r'<!--\s*(/?)feature:([^>]*?)\s*-->',text):
+    for m in re.finditer(r'<!--\s*(/?)feature(-off|-all)?:([^>]*?)\s*-->',text):
         if all(keep for _,keep in stack): output.append(text[last:m.start()])
-        value=m[2].strip(); active=bool(names(value)&enabled)
+        value=m[3].strip(); mode=m[2] or ''; required=names(value)
+        active=(not required <= enabled) if mode=='-off' else (required <= enabled if mode=='-all' else bool(required & enabled))
+        value=mode+':'+value
         if m[1]:
             if not stack or stack[-1][0]!=value: fail('unmatched feature region: '+value)
             stack.pop()
@@ -88,7 +91,7 @@ try:
     if out.exists(): fail('out-dir already exists; use a fresh directory')
     shutil.copytree(src,out,ignore=shutil.ignore_patterns('.git','node_modules'),symlinks=True)
     # Source and tooling are not public site assets.
-    for directory in ('docs', 'docs-site', 'handbooks', 'og/templates'):
+    for directory in ('docs-site', 'handbooks', 'og/templates'):
         shutil.rmtree(out/directory, ignore_errors=True)
     for filename in ('README.md', 'AGENTS.md', 'og/README.md'):
         (out/filename).unlink(missing_ok=True)
@@ -112,7 +115,7 @@ try:
             if body and not names(body[1])&enabled: p.unlink(); continue
         text=regions(text,enabled)
         if p.suffix=='.html': text=Filter(text,enabled).result()
-        if p.suffix=='.txt': text=re.sub(r'\n(?:[ \t]*\n){2,}', '\n\n', text)
+        if p.name in {'llms.txt', 'llms-full.txt'}: text=re.sub(r'\n(?:[ \t]*\n){2,}', '\n\n', text)
         p.write_text(text)
     print('apply-features: enabled '+(','.join(sorted(enabled)) or '(none)'))
 except (ValueError,OSError) as error:

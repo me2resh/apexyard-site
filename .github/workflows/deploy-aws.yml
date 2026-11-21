@@ -60,6 +60,7 @@ jobs:
             --exclude ".git/*" \
             --exclude ".github/*" \
             --exclude "og/node_modules/*" \
+            --exclude "docs/*" \
             --exclude "og/templates/*" \
             --exclude "og/render*" \
             --exclude "og/package*.json" \
@@ -140,6 +141,7 @@ jobs:
             --exclude ".git/*" \
             --exclude ".github/*" \
             --exclude "og/node_modules/*" \
+            --exclude "docs/*" \
             --exclude "og/templates/*" \
             --exclude "og/render*" \
             --exclude "og/package*.json" \

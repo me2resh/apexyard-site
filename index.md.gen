@@ -2,8 +2,10 @@
 
 > ApexYard gives your agents a team's process, then checks every pull request against it. The framework is open source (MIT).
 
-<!-- feature:build -->## Your agents build with your rules.<!-- /feature:build -->
-<!-- feature:gate -->The Gate decides what ships.<!-- /feature:gate -->
+<!-- feature-all:gate -->## Your agents build. The gate decides what ships.
+<!-- /feature-all:gate -->
+<!-- feature-off:gate --><!-- feature:build -->## Your agents build. Your rules guide every change.<!-- /feature:build -->
+<!-- /feature-off:gate -->
 
 ApexYard gives your agents a team's process, then checks every pull request against it.
 
@@ -11,10 +13,13 @@ Agent agnostic. Works with Claude Code, Codex, Cursor, OpenCode, Pi and omp.
 
 ## One process, three places
 
-Keel holds your team's rules and context.
+<!-- feature-all:gate readiness -->Keel is your team's rules and context. Build, the Gate and Readiness all work from it. A miss comes back as a new rule.
+<!-- /feature-all:gate readiness -->
+<!-- feature-off:gate readiness -->Keel holds your team's rules and context.
 <!-- feature:build -->Build guides your agents with those rules.<!-- /feature:build -->
 <!-- feature:gate -->Gate checks pull requests against them.<!-- /feature:gate -->
 <!-- feature:readiness -->Readiness measures repositories against them.<!-- /feature:readiness -->
+<!-- /feature-off:gate readiness -->
 
 1. **Keel**: Every API endpoint checks who is calling. A rule your team adds to its handbook, marked blocking.
 <!-- feature:build -->2. **Build**: Before an agent writes code, it loads your rules. It writes each new endpoint with an auth check.<!-- /feature:build -->
@@ -60,8 +65,11 @@ npx create-apexyard --org <your-org> --name <new-private-repo> --private
 
 <!-- feature:gate -->Bring one of your repositories, and see what the Gate would have held. Book from <https://apexyard.ai/#book-a-demo>.<!-- /feature:gate -->
 
-<!-- feature:build -->Build is free and open source.<!-- /feature:build -->
+<!-- feature-all:gate pricing -->Build is free and open source. Pay when a team needs the hosted Gate, shared Keel and evidence. See plans: <https://apexyard.ai/pricing>.
+<!-- /feature-all:gate pricing -->
+<!-- feature-off:gate pricing --><!-- feature:build -->Build is free and open source.<!-- /feature:build -->
 <!-- feature:pricing -->See plans: <https://apexyard.ai/pricing>.<!-- /feature:pricing -->
+<!-- /feature-off:gate pricing -->
 
 ## More
 

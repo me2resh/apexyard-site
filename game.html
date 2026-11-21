@@ -2608,7 +2608,10 @@ function levelLoop(){
   const OPTS = [
     { id:'verify', label:'Verify with build + tests + review',
       desc:'Run the test suite and a code review every iteration — not just a green build.', risky:false, on:false },
-    { id:'halt',   label:'Halt at the human merge checkpoint',
+<!-- feature-all:gate -->    { id:'halt',   label:'Halt at the human merge gate',
+<!-- /feature-all:gate -->
+<!-- feature-off:gate -->    { id:'halt',   label:'Halt at the human merge checkpoint',
+<!-- /feature-off:gate -->
       desc:'The loop builds and reviews, then stops for a person to approve the merge. It never approves its own.', risky:false, on:false },
     { id:'budget', label:'Set a budget + iteration ceiling',
       desc:'Cap the tokens and the number of rounds up front. The loop stops at the ceiling.', risky:false, on:false },
@@ -2679,7 +2682,10 @@ function levelLoop(){
           ? 'Build-only verify ships broken behaviour — add the tests.'
           : 'No budget or cap is the runaway path — set a ceiling.');
     } else if (safe){
-      quality.className='cost-quality good'; quality.textContent='✓ Bounded, self-verifying, halts at the human checkpoint.';
+<!-- feature-all:gate -->      quality.className='cost-quality good'; quality.textContent='✓ Bounded, self-verifying, halts at the human gate.';
+<!-- /feature-all:gate -->
+<!-- feature-off:gate -->      quality.className='cost-quality good'; quality.textContent='✓ Bounded, self-verifying, halts at the human checkpoint.';
+<!-- /feature-off:gate -->
     } else {
       quality.className='cost-quality poor'; quality.textContent='Add the remaining guardrails before you let it run unattended.';
     }
@@ -2705,11 +2711,17 @@ function levelLoop(){
     verdict.innerHTML = riskyOn>0
       ? '✗ That loop runs off a cliff. One that can self-approve, skip tests, or never stop is a confident-mistake machine — fast, unaccountable, expensive.'
       : safe
-        ? '✓ Bounded, self-verifying, and it halts at the human checkpoint. That’s a loop you can actually leave running.'
+<!-- feature-all:gate -->        ? '✓ Bounded, self-verifying, and it halts at the human gate. That’s a loop you can actually leave running.'
+<!-- /feature-all:gate -->
+<!-- feature-off:gate -->        ? '✓ Bounded, self-verifying, and it halts at the human checkpoint. That’s a loop you can actually leave running.'
+<!-- /feature-off:gate -->
         : 'Decent — but an unguarded gap is where a loop quietly goes wrong. All five guardrails together make it safe to run unattended.';
     wrap.appendChild(verdict);
     showResult(sc, 100,
-      `<b>Key idea —</b> loop engineering is designing the loop that prompts the agent, instead of prompting each step yourself. The leverage is real, but a loop is only as good as its ability to <b>check its own work</b>, and only safe if it <b>halts</b>: verify with tests + review (not just a green build), cap the budget, and stop at a human checkpoint it can never skip. Build the loop — but stay the engineer.`,
+<!-- feature-all:gate -->      `<b>Key idea —</b> loop engineering is designing the loop that prompts the agent, instead of prompting each step yourself. The leverage is real, but a loop is only as good as its ability to <b>check its own work</b>, and only safe if it <b>halts</b>: verify with tests + review (not just a green build), cap the budget, and stop at a human gate it can never skip. Build the loop — but stay the engineer.`,
+<!-- /feature-all:gate -->
+<!-- feature-off:gate -->      `<b>Key idea —</b> loop engineering is designing the loop that prompts the agent, instead of prompting each step yourself. The leverage is real, but a loop is only as good as its ability to <b>check its own work</b>, and only safe if it <b>halts</b>: verify with tests + review (not just a green build), cap the budget, and stop at a human checkpoint it can never skip. Build the loop — but stay the engineer.`,
+<!-- /feature-off:gate -->
       'var(--amber)');
   });
 
@@ -2818,7 +2830,10 @@ const LEVELS = [
       title:'Stop prompting. Design the loop.',
       points:[
         "Instead of prompting an agent step by step, you design a <b>loop</b> that prompts it: discover → plan → execute → <b>verify</b> → repeat, until a goal is met. You write the loop; the model becomes the subroutine.",
-        "A loop is only as good as its ability to <b>check its own work</b> — and it's only safe if it <b>halts</b>. The guardrails are the point: verify with tests (not just a green build), cap the budget, and stop at a human checkpoint it can never skip."
+<!-- feature-all:gate -->        "A loop is only as good as its ability to <b>check its own work</b> — and it's only safe if it <b>halts</b>. The guardrails are the point: verify with tests (not just a green build), cap the budget, and stop at a human gate it can never skip."
+<!-- /feature-all:gate -->
+<!-- feature-off:gate -->        "A loop is only as good as its ability to <b>check its own work</b> — and it's only safe if it <b>halts</b>. The guardrails are the point: verify with tests (not just a green build), cap the budget, and stop at a human checkpoint it can never skip."
+<!-- /feature-off:gate -->
       ],
       terms:['loop engineering','verify + halt','agent loop'] } },
 ];

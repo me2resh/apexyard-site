@@ -43,6 +43,8 @@ for page in root.rglob('*.html'):
 # Every non-hidden text asset in the deploy tree, including Markdown alternates.
 for page in root.rglob('*'):
     if not page.is_file() or any(p.startswith('.') for p in page.relative_to(root).parts): continue
+    # Internal docs source is excluded by site sync; built docs are tested below.
+    if page.relative_to(root).parts[0] == 'docs': continue
     if page.suffix not in {'.html','.md','.txt','.xml','.json'} and not page.name.endswith('.md.gen'): continue
     text=page.read_text()
     for f in removed:
@@ -102,3 +104,31 @@ assert text.count('SITE_FEATURES: ${{ vars.SITE_FEATURES_PRODUCTION }}') == 2
 assert 'SITE_FEATURES: ${{ vars.SITE_FEATURES }}' not in text
 print('PASS main staging and production read the live feature list')
 PYCODE
+
+# The same shared filter runs on the built docs sub-tree before its sync.
+mkdir -p "$tmp/docs-fixture/docs/pagefind"
+printf '%s' '<body>Docs</body>' > "$tmp/docs-fixture/docs.html"
+printf '%s' 'search index' > "$tmp/docs-fixture/docs/pagefind/pagefind.js"
+printf '%s' '<body><p data-feature="gate">Hosted check</p><p>Docs</p></body>' > "$tmp/docs-fixture/docs/guide.html"
+for flags in build,gate,readiness,pricing,cockpit build; do
+  out="$tmp/docs-$flags"
+  "$root/.github/scripts/apply-features.sh" "$tmp/docs-fixture" "$out" "$flags"
+  cmp "$tmp/docs-fixture/docs/pagefind/pagefind.js" "$out/docs/pagefind/pagefind.js"
+  test -f "$out/docs/guide.html"
+  if [ "$flags" = build ]; then
+    if grep -q 'Hosted check' "$out/docs/guide.html"; then
+      echo 'FAIL disabled docs content survived'; exit 1
+    fi
+  fi
+  echo "PASS docs assets survive: $flags"
+done
+
+# ALL and its inverse must partition every partial state, with nesting intact.
+printf '%s' '<!-- feature-all:gate readiness -->original<!-- /feature-all:gate readiness --><!-- feature-off:gate readiness --><!-- feature:build -->Build alternative<!-- /feature:build --><!-- /feature-off:gate readiness -->' > "$tmp/fixture/llms.txt"
+printf '%s' '<body>fixture</body>' > "$tmp/fixture/index.html"
+for flags in build build,gate build,readiness build,gate,readiness; do
+  "$root/.github/scripts/apply-features.sh" "$tmp/fixture" "$tmp/alternative-$flags" "$flags"
+  if [ "$flags" = build,gate,readiness ]; then expected=original; else expected='Build alternative'; fi
+  [ "$(cat "$tmp/alternative-$flags/llms.txt")" = "$expected" ]
+done
+echo 'PASS ALL and feature-off alternatives across partial states'
