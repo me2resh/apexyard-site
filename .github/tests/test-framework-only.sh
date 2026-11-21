@@ -52,6 +52,13 @@ check('Keel returns with every flag', re.search(r'\bKeel\b', text_all) is not No
 js = (src / 'site.js').read_text()
 read = js[js.index('function readTarget'):js.index('function paint')]
 check('the marker rides at one third of the viewport', 'ANCHOR = 1 / 3' in js and 'vh * .6' not in read)
+# One site footer on every page, in every flag state. The old production footer is gone.
+for label, tree in (('free', free), ('all flags', full)):
+    pages = [p for p in tree.rglob('*.html') if p.relative_to(tree).parts[0] not in ('docs', 'apexdock')]
+    old = [p.name for p in pages if 'zero dependencies' in p.read_text() or 'legacy-legal' in p.read_text()]
+    check('no page holds the old footer (' + label + '): ' + ','.join(old), not old)
+    bad = [p.name + ':' + str(p.read_text().count('<footer')) for p in pages if p.read_text().count('<footer') != 1 and p.name not in ('game.html', 'architecture.html')]
+    check('every page has exactly one footer (' + label + '): ' + ','.join(bad), not bad)
 sys_exit = 1 if check.bad else 0
 print('framework-only: %d problem(s)' % check.bad)
 sys.exit(sys_exit)
