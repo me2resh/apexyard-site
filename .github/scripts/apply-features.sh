@@ -83,6 +83,32 @@ def regions(text, enabled):
     output.append(text[last:])
     return ''.join(output)
 
+SECTION = re.compile(r'<section\b(?=[^>]*\bclass="[^"]*\bsec\b[^"]*")(?=[^>]*\bdata-side="[lr]")[^>]*>')
+JOIN = re.compile(r'\s*<div class="join(?: join--rl)?" aria-hidden="true"><i></i><i></i><i></i></div>')
+def sides(original, text):
+    # The moving line runs down alternating sides, with a join between two
+    # sections. A removed section breaks that pattern, so rebuild it from the
+    # sections that stay (#202). The first section keeps the side of the
+    # first section of the unfiltered page.
+    before = SECTION.findall(original)
+    matches = list(SECTION.finditer(text))
+    if not before or len(matches) == len(before): return text
+    side = re.search(r'data-side="([lr])"', before[0])[1]
+    plan = []
+    for i in range(len(matches)):
+        if i: side = 'r' if side == 'l' else 'l'
+        plan.append(side)
+    for i in range(len(matches) - 1, -1, -1):
+        m = matches[i]
+        tag = re.sub(r'data-side="[lr]"', 'data-side="' + plan[i] + '"', m.group(0))
+        rest = text[m.end():]
+        old = JOIN.match(rest)
+        join = ''
+        if i:
+            join = '<div class="join' + (' join--rl' if plan[i] == 'l' else '') + '" aria-hidden="true"><i></i><i></i><i></i></div>'
+        text = text[:m.start()] + tag + join + rest[old.end() if old else 0:]
+    return text
+
 try:
     src,out=map(lambda s:Path(s).resolve(),sys.argv[1:3])
     enabled=set(filter(None,(s.strip() for s in sys.argv[3].split(','))))
@@ -114,7 +140,9 @@ try:
             body=re.search(r'<body\b[^>]*data-feature="([^"]+)"',text)
             if body and not names(body[1])&enabled: p.unlink(); continue
         text=regions(text,enabled)
-        if p.suffix=='.html': text=Filter(text,enabled).result()
+        if p.suffix=='.html':
+            original=text
+            text=sides(original,Filter(text,enabled).result())
         if p.name in {'llms.txt', 'llms-full.txt'}: text=re.sub(r'\n(?:[ \t]*\n){2,}', '\n\n', text)
         p.write_text(text)
     print('apply-features: enabled '+(','.join(sorted(enabled)) or '(none)'))

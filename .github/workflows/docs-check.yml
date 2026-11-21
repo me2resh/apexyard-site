@@ -9,6 +9,7 @@ on:
     paths:
       - 'docs-site/**'
       - '.github/scripts/build-docs.sh'
+      - '.github/tests/test-docs-features.sh'
       - '.github/workflows/docs-check.yml'
   push:
     branches: [staging]
@@ -43,3 +44,5 @@ jobs:
           fi
       - name: Build and check the docs
         run: .github/scripts/build-docs.sh "$RUNNER_TEMP/site"
+      - name: Check the docs build for each feature state
+        run: .github/tests/test-docs-features.sh

@@ -65,6 +65,10 @@ jobs:
           cache: npm
           cache-dependency-path: docs-site/package-lock.json
       - name: Build and check the docs
+        # SITE_FEATURES leaves the sidebar group, pages, search entries and
+        # links of a feature that is off out of the build (#202).
+        env:
+          SITE_FEATURES: ${{ vars.SITE_FEATURES }}
         run: .github/scripts/build-docs.sh "$RUNNER_TEMP/docs-out"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
