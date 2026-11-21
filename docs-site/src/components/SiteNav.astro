@@ -3,7 +3,8 @@
 // The items match the product site nav. Offer links stay off the docs pages.
 const features = 'SITE_FEATURES' in process.env ? process.env.SITE_FEATURES.split(',').map((x) => x.trim()) : ['gate'];
 // The Product section of the home page exists only with Gate on (#202).
-const product = features.includes('gate') ? '/#product' : '/build';
+// Without Gate, the link goes to the install section. It never goes to /build (#204).
+const product = features.includes('gate') ? '/#product' : '/#open-source';
 ---
 
 <nav class="ay-sitenav" aria-label="Site">

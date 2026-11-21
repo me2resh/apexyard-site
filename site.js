@@ -269,12 +269,14 @@
     return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
   }
 
+  /* #204: the marker rides one third of the way down the viewport. */
+  var ANCHOR = 1 / 3;
   function readTarget() {
     var vh = window.innerHeight;
     var max = document.documentElement.scrollHeight - vh;
     var sy = window.scrollY;
-    var base = heroStops.length || !stops.length ? vh * .6 : Math.min(stops[0].y, vh * .6);
-    var c = sy + base + (vh * .6 - base) * Math.min(1, sy / (vh * .5));
+    var base = heroStops.length || !stops.length ? vh * ANCHOR : Math.min(stops[0].y, vh * ANCHOR);
+    var c = sy + base + (vh * ANCHOR - base) * Math.min(1, sy / (vh * .5));
     var len = heroEnd;
     var start = { y: base, len: heroEnd };
     var prev = start;
@@ -285,7 +287,7 @@
     if (next) {
       len = prev.len + (next.len - prev.len) * Math.max(0, (c - prev.y) / (next.y - prev.y));
     } else {
-      var s0 = prev.y - vh * .6;
+      var s0 = prev.y - vh * ANCHOR;
       var f = max > s0 ? Math.max(0, (sy - s0) / (max - s0)) : 1;
       len = prev.len + (total - prev.len) * Math.min(1, f);
     }

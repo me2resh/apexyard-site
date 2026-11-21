@@ -62,9 +62,31 @@ for sec in nav['sections']:
     for g in sec['groups']:
         n = len(g['pages'])
         assert re.search(re.escape(g['title']) + r'.{0,2000}?' + str(n) + ' page' + ('' if n == 1 else 's'), home, re.S), (g['id'], 'count on home')
-# The header link: /#product needs Gate, /build otherwise.
-want = '/#product' if 'gate' in enabled else '/build'
+# The header link: /#product needs Gate, /#open-source otherwise. No docs page links to /build (#204).
+want = '/#product' if 'gate' in enabled else '/#open-source'
 assert ('href="' + want + '">Product<') in home, ('header link', want)
+for page in dist.rglob('*.html'):
+    assert 'href="/build"' not in page.read_text(), (page.name, 'link to the Build page')
+# #204: with no paid flag, the docs are about the framework only. Keel is a paid-area name.
+paid = bool(enabled & {'gate', 'readiness', 'pricing', 'cockpit'})
+def visible(path):
+    text = re.sub(r'<(script|style)\b.*?</\1>', '', path.read_text(), flags=re.S)
+    return re.sub(r'<[^>]+>', ' ', text)
+arch = dist / 'quickstart/architecture.html'
+for name in ('index.html', 'quickstart/architecture.html', 'quickstart/glossary.html'):
+    assert (re.search(r'\bKeel\b', visible(dist / name)) is not None) == paid, (name, 'Keel visibility')
+assert ('framework-architecture.svg' in arch.read_text()) == (not paid), 'framework architecture page'
+assert ('keel-architecture.svg' in arch.read_text()) == paid, 'product architecture page'
+if not paid:
+    text = visible(arch)
+    for word in ('Keel', 'hosted check', 'dashboard', 'Readiness', 'GitHub App'):
+        assert word not in text, ('architecture page names a paid product', word)
+    assert 'The five-layer model' in text
+# One footer on every docs page.
+for page in dist.rglob('*.html'):
+    body = page.read_text()
+    if 'ay-footer' in body:
+        assert body.count('class="ay-footer"') == 1 and body.count('ApexScript Ltd.') == 1 and body.count('<footer class=') == 1, (page.name, 'one footer')
 # The sidebar group labels and the group counts.
 labels = {'cockpit': 'Cockpit (Preview)', 'gate': 'The hosted gate', 'readiness': 'Readiness'}
 for feature, label in labels.items():
@@ -75,7 +97,7 @@ print('PASS docs features: ' + (sys.argv[2] or 'none'))
 PY
 }
 
-for flags in 'build' 'build,gate' 'build,upcoming' 'build,gate,upcoming' 'build,gate,readiness,pricing,cockpit,upcoming'; do
+for flags in 'build' 'build,gate' 'build,upcoming' 'build,gate,upcoming' 'build,buildpage,gate,readiness,pricing,cockpit,upcoming'; do
   (cd "$root/docs-site" && SITE_FEATURES="$flags" npm run build >/dev/null)
   check "$flags"
   # Pagefind stores the indexed text in compressed fragments, so assert on

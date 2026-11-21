@@ -19,7 +19,7 @@ ApexYard gives your agents a team's process. Then it checks every pull request a
 <!-- feature:build -->| Build | The open-source framework. It guides your agents. |<!-- /feature:build -->
 <!-- feature:gate -->| Gate | Checks each pull request against your process. |<!-- /feature:gate -->
 <!-- feature:readiness -->| Readiness | Measures each repository. |<!-- /feature:readiness -->
-| Keel | Your team's rules and context, read by every agent. |
+<!-- feature:gate readiness pricing -->| Keel | Your team's rules and context, read by every agent. |<!-- /feature:gate readiness pricing -->
 
 ## The idea to explain
 
@@ -57,7 +57,7 @@ Example rule: "Every API endpoint checks who is calling." Your team adds it to i
 ## Links
 
 - Home: https://apexyard.ai/
-<!-- feature:build -->- Build: https://apexyard.ai/build<!-- /feature:build -->
+<!-- feature:buildpage -->- Build: https://apexyard.ai/build<!-- /feature:buildpage -->
 <!-- feature:gate -->- Gate: https://apexyard.ai/gate<!-- /feature:gate -->
 <!-- feature:readiness -->- Readiness: https://apexyard.ai/readiness<!-- /feature:readiness -->
 <!-- feature:pricing -->- Pricing: https://apexyard.ai/pricing<!-- /feature:pricing -->
