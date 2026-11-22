@@ -126,6 +126,22 @@ for (let sy = 0; sy <= shortHeight - vh; sy += 5) {
 }
 console.log('PASS  a line visible at load, or ending above the page bottom, keeps the marker in view');
 
+// Regression (Rex, PR 213): how-it-works, skills and pricing show the line at
+// load (first point 75px from the top) with an early horizontal run and then
+// a tall vertical stretch. The marker must stay below the 67px sticky header
+// (z-index above the marker) for the middle 70% of progress.
+const hiw = [[300, 75], [300, 140], [1000, 140], [1000, 900], [300, 900], [300, 1800], [1000, 1800], [1000, 2600]];
+const hiwHeight = 3100;
+const hiwEnd = hiwHeight - vh;
+for (let sy = 0; sy <= hiwEnd; sy += 5) {
+  const pr = sy / hiwEnd;
+  const y = pointAt0(hiw, api.markerLen(vh, sy, hiwHeight, hiw))[1];
+  assert(y >= sy - 1e-6 && y <= sy + vh + 1e-6, 'how-it-works: marker y ' + y + ' outside viewport at sy=' + sy);
+  if (pr >= 0.15 && pr <= 0.85) assert(y - sy >= 67 - 1e-6, 'how-it-works: marker ' + (y - sy).toFixed(1) + 'px from the viewport top (under the 67px header) at sy=' + sy);
+}
+assert.strictEqual(api.markerLen(vh, 0, 2, [[1, 1]]), 0, 'a single point returns 0, not NaN');
+console.log('PASS  a line on screen at load keeps the marker below the sticky header');
+
 function pointAt0(p, len) {
   const c = [0];
   for (let i = 1; i < p.length; i += 1) {

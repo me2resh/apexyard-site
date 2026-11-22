@@ -291,6 +291,7 @@
   var HORIZ_COST = 0.15;
   var DRIFT = 0.25;
   var BAND = 0.55;
+  var HEADER = 67; /* sticky header height on desktop (60 on phones); z-index 60 above the marker */
 
   function ease(t) { t = Math.min(1, Math.max(0, t)); return t * t * (3 - 2 * t); }
 
@@ -305,7 +306,7 @@
   }
 
   function markerLen(vh, sy, scrollHeight, points) {
-    if (!points || !points.length) return 0;
+    if (!points || points.length < 2) return 0;
     var c = arcCum(points);
     var n = points.length;
     var all = c[n - 1];
@@ -318,51 +319,64 @@
     if (p > 1) p = 1;
     var f0 = Math.min(1, lineTop / vh);
     var e = Math.min(1, (lineBottom - (scrollHeight - vh)) / vh);
-    var m = Math.min(BAND, f0);
-    var d1 = span > 0 ? Math.min(0.4, 1.5 * (f0 - m) * vh / span * 1.05) : 0;
+    var m = BAND;
+    var d1 = span > 0 ? Math.min(0.4, 1.5 * Math.abs(f0 - m) * vh / span * 1.05) : 0;
     var d2 = span > 0 ? Math.min(0.4, 1.5 * Math.abs(m - e) * vh / span * 1.05) : 0;
     var f = m;
     if (d1 > 0 && p < d1) f = f0 + (m - f0) * ease(p / d1);
     if (p > 1 - d2) f = m + (e - m) * ease((p - (1 - d2)) / d2);
     else if (p >= 1) f = e;
     var yT = Math.min(lineBottom, Math.max(lineTop, sy + f * vh));
-    /* weighted cost table: vertical 1:1, horizontal HORIZ_COST */
+    /* Target-y axis: Yv[i] is the target y at which the marker reaches
+       vertex i. A horizontal run at y_k (dy === 0) takes the target range
+       [y_k - h, y_k], h = hw * length, so the marker sweeps the run just
+       BEFORE the target reaches y_k: it is never above the target. */
     var horiz = 0;
-    for (var h = 1; h < n; h += 1) horiz += Math.abs(points[h][0] - points[h - 1][0]);
-    var hw = Math.min(HORIZ_COST, horiz ? DRIFT * vh / horiz : HORIZ_COST);
-    var w = [0];
-    for (var i = 1; i < n; i += 1) {
-      w.push(w[i - 1] + Math.abs(points[i][1] - points[i - 1][1]) +
-        Math.abs(points[i][0] - points[i - 1][0]) * hw);
+    for (var h = 1; h < n; h += 1) {
+      if (points[h][1] === points[h - 1][1]) horiz += Math.abs(points[h][0] - points[h - 1][0]);
     }
-    var q = lineBottom > lineTop ? (yT - lineTop) / (lineBottom - lineTop) * w[n - 1] : 0;
+    var hw = Math.min(HORIZ_COST, horiz ? DRIFT * vh / horiz : HORIZ_COST);
+    var Yv = [lineTop];
+    for (var i = 1; i < n; i += 1) {
+      var run = points[i][1] === points[i - 1][1];
+      var y = points[i][1];
+      if (run) {
+        Yv.push(y);
+        var back = Yv.length - 2;
+        Yv[back] = Math.max(Yv[back - 1] === undefined ? lineTop : Yv[back - 1], Math.min(Yv[back], y - hw * Math.abs(points[i][0] - points[i - 1][0])));
+      } else {
+        Yv.push(Math.max(Yv[i - 1], y));
+      }
+    }
+    Yv[n - 1] = Math.max(Yv[n - 1], lineBottom);
     var j = 1;
-    while (j < n - 1 && w[j] < q) j += 1;
-    var wspan = w[j] - w[j - 1] || 1;
-    var t = Math.min(1, Math.max(0, (q - w[j - 1]) / wspan));
+    while (j < n - 1 && Yv[j] < yT) j += 1;
+    var yspan = Yv[j] - Yv[j - 1] || 1;
+    var t = Math.min(1, Math.max(0, (yT - Yv[j - 1]) / yspan));
     var len = c[j - 1] + (c[j] - c[j - 1]) * t;
-    /* first length whose y is at or below the viewport top */
-    var lo = 0;
+    /* first length whose y is at or below the viewport top, under the sticky
+       header (HEADER px); no header clamp at p = 0 */
+    var top = p > 0 ? sy + HEADER : sy;
+    var lo = all;
     for (var a = 0; a < n; a += 1) {
-      if (points[a][1] >= sy) {
+      if (points[a][1] >= top) {
         if (a > 0 && points[a][1] > points[a - 1][1]) {
-          lo = c[a - 1] + (c[a] - c[a - 1]) * ((sy - points[a - 1][1]) / (points[a][1] - points[a - 1][1]));
+          lo = c[a - 1] + (c[a] - c[a - 1]) * ((top - points[a - 1][1]) / (points[a][1] - points[a - 1][1]));
         } else lo = c[a];
         break;
       }
-      lo = all;
     }
     /* last length whose y is at or above the viewport bottom */
     var bottom = sy + vh;
-    var hi = all;
+    var hi = 0;
     for (var b = n - 1; b >= 0; b -= 1) {
       if (points[b][1] <= bottom) {
         if (b < n - 1 && points[b + 1][1] > points[b][1]) {
           hi = c[b] + (c[b + 1] - c[b]) * ((bottom - points[b][1]) / (points[b + 1][1] - points[b][1]));
         } else hi = c[b];
+        if (b === n - 1) hi = all;
         break;
       }
-      hi = 0;
     }
     if (hi < lo) lo = hi;
     return Math.min(hi, Math.max(lo, len));
