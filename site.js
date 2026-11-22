@@ -269,29 +269,45 @@
     return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
   }
 
-  /* #204: the marker rides one third of the way down the viewport. */
+  /* #204: the marker rides one third of the way down the viewport.
+     #206: that means the marker's document Y must sit at scrollY + vh/3
+     (clamped to the line's own extent), not wherever the drawn-so-far
+     head of the line happens to land. anchorDocY is the pure part of
+     that rule (no DOM, easy to unit test); lenAtY walks the measured
+     path to find the arc length whose point actually has that Y, which
+     is what keeps the marker pinned at 33vh through every join/zigzag
+     instead of only near the end of the track. */
   var ANCHOR = 1 / 3;
+  function anchorDocY(vh, sy, lineTop, lineBottom) {
+    var ideal = sy + vh * ANCHOR;
+    if (ideal < lineTop) return lineTop;
+    if (ideal > lineBottom) return lineBottom;
+    return ideal;
+  }
+
+  function lenAtY(targetY) {
+    var n = pts.length;
+    if (!n) return 0;
+    if (targetY <= pts[0][1]) return 0;
+    if (targetY >= pts[n - 1][1]) return total;
+    for (var i = 1; i < n; i += 1) {
+      var y0 = pts[i - 1][1];
+      var y1 = pts[i][1];
+      if (y1 >= targetY) {
+        var t = y1 > y0 ? (targetY - y0) / (y1 - y0) : 0;
+        return cum[i - 1] + t * (cum[i] - cum[i - 1]);
+      }
+    }
+    return total;
+  }
+
   function readTarget() {
+    if (!pts.length) return 0;
     var vh = window.innerHeight;
-    var max = document.documentElement.scrollHeight - vh;
     var sy = window.scrollY;
-    var base = heroStops.length || !stops.length ? vh * ANCHOR : Math.min(stops[0].y, vh * ANCHOR);
-    var c = sy + base + (vh * ANCHOR - base) * Math.min(1, sy / (vh * .5));
-    var len = heroEnd;
-    var start = { y: base, len: heroEnd };
-    var prev = start;
-    var next = null;
-    for (var i = 0; i < stops.length; i += 1) {
-      if (stops[i].y <= c) prev = stops[i]; else { next = stops[i]; break; }
-    }
-    if (next) {
-      len = prev.len + (next.len - prev.len) * Math.max(0, (c - prev.y) / (next.y - prev.y));
-    } else {
-      var s0 = prev.y - vh * ANCHOR;
-      var f = max > s0 ? Math.max(0, (sy - s0) / (max - s0)) : 1;
-      len = prev.len + (total - prev.len) * Math.min(1, f);
-    }
-    return len;
+    var lineTop = pts[0][1];
+    var lineBottom = pts[pts.length - 1][1];
+    return lenAtY(anchorDocY(vh, sy, lineTop, lineBottom));
   }
 
   function paint() {
@@ -559,5 +575,11 @@
       paint();
     });
     paint();
+  }
+
+  /* #206: expose the pure marker-anchor rule for node tests. No-op in the
+     browser, where `module` is undefined. */
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { anchorDocY: anchorDocY, ANCHOR: ANCHOR };
   }
 })();

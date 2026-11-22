@@ -50,7 +50,7 @@ hero_avif=$(wc -c < "$root/img/crew/crew-base-1152.avif")
 assert "hero AVIF at 1440 px is 150 KB or less" test "$hero_avif" -le 153600
 
 intro_count=$(cat "$root/index.html" "$root/build.html" "$root/gate.html" | grep -c 'class="crew-intro"')
-assert "six section intros" test "$intro_count" -eq 6
+assert "five section intros" test "$intro_count" -eq 5
 assert "intro images have alt text" bash -c "! grep -hE 'pt-[a-z]+-320\.png\" srcset=[^>]*alt=\"\"' '$root'/index.html '$root'/build.html '$root'/gate.html"
 
 no_old_mark() { ! grep -lE '<text[^>]*>AY</text>' "$root"/*.html; }
@@ -79,8 +79,16 @@ hadi_images_exist() {
   return "$missing"
 }
 assert "the twelve Hadi images exist" hadi_images_exist
-assert "the crew intro names Hadi, the main thread" grep -Fq '<p class="crew-intro__role">The main thread</p><p class="crew-intro__name">Hadi</p>' "$root/index.html"
 assert "the hero alt text names Hadi, the main thread" grep -Fq 'Hadi, the main thread, routes the work to the crew' "$root/index.html"
+
+# #206: the install heading carries Hadi's avatar inline; the old role card is gone.
+install_section() { sed -n '/id="open-source"/,/<\/section>/p' "$root/index.html"; }
+no_main_thread_label() { ! install_section | grep -Eiq 'the main thread'; }
+assert "no main-thread role label in the install section" no_main_thread_label
+install_heading_has_hadi_avatar() { sed -n '/id="oss-title"/,/<\/h2>/p' "$root/index.html" | grep -Fq '/img/crew/av-hadi-'; }
+assert "the install heading carries Hadi's avatar" install_heading_has_hadi_avatar
+no_old_role_card_in_install() { ! install_section | grep -Fq 'crew-intro'; }
+assert "the old role card is gone from the install section" no_old_role_card_in_install
 hadi_slots() { [ "$(grep -c '<span class="gc-hadi[^"]*" aria-hidden="true"></span>' "$root/index.html")" -eq 12 ]; }
 assert "Hadi has a decorative slot in each gate row and beside Merged, in both examples" hadi_slots
 assert "the story waits for the card to scroll into view" grep -Fq 'IntersectionObserver' "$root/crew-hero.js"

@@ -46,7 +46,8 @@
 # while a browser gets 200, so the check fails at random on unrelated PRs.
 ^https://github\.com/me2resh/apexyard/compare/[0-9a-f]+\.\.\.[0-9a-f]+$
 
-# GitHub commit pages, linked from the gate card's passed-merge evidence
-# (#202). GitHub returns 503 to CI runners on large commit pages, while a
-# browser gets 200. A full commit SHA never changes, so skipping it is safe.
-^https://github\.com/me2resh/apexyard/commit/[0-9a-f]{40}$
+# GitHub commit pages in any me2resh repository, linked from the gate card
+# and the stories (#202, #206). GitHub returns 503 to CI runners on large
+# commit pages, while a browser gets 200. A full commit SHA never changes,
+# so skipping it is safe.
+^https://github\.com/me2resh/[A-Za-z0-9._-]+/commit/[0-9a-f]{40}$
