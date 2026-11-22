@@ -227,11 +227,7 @@
       return { top: r.top + window.scrollY, bottom: r.bottom + window.scrollY, dark: s.classList.contains('t-dark') };
     });
     heroBottom = hero ? hero.getBoundingClientRect().bottom + window.scrollY : 0;
-    cum = [0];
-    for (var n = 1; n < pts.length; n += 1) {
-      cum.push(cum[n - 1] + Math.abs(pts[n][0] - pts[n - 1][0]) + Math.abs(pts[n][1] - pts[n - 1][1]) -
-        Math.min(Math.abs(pts[n][0] - pts[n - 1][0]), Math.abs(pts[n][1] - pts[n - 1][1])) * .586);
-    }
+    cum = arcCum(pts);
     total = cum[cum.length - 1];
     heroStops = heroStops.map(function (i) { return cum[i]; });
     heroEnd = heroStops.length ? heroStops[heroStops.length - 1] : 0;
@@ -269,28 +265,121 @@
     return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
   }
 
-  /* #208 (owner decision, 22 Nov 2026): the marker travels the whole line in
-     step with scroll progress, replacing the #206/#207 "hold at 33vh" rule.
-     Scroll progress p is 0 when the line's first point first reaches the
-     bottom of the viewport (scrollY === lineTop - vh) and 1 when the page is
-     scrolled to the bottom (scrollY === scrollHeight - vh). p is clamped to
-     [0, 1], then the marker sits at arc length p * total along the real
-     measured path -- so it always moves while scrolling, its on-screen speed
-     varies with how the line zigzags, and scrolling up moves it back.
-     markerLen is the pure part of that rule (no DOM, easy to unit test);
-     lineBottom is accepted for interface symmetry with the line's measured
-     extent even though the arc length only depends on where progress starts
-     (lineTop) and the total length already measured. */
-  function markerLen(vh, sy, scrollHeight, lineTop, lineBottom, total) {
-    // A line already on screen at load starts at scroll 0, so the marker
-    // begins at the first point of the line (#208, Rex review 6011401939).
+  /* #212 (owner decision, 22 Nov 2026): the marker stays inside the viewport,
+     in a comfortable band, from the moment the line's first point appears to
+     the page bottom. #208 mapped progress to ARC LENGTH, and the long
+     horizontal runs left the marker below the fold. The rule follows the
+     line's VERTICAL position:
+     1. p is 0 when the first point reaches the viewport bottom
+        (scrollY === lineTop - vh, or 0 if the line shows at load) and 1 at
+        the page bottom, clamped to [0, 1].
+     2. Target y = sy + f(p) * vh, clamped to the line's y extent. f starts at
+        f0 (1, or lineTop / vh when the line shows at load), eases down to 0.55
+        (smoothstep, slow enough that y never moves back: the drop takes at
+        least 1.5 * drop * vh / span of p, capped at 0.4), holds 0.55, then
+        eases to e = (lineBottom - (scrollHeight - vh)) / vh so y equals
+        lineBottom at the page bottom.
+     3. y maps onto the path through "scroll cost": vertical length counts
+        1:1, horizontal length counts a small weight (HORIZ_COST, lowered so
+        all horizontal cost together stays under DRIFT of a viewport height).
+        So each horizontal run takes a short scroll stretch and is not jumped.
+     4. Safety net: the length is clamped between the first point at or below
+        the viewport top and the last point at or above the viewport bottom.
+        Both bounds rise with scrollY, so the result stays monotone.
+     markerLen is the pure part (no DOM): it takes the measured points and
+     returns the arc length (same metric as cum) where the marker sits. */
+  var HORIZ_COST = 0.15;
+  var DRIFT = 0.25;
+  var BAND = 0.55;
+  var HEADER = 67; /* sticky header height on desktop (60 on phones); z-index 60 above the marker */
+
+  function ease(t) { t = Math.min(1, Math.max(0, t)); return t * t * (3 - 2 * t); }
+
+  function arcCum(p) {
+    var c = [0];
+    for (var n = 1; n < p.length; n += 1) {
+      var dx = Math.abs(p[n][0] - p[n - 1][0]);
+      var dy = Math.abs(p[n][1] - p[n - 1][1]);
+      c.push(c[n - 1] + dx + dy - Math.min(dx, dy) * .586);
+    }
+    return c;
+  }
+
+  function markerLen(vh, sy, scrollHeight, points) {
+    if (!points || points.length < 2) return 0;
+    var c = arcCum(points);
+    var n = points.length;
+    var all = c[n - 1];
+    var lineTop = points[0][1];
+    var lineBottom = points[n - 1][1];
     var start = Math.max(0, lineTop - vh);
-    var end = scrollHeight - vh;
-    var span = end - start;
+    var span = scrollHeight - vh - start;
     var p = span > 0 ? (sy - start) / span : 1;
     if (p < 0) p = 0;
     if (p > 1) p = 1;
-    return p * total;
+    var f0 = Math.min(1, lineTop / vh);
+    var e = Math.min(1, (lineBottom - (scrollHeight - vh)) / vh);
+    var m = BAND;
+    var d1 = span > 0 ? Math.min(0.4, 1.5 * Math.abs(f0 - m) * vh / span * 1.05) : 0;
+    var d2 = span > 0 ? Math.min(0.4, 1.5 * Math.abs(m - e) * vh / span * 1.05) : 0;
+    var f = m;
+    if (d1 > 0 && p < d1) f = f0 + (m - f0) * ease(p / d1);
+    if (p > 1 - d2) f = m + (e - m) * ease((p - (1 - d2)) / d2);
+    else if (p >= 1) f = e;
+    var yT = Math.min(lineBottom, Math.max(lineTop, sy + f * vh));
+    /* Target-y axis: Yv[i] is the target y at which the marker reaches
+       vertex i. A horizontal run at y_k (dy === 0) takes the target range
+       [y_k - h, y_k], h = hw * length, so the marker sweeps the run just
+       BEFORE the target reaches y_k: it is never above the target. */
+    var horiz = 0;
+    for (var h = 1; h < n; h += 1) {
+      if (points[h][1] === points[h - 1][1]) horiz += Math.abs(points[h][0] - points[h - 1][0]);
+    }
+    var hw = Math.min(HORIZ_COST, horiz ? DRIFT * vh / horiz : HORIZ_COST);
+    var Yv = [lineTop];
+    for (var i = 1; i < n; i += 1) {
+      var run = points[i][1] === points[i - 1][1];
+      var y = points[i][1];
+      if (run) {
+        Yv.push(y);
+        var back = Yv.length - 2;
+        Yv[back] = Math.max(Yv[back - 1] === undefined ? lineTop : Yv[back - 1], Math.min(Yv[back], y - hw * Math.abs(points[i][0] - points[i - 1][0])));
+      } else {
+        Yv.push(Math.max(Yv[i - 1], y));
+      }
+    }
+    Yv[n - 1] = Math.max(Yv[n - 1], lineBottom);
+    var j = 1;
+    while (j < n - 1 && Yv[j] < yT) j += 1;
+    var yspan = Yv[j] - Yv[j - 1] || 1;
+    var t = Math.min(1, Math.max(0, (yT - Yv[j - 1]) / yspan));
+    var len = c[j - 1] + (c[j] - c[j - 1]) * t;
+    /* first length whose y is at or below the viewport top, under the sticky
+       header (HEADER px); no header clamp at p = 0 */
+    var top = p > 0 ? sy + HEADER : sy;
+    var lo = all;
+    for (var a = 0; a < n; a += 1) {
+      if (points[a][1] >= top) {
+        if (a > 0 && points[a][1] > points[a - 1][1]) {
+          lo = c[a - 1] + (c[a] - c[a - 1]) * ((top - points[a - 1][1]) / (points[a][1] - points[a - 1][1]));
+        } else lo = c[a];
+        break;
+      }
+    }
+    /* last length whose y is at or above the viewport bottom */
+    var bottom = sy + vh;
+    var hi = 0;
+    for (var b = n - 1; b >= 0; b -= 1) {
+      if (points[b][1] <= bottom) {
+        if (b < n - 1 && points[b + 1][1] > points[b][1]) {
+          hi = c[b] + (c[b + 1] - c[b]) * ((bottom - points[b][1]) / (points[b + 1][1] - points[b][1]));
+        } else hi = c[b];
+        if (b === n - 1) hi = all;
+        break;
+      }
+    }
+    if (hi < lo) lo = hi;
+    return Math.min(hi, Math.max(lo, len));
   }
 
   function readTarget() {
@@ -298,9 +387,7 @@
     var vh = window.innerHeight;
     var sy = window.scrollY;
     var scrollHeight = document.documentElement.scrollHeight;
-    var lineTop = pts[0][1];
-    var lineBottom = pts[pts.length - 1][1];
-    return markerLen(vh, sy, scrollHeight, lineTop, lineBottom, total);
+    return markerLen(vh, sy, scrollHeight, pts);
   }
 
   function paint() {
