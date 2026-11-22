@@ -68,5 +68,6 @@ fi
 # Every browser launch must keep Chrome away from the real keychain.
 if grep -n 'chromium.launch' .claude/skills/verify/sweep.js | grep -v -- 'ARGS' >/dev/null; then bad "a chromium.launch call lacks ARGS"; else ok "every chromium.launch passes ARGS"; fi
 if grep -q -- "'--use-mock-keychain'" .claude/skills/verify/sweep.js && grep -q -- "'--password-store=basic'" .claude/skills/verify/sweep.js; then ok "sweep.js ARGS has the mock keychain flags"; else bad "sweep.js lacks the mock keychain flags"; fi
+# shellcheck disable=SC2016 # The pattern matches the literal text "$chrome" in verify.sh.
 if grep -n '^ *"\$chrome" --' .claude/skills/verify/verify.sh | grep -v -- '--use-mock-keychain' | grep -q .; then bad "a Chrome launch in verify.sh lacks --use-mock-keychain"; else ok "verify.sh Chrome launch has --use-mock-keychain"; fi
 exit "$fail"
