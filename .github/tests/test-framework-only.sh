@@ -51,7 +51,7 @@ check('Keel returns with every flag', re.search(r'\bKeel\b', text_all) is not No
 # Moving line marker
 js = (src / 'site.js').read_text()
 read = js[js.index('function readTarget'):js.index('function paint')]
-check('the marker rides at one third of the viewport', 'ANCHOR = 1 / 3' in js and 'vh * .6' not in read)
+check('the marker travels the whole line with scroll progress', 'function markerLen' in js and 'ANCHOR' not in js and 'markerLen(' in read)
 # One site footer on every page, in every flag state. The old production footer is gone.
 for label, tree in (('free', free), ('all flags', full)):
     pages = [p for p in tree.rglob('*.html') if p.relative_to(tree).parts[0] not in ('docs', 'apexdock')]
