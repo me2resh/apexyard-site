@@ -80,7 +80,7 @@ console.log(bad.join('\n'));
 
 if [ -n "$site_text_findings" ]; then
   echo "FAIL em dash in docs-site/content-map.mjs site-owned strings:"
-  echo "$site_text_findings" | sed 's/^/  /'
+  while IFS= read -r line; do printf '  %s\n' "$line"; done <<< "$site_text_findings"
   fail=1
 fi
 
