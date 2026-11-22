@@ -5,10 +5,13 @@ const base = process.argv[3];
 const pages = ['index.html', 'how-it-works.html', 'pricing.html', 'skills.html'];
 const HEADER = 67;
 const STEPS = 25;
+// Never touch the real keychain: Chrome would try to create its Safe Storage key.
+const ARGS = ['--use-mock-keychain', '--password-store=basic'];
+const MIN_CHECKED = 5; // fewer checked steps than this cannot prove the marker stays in view
 
 async function launch() {
-  try { return await pw.chromium.launch(); } catch (e) { /* try system Chrome */ }
-  return pw.chromium.launch({ channel: 'chrome' });
+  try { return await pw.chromium.launch({ args: ARGS }); } catch (e) { /* try system Chrome */ }
+  return pw.chromium.launch({ channel: 'chrome', args: ARGS });
 }
 
 (async () => {
@@ -49,7 +52,9 @@ async function launch() {
       }
       if (errors.length) detail.push('console errors: ' + errors.slice(0, 3).join(' / '));
       if (has && result.bad.length) detail.push('marker out of range: ' + result.bad.slice(0, 4).join(', '));
-      const note = has ? 'marker checked at ' + result.checked + ' of ' + STEPS + ' steps' : 'no .marker on this page, sweep not applicable';
+      if (!has) detail.push('no .marker element on this page');
+      else if (result.checked < MIN_CHECKED) detail.push('only ' + result.checked + ' of ' + STEPS + ' steps checked, need ' + MIN_CHECKED);
+      const note = 'marker checked at ' + result.checked + ' of ' + STEPS + ' steps';
       console.log('RESULT|' + name + '|' + (detail.length ? 'FAIL' : 'PASS') + '|' + (detail.concat(note)).join('; '));
     } catch (e) {
       console.log('RESULT|' + name + '|FAIL|' + String(e.message).split('\n')[0]);

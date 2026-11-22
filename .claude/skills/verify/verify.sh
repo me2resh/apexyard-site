@@ -77,7 +77,7 @@ else
       if [ -n "$d" ] && [ -f "$d/package.json" ]; then pwdir="$d"; break; fi
     done
     done_browser=0
-    if [ -n "$pwdir" ] && command -v node >/dev/null 2>&1; then
+    if [ "${VERIFY_FORCE_FALLBACK:-}" != "1" ] && [ -n "$pwdir" ] && command -v node >/dev/null 2>&1; then
       if node "$root/.claude/skills/verify/sweep.js" "$pwdir" "$url" >"$tmp/sweep.out" 2>"$tmp/sweep.err" \
          && grep -q '^RESULT|' "$tmp/sweep.out"; then
         browser="Playwright (headless Chromium)"
@@ -104,16 +104,15 @@ else
         for p in index how-it-works pricing skills; do
           log="$tmp/chrome-$p.log"
           dom="$tmp/dom-$p.html"
-          "$chrome" --headless --disable-gpu --no-sandbox --enable-logging=stderr --v=0 \
+          "$chrome" --headless --use-mock-keychain --password-store=basic --disable-gpu --no-sandbox --enable-logging=stderr --v=0 \
             --virtual-time-budget=5000 --user-data-dir="$tmp/profile-$p" \
             --dump-dom "$url/$p.html" >"$dom" 2>"$log"
           if ! grep -q '<html' "$dom"; then
-            add FAIL "page: $p.html loads, no console error" "no DOM returned"
-          elif grep -Eq 'CONSOLE.*(ERROR|error)|ERROR:CONSOLE|Uncaught' "$log"; then
-            add FAIL "page: $p.html loads, no console error" "console error: $(grep -E 'CONSOLE|Uncaught' "$log" | head -n 1 | cut -c1-120 | tr '|' '/')"
+            add FAIL "page: $p.html loads (DOM returned)" "no DOM returned"
           else
-            add PASS "page: $p.html loads, no console error" "DOM dumped, no console error in log"
+            add PASS "page: $p.html loads (DOM returned)" "DOM dumped"
           fi
+          add SKIPPED "console check: $p.html" "Chrome --dump-dom cannot tell console.error from console.log; needs Playwright"
           add SKIPPED "scroll sweep: $p.html marker in view" "Chrome --dump-dom cannot scroll; needs Playwright"
         done
       fi
@@ -124,7 +123,9 @@ fi
 
 # 3. No tracked file changed
 after=$(git status --porcelain)
-if [ "$before" = "$after" ]; then
+if [ "$rev" = "unknown" ]; then
+  add SKIPPED "no tracked file changed" "git cannot run here (no repository), so the tree state is unknown"
+elif [ "$before" = "$after" ]; then
   add PASS "no tracked file changed" "git status --porcelain identical before and after"
 else
   add FAIL "no tracked file changed" "git status --porcelain differs"
@@ -147,6 +148,6 @@ else result="Passed"; fi
   cat "$rows"
   echo
   echo "- Cleanup: server stopped, temp directory removed on exit"
-  echo "- Unverified: every check marked SKIPPED above"
+  if [ "$skips" -gt 0 ]; then echo "- Unverified: every check marked SKIPPED above"; else echo "- Unverified: none"; fi
 }
 [ "$fails" -eq 0 ]
