@@ -282,7 +282,9 @@
      extent even though the arc length only depends on where progress starts
      (lineTop) and the total length already measured. */
   function markerLen(vh, sy, scrollHeight, lineTop, lineBottom, total) {
-    var start = lineTop - vh;
+    // A line already on screen at load starts at scroll 0, so the marker
+    // begins at the first point of the line (#208, Rex review 6011401939).
+    var start = Math.max(0, lineTop - vh);
     var end = scrollHeight - vh;
     var span = end - start;
     var p = span > 0 ? (sy - start) / span : 1;

@@ -115,6 +115,18 @@ const quarterScroll = firstAppearance + (pageBottom - firstAppearance) * 0.25;
 const atQuarter = lenAt(quarterScroll);
 assert(Math.abs(atQuarter - total * 0.25) < 1e-9, 'marker is at a quarter of the line length a quarter through the scroll range, got ' + atQuarter);
 console.log('PASS  marker position tracks scroll progress linearly, not a fixed viewport spot');
+
+// A line already on screen at load (its top above the fold, as on
+// /how-it-works) starts at the first point at scroll 0 (Rex review
+// 6011401939), and still reaches the end at the page bottom.
+const shortTop = vh * 0.4;
+const shortBottom = shortTop + 2000;
+const shortHeight = shortBottom + vh * 0.5;
+const atLoad = api.markerLen(vh, 0, shortHeight, shortTop, shortBottom, total);
+assert(atLoad === 0, 'a line visible at load starts at arc length 0, got ' + atLoad);
+const atEnd = api.markerLen(vh, shortHeight - vh, shortHeight, shortTop, shortBottom, total);
+assert(Math.abs(atEnd - total) < 1e-9, 'a line visible at load ends at the full length, got ' + atEnd);
+console.log('PASS  a line already on screen at load starts at its first point');
 NODE
 then
   printf 'PASS  Marker scroll-progress tests\n'
