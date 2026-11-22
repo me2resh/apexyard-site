@@ -269,45 +269,38 @@
     return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
   }
 
-  /* #204: the marker rides one third of the way down the viewport.
-     #206: that means the marker's document Y must sit at scrollY + vh/3
-     (clamped to the line's own extent), not wherever the drawn-so-far
-     head of the line happens to land. anchorDocY is the pure part of
-     that rule (no DOM, easy to unit test); lenAtY walks the measured
-     path to find the arc length whose point actually has that Y, which
-     is what keeps the marker pinned at 33vh through every join/zigzag
-     instead of only near the end of the track. */
-  var ANCHOR = 1 / 3;
-  function anchorDocY(vh, sy, lineTop, lineBottom) {
-    var ideal = sy + vh * ANCHOR;
-    if (ideal < lineTop) return lineTop;
-    if (ideal > lineBottom) return lineBottom;
-    return ideal;
-  }
-
-  function lenAtY(targetY) {
-    var n = pts.length;
-    if (!n) return 0;
-    if (targetY <= pts[0][1]) return 0;
-    if (targetY >= pts[n - 1][1]) return total;
-    for (var i = 1; i < n; i += 1) {
-      var y0 = pts[i - 1][1];
-      var y1 = pts[i][1];
-      if (y1 >= targetY) {
-        var t = y1 > y0 ? (targetY - y0) / (y1 - y0) : 0;
-        return cum[i - 1] + t * (cum[i] - cum[i - 1]);
-      }
-    }
-    return total;
+  /* #208 (owner decision, 22 Nov 2026): the marker travels the whole line in
+     step with scroll progress, replacing the #206/#207 "hold at 33vh" rule.
+     Scroll progress p is 0 when the line's first point first reaches the
+     bottom of the viewport (scrollY === lineTop - vh) and 1 when the page is
+     scrolled to the bottom (scrollY === scrollHeight - vh). p is clamped to
+     [0, 1], then the marker sits at arc length p * total along the real
+     measured path -- so it always moves while scrolling, its on-screen speed
+     varies with how the line zigzags, and scrolling up moves it back.
+     markerLen is the pure part of that rule (no DOM, easy to unit test);
+     lineBottom is accepted for interface symmetry with the line's measured
+     extent even though the arc length only depends on where progress starts
+     (lineTop) and the total length already measured. */
+  function markerLen(vh, sy, scrollHeight, lineTop, lineBottom, total) {
+    // A line already on screen at load starts at scroll 0, so the marker
+    // begins at the first point of the line (#208, Rex review 6011401939).
+    var start = Math.max(0, lineTop - vh);
+    var end = scrollHeight - vh;
+    var span = end - start;
+    var p = span > 0 ? (sy - start) / span : 1;
+    if (p < 0) p = 0;
+    if (p > 1) p = 1;
+    return p * total;
   }
 
   function readTarget() {
     if (!pts.length) return 0;
     var vh = window.innerHeight;
     var sy = window.scrollY;
+    var scrollHeight = document.documentElement.scrollHeight;
     var lineTop = pts[0][1];
     var lineBottom = pts[pts.length - 1][1];
-    return lenAtY(anchorDocY(vh, sy, lineTop, lineBottom));
+    return markerLen(vh, sy, scrollHeight, lineTop, lineBottom, total);
   }
 
   function paint() {
@@ -577,9 +570,9 @@
     paint();
   }
 
-  /* #206: expose the pure marker-anchor rule for node tests. No-op in the
+  /* #208: expose the pure scroll-progress rule for node tests. No-op in the
      browser, where `module` is undefined. */
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { anchorDocY: anchorDocY, ANCHOR: ANCHOR };
+    module.exports = { markerLen: markerLen };
   }
 })();
