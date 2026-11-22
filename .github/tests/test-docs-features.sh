@@ -64,7 +64,9 @@ for sec in nav['sections']:
         assert re.search(re.escape(g['title']) + r'.{0,2000}?' + str(n) + ' page' + ('' if n == 1 else 's'), home, re.S), (g['id'], 'count on home')
 # The header link: /#product needs Gate, /#open-source otherwise. No docs page links to /build (#204).
 want = '/#product' if 'gate' in enabled else '/#open-source'
-assert ('href="' + want + '">Product<') in home, ('header link', want)
+# The label reads Framework with the paid flags off (#210).
+label = 'Product' if 'gate' in enabled else 'Framework'
+assert ('href="' + want + '">' + label + '<') in home, ('header link', want, label)
 for page in dist.rglob('*.html'):
     assert 'href="/build"' not in page.read_text(), (page.name, 'link to the Build page')
 # #204: with no paid flag, the docs are about the framework only. Keel is a paid-area name.
