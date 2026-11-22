@@ -5,10 +5,12 @@ const features = 'SITE_FEATURES' in process.env ? process.env.SITE_FEATURES.spli
 // The Product section of the home page exists only with Gate on (#202).
 // Without Gate, the link goes to the install section. It never goes to /build (#204).
 const product = features.includes('gate') ? '/#product' : '/#open-source';
+// With the paid flags off, the site shows only the framework (#210).
+const productLabel = features.includes('gate') ? 'Product' : 'Framework';
 ---
 
 <nav class="ay-sitenav" aria-label="Site">
-  <a href={product}>Product</a>
+  <a href={product}>{productLabel}</a>
   <a href="/docs" aria-current="page">Docs</a>
   <a href="https://github.com/me2resh/apexyard" rel="noopener">GitHub</a>
 </nav>
